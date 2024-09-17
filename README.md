@@ -14,19 +14,31 @@ Requisito funcional | Sprint | Prioridade |
 | Apresentar os gráficos, incluindo datas e horários de captura.| 1 | Alta |
 
 
-## 🎯 Tasks desenvolvidas
+## 🎯 Sprint backlog
 
- - Definir o propósito do projeto;
- - Elaborar o protótipo da aplicação;
- - Escolher a identidade visual;
- - Configurar o ambiente de desenvolvimento;
- - Desenvolver a base do website;
- - Elaborar o backlog inicial e o plano de entrega;
- - Integrar os gráficos gerados a partir de um arquivo CSV com a interface do usuário;
- - Empacotar a aplicação com Docker;
- - Criar o vídeo de apresentação;
- - Implementar a funcionalidade de importação de arquivos CSV no site;
- - Realizar a transformação automática dos dados em gráficos.
+
+ID | User story | Estimativa
+|------|--------|------|
+| 1 | 	Eu como funcionário gostaria de cadastrar os produtos e suas propriedades para saber o que tem no estoque. | 6 |
+| 2 | 	Eu como gerente gostaria de cadastrar os locais, fornecedores e setores de cada produto para melhor gestão do estoque. | 4 |
+
+---
+
+US | Task | Estimativa | Status
+|------|--------|------|-----|
+| 1 | Criação do modelo lógico do banco de dados | 4 | Feito ✔ |
+| 1 | Elaboração da identidade visual | 2 | Feito ✔ |
+| 1 | Estruturação da classe "produto" | 2 | Em andamento ✘ |
+| 1 | Elaboração do protóripo wireframe | 6 | Em andamento ✘ |
+| 1 | Estruturação das páginas bases em REACT | 12 | Em andamento ✘ |
+| 1 | Criação do servidor de banco de dados (mysql) | 3 | A ser feito ✘ |
+| 1 | Criação dos formulários de cadastro | 4 | A ser feito ✘ |
+| 1 | Integração do backend com o frontend | 2 | A ser feito ✘ |
+| 1 | Criação das rotas | 4 | A ser feito ✘ |
+| 1 | Estudo do ORM | 12 | Em andamento ✘ |
+| 2 | Estruturação da classe "setor" | 2 | Em andamento ✘ |
+| 2 | Estruturação da classe "local_armazenamento" | 2 | Em andamento ✘ |
+| 2 | Estruturação da classe "fornecedor" | 2 | Em andamento ✘ |
 
 
 ## 📅 Métricas do Time
@@ -35,7 +47,7 @@ Utilizamos o Burndown chart para acompanhar o progresso da equipe durante o anda
 
 <div align="center">
  
-![image](https://github.com/user-attachments/assets/d7de1756-c0ca-4c5c-8295-86092faa2bb7)
+![BurndownChart](A ser criado)
  </div>
 
   
@@ -44,8 +56,9 @@ Utilizamos o Burndown chart para acompanhar o progresso da equipe durante o anda
 Apresentação das funcionalidades desenvolvidas até o momento:
 <div align="center">
  
-[![Smartfarm - demonstration](https://img.youtube.com/vi/bqNpXkbuNLw/0.jpg)](https://youtu.be/bqNpXkbuNLw)
+[![Cloudstock - demonstration](A ser criado)
 </div>
+
 
 ## :link: Links úteis
 
