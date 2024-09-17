@@ -2,10 +2,8 @@
 
 ### Orientadores:
 
-- Prof. Jean Carlos Lourenço Costa
-- Prof. Fernando Masanori
-- Prof. Fabricio Galende Marques de Carvalho
-- Profa. Juliana Forin Pasquini Martinez
+- Prof. Walmir Duque
+- Prof. Claudio Lima
 
 <p align="center">
     <a href="#sobre">Sobre o projeto</a>  |  
@@ -14,47 +12,29 @@
     <a href="#backlog">Backlog do produto</a>  |  
     <a href="#autores">Autores</a>
 </p>
-   
-<span id="sobre">
 
 <br>
 
+<span id="sobre">
+
 # 🔎 Sobre o projeto
 
-## 📑 Descrição do Problema
+O Cloud Stock é um sistema de controle de estoque desenvolvida para facilitar a gestão de produtos, fornecedores e movimentações de estoque. Com funcionalidades como cadastro de itens, controle de entradas e saídas, geração de relatórios e alertas automáticos, o sistema oferece suporte completo para decisões estratégicas e organização eficiente do estoque de uma empresa.
 
-<div>
-
-<img src="app/static/img/LogoSmartFarmNav.svg" width="90px" height="90px" align="left">
-
-<p style="margin-top:15px">O Smart Farm é uma câmera tecnológica que integra um sofisticado sistema de monitoramento de dados ambientais, sendo especialmente projetado para otimizar o cultivo de plantas e hortaliças. Atualmente, a coleta e análise dos dados são realizadas manualmente por meio da aplicação Excel. No entanto, esse método se mostra moroso e exigente para a equipe, além de dificultar o acompanhamento eficaz do desenvolvimento das plantas.
-</p>
-</div>
-
-## 🎯 Objetivo  
-
-Desenvolver um painel de visualização que permita o monitoramento constante da estufa através de gráficos e automatizar o processo de coleta e armazenamento de dados,com o intuito de solucionar as problemáticas apresentadas pelo cliente.
+<br> 
 
 ## 📅 Entrega de Sprints
 
 Sprint | Previsão | Status|
 |------|--------|------|
-|Kick Off | 11/03/2024 a 15/03/2024 | ✔️ concluido |
-|01 | 25/03/2024 a 14/04/2024 | ✔️ concluido |
-|02|  15/04/2024 a 05/05/2024|  ✔️ concluido |
-|03| 06/05/2024 a 26/05/2024 |  ✔️ concluido |
-|04| 27/05/2024 a 16/06/2024 | a fazer |
-|Feira de Soluções| 27/06 | a fazer |
+|Kick Off | 26/08/2024 a 30/08/2024 | ✔️ concluido |
+|01 | 09/09/2024 a 29/09/2024 | a fazer |
+|02|  30/09/2024 a 20/10/2024|  a fazer |
+|03| 21/10/2024 a 10/11/2024 |  a fazer |
+|04| 11/11/2024 a 01/12/2024 | a fazer |
+|Feira de Soluções| 12/12 | a fazer |
 
 <br>
-
-<span id="demostracao">
-  
-# 💻 Demonstração
-
-Apresentação das funcionalidades desenvolvidas até o momento:
-
-[![Smartfarm - demonstration](https://img.youtube.com/vi/bqNpXkbuNLw/0.jpg)](https://youtu.be/bqNpXkbuNLw)
 
 <span id="tecnologias">
 
@@ -62,77 +42,52 @@ Apresentação das funcionalidades desenvolvidas até o momento:
 
 As seguintes ferramentas, linguagens, bibliotecas e tecnologias foram usadas na construção do projeto:
 
+![Typescript](https://img.shields.io/badge/TypeScript-20232A?style=for-the-badge&logo=typescript&logoColor=007ACC)
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Node.js](https://img.shields.io/badge/Node%20js-20232A?style=for-the-badge&logo=nodedotjs&logoColor=339933)
 ![Docker](https://img.shields.io/badge/docker-20232A?style=for-the-badge&logo=docker&logoColor=87CEEB)
-![Python](https://img.shields.io/badge/python-20232A?style=for-the-badge&logo=python&logoColor=ffdd54)
 ![HTML5](https://img.shields.io/badge/html5-20232A?style=for-the-badge&logo=html5&logoColor=FF6347)
 ![MySQL](https://img.shields.io/badge/mysql-20232A?style=for-the-badge&logo=mysql&logoColor=4682B4)
 ![CSS3](https://img.shields.io/badge/css3-20232A?style=for-the-badge&logo=css3&logoColor=4682B4)
 ![Figma](https://img.shields.io/badge/figma-20232A?style=for-the-badge&logo=figma&logoColor=800000)
 ![Discord](https://img.shields.io/badge/Discord-20232A?style=for-the-badge&logo=discord&logoColor=61DAFB)
-![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![Jira](https://img.shields.io/badge/Jira-20232A?style=for-the-badge&logo=Jira&logoColor=4169E1)
 
-# 📘 Munual do usuário
-
-Para ter informações de:
-- Processo de instalação
-- Acesso do programa
-- Funções da plataforma
-
-[Acesse aqui!](https://github.com/andresalerno/projeto_api/blob/main/Manual.pdf)
+<br> 
 
 <span id="backlog">
 
 # 🧾 Backlog do produto
 
-Requisito funcional | Sprint | Prioridade |
-|------|--------|------|
-| Exibir os últimos dados coletados das variáveis essenciais: temperatura, umidade do solo, umidade ambiente e volume da água. | 1 | Alta |
-| Importar e converter dados de um arquivo CSV. | 2 | Alta |
-| Apresentar os gráficos, incluindo datas e horários de captura.| 2 | Alta |
-| Exportar dados de um período selecionado pelo usuário em CSV.| 2 | Média |
-| Armazenar os dados no banco de dados. | 3 | Alta |
-| Permitir a seleção de conjuntos de dados e combinações para períodos específicos, incluindo filtragem de dados | 3 | Alta |
+Rank | Prioridade | User Story | Estimativa | Sprint | Requisito
+|----|----|----------|----|----|----|
+| 1 | Alta | Eu como funcionário gostaria de cadastrar os produtos e suas propriedades para saber o que tem no estoque. | 6 | 1 | 02
+| 2 | Alta | Eu como gerente gostaria de cadastrar os locais, fornecedores e setores de cada produto para melhor gestão do estoque. | 4 | 1 | 04
+| 3 | Alta | Eu como gerente gostaria de realizar a compra de produtos. | 6 | 2 | 05 
+| 4 | Alta | Eu como funcionário gostaria de realizar a venda de produtos |4 | 2 | 05
+| 5 | Alta | Eu como gerente gostaria de ter registros da entrada e saída de produtos para não perder a sincronia do sistema e estoque. | 4 | 2 | 05
+| 6 | Alta | Eu como funcionário gostaria de acessar onde está localizado um produto para poder direcionar um comprador. | 2 | 2 | 04
+| 7 | Alta | Eu como administrador gostaria de ter três níveis de acesso diferente para atribuições individualizadas. | 7 | 3 | 01
+| 8 | Alta | Eu como gerente gostaria de definir o estoque mínimo de cada produto para que não haja falta de produtos. | 4 | 3 | 11
+| 9 | Alta | Eu como gerente e funcionário gostaria que sejam emitidos alertas de estoque baixo para controle de reposição. | 6 | 3 | 08
+| 10 | Alta | Eu como gerente e funcionário desejo que a plataforma emita avisos assim que um produto esteja próximo da data de validade para que eu possa substituir esses produtos por itens com validade mais longa e evitar perdas. | 4 | 3 | 09
+| 11 | Alta | Eu como gerente gostaria de possuir relatórios detalhados sobre o status do estoque, histórico de compras e movimentação para possuir o total controle do estoque. | 9 | 4 | 06
+| 12 | Alta | Eu como gerente gostaria de que hajam métricas de venda e perdas para planejar a compra de produtos de interesse. | 7 | 4 | 07
+| 13 | Média | Eu como gerente gostaria de ver um histórico de compras e alterações no sistema para auditar os registros de entrada e saída dos itens da loja. | 5 | 4 | 10
+| 14 | Média | Eu como administrador gostaria de cadastrar novos usuários junto de suas respectivas funções para alimentar minha plataforma. | 3 | 4 | 01
+| 15 | Baixa | Eu como funcionário gostaria de filtrar os produtos para melhor organização. | 2 | 4 | 03
 
 ---
 
-# Sprint backlog
+<br>
 
-## Sprint 1. Concepção
-- [x] Definir o propósito do projeto;
-- [x] Elaborar o protótipo da aplicação;
-- [x] Escolher a identidade visual;
-- [x] Configurar o ambiente de desenvolvimento;
-- [x] Desenvolver a base do website;
-- [x] Elaborar o backlog inicial e o plano de entrega;
-- [x] Integrar os gráficos gerados a partir de um arquivo CSV com a interface do usuário;
-- [x] Empacotar a aplicação com Docker;
-- [x] Criar o vídeo de apresentação;
-- [x] Implementar a funcionalidade de importação de arquivos CSV no site;
-- [x] Realizar a transformação automática dos dados em gráficos.
+<span id="demostracao">
 
-## Sprint 2. Desenvolvimento do Projeto
-- [x] Desenvolver a funcionalidade de importação e conversão automática dos dados do CSV para o banco de dados;
-- [x] Permitir o download de todos os dados;
-- [x] Implementar a exibição dos últimos dados coletados das variáveis essenciais;
-- [x] Testar a funcionalidade de apresentação de gráficos e exportação de dados;
-- [x] Desenvolver a funcionalidade de armazenamento dos dados no banco de dados;
-- [x] Realizar a adaptação da página web para diferentes dispositivos e tamanhos de tela.
+# 💻 Demonstração
 
-## Sprint 3. Implementação
-- [x] Permitir o download dos dados selecionados;
-- [x] Hospedar o website a partir do Raspberry Pi 3;
-- [x] Implementar a seleção de conjuntos de dados e combinações para períodos específicos, incluindo a filtragem de dados;
-- [x] Testar a responsividade da página e a funcionalidade de filtragem.
+Apresentação das funcionalidades desenvolvidas até o momento:
 
-## Sprint 4. Operacionalização
-- [ ] Implementar o botão de limpar filtro
-- [ ] Implementar função de baixar por período selecionado pelo filtro
-- [ ] Tratamento do erro de ao filtrar o período deve permanecer no input
-- [ ] Tratamento do erro de filtro de data inexistente no banco
-- [ ] Tratamento do erro de importar dados duplicados
-- [ ] Realizar testes de integração para garantir o funcionamento correto de todas as funcionalidades;
-- [ ] Corrigir eventuais bugs encontrados durante os testes.
+! em breve !
 
 <br>
 
