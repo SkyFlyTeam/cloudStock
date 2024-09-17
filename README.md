@@ -46,3 +46,15 @@ Apresentação das funcionalidades desenvolvidas até o momento:
  
 [![Smartfarm - demonstration](https://img.youtube.com/vi/bqNpXkbuNLw/0.jpg)](https://youtu.be/bqNpXkbuNLw)
 </div>
+
+## :link: Links úteis
+
+Documentos produzidos durante a sprint:
+
+Modelo lógico do Banco de Dados: [vertabello_modelo](https://github.com/user-attachments/assets/44f5c70d-fe6d-451d-a009-a0b1723421d5) 
+<br>
+Backlog do Produto: [CloudStock-Backlog do Produto.pdf](https://github.com/user-attachments/files/17026988/SKYF-Backlog.do.Produto-170924-104112.pdf)
+
+
+
+
