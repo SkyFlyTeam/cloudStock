@@ -25,10 +25,10 @@ O Cloud Stock é um sistema de controle de estoque desenvolvida para facilitar a
 
 ## 📅 Entrega de Sprints
 
-Sprint | Previsão | Status|
-|------|--------|------|
-|Kick Off | 26/08/2024 a 30/08/2024 | ✔️ concluido |
-|01 | 09/09/2024 a 29/09/2024 | a fazer |
+Sprint | Previsão | Status | Relatório
+|------|--------|------|------|
+|Kick Off | 26/08/2024 a 30/08/2024 | ✔️ Concluída | -
+|01 | 09/09/2024 a 29/09/2024 | em andamento | [ver relatório](https://github.com/SkyFlyTeam/cloudStock/tree/sprint1) 
 |02|  30/09/2024 a 20/10/2024|  a fazer |
 |03| 21/10/2024 a 10/11/2024 |  a fazer |
 |04| 11/11/2024 a 01/12/2024 | a fazer |
@@ -77,7 +77,23 @@ Rank | Prioridade | User Story | Estimativa | Sprint | Requisito
 | 14 | Média | Eu como administrador gostaria de cadastrar novos usuários junto de suas respectivas funções para alimentar minha plataforma. | 3 | 4 | 01
 | 15 | Baixa | Eu como funcionário gostaria de filtrar os produtos para melhor organização. | 2 | 4 | 03
 
----
+### Requisitos Funcionais
+- Cadastro de Usuários: Diferenciar níveis de acesso (administrador, gerente, funcionário). 
+- Cadastro de Produtos: Incluindo código, nome, descrição, marca, modelo, categoria, quantidade, preço de custo e venda, unidade de medida, localização no estoque, fornecedor, imagem do produto, peso, dimensões, validade e setor de armazenagem. 
+- Cadastro de Categorias: Organização hierárquica dos produtos, facilitando a navegação.  Cadastro de Local, Fornecedor e Setor: Registro dos locais de armazenamento, fornecedores e Setores. 
+- Movimentação de Estoque: Registros de entrada e saída de produtos com controle de responsável e data. 
+- Relatórios de Estoque: Relatórios detalhados sobre o status do estoque, histórico de compras, e movimentações. 
+- Análise de Tendências: Ferramentas de análise para prever demandas futuras e planejar compras. 
+- Alertas de Baixo Estoque: Notificações automáticas para itens com estoque abaixo do nível mínimo. 
+- Notificações de Expiração: Avisos para produtos próximos da data de validade. 
+- Histórico de Compras e Auditoria: Registro de compras e logs de alterações no sistema.
+- Definir o estoque mínimo
+
+### Requisitos Não Funcionais
+- Manual do Usuário: Documento claro e detalhado para auxiliar os usuários. 
+- Usabilidade: Interface intuitiva, fácil navegação e design responsivo adaptável a diferentes dispositivos. 
+- Guia de Instalação: Instruções claras para a instalação do sistema em diferentes ambientes.
+
 
 <br>
 
