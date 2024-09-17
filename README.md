@@ -10,7 +10,7 @@ Na primeira sprint realizamos o processo de prototipagem e criação de uma iden
 
 Os requisitos desenvolvidos durante esta sprint foram:
 
-- Cadastro de Usuários: Diferenciar níveis de acesso (administrador, gerente, funcionário).
+- Cadastro de Local, Fornecedor e Setor: Registro dos locais de armazenamento, fornecedores e Setores.
 - Cadastro de Produtos: Incluindo código, nome, descrição, marca, modelo, categoria, quantidade, preço de custo e venda, unidade de medida, localização no estoque, fornecedor, imagem do produto, peso, dimensões, validade e setor de armazenagem.
 
 <br>
