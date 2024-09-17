@@ -1,4 +1,4 @@
-<img src="app/static/img/BannerSkyFly.png" style="margin-left: auto; margin-right: auto;">
+<img src="BannerSkyFly.png" style="margin-left: auto; margin-right: auto;">
 
 ### Orientadores:
 
