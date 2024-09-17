@@ -1,28 +1,28 @@
 <h1 align='center'> Sprint 1: 09/09/2024 à 29/09/2024 </h1>
 
+<br>
+
 Na primeira sprint realizamos o processo de prototipagem e criação de uma identidade visual, estruturação do projeto e criação do modelo lógico e conceitual do banco de dados. Ademais, implementamos funcionalidades básicas como cadastro de produtos, setores, locais de armazenamento e fornecedores.
 
+<br>
 
 ## 🧾 Requisitos Funcionais
 
 Os requisitos desenvolvidos durante esta sprint foram:
 
-Requisito funcional | Sprint | Prioridade |
-|------|--------|------|
-| Apresentar os gráficos, incluindo datas e horários de captura. | 1 | Alta |
-| Importar e converter dados de um arquivo CSV. | 1 | Alta |
-| Apresentar os gráficos, incluindo datas e horários de captura.| 1 | Alta |
+- Cadastro de Usuários: Diferenciar níveis de acesso (administrador, gerente, funcionário).
+- Cadastro de Produtos: Incluindo código, nome, descrição, marca, modelo, categoria, quantidade, preço de custo e venda, unidade de medida, localização no estoque, fornecedor, imagem do produto, peso, dimensões, validade e setor de armazenagem.
 
+<br>
 
 ## 🎯 Sprint backlog
-
 
 ID | User story | Estimativa
 |------|--------|------|
 | 1 | 	Eu como funcionário gostaria de cadastrar os produtos e suas propriedades para saber o que tem no estoque. | 6 |
 | 2 | 	Eu como gerente gostaria de cadastrar os locais, fornecedores e setores de cada produto para melhor gestão do estoque. | 4 |
 
----
+<br>
 
 US | Task | Estimativa | Status
 |------|--------|------|-----|
@@ -40,6 +40,7 @@ US | Task | Estimativa | Status
 | 2 | Estruturação da classe "local_armazenamento" | 2 | Em andamento ✘ |
 | 2 | Estruturação da classe "fornecedor" | 2 | Em andamento ✘ |
 
+<br> 
 
 ## 📅 Métricas do Time
 
@@ -50,7 +51,8 @@ Utilizamos o Burndown chart para acompanhar o progresso da equipe durante o anda
 ![BurndownChart](A ser criado)
  </div>
 
-  
+ <br>
+ 
 ## 💻 Demonstração
 
 Apresentação das funcionalidades desenvolvidas até o momento:
@@ -59,6 +61,7 @@ Apresentação das funcionalidades desenvolvidas até o momento:
 [![Cloudstock - demonstration](A ser criado)
 </div>
 
+<br>
 
 ## :link: Links úteis
 
