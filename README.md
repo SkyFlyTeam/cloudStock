@@ -1,70 +1,48 @@
-# Getting Started with Create React App
+<h1 align='center'> Sprint 1: 09/09/2024 à 29/09/2024 </h1>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Na primeira sprint realizamos o processo de prototipagem e criação de uma identidade visual, estruturação do projeto e criação do modelo lógico e conceitual do banco de dados. Ademais, implementamos funcionalidades básicas como cadastro de produtos, setores, locais de armazenamento e fornecedores.
 
-## Available Scripts
 
-In the project directory, you can run:
+## 🧾 Requisitos Funcionais
 
-### `npm start`
+Os requisitos desenvolvidos durante esta sprint foram:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Requisito funcional | Sprint | Prioridade |
+|------|--------|------|
+| Apresentar os gráficos, incluindo datas e horários de captura. | 1 | Alta |
+| Importar e converter dados de um arquivo CSV. | 1 | Alta |
+| Apresentar os gráficos, incluindo datas e horários de captura.| 1 | Alta |
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+## 🎯 Tasks desenvolvidas
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+ - Definir o propósito do projeto;
+ - Elaborar o protótipo da aplicação;
+ - Escolher a identidade visual;
+ - Configurar o ambiente de desenvolvimento;
+ - Desenvolver a base do website;
+ - Elaborar o backlog inicial e o plano de entrega;
+ - Integrar os gráficos gerados a partir de um arquivo CSV com a interface do usuário;
+ - Empacotar a aplicação com Docker;
+ - Criar o vídeo de apresentação;
+ - Implementar a funcionalidade de importação de arquivos CSV no site;
+ - Realizar a transformação automática dos dados em gráficos.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 📅 Métricas do Time
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Utilizamos o Burndown chart para acompanhar o progresso da equipe durante o andamento da sprint (o eixo X são os dias trabalhados na sprint e os valores do eixo Y representam as entregas e esforços realizados com o passar do tempo)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<div align="center">
+ 
+![image](https://github.com/user-attachments/assets/d7de1756-c0ca-4c5c-8295-86092faa2bb7)
+ </div>
 
-### `npm run eject`
+  
+## 💻 Demonstração
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Apresentação das funcionalidades desenvolvidas até o momento:
+<div align="center">
+ 
+[![Smartfarm - demonstration](https://img.youtube.com/vi/bqNpXkbuNLw/0.jpg)](https://youtu.be/bqNpXkbuNLw)
+</div>
