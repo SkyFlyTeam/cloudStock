@@ -1,14 +1,16 @@
 {
   "compilerOptions": {
-    "target": "ES5", /*'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', 'ES2021', or 'ESNEXT'. */
-    "module": "CommonJS", /*'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */
+    "target": "ES6", /* Altere para 'ES6' ou superior */
+    "module": "CommonJS",
     "strict": false,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "outDir": "dist/",
     "moduleResolution": "node",
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "include": [
     "src/**/*"

@@ -27,6 +27,8 @@
     "reflect-metadata": "^0.1.13",
     "save": "^2.9.0",
     "save-dev": "^0.0.1-security",
+    "sequelize": "^6.37.3",
+    "sequelize-typescript": "^2.1.6",
     "ts-node": "^10.9.1",
     "typeorm": "^0.3.17"
   }

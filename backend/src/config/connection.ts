@@ -1,11 +1,14 @@
-const mysql = require('mysql2/promise')
+import { Sequelize } from 'sequelize-typescript';
+import { Product } from '../models/Product';
+import { Supplier } from '../models/Supplier';
 
-export async function connection() {
-    const conn = await mysql.createConnection({
-        user: 'root',
-        host: 'localhost',
-        password: 'fatec', // senha de seu workbecnh
-        database: 'ativ2'  // sua basa de dados
-    })
-    return conn
-}
+const sequelize = new Sequelize({
+  database: 'orm',
+  username: 'root',
+  password: 'fatec',
+  host: 'localhost',
+  dialect: 'mysql',
+  models: [Product, Supplier],  // Adiciona os modelos aqui
+});
+
+export default sequelize;
