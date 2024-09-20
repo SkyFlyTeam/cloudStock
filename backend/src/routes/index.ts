@@ -1,14 +1,21 @@
 import { Router } from 'express';
-const controllerProducts = require('../service/controller-products')
+
 const controllerSuppliers = require('../service/controller-suppliers')
+<<<<<<< HEAD
 const controllerLote = require('../service/controller-lote')
+=======
+const controllerProducts = require('../service/produtoController')
+>>>>>>> 9c1e12fd7d4beca62ef1f46c74a09f1599f06cc8
 
 const router = Router();
 
+
 // rota para salvar o fornecedor
 router.post('/fornecedor', controllerSuppliers.save);
-// rota para visualizar fornecedor
+// // rota para visualizar fornecedor
 router.get('/fornecedor', controllerSuppliers.show)
+
+
 
 // rota para salvar o produto
 router.post('/produto', controllerProducts.save);

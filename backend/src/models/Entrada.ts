@@ -1,5 +1,9 @@
-import { Table, Column, Model, DataType, ForeignKey } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, ForeignKey, BelongsToMany } from 'sequelize-typescript';
 import { Usuario } from './Usuario';
+import { Lote } from './Lote';
+import { LoteEntrada } from './Lote_Entrada';
+
+
 
 @Table({
   tableName: 'Entrada',
@@ -31,4 +35,7 @@ export class Entrada extends Model<Entrada> {
     allowNull: false,
   })
   perfil_id!: number;
+
+  @BelongsToMany(() => Lote, () => LoteEntrada)
+  lotes!: Lote[];
 }

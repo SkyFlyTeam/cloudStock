@@ -1,5 +1,5 @@
 import { Table, Column, Model, DataType, HasMany } from 'sequelize-typescript';
-import { Product } from './Product';  // Importar o modelo Product
+import { Produto } from './Produto';  // Importar o modelo Product
 
 @Table({
   tableName: 'suppliers',
@@ -19,6 +19,6 @@ export class Supplier extends Model {
   contactInfo?: string;
 
   // Definir a associação de HasMany
-  @HasMany(() => Product)
-  products!: Product[];  // Associação com o modelo Product
+  @HasMany(() => Produto)
+  products!: Produto[];  // Associação com o modelo Product
 }
