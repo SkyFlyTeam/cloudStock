@@ -11,6 +11,7 @@ export class LoteEntrada extends Model<LoteEntrada> {
   @Column({
     type: DataType.INTEGER,
     primaryKey: true,
+    autoIncrement: true
   })
   Lote_id!: number;
 
