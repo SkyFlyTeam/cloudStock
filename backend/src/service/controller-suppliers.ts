@@ -1,4 +1,4 @@
-import { Product } from '../models/Product';
+import { Produto } from '../models/Produto';
 import { Supplier } from '../models/Supplier';
 
 const controllerSuppliers = {
@@ -31,7 +31,7 @@ const controllerSuppliers = {
     try {
         // Busca todos os fornecedores com os produtos relacionados
         const suppliers = await Supplier.findAll({
-          include: [Product],  // Incluir os produtos relacionados
+          include: [Produto],  // Incluir os produtos relacionados
         });
   
         // Retorna os fornecedores com os produtos
