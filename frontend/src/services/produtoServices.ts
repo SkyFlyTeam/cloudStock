@@ -17,11 +17,14 @@ const getAllProdutos = async (): Promise<Produto[] | ApiException> => {
   }
 }
 
-const createProduto = async (produto: Produto): Promise<Produto | ApiException> => {
+const createProduto = async (formData: FormData): Promise<Produto | ApiException> => {
   try {
-    console.log(produto)
-    const { data } = await Api().post<any>('/produto', produto);
-    return data;
+    const { data } = await Api().post<any>('/produto', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    });
+
+    const produto: Produto = data;
+    return produto;
   } catch (error: any) {
     return new ApiException(error.message || 'Erro ao criar o registro.');
   }
