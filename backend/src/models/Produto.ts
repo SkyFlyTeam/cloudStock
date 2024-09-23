@@ -98,10 +98,8 @@ export class Produto extends Model {
     // })
     // categoriaId!: number
 
-    // @BelongsToMany(() => Categoria, {
-    //    through: () => ProdutoCategoria, // Especifica a tabela intermediária
-    //  })
-    //  declare categorias?: NonAttribute<Categoria[]>; //Indica apenas a relação, sem criar uma coluna no db
+    // @BelongsTo(() => Categoria)  
+    // categoria!: Categoria;
 
     // @ForeignKey(() => UnidadeMedida)
     // @Column({
@@ -113,8 +111,6 @@ export class Produto extends Model {
     // @BelongsTo(() => UnidadeMedida)
     // unidadeMedida!: UnidadeMedida
 
-    // @BelongsToMany(() => Fornecedor, {
-    //    through: () => FornecedoresProduto, // Especifica a tabela intermediária
-    //  })
-    //  declare fornecedores?: NonAttribute<Fornecedor[]>; //Indica apenas a relação, sem criar uma coluna no db
+    // @BelongsTo(() => Fornecedor)
+    // fornecedor!: Fornecedor
 }
