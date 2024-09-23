@@ -1,4 +1,4 @@
-import { Table, Column, Model, DataType,  HasMany } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, HasMany } from 'sequelize-typescript';
 import { Usuario } from './Usuario';
 
 @Table({
@@ -17,8 +17,8 @@ export class Cargo extends Model {
         type: DataType.STRING(100),
         allowNull: false,
     })
-    user_email!: string;
+    perfil_email!: string;
 
-    @HasMany(() => Usuario)  // A supplier can have many products
+    @HasMany(() => Usuario)
     usuario!: Usuario[];
 }

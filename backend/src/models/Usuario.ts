@@ -11,21 +11,27 @@ export class Usuario extends Model {
         primaryKey: true,
         autoIncrement: true,
     })
-    user_id!: number;
+    perfil_id!: number;
 
     @Column({
         type: DataType.STRING(100),
         allowNull: false,
     })
-    user_email!: string;
+    perfil_email!: string;
 
     @Column({
-        type: DataType.FLOAT,
+        type: DataType.STRING(30),
         allowNull: false,
     })
-    price!: number;
+    perfil_senha!: string;
 
-    @ForeignKey(() => Cargo) 
+    @Column({
+        type: DataType.DATE,
+        allowNull: true,
+    })
+    perfil_CriacaoData!: Date;
+
+    @ForeignKey(() => Cargo)
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
