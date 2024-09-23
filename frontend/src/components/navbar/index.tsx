@@ -11,37 +11,39 @@ const Navbar: React.FC = () => {
     return (
         <div className="sidebar">
           <div className="logo">
-            <span>CLOUD STOCK</span>
+            <div className="textlogo"> <span>CLOUD STOCK</span> </div>
           </div>
     
           <div className="sidebar-menu">
             <div className="logoimg">
-                <img src="https://i.ibb.co/LJFHWys/imagem-2024-09-17-201505544.png"></img>
+                <img src="https://i.ibb.co/LJFHWys/imagem-2024-09-17-201505544.png" alt=''></img>
             </div>
-            <div className="menu-item active">
-                <BsBoxSeamFill />
-              <span> Produtos</span>
-            </div>
-            <div className="menu-item">
-                <IoMdPricetags />
-              <span>Categorias</span>
-            </div>
-            <div className="menu-item">
-                <FaUserGroup />
-              <span>Fornecedores</span>
-            </div>
-            <div className="menu-item">
-                <FaWarehouse />
-                <span>Locais Armazenamento</span>
+            <div className="itens_menu">
+              <div className="menu-item active">
+                  <BsBoxSeamFill />
+                  <div className="navbartext"><span>Produtos</span></div>
+              </div>
+              <div className="menu-item">
+                  <IoMdPricetags />
+                <div className="navbartext"><span>Categorias</span></div>
+              </div>
+              <div className="menu-item">
+                  <FaUserGroup />
+                  <div className="navbartext"><span>Fornecedores</span></div>
+              </div>
+              <div className="menu-item">
+                  <FaWarehouse />
+                  <div className="navbartext"><span>Locais Armazenamento</span></div>
+              </div>
             </div>
             <div className="menu-item">
                 <FaSquareArrowUpRight />
-                <span>Saída</span>
+                <div className="navbartext"><span>Saída</span></div>
             </div>
           </div>
     
           <div className="logout">
-            <span>Logout</span>
+            <div className="logouttext"> <span>Logout</span> </div>
             <PiSignOutBold />
           </div>
         </div>

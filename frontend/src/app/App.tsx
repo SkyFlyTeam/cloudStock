@@ -1,14 +1,14 @@
 import { Component } from 'react';
 import Produto from '../pages/produto';
-import Navbar from '../components/navbar/index';
+import Navbar from '../components/navbar';
 
 export default class App extends Component {
   render() {
     return (
       <div>
-        <Navbar/>
-        <Produto/>
+        <Navbar />
+        <Produto />
       </div>
-    )
+    );
   }
 }
