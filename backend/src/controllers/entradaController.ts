@@ -35,8 +35,8 @@ export const controllerEntrada = {
               await LoteEntrada.create({
                 Lote_id: loteId,
                 Ent_id: novaEntrada.Ent_id,
-                Ent_quantidade: lote.loteQuantidade, // Defina a quantidade conforme a necessidade
-                Ent_valor: 1, // Defina o valor conforme necessário
+                Ent_quantidade: 1, // Defina a quantidade conforme a necessidade
+                Ent_valor: lote.Lote_quantidade, // Defina o valor conforme necessário
               });
       
               // Associa o lote à entrada
