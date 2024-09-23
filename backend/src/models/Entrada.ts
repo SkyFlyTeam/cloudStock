@@ -3,8 +3,6 @@ import { Usuario } from './Usuario';
 import { Lote } from './Lote';
 import { LoteEntrada } from './Lote_Entrada';
 
-
-
 @Table({
   tableName: 'Entrada',
   timestamps: false,
@@ -37,7 +35,7 @@ export class Entrada extends Model<Entrada> {
   perfil_id!: number;
 
   @BelongsTo(() => Usuario)
-  usuarios!: Usuario[]
+  usuario!: Usuario; // Singular, pois é uma relação de um para muitos
 
   @BelongsToMany(() => Lote, () => LoteEntrada)
   lotes!: Lote[];

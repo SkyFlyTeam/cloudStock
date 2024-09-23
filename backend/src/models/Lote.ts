@@ -1,5 +1,6 @@
-import { Table, Column, Model, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, BelongsToMany } from 'sequelize-typescript';
 import { LoteEntrada } from './Lote_Entrada';
+import { Entrada } from './Entrada';
 
 @Table({
     tableName: 'lote',
@@ -37,4 +38,8 @@ export class Lote extends Model {
         type: DataType.INTEGER,
     })
     localArmzLocAirId!: number;
+
+    // Associação com Entrada através de LoteEntrada
+    @BelongsToMany(() => Entrada, () => LoteEntrada)
+    entradas!: Entrada[];
 }
