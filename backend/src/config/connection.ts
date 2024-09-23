@@ -9,7 +9,7 @@ const sequelize = new Sequelize({
   password: '', // mudar senha
   host: '', // colocar domínio
   dialect: 'mysql',
-  models: [Produto, Usuario],  // Adiciona os modelos aqui
+  models: [Produto, Usuario, Cargo],  // Adiciona os modelos aqui
 });
 
 export default sequelize;
