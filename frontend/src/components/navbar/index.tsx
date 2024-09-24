@@ -21,7 +21,7 @@ const Navbar: React.FC = () => {
             <div className="itens_menu">
               <div className="menu-item active">
                   <BsBoxSeamFill />
-                  <div className="navbartext"><span>Produtos</span></div>
+                  <div className="navbartext" style={{color: 'white'}}><span>Produtos</span></div>
               </div>
               <div className="menu-item">
                   <IoMdPricetags />
@@ -35,10 +35,11 @@ const Navbar: React.FC = () => {
                   <FaWarehouse />
                   <div className="navbartext"><span>Locais Armazenamento</span></div>
               </div>
-            </div>
-            <div className="menu-item">
-                <FaSquareArrowUpRight />
-                <div className="navbartext"><span>Saída</span></div>
+            
+              <div className="menu-item">
+                  <FaSquareArrowUpRight />
+                  <div className="navbartext"><span>Saída</span></div>
+              </div>
             </div>
           </div>
     
