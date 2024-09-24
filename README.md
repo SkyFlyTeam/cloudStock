@@ -28,17 +28,17 @@ US | Task | Estimativa | Status
 |------|--------|------|-----|
 | 1 | Criação do modelo lógico do banco de dados | 4 | Feito ✔ |
 | 1 | Elaboração da identidade visual | 2 | Feito ✔ |
-| 1 | Estruturação da classe "produto" | 2 | Em andamento ✘ |
+| 1 | Estruturação da classe "produto" | 2 | Feito ✔ |
 | 1 | Elaboração do protóripo wireframe | 6 | Em andamento ✘ |
 | 1 | Estruturação das páginas bases em REACT | 12 | Em andamento ✘ |
-| 1 | Criação do servidor de banco de dados (mysql) | 3 | A ser feito ✘ |
+| 1 | Criação do servidor de banco de dados (mysql) | 3 | Feito ✔ |
 | 1 | Criação dos formulários de cadastro | 4 | A ser feito ✘ |
 | 1 | Integração do backend com o frontend | 2 | A ser feito ✘ |
 | 1 | Criação das rotas | 4 | A ser feito ✘ |
-| 1 | Estudo do ORM | 12 | Em andamento ✘ |
-| 2 | Estruturação da classe "setor" | 2 | Em andamento ✘ |
-| 2 | Estruturação da classe "local_armazenamento" | 2 | Em andamento ✘ |
-| 2 | Estruturação da classe "fornecedor" | 2 | Em andamento ✘ |
+| 1 | Estudo do ORM | 12 | Feito ✔ |
+| 2 | Estruturação da classe "setor" | 2 | Feito ✔ |
+| 2 | Estruturação da classe "local_armazenamento" | 2 | Feito ✔ |
+| 2 | Estruturação da classe "fornecedor" | 2 | Feito ✔ |
 
 <br> 
 
