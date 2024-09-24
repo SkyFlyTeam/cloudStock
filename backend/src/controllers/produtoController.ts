@@ -4,7 +4,7 @@ export const controllerProducts = {
   // POST /produto
   save: async (req, res) => {
     try {
-      let { Prod_nome, Prod_preco, Prod_descricao , Prod_custo, Prod_peso, Prod_altura, Prod_largura, Prod_comprimento, Prod_marca, Prod_modelo, Prod_validade, Prod_status, Categoria_id, UnidadeMedida_id} = req.body;
+      let { Prod_nome, Prod_preco, Prod_descricao , Prod_custo, Prod_peso, Prod_altura, Prod_largura, Prod_comprimento, Prod_marca, Prod_modelo, Prod_validade, Categoria_id, UnidadeMedida_id} = req.body;
 
       let Prod_imagem = req.file ? req.file.buffer : null;
 
@@ -27,7 +27,7 @@ export const controllerProducts = {
         Prod_marca, 
         Prod_modelo, 
         Prod_validade, 
-        Prod_status, 
+        Prod_status: true, 
         Categoria_id, 
         UnidadeMedida_id
       })
