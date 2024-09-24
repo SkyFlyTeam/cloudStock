@@ -4,7 +4,11 @@ import { ApiException } from "../config/apiException"
 export interface Produto {
   Prod_cod: string
   Prod_nome: string
+  Prod_descricao: string
   Prod_preco: number
+  Prod_custo: number
+  Prod_largura: number
+  UnidadeMedida_id: number
 }
 
 const getAllProdutos = async (): Promise<Produto[] | ApiException> => {

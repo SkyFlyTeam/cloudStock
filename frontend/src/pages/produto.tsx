@@ -6,7 +6,11 @@ import { Produto } from "../services/produtoServices";
 type state = {
   // prod_cod: string
   prod_nome: string
+  prod_descricao: string
   prod_preco: number
+  prod_custo: number
+  prod_largura: number
+  unidadeMedida_id: number
   prod_img: File | null
   produtos: Produto[]
 }
@@ -17,7 +21,11 @@ class Produtos extends Component<any, state> {
     this.state = {
       // prod_cod: '',
       prod_nome: '',
+      prod_descricao: '',
       prod_preco: 0,
+      prod_custo: 0,
+      prod_largura: 0,
+      unidadeMedida_id: 1,
       prod_img: null,
       produtos: []
     }
@@ -39,13 +47,17 @@ class Produtos extends Component<any, state> {
     
     const formData = new FormData();
     // const { prod_cod, prod_nome, prod_preco, prod_img } = this.state;
-      const { prod_nome, prod_preco, prod_img } = this.state;
+      const { prod_nome, prod_descricao, prod_preco, prod_img, prod_custo, prod_largura, unidadeMedida_id } = this.state;
 
   
     // Adicione os dados do produto
     // formData.append('Prod_cod', prod_cod);
     formData.append('Prod_nome', prod_nome);
+    formData.append('Prod_descricao', prod_descricao);
     formData.append('Prod_preco', prod_preco.toString());
+    formData.append('Prod_custo', prod_custo.toString());
+    formData.append('Prod_largura', prod_largura.toString());
+    formData.append('UnidadeMedida_id', unidadeMedida_id.toString());
     
     // Adicione o arquivo de imagem, se houver
     if (prod_img) {
@@ -62,7 +74,11 @@ class Produtos extends Component<any, state> {
           produtos: [...prevState.produtos, response],
           // prod_cod: '',
           prod_nome: '',
+          prod_descricao: '',
           prod_preco: 0,
+          prod_custo: 0,
+          prod_largura: 0,
+          unidadeMedida_id: 1,
           prod_img: null,
         }));
       }
@@ -79,8 +95,24 @@ class Produtos extends Component<any, state> {
     this.setState({ prod_nome: evento.target.value })
   }
 
+  obterDescricao = (evento: any) => {
+    this.setState({ prod_descricao: evento.target.value })
+  }
+
   obterPreco = (evento: any) => {
     this.setState({ prod_preco: parseFloat(evento.target.value) });
+  }
+
+  obterCusto = (evento: any) => {
+    this.setState({ prod_custo: parseFloat(evento.target.value) });
+  }
+
+  obterLargura = (evento: any) => {
+    this.setState({ prod_largura: parseFloat(evento.target.value) });
+  }
+
+  obterUnidade = (evento: any) => {
+    this.setState({ unidadeMedida_id: parseInt(evento.target.value) });
   }
 
   receberArquivo = (evento: any) => {
@@ -106,8 +138,24 @@ class Produtos extends Component<any, state> {
               <label htmlFor="last_name">Nome</label>
             </div>
             <div className="input-field col s6">
+              <input value={this.state.prod_descricao} onChange={this.obterDescricao} id="last_name" type="text" className="validate" />
+              <label htmlFor="last_name">Descrição</label>
+            </div>
+            <div className="input-field col s6">
               <input value={this.state.prod_preco} onChange={this.obterPreco} id="last_name" type="number" className="validate" />
               <label htmlFor="last_name">Preço</label>
+            </div>
+            <div className="input-field col s6">
+              <input value={this.state.prod_custo} onChange={this.obterCusto} id="last_name" type="number" className="validate" />
+              <label htmlFor="last_name">Custo</label>
+            </div>
+            <div className="input-field col s6">
+              <input value={this.state.prod_largura} onChange={this.obterLargura} id="last_name" type="number" className="validate" />
+              <label htmlFor="last_name">Largura</label>
+            </div>
+            <div className="input-field col s6">
+              <input value={this.state.unidadeMedida_id} onChange={this.obterUnidade} id="last_name" type="text" className="validate" />
+              <label htmlFor="last_name">Unidade de Medida</label>
             </div>
             <div className="btn light-blue darken-4">
                 <span>Arquivo</span>
