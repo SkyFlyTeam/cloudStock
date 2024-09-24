@@ -2,25 +2,24 @@ import { Lote } from '../models/Lote';
 import { Produto } from '../models/Produto';  // Assuming Produto model exists
 import { Local_Armazenamento } from '../models/Local_Armazenamento'; // Assuming LocalArmazenamento model exists
 
-const controllerLote = {
+export const controllerLote = {
     // POST /lote
     save: async (req, res) => {
         try {
-            const { loteId, loteValidade, loteQuantidade, loteCod, ProdutoProdCod, localArmzLocAirId } = req.body;
+            const { Lote_validade, Lote_quantidade, Lote_cod, Prod_cod, LocAr_id } = req.body;
             
             // Check for required fields
-            if (!loteId || !loteValidade || !loteQuantidade || !loteCod || !ProdutoProdCod || !localArmzLocAirId) {
-                return res.status(400).json({ error: "All fields are required: loteId, loteValidade, loteQuantidade, loteCod, ProdutoProdCod, localArmzLocAirId" });
+            if (!Lote_validade || !Lote_quantidade || !Lote_cod || !Prod_cod || !LocAr_id) {
+                return res.status(400).json({ error: "All fields are required: Lote_id, Lote_validade, Lote_quantidade, Lote_cod, Prod_cod, LocAr_id" });
             }
             
             // Create the Lote
             const lote = await Lote.create({
-                loteId,
-                loteValidade,
-                loteQuantidade,
-                loteCod,
-                ProdutoProdCod,
-                localArmzLocAirId
+                Lote_validade,
+                Lote_quantidade,
+                Lote_cod,
+                Prod_cod,
+                LocAr_id
             });
             
             return res.status(201).json(lote);
@@ -45,5 +44,3 @@ const controllerLote = {
         }
     }
 }
-
-module.exports = controllerLote;

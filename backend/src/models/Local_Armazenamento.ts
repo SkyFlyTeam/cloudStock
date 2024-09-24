@@ -25,7 +25,7 @@ export class Local_Armazenamento extends Model {
 	@ForeignKey(() => Setor)
 	@Column({
 		type: DataType.INTEGER,
-		allowNull: true
+		allowNull: false
 	})
 	Setor_id!: number;
 

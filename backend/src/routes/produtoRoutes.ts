@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import multer from 'multer';
-const produtoController = require('../controllers/produtoController')
+import {controllerProducts} from '../controllers/produtoController'
 
 const router = Router();
 
@@ -9,12 +9,12 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 // Rota para criar uma nova entrada
-router.post('/', upload.single('Prod_imagem'), produtoController.save)
+router.post('/', upload.single('Prod_imagem'), controllerProducts.save)
 
 // Rota para obter todas as entradas
-router.get('/', produtoController.show)
+router.get('/', controllerProducts.show)
 
 // Rota para exibir a imagem de cada produto
-router.get('/DownloadImage/:id', produtoController.showImage)
+router.get('/DownloadImage/:id', controllerProducts.showImage)
 
 export default router

@@ -1,10 +1,10 @@
 import { Produto } from '../models/Produto';
 
-const controllerProducts = {
+export const controllerProducts = {
   // POST /produto
   save: async (req, res) => {
     try {
-      let { Prod_nome, Prod_preco } = req.body;
+      let { Prod_nome, Prod_preco, Prod_descricao , Prod_custo, Prod_peso, Prod_altura, Prod_largura, Prod_comprimento, Prod_marca, Prod_modelo, Prod_validade, Prod_status, Categoria_id, UnidadeMedida_id} = req.body;
 
       let Prod_imagem = req.file ? req.file.buffer : null;
 
@@ -15,12 +15,21 @@ const controllerProducts = {
       Prod_preco = parseFloat(Prod_preco)
 
       const product = await Produto.create({
-        Prod_cod: 1,
         Prod_nome,
+        Prod_descricao,
         Prod_preco,
-        Prod_imagem
-      }, {
-        fields: ['Prod_nome', 'Prod_preco', 'Prod_imagem']
+        Prod_custo,
+        Prod_imagem,
+        Prod_peso,
+        Prod_altura, 
+        Prod_largura,
+        Prod_comprimento, 
+        Prod_marca, 
+        Prod_modelo, 
+        Prod_validade, 
+        Prod_status, 
+        Categoria_id, 
+        UnidadeMedida_id
       })
       return res.status(201).json(product)
     } catch (error) {
@@ -31,9 +40,7 @@ const controllerProducts = {
   // GET /produto
   show: async (req, res) => {
     try {
-      const products = await Produto.findAll({
-        attributes: ['Prod_cod', 'Prod_nome', 'Prod_preco']
-      })
+      const products = await Produto.findAll()
 
       return res.status(200).json(products);
     } catch (error) {
@@ -55,5 +62,3 @@ const controllerProducts = {
     }
   }
 }
-
-module.exports = controllerProducts

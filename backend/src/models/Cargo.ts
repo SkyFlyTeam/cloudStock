@@ -19,7 +19,7 @@ export class Cargo extends Model {
         type: DataType.STRING(100),
         allowNull: false
     })
-    Usuario_email!: string;
+    Cargo_acesso!: string;
 
     @HasMany(() => Usuario)
     Usuarios!: Usuario[];

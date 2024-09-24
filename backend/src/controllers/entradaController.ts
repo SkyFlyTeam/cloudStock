@@ -5,12 +5,12 @@ import { Usuario } from '../models/Usuario'; // Importando o modelo Usuario
 import { Lote_Entrada } from '../models/Lote_Entrada'; // Importando a tabela de junção
 
 export const controllerEntrada = {
-    // POST /entrada
+    // POST /entrada - Criar uma nova entrada
     save: async (req: Request, res: Response) => {
         try {
             const { Ent_valortot, Ent_dataCriacao, Usuario_id, lotes } = req.body;
 
-            // Verifica se o usuário de usuário existe
+            // Verifica se o usuário existe
             const usuario = await Usuario.findByPk(Usuario_id);
             if (!usuario) {
                 return res.status(404).json({ error: 'Usuário não encontrado' });
@@ -48,27 +48,59 @@ export const controllerEntrada = {
         }
     },
 
-    // GET /entrada
+    // POST /entrada_lote - Associar lote a uma entrada existente
+    addLoteToEntrada: async (req: Request, res: Response) => {
+        try {
+            const { Lote_id, Ent_id, Ent_quantidade, Ent_valor } = req.body;
+
+            // Verifica se a entrada já existe
+            const entrada = await Entrada.findByPk(Ent_id);
+            if (!entrada) {
+                return res.status(404).json({ error: 'Entrada não encontrada' });
+            }
+
+            // Verifica se o lote já existe
+            const lote = await Lote.findByPk(Lote_id);
+            if (!lote) {
+                return res.status(404).json({ error: 'Lote não encontrado' });
+            }
+
+            // Cria a relação na tabela Lote_Entrada
+            const loteEntrada = await Lote_Entrada.create({
+                Lote_id: Lote_id,
+                Ent_id: Ent_id,
+                Ent_quantidade: Ent_quantidade || lote.Lote_quantidade, // Se não for especificada, usar a quantidade do lote
+                Ent_valor: Ent_valor || 0 // Define valor padrão se não especificado
+            });
+
+            res.status(201).json({ message: 'Lote associado à entrada com sucesso', loteEntrada });
+        } catch (error) {
+            console.error('Erro ao associar lote à entrada:', error);
+            res.status(500).json({ error: 'Erro ao associar lote à entrada' });
+        }
+    },
+
+    // GET /entrada - Mostrar todas as entradas
     show: async (req: Request, res: Response) => {
-      try {
-          // Recupera todas as entradas, incluindo as associações com Lotes e a tabela de junção LoteEntrada
-          const entradas = await Entrada.findAll({
-            include: [{
-                model: Lote,
-                through: {}  
-            }],
-        });
-  
-          // Se não houver entradas, retorna uma resposta apropriada
-          if (!entradas || entradas.length === 0) {
-              return res.status(404).json({ message: 'Nenhuma entrada encontrada' });
-          }
-  
-          // Retorna as entradas encontradas
-          res.status(200).json(entradas);
-      } catch (error) {
-          console.error('Erro ao recuperar as entradas:', error);
-          res.status(500).json({ error: 'Erro ao recuperar as entradas' });
-      }
-  }
-}
+        try {
+            // Recupera todas as entradas, incluindo as associações com Lotes e a tabela de junção LoteEntrada
+            const entradas = await Entrada.findAll({
+                include: [{
+                    model: Lote,
+                    through: {}  
+                }],
+            });
+
+            // Se não houver entradas, retorna uma resposta apropriada
+            if (!entradas || entradas.length === 0) {
+                return res.status(404).json({ message: 'Nenhuma entrada encontrada' });
+            }
+
+            // Retorna as entradas encontradas
+            res.status(200).json(entradas);
+        } catch (error) {
+            console.error('Erro ao recuperar as entradas:', error);
+            res.status(500).json({ error: 'Erro ao recuperar as entradas' });
+        }
+    }
+};
