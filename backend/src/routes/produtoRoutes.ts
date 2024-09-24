@@ -9,7 +9,7 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 // Rota para criar uma nova entrada
-router.post('/', upload.single('prod_imagem'), produtoController.save)
+router.post('/', upload.single('Prod_imagem'), produtoController.save)
 
 // Rota para obter todas as entradas
 router.get('/', produtoController.show)

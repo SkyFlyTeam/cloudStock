@@ -6,9 +6,9 @@ import saidaRoutes from './saidaRoutes'
 
 const router = Router();
 
-router.use('/entrada', entradaRoutes)
+// router.use('/entrada', entradaRoutes)
 router.use('/produto', produtoRoutes)
-router.use('/lote', loteRoutes)
-router.use('/saida', saidaRoutes)
+// router.use('/lote', loteRoutes)
+// router.use('/saida', saidaRoutes)
 
 export default router;

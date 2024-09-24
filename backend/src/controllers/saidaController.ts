@@ -2,16 +2,16 @@ import { Request, Response } from 'express';
 import { Saida } from '../models/Saida';
 import { Usuario } from '../models/Usuario';
 import { Lote } from '../models/Lote';
-import { LoteSaida } from '../models/Lote_Saida';
+import { Lote_Saida } from '../models/Lote_Saida';
 
 export const saidaController = {
     // POST criar uma saida
     save: async (req: Request, res: Response) => {
         try {
-          const { saida_valorTot, saida_dataCriacao, perfil_id, lote_ids, lote_quantidades, lote_valores } = req.body;
+          const { saida_valorTot, saida_dataCriacao, Usuario_id, lote_ids, lote_quantidades, lote_valores } = req.body;
       
-          // Verificar se o perfil_id é válido
-          const usuario = await Usuario.findByPk(perfil_id);
+          // Verificar se o usuário_id é válido
+          const usuario = await Usuario.findByPk(Usuario_id);
           if (!usuario) {
             return res.status(404).json({ message: 'Usuário não encontrado' });
           }
@@ -20,7 +20,7 @@ export const saidaController = {
           const novaSaida = await Saida.create({
             saida_valorTot,
             saida_dataCriacao,
-            perfil_id
+            Usuario_id
           });
       
           // Verificar se os lotes e suas respectivas quantidades e valores foram fornecidos
@@ -29,7 +29,7 @@ export const saidaController = {
               const lote = await Lote.findByPk(lote_ids[i]);
               if (lote) {
                 // Criar as entradas na tabela Lote_Saida
-                await LoteSaida.create({
+                await Lote_Saida.create({
                   Lote_id: lote_ids[i],
                   Saida_id: novaSaida.Saida_id,
                   Saida_quantidade: lote_quantidades[i],

@@ -1,6 +1,6 @@
 import { Lote } from '../models/Lote';
 import { Produto } from '../models/Produto';  // Assuming Produto model exists
-import { LocalArmazenamento } from '../models/LocalArmazenamento'; // Assuming LocalArmazenamento model exists
+import { Local_Armazenamento } from '../models/Local_Armazenamento'; // Assuming LocalArmazenamento model exists
 
 const controllerLote = {
     // POST /lote
@@ -35,7 +35,7 @@ const controllerLote = {
         try {
             // Fetch all Lotes with related Produto and LocalArmazenamento
             const lote = await Lote.findAll({
-                include: [Produto, LocalArmazenamento],
+                include: [Produto, Local_Armazenamento],
             });
 
             return res.status(200).json(lote);

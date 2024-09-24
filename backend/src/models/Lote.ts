@@ -1,45 +1,65 @@
-import { Table, Column, Model, DataType, BelongsToMany } from 'sequelize-typescript';
-import { LoteEntrada } from './Lote_Entrada';
+import { Table, Column, Model, DataType, BelongsToMany, ForeignKey, BelongsTo } from 'sequelize-typescript';
+import { Lote_Entrada } from './Lote_Entrada';
 import { Entrada } from './Entrada';
+import { DateOnlyDataType } from 'sequelize';
+import { Produto } from './Produto';
+import { Local_Armazenamento } from './Local_Armazenamento';
+import { Saida } from './Saida';
+import { Lote_Saida } from './Lote_Saida';
 
 @Table({
-    tableName: 'lote',
-    timestamps: false,
+    tableName: 'Lote',
+    timestamps: false
 })
+
 export class Lote extends Model {
-    @Column({
-        type: DataType.INTEGER,
-        autoIncrement: true, // Enable auto-increment
-        primaryKey: true,    // Set as primary key
-    })
-    loteId!: number;
-
-    @Column({
-        type: DataType.DATE,
-    })
-    loteValidade!: Date;
 
     @Column({
         type: DataType.INTEGER,
+        autoIncrement: true, 
+        primaryKey: true
     })
-    loteQuantidade!: number;
+    Lote_id!: number;
+
+    @Column({
+        type: DataType.DATEONLY,
+    })
+    Lote_validade!: DateOnlyDataType;
+
+    @Column({
+        type: DataType.INTEGER,
+    })
+    Lote_quantidade!: number;
 
     @Column({
         type: DataType.STRING(30),
     })
-    loteCod!: string;
+    Lote_cod!: string;
 
+    @ForeignKey(() => Produto)
     @Column({
         type: DataType.INTEGER,
     })
-    ProdutoProdCod!: number;
+    Prod_cod!: number;
 
+    @ForeignKey(() => Local_Armazenamento)
     @Column({
         type: DataType.INTEGER,
     })
-    localArmzLocAirId!: number;
+    LocAr_id!: number;
+
+
+    //Cardinalidades
+    @BelongsTo(() => Produto)
+    Produtos!: Produto[]
+
+    @BelongsTo(() => Local_Armazenamento)
+    Locais_Armazenamento!: Local_Armazenamento[]
 
     // Associação com Entrada através de LoteEntrada
-    @BelongsToMany(() => Entrada, () => LoteEntrada)
-    entradas!: Entrada[];
+    @BelongsToMany(() => Entrada, () => Lote_Entrada)
+    Entradas!: Entrada[];
+
+    @BelongsToMany(() => Saida, () => Lote_Saida)
+    Saidas!: Saida[];
 }

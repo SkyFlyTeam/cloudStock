@@ -1,43 +1,59 @@
-import { Table, Column, Model, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, ForeignKey, BelongsTo, HasMany } from 'sequelize-typescript';
 import { Cargo } from './Cargo';
+import { Entrada } from './Entrada';
+import { Saida } from './Saida';
 
 @Table({
     tableName: 'Usuario',
-    timestamps: true,
+    timestamps: false
 })
+
 export class Usuario extends Model {
+    
     @Column({
         type: DataType.INTEGER,
         primaryKey: true,
-        autoIncrement: true,
+        autoIncrement: true
     })
-    perfil_id!: number;
-
-    @Column({
-        type: DataType.STRING(100),
-        allowNull: false,
-    })
-    perfil_email!: string;
+    Usuario_id!: number;
 
     @Column({
         type: DataType.STRING(30),
-        allowNull: false,
+        allowNull: false
     })
-    perfil_senha!: string;
+    Usuario_email!: string;
+
+    @Column({
+        type: DataType.STRING(30),
+        allowNull: false
+    })
+    Usuario_senha!: string;
+
+    @Column({
+        type: DataType.BOOLEAN,
+        allowNull: false
+    })
+    Usuario_status!: boolean;
 
     @Column({
         type: DataType.DATE,
-        allowNull: true,
+        allowNull: false
     })
-    perfil_CriacaoData!: Date;
+    Usuario_dataCriacao!: Date;
 
     @ForeignKey(() => Cargo)
     @Column({
         type: DataType.INTEGER,
-        allowNull: false,
+        allowNull: false
     })
-    cargo_id!: number;
+    Cargo_id!: number;
 
     @BelongsTo(() => Cargo)
-    cargo!: Cargo;
+    Cargo!: Cargo;
+
+    @HasMany (() => Entrada)
+    Entradas!: Entrada[]
+
+    @HasMany(() => Saida)
+    Saidas!: Saida[]
 }

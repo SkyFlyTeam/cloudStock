@@ -4,21 +4,23 @@ const controllerProducts = {
   // POST /produto
   save: async (req, res) => {
     try {
-      let { prod_cod, prod_nome, prod_preco } = req.body;
+      let { Prod_nome, Prod_preco } = req.body;
 
-      let prod_imagem = req.file ? req.file.buffer : null;
+      let Prod_imagem = req.file ? req.file.buffer : null;
 
-      if (!prod_cod || !prod_nome || !prod_preco) {
-        return res.status(400).json({ error: "Missing required fields: id, name, price" });
+      if (!Prod_nome || !Prod_preco) {
+        return res.status(400).json({ error: "Campos faltando: Nome, preço" });
       }
 
-      prod_preco = parseFloat(prod_preco)
+      Prod_preco = parseFloat(Prod_preco)
 
       const product = await Produto.create({
-        prod_cod,
-        prod_nome,
-        prod_preco,
-        prod_imagem
+        Prod_cod: 1,
+        Prod_nome,
+        Prod_preco,
+        Prod_imagem
+      }, {
+        fields: ['Prod_nome', 'Prod_preco', 'Prod_imagem']
       })
       return res.status(201).json(product)
     } catch (error) {
@@ -30,7 +32,7 @@ const controllerProducts = {
   show: async (req, res) => {
     try {
       const products = await Produto.findAll({
-        attributes: ['prod_cod', 'prod_nome', 'prod_preco']
+        attributes: ['Prod_cod', 'Prod_nome', 'Prod_preco']
       })
 
       return res.status(200).json(products);
@@ -42,11 +44,11 @@ const controllerProducts = {
   // GET /produto/DowloadImage/:id
   showImage: async (req, res) => {
     try {
-      const prod_cod = req.params.id; 
-      const produto =  await Produto.findByPk(prod_cod);
+      const Prod_cod = req.params.id; 
+      const produto =  await Produto.findByPk(Prod_cod);
 
       res.set('Content-Type', 'image/jpg'); 
-      res.send(produto.prod_imagem);
+      res.send(produto.Prod_imagem);
     } catch (error) {
       console.error('Error fetching products with suppliers:', error)
       return res.status(500).json({ error: 'Internal server error' })

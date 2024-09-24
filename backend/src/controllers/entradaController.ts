@@ -2,16 +2,16 @@ import express, { Request, Response } from 'express';
 import { Entrada } from '../models/Entrada'; // Importando o modelo Entrada
 import { Lote } from '../models/Lote'; // Importando o modelo Lote
 import { Usuario } from '../models/Usuario'; // Importando o modelo Usuario
-import { LoteEntrada } from '../models/Lote_Entrada'; // Importando a tabela de junção
+import { Lote_Entrada } from '../models/Lote_Entrada'; // Importando a tabela de junção
 
 export const controllerEntrada = {
     // POST /entrada
     save: async (req: Request, res: Response) => {
         try {
-            const { Ent_valortot, Ent_dataCriacao, perfil_id, lotes } = req.body;
+            const { Ent_valortot, Ent_dataCriacao, Usuario_id, lotes } = req.body;
 
-            // Verifica se o perfil de usuário existe
-            const usuario = await Usuario.findByPk(perfil_id);
+            // Verifica se o usuário de usuário existe
+            const usuario = await Usuario.findByPk(Usuario_id);
             if (!usuario) {
                 return res.status(404).json({ error: 'Usuário não encontrado' });
             }
@@ -20,7 +20,7 @@ export const controllerEntrada = {
             const novaEntrada = await Entrada.create({
                 Ent_valortot,
                 Ent_dataCriacao,
-                perfil_id,
+                Usuario_id,
             });
 
             // Verifica se os lotes existem e associa à nova entrada
@@ -32,10 +32,10 @@ export const controllerEntrada = {
                     }
 
                     // Cria a relação na tabela Lote_Entrada
-                    await LoteEntrada.create({
+                    await Lote_Entrada.create({
                         Lote_id: loteId,
                         Ent_id: novaEntrada.Ent_id,
-                        Ent_quantidade: Ent_quantidade || lote.loteQuantidade, // Se não especificado, usar a quantidade do lote
+                        Ent_quantidade: Ent_quantidade || lote.Lote_quantidade, // Se não especificado, usar a quantidade do lote
                         Ent_valor: Ent_valor
                     });
                 }

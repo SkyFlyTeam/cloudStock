@@ -4,7 +4,7 @@ import { ApiException } from "../config/apiException";
 import { Produto } from "../services/produtoServices";
 
 type state = {
-  prod_cod: string
+  // prod_cod: string
   prod_nome: string
   prod_preco: number
   prod_img: File | null
@@ -15,7 +15,7 @@ class Produtos extends Component<any, state> {
   constructor(props: any) {
     super(props)
     this.state = {
-      prod_cod: '',
+      // prod_cod: '',
       prod_nome: '',
       prod_preco: 0,
       prod_img: null,
@@ -38,16 +38,18 @@ class Produtos extends Component<any, state> {
     evento.preventDefault();
     
     const formData = new FormData();
-    const { prod_cod, prod_nome, prod_preco, prod_img } = this.state;
+    // const { prod_cod, prod_nome, prod_preco, prod_img } = this.state;
+      const { prod_nome, prod_preco, prod_img } = this.state;
+
   
     // Adicione os dados do produto
-    formData.append('prod_cod', prod_cod);
-    formData.append('prod_nome', prod_nome);
-    formData.append('prod_preco', prod_preco.toString());
+    // formData.append('Prod_cod', prod_cod);
+    formData.append('Prod_nome', prod_nome);
+    formData.append('Prod_preco', prod_preco.toString());
     
     // Adicione o arquivo de imagem, se houver
     if (prod_img) {
-      formData.append('prod_imagem', prod_img);
+      formData.append('Prod_imagem', prod_img);
     }
   
     try {
@@ -58,7 +60,7 @@ class Produtos extends Component<any, state> {
         console.log("Produto criado com sucesso:", response);
         this.setState((prevState) => ({
           produtos: [...prevState.produtos, response],
-          prod_cod: '',
+          // prod_cod: '',
           prod_nome: '',
           prod_preco: 0,
           prod_img: null,
@@ -69,9 +71,9 @@ class Produtos extends Component<any, state> {
     }
   }
 
-  obterCodigo = (evento: any) => {
-    this.setState({ prod_cod: evento.target.value })
-  }
+  // obterCodigo = (evento: any) => {
+  //   this.setState({ prod_cod: evento.target.value })
+  // }
 
   obterNome = (evento: any) => {
     this.setState({ prod_nome: evento.target.value })
@@ -91,24 +93,20 @@ class Produtos extends Component<any, state> {
       <div className="row">
         <ul>
           {this.state.produtos.map(produto => (
-            <div key={produto.prod_cod}>
-              <img src={`http://localhost:5000/produto/DownloadImage/${produto.prod_cod}`} width={100}></img>
-              <li >{produto.prod_nome} - {produto.prod_preco}</li>
+            <div key={produto.Prod_cod}>
+              <img src={`http://localhost:5000/produto/DownloadImage/${produto.Prod_cod}`} width={100}></img>
+              <li >{produto.Prod_nome} - {produto.Prod_preco}</li>
             </div>
           ))}
         </ul>
         <form className="col s12" encType="multipart/form-data" onSubmit={this.eventoFormulario}>
           <div className="row">
             <div className="input-field col s6">
-              <input value={this.state.prod_cod} onChange={this.obterCodigo} id="first_name" type="text" className="validate" />
-              <label htmlFor="first_name">Código</label>
-            </div>
-            <div className="input-field col s6">
               <input value={this.state.prod_nome} onChange={this.obterNome} id="last_name" type="text" className="validate" />
               <label htmlFor="last_name">Nome</label>
             </div>
             <div className="input-field col s6">
-              <input value={this.state.prod_preco} onChange={this.obterPreco} id="last_name" type="text" className="validate" />
+              <input value={this.state.prod_preco} onChange={this.obterPreco} id="last_name" type="number" className="validate" />
               <label htmlFor="last_name">Preço</label>
             </div>
             <div className="btn light-blue darken-4">
