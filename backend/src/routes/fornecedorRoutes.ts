@@ -10,4 +10,10 @@ routes.post('/fornecedor_produto', controllerFornecedor.addProdutoToFornecedor);
 
 routes.get('/', controllerFornecedor.show);  // Listar fornecedores
 
+routes.delete('/:id', controllerFornecedor.delete);  // deletar fornecedores
+
+routes.put('/:id', controllerFornecedor.update);  // update fornecedores
+
+routes.get('/:id', controllerFornecedor.showSpecific);
+
 export default routes;
