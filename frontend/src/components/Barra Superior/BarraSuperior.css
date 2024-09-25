@@ -1,0 +1,38 @@
+/* header */
+.BarraSuperior {
+    position: absolute;
+    width: calc(100% - 270px);
+    height: 60px;
+    left: 270px;
+    top: 0px;
+    background-color: rgb(255, 255, 255);
+    display: flex; /* Adicione isso */
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.tbcirclecaretleft {
+    margin-left: 2vh;
+    margin-right: 4vh;
+    font-size: 25px;
+    color: grey;
+    cursor: pointer;
+}
+
+.barrasuptext {
+    color: grey;
+}
+
+.itensright {
+    justify-content: flex-end;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 90%;
+  }
+
+.itensright i {
+    color: grey;
+    font-size: 20px;
+    cursor: pointer;
+}
