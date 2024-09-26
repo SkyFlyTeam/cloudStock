@@ -24,10 +24,10 @@ body {
 }
   
 .logoimg img {
-    margin-top: 20%;
     max-width: 100%; 
     height: auto;
     display: block;
+    margin: 25% 0 25% 0;
 }
 
 .logo {
@@ -104,9 +104,6 @@ body {
   margin-left: 5%;
 }
 
-.itens_menu {
-    margin-top: 40%;
-}
   
 .textlogo {
     margin-left: 5%;
