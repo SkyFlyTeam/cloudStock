@@ -1,0 +1,18 @@
+body {
+  width: 100%;
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: #ff0000;
+  overflow-y: auto;
+}

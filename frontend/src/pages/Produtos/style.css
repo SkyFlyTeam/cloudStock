@@ -1,0 +1,103 @@
+table{
+    font-family: "Montserrat", sans-serif;
+}
+
+tbody{
+    margin-top: 2rem;
+}
+
+tr.table-row{
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+tr.heading{
+    background-color: transparent;
+}
+
+th{
+    color: #ACACAC !important;
+    font-weight: 500 !important;
+    border: none !important;
+}
+
+tr.vazia { 
+    border: none; 
+    height: 1rem !important; 
+    background-color: transparent; 
+}
+
+td{
+    vertical-align: middle;
+}
+
+td img{
+    width: 5rem;
+    height: 5rem;
+    object-fit: contain;
+    border-radius: 50%;
+}
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 34px;
+    height: 20px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 20px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #00aaff;
+}
+
+input:checked + .slider:before {
+    transform: translateX(14px);
+}
+
+div.td-actions{
+    display: flex;
+    gap: 0.5rem;
+}
+
+.edit-icon,
+.delete-icon {
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.edit-icon {
+  color: #00aaff;
+}
+
+.delete-icon {
+  color: #f44336;
+}

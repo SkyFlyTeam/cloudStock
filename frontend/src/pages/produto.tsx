@@ -11,7 +11,7 @@ type state = {
   produtos: Produto[]
 }
 
-class Produtos extends Component<any, state> {
+class Products extends Component<any, state> {
   constructor(props: any) {
     super(props)
     this.state = {
@@ -128,4 +128,4 @@ class Produtos extends Component<any, state> {
   }
 }
 
-export default Produtos;
+export default Products;

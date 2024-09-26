@@ -20,6 +20,7 @@ const BarraSuperior: React.FC = () => {
       </div>
     );
 }
+
     
     
 

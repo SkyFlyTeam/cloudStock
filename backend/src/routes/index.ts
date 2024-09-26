@@ -5,8 +5,8 @@ import loteRoutes from './loteRoutes';
 
 const router = Router();
 
-router.use('/entrada', entradaRoutes)
+// router.use('/entrada', entradaRoutes)
 router.use('/produto', produtoRoutes)
-router.use('/lote', loteRoutes)
+// router.use('/lote', loteRoutes)
 
 export default router;

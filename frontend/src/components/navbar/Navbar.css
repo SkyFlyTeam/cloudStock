@@ -13,11 +13,12 @@ body {
 .sidebar {
     width: 270px;
     height: 100vh;
-    background-color: white;
+    background-color: green;
     border-right: 2px solid #e0e0e0;
     display: flex;
     flex-direction: column;
     align-items: center;
+    /*overflow-y: auto;*/
     padding: 20px;
     box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
 }
