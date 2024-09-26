@@ -6,13 +6,13 @@ import { Fornecedor_Produto } from '../models/Fornecedor_Produto';
 export const controllerFornecedor = {
   // POST /fornecedor - Criar um novo fornecedor
   save: async (req: Request, res: Response) => {
-    const { Forn_nome, Forn_razaosocial, Forn_cnpj, Forn_status, produtos } = req.body;
+    const { Forn_nome, Forn_razaoSocial, Forn_cnpj, Forn_status, produtos } = req.body;
 
     try {
       // 1. Criar o Fornecedor
       const fornecedor = await Fornecedor.create({
         Forn_nome,
-        Forn_razaosocial,
+        Forn_razaoSocial,
         Forn_cnpj,
         Forn_status
       });
@@ -97,7 +97,7 @@ export const controllerFornecedor = {
   },
 
   update: async (req: Request, res: Response) => {
-    const { Forn_nome, Forn_razaosocial, Forn_cnpj, Forn_status, produtos } = req.body;
+    const { Forn_nome, Forn_razaoSocial, Forn_cnpj, Forn_status } = req.body;
 
     const {id} = req.params
 
@@ -105,7 +105,7 @@ export const controllerFornecedor = {
       // 1. Update do Fornecedor
       const [update] = await Fornecedor.update({
         Forn_nome,
-        Forn_razaosocial,
+        Forn_razaoSocial,
         Forn_cnpj,
         Forn_status
       },

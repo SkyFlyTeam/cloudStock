@@ -14,6 +14,15 @@ router.post('/', upload.single('Prod_imagem'), controllerProducts.save)
 // Rota para obter todas as entradas
 router.get('/', controllerProducts.show)
 
+// Rota para obter produto específico
+router.get('/:id', controllerProducts.showSpecific)
+
+// Rota para atualizar produto
+router.put('/:id', controllerProducts.update)
+
+// Rota para mudar status do produto
+router.put('/status/:id', controllerProducts.changeStatus)
+
 // Rota para exibir a imagem de cada produto
 router.get('/DownloadImage/:id', controllerProducts.showImage)
 
