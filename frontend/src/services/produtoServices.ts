@@ -2,9 +2,13 @@ import { Api } from "../config/apiConfig"
 import { ApiException } from "../config/apiException"
 
 export interface Produto {
-  prod_cod: string
+  prod_cod: number
   prod_nome: string
-  prod_preco: number
+  prod_categoria: string,
+  prod_quantidade: number,
+  prod_validade: Date,
+  prod_preco: number,
+  prod_status: boolean
 }
 
 

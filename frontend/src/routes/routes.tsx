@@ -17,7 +17,7 @@ function MainRoutes(){
                 <BarraSuperior />
                 <div className="main-content">
                     <Routes>
-                        <Route path="/" element={<Produtos />} />
+                        <Route path="/" element={<Produtos />}/>
                         <Route path="/LocalArmazenamento" element={<LocalArmazenamento />} />
                         <Route path="/Setores" element={<Setores />} />
                         <Route path="/Fornecedores" element={<Fornecedores />} />

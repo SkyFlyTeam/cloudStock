@@ -6,14 +6,8 @@ tbody{
     margin-top: 2rem;
 }
 
-tr.table-row{
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-}
-
-tr.heading{
-    background-color: transparent;
+.table>:not(caption)>*>*{
+    background-color: transparent !important;
 }
 
 th{
@@ -28,6 +22,16 @@ tr.vazia {
     background-color: transparent; 
 }
 
+tr.table-row{
+    background-color: white;
+    border-radius: 8px !important;
+    box-shadow: 0 2px 5px rgba(63, 63, 63, 0.15);
+}
+
+
+tr td:first-child { border-bottom-left-radius: 10px; border-top-left-radius: 10px }
+tr td:last-child { border-bottom-right-radius: 10px; border-top-right-radius: 10px }
+
 td{
     vertical-align: middle;
 }
@@ -37,50 +41,6 @@ td img{
     height: 5rem;
     object-fit: contain;
     border-radius: 50%;
-}
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 34px;
-    height: 20px;
-}
-
-.switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition: 0.4s;
-    border-radius: 20px;
-}
-
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 14px;
-    width: 14px;
-    left: 3px;
-    bottom: 3px;
-    background-color: white;
-    transition: 0.4s;
-    border-radius: 50%;
-}
-
-input:checked + .slider {
-    background-color: #00aaff;
-}
-
-input:checked + .slider:before {
-    transform: translateX(14px);
 }
 
 div.td-actions{

@@ -7,11 +7,9 @@ import { FaRegUser } from "react-icons/fa6";
 const BarraSuperior: React.FC = () => {
     return (
       <div className="BarraSuperior">
-        <div className="tbcirclecaretleft">
+        <div className="itensleft">
           <i> <TbCircleCaretLeft /> </i>
-        </div>
-        <div className="barrasuptext">
-          Produtos
+          <span>Produtos</span>
         </div>
         <div className="itensright">
           <i> <FaRegBell /> </i>

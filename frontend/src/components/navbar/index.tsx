@@ -14,11 +14,10 @@ const Navbar: React.FC = () => {
           <div className="logo">
             <div className="textlogo"> <span>CLOUD STOCK</span> </div>
           </div>
-    
+  
+          <img src="https://i.ibb.co/LJFHWys/imagem-2024-09-17-201505544.png" alt=''></img>
+
           <div className="sidebar-menu">
-            <div className="logoimg">
-                <img src="https://i.ibb.co/LJFHWys/imagem-2024-09-17-201505544.png" alt=''></img>
-            </div>
             <div className="itens_menu">
               <Link to="/">
                 <div className="menu-item active">
@@ -50,7 +49,7 @@ const Navbar: React.FC = () => {
           </div>
     
           <div className="logout">
-            <div className="logouttext"> <span>Logout</span> </div>
+            <span>Logout</span> 
             <PiSignOutBold />
           </div>
         </div>
