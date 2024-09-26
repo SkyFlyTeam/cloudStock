@@ -1,45 +1,44 @@
 import { Table, Column, Model, DataType, ForeignKey, BelongsToMany, BelongsTo } from 'sequelize-typescript';
 import { Usuario } from './Usuario';
 import { Lote } from './Lote';
-import { LoteSaida } from './Lote_Saida'
-
-
-
+import { Lote_Saida } from './Lote_Saida'
 
 @Table({
   tableName: 'Saida',
-  timestamps: false,
+  timestamps: false
 })
-export class Saida extends Model<Saida> {
-  @Column({
-    type: DataType.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  })
-  Saida_id!: number;
 
-  @Column({
-    type: DataType.DECIMAL(8, 2),
-    allowNull: true,
-  })
-  saida_valorTot!: number;
+export class Saida extends Model{
+  
+	@Column({
+		type: DataType.INTEGER,
+		primaryKey: true,
+		autoIncrement: true
+	})
+	Saida_id!: number;
 
-  @Column({
-    type: DataType.DATE,
-    allowNull: true,
-  })
-  saida_dataCriacao!: Date;
+	@Column({
+		type: DataType.DECIMAL(8, 2),
+		allowNull: true
+	})
+	Saida_valorTot!: number;
 
-  @ForeignKey(() => Usuario)
-  @Column({
-    type: DataType.INTEGER,
-    allowNull: false,
-  })
-  perfil_id!: number;
+	@Column({
+		type: DataType.DATE,
+		allowNull: false
+	})
+	Saida_dataCriacao!: Date;
 
-  @BelongsTo(() => Usuario)
-  usuarios!: Usuario[];
+	@ForeignKey(() => Usuario)
+	@Column({
+		type: DataType.INTEGER,
+		allowNull: false
+	})
+	Usuario_id!: number;
 
-  @BelongsToMany(() => Lote, () => LoteSaida)
-  lotes!: Lote[]
+	@BelongsTo(() => Usuario)
+	Usuarios!: Usuario[];
+
+	@BelongsToMany(() => Lote, () => Lote_Saida)
+	Lotes!: Lote[]
 }

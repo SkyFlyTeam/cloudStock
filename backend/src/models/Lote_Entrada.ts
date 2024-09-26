@@ -6,30 +6,30 @@ import { Entrada } from './Entrada';
   tableName: 'Lote_Entrada',
   timestamps: false,
 })
-export class LoteEntrada extends Model<LoteEntrada> {
-  @ForeignKey(() => Lote)
-  @Column({
-    type: DataType.INTEGER,
-    primaryKey: true,
-  })
-  Lote_id!: number;
 
-  @ForeignKey(() => Entrada)
-  @Column({
-    type: DataType.INTEGER,
-    primaryKey: true,
-  })
-  Ent_id!: number;
+export class Lote_Entrada extends Model {
 
-  @Column({
-    type: DataType.INTEGER,
-    allowNull: false,
-  })
-  Ent_quantidade!: number;
+    @ForeignKey(() => Lote)
+    @Column({
+      type: DataType.INTEGER
+    })
+    Lote_id!: number;
 
-  @Column({
-    type: DataType.INTEGER,
-    allowNull: false,
-  })
-  Ent_valor!: number;
+    @ForeignKey(() => Entrada)
+    @Column({
+      type: DataType.INTEGER
+    })
+    Ent_id!: number;
+
+    @Column({
+      type: DataType.INTEGER,
+      allowNull: false,
+    })
+    Ent_quantidade!: number;
+
+    @Column({
+      type: DataType.DECIMAL(8, 2),
+      allowNull: false,
+    })
+    Ent_valor!: number;
 }

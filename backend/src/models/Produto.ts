@@ -1,116 +1,126 @@
-import { Table, Column, Model, DataType, ForeignKey, BelongsTo, PrimaryKey } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, ForeignKey, BelongsTo, PrimaryKey, BelongsToMany, HasMany, AutoIncrement } from 'sequelize-typescript';
+import { Fornecedor_Produto } from './Fornecedor_Produto';
+import { ManyToMany } from 'typeorm';
+import { Lote } from './Lote';
+import { Categoria } from './Categoria';
+import { Unidade_Medida } from './Unidade_Medida';
+import { Fornecedor } from './Fornecedor';
 
 @Table({
-  tableName: 'Produto',
-  timestamps: true,
+    tableName: 'Produto',
+    timestamps: false
 })
 
 export class Produto extends Model {
-    @PrimaryKey
+
     @Column({
         type: DataType.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
     })
-    prod_cod!: number;
+    Prod_cod!: number;
 
     @Column({
-        type: DataType.STRING(100),
-        allowNull: false,
+        type: DataType.STRING(50),
+        allowNull: false
     })
-    prod_nome!: string;
+    Prod_nome!: string;
 
     @Column({
-        type: DataType.STRING,
-        allowNull: true,
+       type: DataType.STRING,
+       allowNull: false
     })
-    prod_descricao?: string;
+    Prod_descricao?: string;
 
     @Column({
-        type: DataType.DECIMAL(8, 2),
-        allowNull: false,
+        type: DataType.DECIMAL(8,2),
+        allowNull: false
     })
-    prod_preco!: number;
+    Prod_preco!: number;
 
     @Column({
-        type: DataType.DECIMAL(8, 2),
-        allowNull: false,
+        type: DataType.DECIMAL(8,2),
+        allowNull: false
     })
-    prod_custo!: number;
+    Prod_custo!: number;
 
     @Column({
         type: DataType.BLOB('medium'),
-        allowNull: true,
+        allowNull: true
     })
-    prod_imagem?: Buffer;
+    Prod_imagem?: Buffer;
 
     @Column({
-        type: DataType.DECIMAL(8, 2),
-        allowNull: true,
+        type: DataType.DECIMAL(8,2),
+        allowNull: true
     })
-    prod_peso?: number;
+    Prod_peso?: number;
 
     @Column({
-        type: DataType.DECIMAL(8, 2),
-        allowNull: true,
+        type: DataType.DECIMAL(8,2),
+        allowNull: true
     })
-    prod_altura?: number;
+    Prod_altura?: number;
 
     @Column({
-        type: DataType.DECIMAL(8, 2),
-        allowNull: false,
+        type: DataType.DECIMAL(8,2),
+        allowNull: false
     })
-    prod_largura?: number;
+    Prod_largura?: number;
 
     @Column({
-        type: DataType.DECIMAL(8, 2),
-        allowNull: true,
+        type: DataType.DECIMAL(8,2),
+        allowNull: true
     })
-    prod_comprimento?: number;
-
-    @Column({
-        type: DataType.STRING(50),
-        allowNull: true,
-    })
-    prod_marca?: string;
+    Prod_comprimento?: number;
 
     @Column({
         type: DataType.STRING(50),
-        allowNull: true,
+        allowNull: true
     })
-    prod_modelo?: string;
-
-    @Column({
-        type: DataType.DECIMAL(8, 2),
-        allowNull: false,
-    })
-    prod_validade!: boolean;
+    Prod_marca?: string;
 
     @Column({
         type: DataType.STRING(50),
-        allowNull: false,
+        allowNull: true
     })
-    prod_status!: boolean;
+    Prod_modelo?: string;
 
-    /* Adicionar após as classes Categoria, Unidade de Medida e Fornecedor serem criadas */
-    // @ForeignKey(() => Categoria)
-    // @Column({
-    //   type: DataType.INTEGER,
-    //   allowNull: true,
-    // })
-    // categoriaId!: number
+    @Column({
+        type: DataType.DATE, 
+        allowNull: true, 
+      })
+      Prod_validade?: Date
 
-    // @BelongsTo(() => Categoria)  
-    // categoria!: Categoria;
+    @Column({
+        type: DataType.BOOLEAN,
+        allowNull: false
+    })
+    Prod_status!: boolean;
 
-    // @ForeignKey(() => UnidadeMedida)
-    // @Column({
-    //   type: DataType.INTEGER,
-    //   allowNull: false,
-    // })
-    // unidadeMedida_id!: number
-  
-    // @BelongsTo(() => UnidadeMedida)
-    // unidadeMedida!: UnidadeMedida
+    @ForeignKey(() => Categoria)
+    @Column({
+      type: DataType.INTEGER,
+      allowNull: true
+    })
+    Categoria_id!: number
 
-    // @BelongsTo(() => Fornecedor)
-    // fornecedor!: Fornecedor
+    @BelongsTo(() => Categoria)  
+    Categoria!: Categoria;
+
+    @ForeignKey(() => Unidade_Medida)
+    @Column({
+      type: DataType.INTEGER,
+      allowNull: false
+    })
+    UnidadeMedida_id!: number
+
+    @BelongsTo(() => Unidade_Medida)
+    Unidade_Medida!: Unidade_Medida
+
+    @BelongsToMany(() => Fornecedor, () => Fornecedor_Produto)
+    Fornecedores!: Fornecedor[];
+
+    @HasMany(() => Lote)
+    Lotes!: Lote[]
 }

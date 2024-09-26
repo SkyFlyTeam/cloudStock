@@ -2,35 +2,34 @@ import { Table, Column, Model, ForeignKey, DataType } from 'sequelize-typescript
 import { Lote } from './Lote';
 import { Saida } from './Saida'
 
-
 @Table({
   tableName: 'Lote_Saida',
-  timestamps: false,
+  timestamps: false
 })
-export class LoteSaida extends Model<LoteSaida> {
-  @ForeignKey(() => Lote)
-  @Column({
-    type: DataType.INTEGER,
-    primaryKey: true,
-  })
-  Lote_id!: number;
 
-  @ForeignKey(() => Saida)
-  @Column({
-    type: DataType.INTEGER,
-    primaryKey: true,
-  })
-  Saida_id!: number;
+export class Lote_Saida extends Model {
 
-  @Column({
-    type: DataType.INTEGER,
-    allowNull: false,
-  })
-  Saida_quantidade!: number;
+	@ForeignKey(() => Lote)
+	@Column({
+		type: DataType.INTEGER
+	})
+	Lote_id!: number;
 
-  @Column({
-    type: DataType.INTEGER,
-    allowNull: false,
-  })
-  Saida_valor!: number;
+	@ForeignKey(() => Saida)
+	@Column({
+		type: DataType.INTEGER
+	})
+	Saida_id!: number;
+
+	@Column({
+		type: DataType.INTEGER,
+		allowNull: false,
+	})
+	Saida_quantidade!: number;
+
+	@Column({
+		type: DataType.DECIMAL(8, 2),
+		allowNull: false,
+	})
+	Saida_valor!: number;
 }
