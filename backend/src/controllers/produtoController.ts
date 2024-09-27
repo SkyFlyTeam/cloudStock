@@ -5,7 +5,7 @@ export const controllerProducts = {
   // POST /produto - Criar um novo produto
   save: async (req, res) => {
     try {
-      let { Prod_nome, Prod_preco, Prod_descricao, Prod_custo, Prod_peso, Prod_altura, Prod_largura, Prod_comprimento, Prod_marca, Prod_modelo, Prod_validade, Categoria_id, UnidadeMedida_id } = req.body;
+      let { Prod_nome, Prod_preco, Prod_descricao, Prod_custo, Prod_peso, Prod_altura, Prod_largura, Prod_comprimento, Prod_marca, Prod_modelo, Prod_validade, Prod_quantidade, Categoria_id, UnidadeMedida_id } = req.body;
 
       let Prod_imagem = req.file ? req.file.buffer : null;
 
@@ -28,7 +28,8 @@ export const controllerProducts = {
         Prod_marca, 
         Prod_modelo, 
         Prod_validade, 
-        Prod_status: true, 
+        Prod_status: true,
+        Prod_quantidade, 
         Categoria_id, 
         UnidadeMedida_id
       });
@@ -87,7 +88,7 @@ export const controllerProducts = {
   // PUT /produto/:id - Atualizar produto
   update: async (req: Request, res: Response) => {
     const { id } = req.params;
-    let { Prod_nome, Prod_preco, Prod_descricao, Prod_custo, Prod_peso, Prod_altura, Prod_largura, Prod_comprimento, Prod_marca, Prod_modelo, Prod_validade, Prod_status, Categoria_id, UnidadeMedida_id 
+    let { Prod_nome, Prod_preco, Prod_descricao, Prod_custo, Prod_peso, Prod_altura, Prod_largura, Prod_comprimento, Prod_marca, Prod_modelo, Prod_validade, Prod_quantidade, Prod_status, Categoria_id, UnidadeMedida_id 
     } = req.body;
       let Prod_imagem = req.file ? req.file.buffer : null;
       if (!Prod_nome || !Prod_preco) {
@@ -112,7 +113,8 @@ export const controllerProducts = {
         Prod_comprimento, 
         Prod_marca, 
         Prod_modelo, 
-        Prod_validade, 
+        Prod_validade,
+        Prod_quantidade, 
         Prod_status, 
         Categoria_id, 
         UnidadeMedida_id
