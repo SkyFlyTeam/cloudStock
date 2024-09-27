@@ -9,7 +9,7 @@
     display: flex; /* Adicione isso */
     align-items: center;
     box-sizing: border-box;
-    padding: 2rem;
+    padding: 2rem 3rem;
     display: flex;
     justify-content: space-between;
 }
@@ -17,9 +17,8 @@
 .itensleft {
     display: flex;
     align-items: center;
-    gap: 2rem;
-    color: grey;
-    cursor: pointer;
+    gap: 1.2rem;
+    color: #C4C4C4;
 }
 
 .itensleft span{
@@ -27,9 +26,6 @@
     vertical-align: middle;
 }
 
-.itensleft i{
-    font-size:  26px;
-}
 
 .itensright {
     display: flex;
@@ -38,7 +34,11 @@
 }
 
 .itensright i {
-    color: grey;
+    color: #C4C4C4;
     font-size: 20px;
     cursor: pointer;
+}
+
+.link-icon:hover{
+    color: #61BDE0 !important;
 }

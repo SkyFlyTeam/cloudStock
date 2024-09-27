@@ -5,10 +5,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    gap: 2rem;
     /*overflow-y: auto;*/
     padding: 20px;
-    gap: 2rem;
     box-shadow: 5px 0 15px rgba(150, 150, 150, 0.1);
     position: fixed;
     left: 0;
@@ -34,7 +33,6 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
     gap: 15px;
 }
   
@@ -63,7 +61,7 @@
 }
   
 .menu-item:hover {
-    background-color: #f0f0f0;
+    background-color: #e9e9e9 !important;
 }
   
 .logout {
@@ -78,23 +76,21 @@
     gap: 1rem;
 }
   
-
-
 .navbartext {
   font-family: "Montserrat", sans-serif;
   font-style: normal;
   font-weight: 600;
   font-size: 14px;
   line-height: 17px;
-  color: #61BDE0;
   margin-left: 5%;
 }
 
-  
 .textlogo {
     margin-left: 5%;
 }
 
-.link{
-    text-decoration: none;
+@media screen and (min-width: 2500px){
+    .sidebar {
+        gap: 5rem;
+    }
 }
