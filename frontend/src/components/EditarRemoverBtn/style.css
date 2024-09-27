@@ -1,0 +1,9 @@
+div.td-actions{
+    display: flex;
+    gap: 0.5rem;
+}
+
+.edit-icon,
+.delete-icon {
+  cursor: pointer;
+}

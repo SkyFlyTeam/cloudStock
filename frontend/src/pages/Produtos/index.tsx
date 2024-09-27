@@ -1,36 +1,41 @@
-import React, { useState, useEffect } from "react";
-import { Table } from "react-bootstrap";
-import './style.css';
-import { AiOutlineDelete } from "react-icons/ai";
-import { FiEdit2 } from "react-icons/fi";
-import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import { produtosServices } from "../../services/produtoServices";
-import { Produto } from "../../services/produtoServices";
-import { ApiException } from "../../config/apiException";
-import ImagemProduto from "../../components/ImagemProduto/index";
-import ToggleBtn from "../../components/ToggleBtn/index";
+import React, { useState, useEffect } from "react"
+
+import { Table } from "react-bootstrap"
+import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
+
+import { produtosServices } from "../../services/produtoServices"
+import { Produto } from "../../services/produtoServices"
+import { ApiException } from "../../config/apiException"
+
+import ImagemProduto from "../../components/ImagemProduto/index"
+import ToggleBtn from "../../components/ToggleBtn/index"
+import EditarRemoverBtn from "../../components/EditarRemoverBtn"
+
+import './style.css'
+
 
 // Criar o helper para colunas
-const columnHelper = createColumnHelper<Produto>();
-
+const columnHelper = createColumnHelper<Produto>()
 
 function Produtos() {
-  const [data, setData] = useState<Produto[]>([]);
+  // Use state para armazenar uma array de Produto (interface) que será exibido na tabela
+  const [data, setData] = useState<Produto[]>([])
 
+  // Chama a função para pegar todos os produtos do BD
   useEffect(() => {
     const fetchProdutos = async () => {
-      const result = await produtosServices.getAllProdutos();
+      const result = await produtosServices.getAllProdutos()
       if (result instanceof ApiException) {
-        alert(result.message);
+        alert(result.message) //caso der erro, exibe a mensagem de erro num alert
       } else {
-        setData(result);
+        setData(result) // caso der certo, armazena os dados no useState data
       }
     };
 
-    fetchProdutos();
-  }, []);
+    fetchProdutos()
+  }, [])
 
-  // Função para atualizar o status do produto
+  // Função para atualizar o status do produto usando o toggle button !aqui é apenas para atualizar localmente (o useState) !
   const handleStatusChange = (prod_cod: number, newStatus: boolean) => {
     setData(prevData =>
       prevData.map(produto =>
@@ -39,7 +44,7 @@ function Produtos() {
     )
   }
 
-    // Definir as colunas
+    // Colunas da tabela
     const columns: ColumnDef<Produto, any>[] = [
         columnHelper.display({
             id: 'table-img',
@@ -51,19 +56,19 @@ function Produtos() {
         }),
         columnHelper.accessor('categoria', {
             header: () => 'Categoria',
-            cell: info => `${info.getValue()}`, // Formata o preço
+            cell: info => `${info.getValue()}`, 
         }),
         columnHelper.accessor('prod_quantidade', {
             header: () => 'Quantidade',
-            cell: info => `${info.getValue()}`, // Formata o preço
+            cell: info => `${info.getValue()}`, 
         }),
         columnHelper.accessor('prod_validade', {
             header: () => 'Validade',
-            cell: info => `${info.getValue()}`, // Formata o preço
+            cell: info => `${info.getValue()}`, 
         }),
         columnHelper.accessor('prod_preco', {
             header: () => 'Preço',
-            cell: info => `${info.getValue()}`, // Formata o preço
+            cell: info => `${info.getValue()}`, 
         }),
         columnHelper.accessor('prod_status', {
             header: () => <div className="th-center"> Status</div>,
@@ -79,12 +84,11 @@ function Produtos() {
         }),
         columnHelper.display({
           id: 'actions',
-          cell: props => <div className="td-actions"> <FiEdit2 color="#61BDE0" size={20}/>
-                <AiOutlineDelete color="#C80000" size={20} /></div>
+          cell: props => <EditarRemoverBtn />
       }),
     ]
 
-
+  // Cria a tabela, aqui é onde serão passados todos os possíveis parâmetros
   const table = useReactTable({
     data,
     columns,
@@ -93,11 +97,14 @@ function Produtos() {
 
     return (
       <main>
-        <h1 className="title">Produtos</h1>
-        <hr/>
+        <div className="page-title">
+          <h1 className="title">Produtos</h1>
+          <hr className="line"/>
+        </div>
+
         <Table hover responsive size="lg">
         <thead>
-        {table.getHeaderGroups().map(headerGroup => (
+        {table.getHeaderGroups().map(headerGroup => ( // Mapeia o cabeçalho (th) de cada coluna
             <tr key={headerGroup.id}>
               {headerGroup.headers.map(header => (
                 <th key={header.id}>
@@ -110,7 +117,7 @@ function Produtos() {
           ))}
         </thead>
         <tbody>
-          {table.getRowModel().rows.map(row => (
+          {table.getRowModel().rows.map(row => ( // Mapeia as linhas e células de cada coluna
             <React.Fragment key={row.id}>
               <tr className="table-row">
                 {row.getVisibleCells().map(cell => (
@@ -119,7 +126,7 @@ function Produtos() {
                   </td>
                 ))}
               </tr>
-              <tr className="vazia"></tr> 
+              <tr className="vazia"></tr>   
             </React.Fragment>
           ))}
         </tbody>
