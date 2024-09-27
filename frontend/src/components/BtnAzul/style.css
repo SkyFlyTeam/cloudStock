@@ -1,0 +1,31 @@
+.btn-azul {
+    background-color: #61BDE0;
+    padding: 6px 0;
+    width: 10em;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+}
+
+button:hover {
+    background-color: #61bce083;
+}
+
+.icon {
+    font-size: 1.3em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.label {
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
