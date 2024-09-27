@@ -1,4 +1,4 @@
-import { Table, Column, Model, DataType, ForeignKey, BelongsTo, PrimaryKey, BelongsToMany, HasMany, AutoIncrement } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, ForeignKey, BelongsTo, PrimaryKey, BelongsToMany, HasMany, AutoIncrement, AllowNull } from 'sequelize-typescript';
 import { Fornecedor_Produto } from './Fornecedor_Produto';
 import { ManyToMany } from 'typeorm';
 import { Lote } from './Lote';
@@ -97,6 +97,12 @@ export class Produto extends Model {
         allowNull: false
     })
     Prod_status!: boolean;
+
+    @Column({
+        type: DataType.INTEGER,
+        allowNull: false
+    })
+    Prod_quantidade!: number;
 
     @ForeignKey(() => Categoria)
     @Column({
