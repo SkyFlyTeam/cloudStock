@@ -58,10 +58,14 @@ function Produtos() {
             header: () => 'Categoria',
             cell: info => `${info.getValue()}`, 
         }),
+        // columnHelper.accessor('prod_quantidade', {
+        //     header: () => 'Quantidade',
+        //     cell: info => `${info.getValue()}`, 
+        // }), Comentado pois no momento não temos essa informação
         columnHelper.accessor('prod_quantidade', {
             header: () => 'Quantidade',
-            cell: info => `${info.getValue()}`, 
-        }),
+            cell: info => '0', 
+        }), 
         columnHelper.accessor('prod_validade', {
             header: () => 'Validade',
             cell: info => `${info.getValue()}`, 

@@ -63,3 +63,8 @@ div.td-center, div.th-center{
     display: flex;
     justify-content: center;
 }
+
+div.td-numeric{
+    text-align: end;
+    width: min-content;
+}
