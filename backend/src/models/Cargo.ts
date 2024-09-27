@@ -3,22 +3,24 @@ import { Usuario } from './Usuario';
 
 @Table({
     tableName: 'Cargo',
-    timestamps: true,
+    timestamps: false
 })
+
 export class Cargo extends Model {
+
     @Column({
         type: DataType.INTEGER,
         primaryKey: true,
-        autoIncrement: true,
+        autoIncrement: true
     })
-    cargo_id!: number;
+    Cargo_id!: number;
 
     @Column({
         type: DataType.STRING(100),
-        allowNull: false,
+        allowNull: false
     })
-    perfil_email!: string;
+    Cargo_acesso!: string;
 
     @HasMany(() => Usuario)
-    usuario!: Usuario[];
+    Usuarios!: Usuario[];
 }

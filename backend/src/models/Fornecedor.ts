@@ -1,43 +1,47 @@
-import { Table, Column, Model, DataType} from 'sequelize-typescript';
+import { Table, Column, Model, DataType, BelongsToMany } from 'sequelize-typescript';
+import { Fornecedor_Produto } from './Fornecedor_Produto';
+import { Produto } from './Produto';
 
 @Table({
-    tableName: 'Fornecedores',
-    timestamps: false,
+    tableName: 'Fornecedor',
+    timestamps: false
 })
-export class Fornecedores extends Model<Fornecedores> {
+
+export class Fornecedor extends Model {
+
     @Column({
         type: DataType.INTEGER,
-        allowNull: false,
         primaryKey: true,
-        autoIncrement: true, //habilita autoincrement
+        autoIncrement: true
     })
     Forn_id!: number;
 
     @Column({
-        type: DataType.STRING,
-        allowNull: false,
+        type: DataType.STRING(50),
+        allowNull: true
     })
     Forn_nome!: string;
 
     @Column({
-        type: DataType.STRING,
-        allowNull: false,
+        type: DataType.STRING(30),
+        allowNull: true
     })
-    Forn_razaosocial!: string;
+    Forn_razaoSocial!: string;
 
     @Column({
-        type: DataType.STRING,
-        allowNull: false,
+        type: DataType.STRING(14),
+        allowNull: true
     })
     Forn_cnpj!: string;
 
     @Column({
         type: DataType.BOOLEAN,
-        allowNull: false,
+        allowNull: true
     })
-    Forn_status!: boolean // propriedade para o status (ativo/inativo)
+    Forn_status!: boolean
 
-    // fornecedores!:Fornecedores
+    @BelongsToMany(() => Produto, () => Fornecedor_Produto)
+    Produtos!: Produto[];
 }
 
 

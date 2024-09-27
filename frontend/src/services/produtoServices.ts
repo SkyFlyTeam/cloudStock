@@ -11,7 +11,6 @@ export interface Produto {
   prod_status: boolean
 }
 
-
 const getAllProdutos = async (): Promise<Produto[] | ApiException> => {
   try{
     const { data } = await Api().get('/produto')

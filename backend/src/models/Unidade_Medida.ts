@@ -1,20 +1,26 @@
-import { Table, Column, Model, DataType} from 'sequelize-typescript';
+import { Table, Column, Model, DataType, HasMany} from 'sequelize-typescript';
+import { Produto } from './Produto';
 
 @Table ({
-    tableName: "Fornecedores",
-    timestamps: false,
+    tableName: "Unidade_Medida",
+    timestamps: false
 })
-export class Unidade_Medida extends Model <Unidade_Medida> {
+
+export class Unidade_Medida extends Model {
+    
     @Column({
         type: DataType.INTEGER,
-        allowNull: false,
         primaryKey: true,
+        autoIncrement: true
     })
     UnidadeMedida_id!: number;
 
     @Column({
-        type: DataType.STRING,
-        allowNull: false,
+        type: DataType.STRING(50),
+        allowNull: true
     })
     UnidadeMedida_nome!: string;
+
+    @HasMany(() => Produto)
+    Produtos!: Produto[]
 }
