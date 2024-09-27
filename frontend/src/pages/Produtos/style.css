@@ -48,6 +48,11 @@ div.td-actions{
     gap: 0.5rem;
 }
 
+div.td-center, div.th-center{
+    display: flex;
+    justify-content: center;
+}
+
 .edit-icon,
 .delete-icon {
   font-size: 18px;
@@ -61,3 +66,9 @@ div.td-actions{
 .delete-icon {
   color: #f44336;
 }
+
+hr{
+    opacity: 0.2;
+    color: rgba(216, 216, 216, 0.534);
+    width: 100%;
+  }

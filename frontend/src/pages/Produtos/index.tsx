@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Table } from "react-bootstrap";
 import './style.css';
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { AiOutlineDelete } from "react-icons/ai";
+import { FiEdit2 } from "react-icons/fi";
 import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { produtosServices } from "../../services/produtoServices";
 import { Produto } from "../../services/produtoServices";
@@ -48,7 +49,7 @@ function Produtos() {
             header: () => 'Nome',
             cell: info => info.getValue(),
         }),
-        columnHelper.accessor('prod_categoria', {
+        columnHelper.accessor('categoria', {
             header: () => 'Categoria',
             cell: info => `${info.getValue()}`, // Formata o preço
         }),
@@ -62,18 +63,25 @@ function Produtos() {
         }),
         columnHelper.accessor('prod_preco', {
             header: () => 'Preço',
-            cell: info => `R$ ${info.getValue()}`, // Formata o preço
+            cell: info => `${info.getValue()}`, // Formata o preço
         }),
         columnHelper.accessor('prod_status', {
-            header: 'Status',
+            header: () => <div className="th-center"> Status</div>,
             cell: info => (
+              <div className="td-center">
                 <ToggleBtn
-                checked={info.getValue()} 
-                cod={info.row.original.prod_cod} // Passa o prod_cod
-                onStatusChange={(newStatus:any) => handleStatusChange(info.row.original.prod_cod, newStatus)} // Passa o callback
+                  checked={info.getValue() == 1} 
+                  cod={info.row.original.prod_cod}
+                  onStatusChange={(newStatus:any) => handleStatusChange(info.row.original.prod_cod, newStatus)} 
                 />
+              </div>
             ),
         }),
+        columnHelper.display({
+          id: 'actions',
+          cell: props => <div className="td-actions"> <FiEdit2 color="#61BDE0" size={20}/>
+                <AiOutlineDelete color="#C80000" size={20} /></div>
+      }),
     ]
 
 
@@ -84,35 +92,39 @@ function Produtos() {
   })
 
     return (
-      <Table hover responsive size="lg">
-      <thead>
-      {table.getHeaderGroups().map(headerGroup => (
-          <tr key={headerGroup.id}>
-            {headerGroup.headers.map(header => (
-              <th key={header.id}>
-                {typeof header.column.columnDef.header === 'function'
-                  ? header.column.columnDef.header(header.getContext())
-                  : header.column.columnDef.header}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody>
-         {table.getRowModel().rows.map(row => (
-          <React.Fragment key={row.id}>
-            <tr className="table-row">
-              {row.getVisibleCells().map(cell => (
-                <td key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())} 
-                </td>
+      <main>
+        <h1 className="title">Produtos</h1>
+        <hr/>
+        <Table hover responsive size="lg">
+        <thead>
+        {table.getHeaderGroups().map(headerGroup => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map(header => (
+                <th key={header.id}>
+                  {typeof header.column.columnDef.header === 'function'
+                    ? header.column.columnDef.header(header.getContext())
+                    : header.column.columnDef.header}
+                </th>
               ))}
             </tr>
-            <tr className="vazia"></tr> 
-          </React.Fragment>
-        ))}
-      </tbody>
-    </Table>
+          ))}
+        </thead>
+        <tbody>
+          {table.getRowModel().rows.map(row => (
+            <React.Fragment key={row.id}>
+              <tr className="table-row">
+                {row.getVisibleCells().map(cell => (
+                  <td key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())} 
+                  </td>
+                ))}
+              </tr>
+              <tr className="vazia"></tr> 
+            </React.Fragment>
+          ))}
+        </tbody>
+      </Table>
+    </main>
     )
 }
 

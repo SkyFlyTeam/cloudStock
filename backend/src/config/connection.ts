@@ -5,7 +5,7 @@ const sequelize = new Sequelize({
   database: 'orm',
   username: 'root',
   password: '', // mudar senha
-  host: '', // colocar domínio
+  host: 'localhost', // colocar domínio
   dialect: 'mysql',
   models: [Produto],  // Adiciona os modelos aqui
 });

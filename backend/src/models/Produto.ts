@@ -1,4 +1,7 @@
 import { Table, Column, Model, DataType, ForeignKey, BelongsTo, PrimaryKey } from 'sequelize-typescript';
+import { Categoria } from './Categoria';
+import { Unidade_Medida } from './Unidade_Medida';
+import { Fornecedores } from './Fornecedor';
 
 @Table({
   tableName: 'Produto',
@@ -78,17 +81,24 @@ export class Produto extends Model {
     // })
     // prod_modelo?: string;
 
-    // @Column({
-    //     type: DataType.DECIMAL(8, 2),
-    //     allowNull: false,
-    // })
-    // prod_validade!: boolean;
+    @Column({
+        type: DataType.DATEONLY,
+        allowNull: false,
+    })
+    prod_validade!: boolean;
 
-    // @Column({
-    //     type: DataType.STRING(50),
-    //     allowNull: false,
-    // })
-    // prod_status!: boolean;
+    @Column({
+        type: DataType.STRING(50),
+        allowNull: false,
+    })
+    prod_status!: boolean;
+
+    /* TESTEEEE TIRAR DEPOIS */
+    @Column({
+        type: DataType.STRING(50),
+        allowNull: true,
+    })
+    categoria!: string;
 
     /* Adicionar após as classes Categoria, Unidade de Medida e Fornecedor serem criadas */
     // @ForeignKey(() => Categoria)
@@ -101,16 +111,16 @@ export class Produto extends Model {
     // @BelongsTo(() => Categoria)  
     // categoria!: Categoria;
 
-    // @ForeignKey(() => UnidadeMedida)
+    // @ForeignKey(() => Unidade_Medida)
     // @Column({
     //   type: DataType.INTEGER,
     //   allowNull: false,
     // })
     // unidadeMedida_id!: number
   
-    // @BelongsTo(() => UnidadeMedida)
-    // unidadeMedida!: UnidadeMedida
+    // @BelongsTo(() => Unidade_Medida)
+    // unidadeMedida!: Unidade_Medida
 
-    // @BelongsTo(() => Fornecedor)
-    // fornecedor!: Fornecedor
+    // @BelongsTo(() => Fornecedores)
+    // fornecedor!: Fornecedores
 }

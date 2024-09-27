@@ -36,7 +36,7 @@
 }
 
 input:checked + .slider {
-    background-color: #00aaff;
+    background-color: #00aaff !important;
 }
 
 input:checked + .slider:before {

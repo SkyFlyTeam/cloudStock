@@ -4,7 +4,7 @@ import { ApiException } from "../config/apiException"
 export interface Produto {
   prod_cod: number
   prod_nome: string
-  prod_categoria: string,
+  categoria: string,
   prod_quantidade: number,
   prod_validade: Date,
   prod_preco: number,

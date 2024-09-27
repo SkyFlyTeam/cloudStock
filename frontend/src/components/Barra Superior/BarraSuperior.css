@@ -2,7 +2,7 @@
 .BarraSuperior {
     position: fixed;
     width: calc(100% - 16.5rem);
-    height: 5rem;
+    height: 3rem;
     left: 16.5rem;
     top: 0;
     background-color: rgb(255, 255, 255);

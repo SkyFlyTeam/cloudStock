@@ -19,23 +19,23 @@ const Navbar: React.FC = () => {
 
           <div className="sidebar-menu">
             <div className="itens_menu">
-              <Link to="/">
+              <Link to="/" className="link">
                 <div className="menu-item active">
                     <BsBoxSeamFill />
                     <div className="navbartext" style={{color: 'white'}}><span>Produtos</span></div>
                 </div>
               </Link>
-              <div className="menu-item">
+              <div className="menu-item" >
                   <IoMdPricetags />
                 <div className="navbartext"><span>Categorias</span></div>
               </div>
-              <Link to="/Fornecedores">
+              <Link to="/Fornecedores" className="link">
                 <div className="menu-item">
                     <FaUserGroup />
                     <div className="navbartext"><span>Fornecedores</span></div>
                 </div>
               </Link>
-              <Link to="/LocalArmazenamento">
+              <Link to="/LocalArmazenamento" className="link">
                 <div className="menu-item">
                     <FaWarehouse />
                     <div className="navbartext"><span>Locais Armazenamento</span></div>

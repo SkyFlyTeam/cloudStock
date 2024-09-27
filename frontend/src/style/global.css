@@ -18,11 +18,18 @@ body {
 
 
 .main-content {
-  margin-top: 5rem;
+  margin-top: 3rem;
   min-height: 100vh;
   margin-left: 16.5rem;
   flex-grow: 1;
-  padding: 2.1rem;
+  padding: 2.5rem 3rem;
   background-color: #F8F8F8;
   overflow-y: auto;
 }
+
+h1.title{
+  font-size: 25px;
+  font-weight: 700;
+}
+
+
