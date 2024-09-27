@@ -39,7 +39,7 @@ function Produtos() {
   const handleStatusChange = (prod_cod: number, newStatus: boolean) => {
     setData(prevData =>
       prevData.map(produto =>
-        produto.prod_cod === prod_cod ? { ...produto, prod_status: newStatus } : produto
+        produto.Prod_cod === prod_cod ? { ...produto, prod_status: newStatus } : produto
       )
     )
   }
@@ -48,13 +48,13 @@ function Produtos() {
     const columns: ColumnDef<Produto, any>[] = [
         columnHelper.display({
             id: 'table-img',
-            cell: props => <ImagemProduto prod_cod={props.row.original.prod_cod} />,
+            cell: props => <ImagemProduto prod_cod={props.row.original.Prod_cod} />,
         }),
-        columnHelper.accessor('prod_nome', {
+        columnHelper.accessor('Prod_nome', {
             header: () => 'Nome',
             cell: info => info.getValue(),
         }),
-        columnHelper.accessor('categoria', {
+        columnHelper.accessor('Categoria', {
             header: () => 'Categoria',
             cell: info => `${info.getValue()}`, 
         }),
@@ -62,26 +62,26 @@ function Produtos() {
         //     header: () => 'Quantidade',
         //     cell: info => `${info.getValue()}`, 
         // }), Comentado pois no momento não temos essa informação
-        columnHelper.accessor('prod_quantidade', {
+        columnHelper.accessor('Prod_quantidade', {
             header: () => 'Quantidade',
             cell: info => '0', 
         }), 
-        columnHelper.accessor('prod_validade', {
+        columnHelper.accessor('Prod_validade', {
             header: () => 'Validade',
             cell: info => `${info.getValue()}`, 
         }),
-        columnHelper.accessor('prod_preco', {
+        columnHelper.accessor('Prod_preco', {
             header: () => 'Preço',
             cell: info => `${info.getValue()}`, 
         }),
-        columnHelper.accessor('prod_status', {
+        columnHelper.accessor('Prod_status', {
             header: () => <div className="th-center"> Status</div>,
             cell: info => (
               <div className="td-center">
                 <ToggleBtn
                   checked={info.getValue() == 1} 
-                  cod={info.row.original.prod_cod}
-                  onStatusChange={(newStatus:any) => handleStatusChange(info.row.original.prod_cod, newStatus)} 
+                  cod={info.row.original.Prod_cod}
+                  onStatusChange={(newStatus:any) => handleStatusChange(info.row.original.Prod_cod, newStatus)} 
                 />
               </div>
             ),

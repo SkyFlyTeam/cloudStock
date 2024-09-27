@@ -44,7 +44,7 @@ export const controllerProducts = {
   show: async (req, res) => {
     try {
       const products = await Produto.findAll({
-        attributes: ['prod_cod', 'prod_nome', 'prod_preco', 'prod_status', 'categoria', 'prod_validade']
+        attributes: ['Prod_cod', 'Prod_nome', 'Prod_preco', 'Prod_status', 'Categoria_id', 'Prod_validade']
       })
 
       return res.status(200).json(products);

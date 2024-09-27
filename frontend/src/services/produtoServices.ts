@@ -2,13 +2,13 @@ import { Api } from "../config/apiConfig"
 import { ApiException } from "../config/apiException"
 
 export interface Produto {
-  prod_cod: number
-  prod_nome: string
-  categoria: string,
-  prod_quantidade: number,
-  prod_validade: Date,
-  prod_preco: number,
-  prod_status: boolean
+  Prod_cod: number
+  Prod_nome: string
+  Categoria: string,
+  Prod_quantidade: number,
+  Prod_validade: Date,
+  Prod_preco: number,
+  Prod_status: boolean
 }
 
 const getAllProdutos = async (): Promise<Produto[] | ApiException> => {
