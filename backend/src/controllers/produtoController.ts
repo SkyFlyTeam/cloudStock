@@ -43,7 +43,10 @@ export const controllerProducts = {
   // GET /produto - Buscar todos os produtos
   show: async (req, res) => {
     try {
-      const products = await Produto.findAll();
+      const products = await Produto.findAll({
+        attributes: ['prod_cod', 'prod_nome', 'prod_preco', 'prod_status', 'categoria', 'prod_validade']
+      })
+
       return res.status(200).json(products);
     } catch (error) {
       console.error('Error fetching products with suppliers:', error);

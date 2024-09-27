@@ -1,38 +1,44 @@
 /* header */
 .BarraSuperior {
-    position: absolute;
-    width: calc(100% - 270px);
-    height: 60px;
-    left: 270px;
-    top: 0px;
+    position: fixed;
+    width: calc(100% - 16.5rem);
+    height: 3rem;
+    left: 16.5rem;
+    top: 0;
     background-color: rgb(255, 255, 255);
     display: flex; /* Adicione isso */
     align-items: center;
     box-sizing: border-box;
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
 }
 
-.tbcirclecaretleft {
-    margin-left: 2vh;
-    margin-right: 4vh;
-    font-size: 25px;
-    color: grey;
-    cursor: pointer;
+.itensleft {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    color: #C4C4C4;
 }
 
-.barrasuptext {
-    color: grey;
+.itensleft span{
+    font-size: 16px;
+    vertical-align: middle;
 }
+
 
 .itensright {
-    justify-content: flex-end;
     display: flex;
     align-items: center;
     gap: 15px;
-    width: 90%;
-  }
+}
 
 .itensright i {
-    color: grey;
+    color: #C4C4C4;
     font-size: 20px;
     cursor: pointer;
+}
+
+.link-icon:hover{
+    color: #61BDE0 !important;
 }

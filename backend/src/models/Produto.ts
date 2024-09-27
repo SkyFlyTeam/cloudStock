@@ -64,7 +64,7 @@ export class Produto extends Model {
 
     @Column({
         type: DataType.DECIMAL(8,2),
-        allowNull: false
+        allowNull: true
     })
     Prod_largura?: number;
 
@@ -111,7 +111,7 @@ export class Produto extends Model {
     @ForeignKey(() => Unidade_Medida)
     @Column({
       type: DataType.INTEGER,
-      allowNull: false
+      allowNull: true
     })
     UnidadeMedida_id!: number
 
