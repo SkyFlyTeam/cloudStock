@@ -12,7 +12,7 @@
     gap: 0.5em;
 }
 
-button:hover {
+.btn-azul:hover {
     background-color: #61bce083;
 }
 

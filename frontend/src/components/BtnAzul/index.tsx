@@ -1,3 +1,4 @@
+// BtnAzul.tsx
 import React from 'react';
 import './style.css';
 
@@ -11,18 +12,18 @@ const BtnAzul: React.FC<BtnAzulProps> = ({ onClick, icon, label }) => {
     return (
         <button className='btn-azul' onClick={onClick}>
             <span className='icon'>{icon}</span>
-            <span className='label'>{label}</span>
+            <span className='label'>{label}</span>        
         </button>
     );
 }
 
 export default BtnAzul;
 
-
 /*
 
 ---- USANDO O COMPONENTE 
 import BtnAzul from "../../components/BtnAzul";
+const [openModal, setOpenModal] = useState(false)
 
 ---- BOTÃO DE CADASTRAR
 import { IoAddCircleOutline } from "react-icons/io5";

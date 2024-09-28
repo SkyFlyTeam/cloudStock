@@ -11,3 +11,8 @@
     justify-content: center;
     font-weight: bold; 
 }
+
+.btn-cancelar:hover {
+    background-color: #C80000;
+    color: white;
+}
