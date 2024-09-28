@@ -1,0 +1,13 @@
+input.textbox::placeholder {
+    font-size: 0.8rem;
+    color: #C4C4C4;
+    font-display: block;
+    padding-left: 30px;
+}
+
+input.textbox {
+    border-radius: 0.4rem;
+    border: 0.1rem solid #E5E5E5;
+    width: 100%;
+    padding: 0.3rem 0.6rem;
+}
