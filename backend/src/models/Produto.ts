@@ -100,7 +100,7 @@ export class Produto extends Model {
 
     @Column({
         type: DataType.INTEGER,
-        allowNull: false
+        allowNull: true
     })
     Prod_quantidade!: number;
 

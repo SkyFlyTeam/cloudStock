@@ -5,3 +5,5 @@ export const Api = () =>{
         baseURL: 'http://localhost:5000'
     })
 }
+
+export const hostname = 'http://localhost:5000/'
