@@ -1,0 +1,12 @@
+/* modal.css */
+.modal-overlay {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 400px; /* Ajuste conforme necessário */
+    margin: auto; /* Centraliza o modal */
+}
