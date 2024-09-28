@@ -59,6 +59,15 @@ h1.title{
 </div>
 */
 
+/* Espaçamento do componente input */
+
+.inputEspaçamento > * {
+  margin-bottom: 15px;
+}
+
+.inputEspaçamento > *:last-child {
+  margin-bottom: 0; /* Remove o espaçamento do último input */
+}
 
 
 
