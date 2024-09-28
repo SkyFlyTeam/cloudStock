@@ -87,10 +87,10 @@ export class Produto extends Model {
     Prod_modelo?: string;
 
     @Column({
-        type: DataType.DATE, 
+        type: DataType.BOOLEAN, 
         allowNull: true, 
       })
-      Prod_validade?: Date
+      Prod_validade?: Boolean
 
     @Column({
         type: DataType.BOOLEAN,
