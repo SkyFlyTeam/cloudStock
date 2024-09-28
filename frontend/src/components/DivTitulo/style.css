@@ -1,0 +1,16 @@
+div.divtitulo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+h3.divtitulo {
+    flex-grow: 0;
+}
+
+hr.divtitulo {
+    flex-grow: 1;
+    height: 0.2rem;
+    margin-left: 0.5rem;
+    background-color: black;
+}
