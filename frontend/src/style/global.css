@@ -35,3 +35,30 @@ h1.title{
   text-decoration: none;
 }
 
+
+/* Alinhamento do input de busca e botão de cadastro */
+
+.inputButton {
+  display: flex;
+  align-items: center; 
+  width: 100%; 
+}
+
+.inputButton .busca-container {
+  margin-right: auto; 
+}
+
+.inputButton .btnAzul { 
+  margin-left: auto;
+}
+
+/*
+<div className="inputButton">
+  <InputBusca />
+  <BtnAzul icon={<IoAddCircleOutline />} label='CADASTRAR' onClick={() => {}} />
+</div>
+*/
+
+
+
+
