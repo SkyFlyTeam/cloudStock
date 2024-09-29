@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { produtosServices } from "../services/produtoServices";
+import { produtoServices } from "../services/produtoServices";
 import { ApiException } from "../config/apiException";
 import { Produto } from "../services/produtoServices";
 
@@ -10,6 +10,7 @@ type state = {
   Prod_preco: number
   Prod_custo: number
   Prod_largura: number
+  Prod_quantidade: number
   UnidadeMedida_id: number
   Prod_img: File | null
   Produtos: Produto[]
@@ -25,6 +26,7 @@ class Products extends Component<any, state> {
       Prod_preco: 0,
       Prod_custo: 0,
       Prod_largura: 0,
+      Prod_quantidade: 0,
       UnidadeMedida_id: 1,
       Prod_img: null,
       Produtos: []
@@ -32,7 +34,7 @@ class Products extends Component<any, state> {
   }
 
   componentDidMount() {
-    produtosServices.getAllProdutos()
+    produtoServices.getAllProdutos()
       .then((result) => {
         if (result instanceof ApiException) {
           alert(result.message);
@@ -47,7 +49,7 @@ class Products extends Component<any, state> {
     
     const formData = new FormData();
     // const { prod_cod, prod_nome, P, prod_img } = this.state;
-      const { Prod_nome, Prod_descricao, Prod_preco, Prod_img, Prod_custo, Prod_largura, UnidadeMedida_id } = this.state;
+      const { Prod_nome, Prod_descricao, Prod_preco, Prod_img, Prod_custo, Prod_largura, Prod_quantidade, UnidadeMedida_id } = this.state;
 
   
     // Adicione os dados do produto
@@ -57,6 +59,7 @@ class Products extends Component<any, state> {
     formData.append('Prod_preco', Prod_preco.toString());
     formData.append('Prod_custo', Prod_custo.toString());
     formData.append('Prod_largura', Prod_largura.toString());
+    formData.append('Prod_quantidade', Prod_quantidade.toString());
     
     
     // Adicione o arquivo de imagem, se houver
@@ -69,10 +72,11 @@ class Products extends Component<any, state> {
     }
   
     try {
-      const response = await produtosServices.createProduto(formData); 
+      const response = await produtoServices.createProduto(formData); 
       if (response instanceof ApiException) {
         console.error(response.message);
       } else {
+        console.log(this.state.Produtos)
         console.log("Produto criado com sucesso:", response);
         this.setState((prevState) => ({
           Produtos: [...prevState.Produtos, response],
@@ -82,6 +86,7 @@ class Products extends Component<any, state> {
           Prod_preco: 0,
           Prod_custo: 0,
           Prod_largura: 0,
+          Prod_quantidade: 0,
           UnidadeMedida_id: 1,
           Prod_img: null,
         }));
@@ -111,6 +116,10 @@ class Products extends Component<any, state> {
     this.setState({ Prod_custo: parseFloat(evento.target.value) });
   }
 
+  obterQuantidade = (evento: any) => {
+    this.setState({ Prod_quantidade: parseInt(evento.target.value) });
+  }
+
   obterLargura = (evento: any) => {
     this.setState({ Prod_largura: parseFloat(evento.target.value) });
   }
@@ -131,7 +140,7 @@ class Products extends Component<any, state> {
           {this.state.Produtos.map(produto => (
             <div key={produto.Prod_cod}>
               <img src={`http://localhost:5000/produto/DownloadImage/${produto.Prod_cod}`} width={100}></img>
-              <li >{produto.Prod_nome} - {produto.Prod_preco}</li>
+              <li >{produto.Prod_nome} - {produto.Prod_preco} - {produto.Prod_quantidade}</li>
             </div>
           ))}
         </ul>
@@ -156,6 +165,10 @@ class Products extends Component<any, state> {
             <div className="input-field col s6">
               <input value={this.state.Prod_largura} onChange={this.obterLargura} id="last_name" type="number" className="validate" />
               <label htmlFor="last_name">Largura</label>
+            </div>
+            <div className="input-field col s6">
+              <input value={this.state.Prod_quantidade} onChange={this.obterQuantidade} id="last_name" type="number" className="validate" />
+              <label htmlFor="last_name">Quantidade</label>
             </div>
             <div className="input-field col s6">
               <input value={this.state.UnidadeMedida_id} onChange={this.obterUnidade} id="last_name" type="text" className="validate" />

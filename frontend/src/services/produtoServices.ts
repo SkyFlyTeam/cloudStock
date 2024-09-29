@@ -4,12 +4,13 @@ import { ApiException } from "../config/apiException"
 export interface Produto {
   Prod_cod: number
   Prod_nome: string
-  Categoria: string,
-  Prod_quantidade: number,
-  Prod_validade: Date,
-  Prod_preco: number,
+  Categoria: string
+  Prod_quantidade: number
+  Prod_validade: boolean
+  Prod_preco: number
   Prod_status: boolean
 }
+
 
 const getAllProdutos = async (): Promise<Produto[] | ApiException> => {
   try{
@@ -20,21 +21,20 @@ const getAllProdutos = async (): Promise<Produto[] | ApiException> => {
   }
 }
 
-const createProduto = async (formData: FormData): Promise<Produto | ApiException> => {
+const createProduto = async (produto: any): Promise<Produto | ApiException> => {
   try {
-    const { data } = await Api().post<any>('/produto', formData, {
+    const { data } = await Api().post<any>('/produto', produto, {
       headers: { 'Content-Type': 'multipart/form-data' }
     });
 
-    const produto: Produto = data;
-    return produto;
+    const produto_criado: Produto = data;
+    return produto_criado;
   } catch (error: any) {
     return new ApiException(error.message || 'Erro ao criar o registro.');
   }
 }
 
-
-export const produtosServices = {
+export const produtoServices = {
   getAllProdutos,
-  createProduto
+  createProduto,
 }

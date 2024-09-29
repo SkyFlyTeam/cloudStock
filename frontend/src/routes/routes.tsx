@@ -6,6 +6,7 @@ import Fornecedores from "../pages/Fornecedores/index";
 import Navbar from "../components/navbar";
 import Products from "../pages/produto"
 
+
 import '../style/global.css';
 import BarraSuperior from "../components/Barra Superior";
 
@@ -21,7 +22,6 @@ function MainRoutes(){
                         <Route path="/LocalArmazenamento" element={<LocalArmazenamento />} />
                         <Route path="/Setores" element={<Setores />} />
                         <Route path="/Fornecedores" element={<Fornecedores />} />
-                        <Route path="/produto" element={<Products />} />
                     </Routes>
                 </div>
             </div>
