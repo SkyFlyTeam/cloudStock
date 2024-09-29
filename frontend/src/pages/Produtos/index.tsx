@@ -26,7 +26,7 @@ function Produtos() {
     const fetchProdutos = async () => {
       const result = await produtosServices.getAllProdutos()
       if (result instanceof ApiException) {
-        alert(result.message) //caso der erro, exibe a mensagem de erro num alert
+        console.log(result.message) //caso der erro, exibe a mensagem de erro num alert
       } else {
         setData(result) // caso der certo, armazena os dados no useState data
       }
@@ -80,16 +80,20 @@ function Produtos() {
               <div className="td-center">
                 <ToggleBtn
                   checked={info.getValue() == 1} 
+                  rota={'produto'}
                   cod={info.row.original.Prod_cod}
                   onStatusChange={(newStatus:any) => handleStatusChange(info.row.original.Prod_cod, newStatus)} 
                 />
               </div>
             ),
-        }),
-        columnHelper.display({
-          id: 'actions',
-          cell: props => <EditarRemoverBtn />
-      }),
+        }), 
+        // COMENTADO PQ NÃO PEGA SEM AS FUNÇÕES DE EDITAR E REMOVER !!!!!
+        // columnHelper.display({
+        //   id: 'actions',
+        //   cell: props => <EditarRemoverBtn id={props.row.original.Prod_cod}
+        //   onEdit={}
+        //   onDelete={}/>
+        // }),
     ]
 
   // Cria a tabela, aqui é onde serão passados todos os possíveis parâmetros
