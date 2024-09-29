@@ -2,7 +2,16 @@
     height: 640px;
     overflow-y: scroll;
 }
+.prod-cadastro {
+    padding: 0 1rem;
+}
 
+.radio-val {
+    padding: 1rem 0 0 0;
+}
+.radio-val > label > input {
+    margin: 0 0 0 1rem;
+}
 
 .unidadeMedida{
     width: 62.5%;
@@ -54,3 +63,6 @@
     flex-wrap: nowrap;
 }
 
+.rfloat{
+    float: right;
+}
