@@ -3,7 +3,7 @@ import React from 'react';
 import './style.css';
 
 interface BtnAzulProps {
-    onClick: () => void;
+    onClick?: () => void;
     icon: React.ReactNode;
     label: string;
 }
