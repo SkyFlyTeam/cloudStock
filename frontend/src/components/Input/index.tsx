@@ -3,6 +3,7 @@ import './style.css';
 
 interface InputProps {
   label: string; // Rótulo do input
+  className?: string; // Recebe classes para 'div' base
   placeholder?: string; // Texto que aparece quando o input está vazio
   type?: string; // Tipo do input, por padrão é "text"
   value?: string; // Valor do input
@@ -11,9 +12,9 @@ interface InputProps {
 }
 
 
-const Input: React.FC<InputProps> = ({ label, placeholder, type = "text", value, options, onChange }) => {
+const Input: React.FC<InputProps> = ({ label, className, placeholder, type = "text", value, options, onChange }) => {
   return (
-    <div>
+    <div className={className}>
 
       <label>{label}</label> 
       
