@@ -2,15 +2,15 @@ import React from 'react';
 import './style.css'
 
 interface Props {
-  className: string;
-  title: string;
+  label?: string; // Recebe texto
+  className?: string; // Classes para 'div' base
 }
 
-const DivTitulo: React.FC<Props> = ({ className, title }) => {
+const DivTitulo: React.FC<Props> = ({ className, label }) => {
 
   return (
     <div className="{className} divtitulo">
-      <h3 className="divtitulo">{title}</h3>
+      <h3 className="divtitulo">{label}</h3>
       <hr className="line divtitulo"></hr>
     </div>
   );
