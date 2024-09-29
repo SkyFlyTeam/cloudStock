@@ -1,0 +1,18 @@
+.btn-cancelar {
+    padding: 6px 0;
+    width: 10em;
+    cursor: pointer;
+    border: 1.8px solid #C80000;
+    border-radius: 8px;
+    color: #C80000; 
+    background-color: transparent; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold; 
+}
+
+.btn-cancelar:hover {
+    background-color: #C80000;
+    color: white;
+}

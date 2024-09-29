@@ -29,7 +29,7 @@ export class Fornecedor extends Model {
     Forn_razaoSocial!: string;
 
     @Column({
-        type: DataType.STRING(14),
+        type: DataType.STRING(18),
         allowNull: true
     })
     Forn_cnpj!: string;
