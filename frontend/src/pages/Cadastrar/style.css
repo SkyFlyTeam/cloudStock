@@ -1,3 +1,9 @@
+.scroller {
+    height: 640px;
+    overflow-y: scroll;
+}
+
+
 .unidadeMedida{
     width: 62.5%;
 }
