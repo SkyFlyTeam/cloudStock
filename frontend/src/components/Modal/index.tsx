@@ -9,9 +9,10 @@ interface ModalProps {
   setModalOpen: () => void;
   children: ReactNode;
   label: string;
+  buttons?: ReactNode; 
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, setModalOpen, label, children }) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, setModalOpen, label, children, buttons }) => {
   const [openModal, setOpenModal] = useState(false);
 
   if (isOpen) {
@@ -22,8 +23,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, setModalOpen, label, children }) 
           <div className='content'>{children}</div>
 
           <div className='buttonContainer'>
-            <BtnCancelar onClick={setModalOpen} />
-            <BtnAzul icon={<IoAddCircleOutline />} label='CADASTRAR' onClick={() => setOpenModal(true)} />
+            {buttons} 
           </div>
         </div>
       </div>

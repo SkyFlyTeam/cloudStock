@@ -6,11 +6,12 @@ interface BtnAzulProps {
     onClick?: () => void;
     icon: React.ReactNode;
     label: string;
+    className?: string;
 }
 
-const BtnAzul: React.FC<BtnAzulProps> = ({ onClick, icon, label }) => {
+const BtnAzul: React.FC<BtnAzulProps> = ({ onClick, icon, label, className = ''}) => {
     return (
-        <button className='btn-azul' onClick={onClick}>
+        <button className={'btn-azul ' + className} onClick={onClick}>
             <span className='icon'>{icon}</span>
             <span className='label'>{label}</span>        
         </button>
