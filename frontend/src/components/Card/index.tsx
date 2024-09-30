@@ -7,6 +7,7 @@ interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({ children, className }) => {
+
   return (
     <div className={`cards ${className}`}>
       {children}

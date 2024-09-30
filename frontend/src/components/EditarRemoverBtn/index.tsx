@@ -6,6 +6,7 @@ interface Props {
     id?: number // Recebe o id 
     onEdit?: () => void // Chama a função de editar
     onDelete?: () => void // Chama a função de deletar
+
 }
   
 const EditarRemoverBtn: React.FC<Props> = ({ id, onEdit,onDelete }) =>{

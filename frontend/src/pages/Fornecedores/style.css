@@ -1,3 +1,28 @@
+main{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+div.page-title{
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+hr.line{
+    margin: 0;
+    width: 100%;
+    border: 0.2px solid rgb(170, 170, 170);
+}
+
+.actions-group{
+    display: flex;
+    width: 100%;
+    justify-content: end;
+}
+
+
 table {
     font-family: "Montserrat", sans-serif;
     border-collapse: collapse; /* Remover espaços e bordas entre as células */
@@ -32,13 +57,6 @@ td {
     vertical-align: middle;
     border: none !important;
     padding: 10px;
-}
-
-td img {
-    width: 5rem;
-    height: 5rem;
-    object-fit: contain;
-    border-radius: 50%;
 }
 
 .align-right {
@@ -123,7 +141,7 @@ div.td-center, div.th-center {
 
 /* Alternar a cor das linhas da tabela */
 tbody tr:nth-child(even) {
-    background-color: #f2f2f2; /* Cor para as linhas pares */
+    background-color: #61bce027; /* Cor para as linhas pares */
 }
 
 tbody tr:nth-child(odd) {

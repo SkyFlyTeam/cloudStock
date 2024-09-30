@@ -11,13 +11,12 @@ body {
   width: 100vw;
   height: 100%;
   overflow-x: hidden;
-  overflow-y: hidden;
   font-family: 'Montserrat', sans-serif;
 }
 
 
 .main-content {
-  margin-top: 3rem;
+  margin-top: 3.9rem;
   min-height: 100vh;
   margin-left: 16.5rem;
   flex-grow: 1;

@@ -2,6 +2,7 @@ import { Component } from "react";
 import { produtoServices } from "../services/produtoServices";
 import { ApiException } from "../config/apiException";
 import { Produto } from "../services/produtoServices";
+import { hostname } from "../config/apiConfig";
 
 type state = {
   // prod_cod: string
@@ -139,6 +140,7 @@ class Products extends Component<any, state> {
         <ul>
           {this.state.Produtos.map(produto => (
             <div key={produto.Prod_cod}>
+
               <img src={`http://localhost:5000/produto/DownloadImage/${produto.Prod_cod}`} width={100}></img>
               <li >{produto.Prod_nome} - {produto.Prod_preco} - {produto.Prod_quantidade}</li>
             </div>

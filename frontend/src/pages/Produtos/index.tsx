@@ -34,6 +34,7 @@ function Produtos() {
   // Use state para armazenar uma array de Produto (interface) que será exibido na tabela
   const [data, setData] = useState<Produto[]>([])
 
+
   // Estado para controlar os modais
   const [openModalCadastro, setOpenModalCadastro] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
@@ -41,6 +42,7 @@ function Produtos() {
 
   // Mensagem de sucesso das ações
   const [mensagemSucesso, setMensagemSucesso] = useState<string>('');
+
 
   // Referência ao forms para realizar o submit fora do componente do forms
   const formRef = useRef<{ submitForm: () => void }>(null);
@@ -72,6 +74,7 @@ function Produtos() {
       )
     )
   }
+
 
   // Colunas da tabela
   const columns: ColumnDef<Produto, any>[] = [
@@ -122,6 +125,7 @@ function Produtos() {
       ),
     }),
   ]
+
 
   // Cria a tabela, aqui é onde serão passados todos os possíveis parâmetros
   const table = useReactTable({

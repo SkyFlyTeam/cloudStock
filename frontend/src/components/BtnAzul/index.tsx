@@ -3,6 +3,7 @@ import React from 'react';
 import './style.css';
 
 interface BtnAzulProps {
+
     onClick?: () => void;
     icon: React.ReactNode;
     label: string;
@@ -19,6 +20,7 @@ const BtnAzul: React.FC<BtnAzulProps> = ({ onClick, icon, label, className = ''}
 }
 
 export default BtnAzul;
+
 
 /*
 
@@ -38,5 +40,4 @@ import { IoArrowBackCircleOutline } from "react-icons/io5";
 import { IoCheckmarkCircleOutline } from "react-icons/io5";
 <BtnAzul icon={<IoCheckmarkCircleOutline />} label='CONCLUIR' onClick={() => {}} />
 
-*/
 
