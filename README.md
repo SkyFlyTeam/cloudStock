@@ -63,8 +63,8 @@ Rank | Prioridade | User Story | Estimativa | Sprint | Requisito
 |----|----|----------|----|----|----|
 | 1 | Alta | Eu como funcionário gostaria de cadastrar os produtos e suas propriedades para saber o que tem no estoque.  | 6 | 1 | 02
 | 2 | Alta | Eu como gerente gostaria de cadastrar os locais, fornecedores e setores de cada produto para melhor gestão do estoque. | 4 | 1 | 04
-| 3 | Alta | Eu como gerente gostaria de realizar a compra de produtos.  | 6 | 2 | 05 
-| 4 | Alta | Eu como funcionário gostaria de realizar a venda de produtos | 4 | 2 | 05
+| 3 | Alta | Eu como gerente gostaria de realizar a compra de produtos para alimentar o meu sistema.  | 6 | 2 | 05 
+| 4 | Alta | Eu como funcionário gostaria de realizar a venda de produtos para auxiliar no sistemas de venda  | 4 | 2 | 05
 | 5 | Alta | Eu como gerente gostaria de ter registros da entrada e saída de produtos para não perder a sincronia do sistema e estoque.| 4 | 2 | 05
 | 6 | Alta | Eu como funcionário gostaria de acessar onde está localizado um produto para poder direcionar um comprador.| 2 | 2 | 04
 | 7 | Alta | Eu como administrador gostaria de ter três níveis de acesso diferente para atribuições individualizadas.| 7 | 3 | 01
@@ -80,14 +80,15 @@ Rank | Prioridade | User Story | Estimativa | Sprint | Requisito
 ### Requisitos Funcionais
 - 01: Cadastro de Usuários: Diferenciar níveis de acesso (administrador, gerente, funcionário). 
 - 02: Cadastro de Produtos: Incluindo código, nome, descrição, marca, modelo, categoria, quantidade, preço de custo e venda, unidade de medida, localização no estoque, fornecedor, imagem do produto, peso, dimensões, validade e setor de armazenagem. 
-- 03: Cadastro de Categorias: Organização hierárquica dos produtos, facilitando a navegação.  Cadastro de Local, Fornecedor e Setor: Registro dos locais de armazenamento, fornecedores e Setores. 
-- 04: Movimentação de Estoque: Registros de entrada e saída de produtos com controle de responsável e data. 
-- 05: Relatórios de Estoque: Relatórios detalhados sobre o status do estoque, histórico de compras, e movimentações. 
-- 06: Análise de Tendências: Ferramentas de análise para prever demandas futuras e planejar compras. 
-- 07: Alertas de Baixo Estoque: Notificações automáticas para itens com estoque abaixo do nível mínimo. 
-- 08: Notificações de Expiração: Avisos para produtos próximos da data de validade. 
-- 09: Histórico de Compras e Auditoria: Registro de compras e logs de alterações no sistema.
-- 10: Definir o estoque mínimo
+- 03: Cadastro de Categorias: Organização hierárquica dos produtos, facilitando a navegação.  Cadastro de Local, Fornecedor e Setor: Registro dos locais de armazenamento, fornecedores e Setores.
+- 04: Cadastro de Local, Fornecedor e Setor: Registro dos locais de armazenamento, fornecedores e Setores.
+- 05: Movimentação de Estoque: Registros de entrada e saída de produtos com controle de responsável e data. 
+- 06: Relatórios de Estoque: Relatórios detalhados sobre o status do estoque, histórico de compras, e movimentações. 
+- 07: Análise de Tendências: Ferramentas de análise para prever demandas futuras e planejar compras. 
+- 08: Alertas de Baixo Estoque: Notificações automáticas para itens com estoque abaixo do nível mínimo. 
+- 09: Notificações de Expiração: Avisos para produtos próximos da data de validade. 
+- 10: Histórico de Compras e Auditoria: Registro de compras e logs de alterações no sistema.
+- 11: Definir o estoque mínimo
 
 ### Requisitos Não Funcionais
 - Manual do Usuário: Documento claro e detalhado para auxiliar os usuários. 
@@ -114,13 +115,13 @@ Apresentação das funcionalidades desenvolvidas até o momento:
 
 |    Função     | Nome                                  |                                                                                                                                                      LinkedIn & GitHub                                                                                                                                                      |
 | :-----------: | :------------------------------------ | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| Product Owner |   Mariane Valério Nunes         |     [![Linkedin Badge](https://img.shields.io/badge/Linkedin-blue?style=flat-square&logo=Linkedin&logoColor=white)]() [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/Marianne10)              |
+|  Product Owner  | Brenno Rosa Lyrio de Oliveira               |   [![Linkedin Badge](https://img.shields.io/badge/Linkedin-blue?style=flat-square&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/brennolyrio/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/BrennoLyrio)   |
 | Scrum Master  | André Salerno |      [![Linkedin Badge](https://img.shields.io/badge/Linkedin-blue?style=flat-square&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/andresalerno/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/andresalerno)     |
 | Team Member   | Eric Lourenço Mendes da Silva      |         [![Linkedin Badge](https://img.shields.io/badge/Linkedin-blue?style=flat-square&logo=Linkedin&logoColor=white)]() [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/ericloumendes)        |
 |  Team Member  | Gustavo Muraoka Silva                 |         [![Linkedin Badge](https://img.shields.io/badge/Linkedin-blue?style=flat-square&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/gustavo-muraoka-4256721ba/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/gustavomuraoka)        |
 |  Team Member  | Sarah Montuani Batagioti               |   [![Linkedin Badge](https://img.shields.io/badge/Linkedin-blue?style=flat-square&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/sarahbatagioti/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/SarahBatagioti)   |
 |  Team Member  | Karen de Cássia Gonçalves     |           [![Linkedin Badge](https://img.shields.io/badge/Linkedin-blue?style=flat-square&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/karen-cgonçalves) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/karengoncalves8)   |
-|  Team Member  | Brenno Rosa Lyrio de Oliveira               |   [![Linkedin Badge](https://img.shields.io/badge/Linkedin-blue?style=flat-square&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/brennolyrio/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/BrennoLyrio)   |
+| Team Master |   Mariane Valério Nunes         |     [![Linkedin Badge](https://img.shields.io/badge/Linkedin-blue?style=flat-square&logo=Linkedin&logoColor=white)]() [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/Marianne10)              |
 |  Team Member  | Guilherme dos Santos Benedito               |   [![Linkedin Badge](https://img.shields.io/badge/Linkedin-blue?style=flat-square&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/guilherme-benedito/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/gui-benedito)   |
 |  Team Member  | Arthur Johannes Rodrigues Peres y Peres              |   [![Linkedin Badge](https://img.shields.io/badge/Linkedin-blue?style=flat-square&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/ajperes/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/ajperes)   |
 
