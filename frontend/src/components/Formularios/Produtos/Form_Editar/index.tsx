@@ -96,7 +96,7 @@ const ProdutoEditar = forwardRef((props: Props, ref: Ref<{ submitForm: () => voi
 
     return (
 
-        <form className="scroller" encType="multipart/form-data">
+        <form className="scroller">
             <div>
                 {/* PARA O OTÁRIO DO FUTURO (VULGO ARTHUR): Lembrar de transformar isso tudo num único Flex Row para versão Mobile! */}
                 <div className="dual rflex nwflex prod-cadastro">

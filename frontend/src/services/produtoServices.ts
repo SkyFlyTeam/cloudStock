@@ -55,7 +55,7 @@ const updateProduto = async (id: number, produto: any): Promise<Produto | ApiExc
     console.log(id)
     console.log(produto)
     const { data } = await Api().put<any>(`/produto/${id}`, produto, {
-      headers: { 'Content-Type': 'multipart/form-data' }
+      headers: { 'Content-Type': 'application/json' }
     });
     console.log("data: OK")
 

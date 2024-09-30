@@ -69,10 +69,6 @@ export const controllerFornecedor = {
         include: [Produto] // Incluindo produtos associados
       });
 
-      if (fornecedores.length === 0) {
-        return res.status(404).json({ message: 'Nenhum fornecedor encontrado' });
-      }
-
       return res.status(200).json(fornecedores);
     } catch (error) {
       return res.status(400).json({ error: 'Erro ao buscar fornecedores', details: error.message });
