@@ -40,4 +40,4 @@ import { IoArrowBackCircleOutline } from "react-icons/io5";
 import { IoCheckmarkCircleOutline } from "react-icons/io5";
 <BtnAzul icon={<IoCheckmarkCircleOutline />} label='CONCLUIR' onClick={() => {}} />
 
-
+*/

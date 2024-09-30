@@ -6,7 +6,7 @@ interface Props {
   checked: boolean;
   cod: number; // Adiciona prod_cod como prop
   onStatusChange: (newStatus: boolean) => void; // Adiciona o callback
-  rota: string //nome da rota 
+  rota?: string //nome da rota 
 }
 
 const ToggleBtn: React.FC<Props> = ({ checked, cod, onStatusChange, rota }) => {
