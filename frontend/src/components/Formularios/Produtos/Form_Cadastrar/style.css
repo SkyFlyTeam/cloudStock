@@ -1,0 +1,68 @@
+.scroller {
+    height: 640px;
+    overflow-y: scroll;
+}
+.prod-cadastro {
+    padding: 0 1rem;
+}
+
+.radio-val {
+    padding: 1rem 0 0 0;
+}
+.radio-val > label > input {
+    margin: 0 0 0 1rem;
+}
+
+.unidadeMedida{
+    width: 62.5%;
+}
+
+.nextSect{
+    margin-top: 2rem;
+}
+
+
+.spacerChild > * {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+
+
+
+
+.dual > *:not(:first-child):not(:last-child) {
+    margin: 0 1rem;
+}
+.dual > *:first-child {
+    margin: 0 1rem 0 0;
+}
+.dual > *:last-child {
+    margin: 0 0 0 1rem;
+}
+
+
+/* Tamanhos de Flex */
+.flex1 {
+    flex: 1;
+}
+.flex2{
+    flex: 2;
+}
+
+/* Tipos de Flex */
+.rflex {
+    display: flex;
+    flex-flow: row;
+}
+.cflex {
+    display: flex;
+    flex-flow: column;
+}
+.nwflex {
+    flex-wrap: nowrap;
+}
+
+.rfloat{
+    float: right;
+}

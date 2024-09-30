@@ -1,0 +1,25 @@
+.input-label-disabled {
+  color: #C4C4C4;
+}
+
+.input-field::placeholder {
+  font-size: 0.8rem;
+  color: #C4C4C4;
+  font-display: block;
+  padding-left: 30px;
+}
+
+
+.input-field:disabled::placeholder,
+.input-field:disabled {
+  color: #C4C4C4;
+}
+
+
+.input-field {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #E5E5E5;
+  font-size: 0.9rem;
+}

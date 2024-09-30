@@ -1,0 +1,40 @@
+.busca-container {
+    display: flex;
+    align-items: center;
+    width: 400px; 
+    border: 1px solid #E5E5E5; 
+    border-radius: 8px; 
+    padding: 0px 10px;
+    background-color: #f9f9f9;
+    height: 40px;
+}
+
+.busca-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 10px 0px;
+    font-size: 16px;
+    background-color: transparent;
+    color: black;
+    line-height: 40px;
+}
+
+.busca-input::placeholder {
+    color: #C4C4C4;
+}
+
+.busca-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #C4C4C4;
+    font-size: 20px;
+    height: 40px; 
+    display: flex;
+    align-items: center;
+}
+
+.busca-button:hover {
+    color: #666;
+}

@@ -1,12 +1,13 @@
 import React, { ReactNode } from 'react';
 import './style.css'
 
-interface Props {
-  children: ReactNode // Permite que recebe componentes/conteudo 
-  className?: string // Permite que haja mais classes além de card
+interface CardProps {
+  children: ReactNode;
+  className?: string 
 }
 
-const Card: React.FC<Props> = ({ children, className  }) => {
+const Card: React.FC<CardProps> = ({ children, className }) => {
+
   return (
     <div className={`cards ${className}`}>
       {children}

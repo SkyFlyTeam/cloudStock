@@ -48,7 +48,7 @@ export class Produto extends Model {
         type: DataType.BLOB('medium'),
         allowNull: true
     })
-    Prod_imagem?: Buffer;
+    Prod_imagem?: Buffer | null;
 
     @Column({
         type: DataType.DECIMAL(8,2),

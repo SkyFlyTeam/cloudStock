@@ -26,4 +26,7 @@ router.put('/status/:id', controllerProducts.changeStatus)
 // Rota para exibir a imagem de cada produto
 router.get('/DownloadImage/:id', controllerProducts.showImage)
 
+// Rota para deletar produto
+router.delete('/:id', controllerProducts.delete)
+
 export default router

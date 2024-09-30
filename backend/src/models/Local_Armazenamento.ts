@@ -22,6 +22,12 @@ export class Local_Armazenamento extends Model {
 	})
 	LocAr_nome!: string;
 
+	@Column({
+        type: DataType.BOOLEAN,
+        allowNull: false
+    })
+    LocAr_status!: boolean;
+
 	@ForeignKey(() => Setor)
 	@Column({
 		type: DataType.INTEGER,

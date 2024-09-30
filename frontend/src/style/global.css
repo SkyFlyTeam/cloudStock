@@ -34,3 +34,39 @@ h1.title{
   text-decoration: none;
 }
 
+
+/* Alinhamento do input de busca e botão de cadastro */
+
+.inputButton {
+  display: flex;
+  align-items: center; 
+  width: 100%; 
+}
+
+.inputButton .busca-container {
+  margin-right: auto; 
+}
+
+.inputButton .btnAzul { 
+  margin-left: auto;
+}
+
+/*
+<div className="inputButton">
+  <InputBusca />
+  <BtnAzul icon={<IoAddCircleOutline />} label='CADASTRAR' onClick={() => {}} />
+</div>
+*/
+
+/* Espaçamento do componente input */
+
+.inputEspaçamento > * {
+  margin-bottom: 15px;
+}
+
+.inputEspaçamento > *:last-child {
+  margin-bottom: 0; /* Remove o espaçamento do último input */
+}
+
+
+

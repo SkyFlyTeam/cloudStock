@@ -110,5 +110,25 @@ export const controllerSetor = {
     } catch (error) {
       return res.status(500).json({ error: 'Erro ao alterar o status do setor' });
     }
+  },
+
+  // DELETE /setor/:id
+  delete: async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      
+      // Exclui o Local_Armazenamento
+      const deleted = await Setor.destroy({
+        where: { Setor_id: id }
+      });
+
+      if (deleted) {
+        return res.status(204).send(); // No content
+      }
+
+      return res.status(404).json({ error: 'Setor not found' });
+    } catch (error) {
+      return res.status(400).json({ error: 'Error deleting setor', details: error.message });
+    }
   }
 };

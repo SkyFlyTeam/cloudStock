@@ -3,21 +3,24 @@ import React from 'react';
 import './style.css';
 
 interface BtnAzulProps {
-    onClick: () => void // Função que irá realizar
-    icon: React.ReactNode // Icone
-    label: string // Texto do botão
+
+    onClick?: () => void;
+    icon: React.ReactNode;
+    label: string;
+    className?: string;
 }
 
-const BtnAzul: React.FC<BtnAzulProps> = ({ onClick, icon, label }) => {
+const BtnAzul: React.FC<BtnAzulProps> = ({ onClick, icon, label, className = ''}) => {
     return (
-        <button className='btn-azul' onClick={onClick}>
+        <button className={'btn-azul ' + className} onClick={onClick}>
             <span className='icon'>{icon}</span>
             <span className='label'>{label}</span>        
         </button>
-    )
+    );
 }
 
-export default BtnAzul
+export default BtnAzul;
+
 
 /*
 
@@ -37,4 +40,4 @@ import { IoArrowBackCircleOutline } from "react-icons/io5";
 import { IoCheckmarkCircleOutline } from "react-icons/io5";
 <BtnAzul icon={<IoCheckmarkCircleOutline />} label='CONCLUIR' onClick={() => {}} />
 
-*/
+

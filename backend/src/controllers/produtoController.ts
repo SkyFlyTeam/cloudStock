@@ -20,7 +20,6 @@ export const controllerProducts = {
         Prod_descricao,
         Prod_preco,
         Prod_custo,
-        Prod_imagem,
         Prod_peso,
         Prod_altura, 
         Prod_largura,
@@ -31,7 +30,8 @@ export const controllerProducts = {
         Prod_status: true,
         Prod_quantidade, 
         Categoria_id, 
-        UnidadeMedida_id
+        UnidadeMedida_id,
+        Prod_imagem
       });
       
       return res.status(201).json(product);
@@ -94,22 +94,19 @@ export const controllerProducts = {
     let { Prod_nome, Prod_preco, Prod_descricao, Prod_custo, Prod_peso, Prod_altura, Prod_largura, Prod_comprimento, Prod_marca, Prod_modelo, Prod_validade, Prod_quantidade, Prod_status, Categoria_id, UnidadeMedida_id 
     } = req.body;
       let Prod_imagem = req.file ? req.file.buffer : null;
-      if (!Prod_nome || !Prod_preco) {
+      /*if (!Prod_nome || !Prod_preco) {
         return res.status(400).json({ error: "Campos faltando: Nome, preço" });
+      }*/
+      if (Prod_preco){
+        Prod_preco = parseFloat(Prod_preco);
       }
-      Prod_preco = parseFloat(Prod_preco);
+
     try {
-      // Validação dos campos obrigatórios
-      if (!Prod_nome || !Prod_preco) {
-        return res.status(400).json({ error: "Campos faltando: Nome, preço" });
-      }
-      Prod_preco = parseFloat(Prod_preco)
       const [updated] = await Produto.update({
         Prod_nome,
         Prod_descricao,
         Prod_preco,
         Prod_custo,
-        Prod_imagem,
         Prod_peso,
         Prod_altura, 
         Prod_largura,
@@ -120,7 +117,8 @@ export const controllerProducts = {
         Prod_quantidade, 
         Prod_status, 
         Categoria_id, 
-        UnidadeMedida_id
+        UnidadeMedida_id,
+        Prod_imagem
       }, {
         where: { Prod_cod: id }
       });
@@ -133,7 +131,6 @@ export const controllerProducts = {
         return res.status(200).json(produtoAtualizado);
       }
   
-      return res.status(404).json({ error: 'Produto não encontrado' });
     } catch (error) {
       console.error('Erro ao atualizar produto:', error);
       return res.status(500).json({ error: 'Erro interno no servidor' });
@@ -166,6 +163,16 @@ export const controllerProducts = {
       console.error('Erro ao alterar o status do produto:', error);
       return res.status(500).json({ error: 'Erro interno no servidor' });
     }
+  },
+
+  // ???
+  delete: async(req: Request, resp: Response) => {
+    const {id} =  req.params
+      try {
+        const deleted = await Produto.destroy({where: {Prod_cod: id}})
+        return resp.status(200).json(deleted)
+      } catch (error) {
+        resp.status(400).json({error: 'Erro ao deletar'})
+      }
   }
-  
 };
