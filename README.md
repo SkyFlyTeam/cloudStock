@@ -48,7 +48,7 @@ Utilizamos o Burndown chart para acompanhar o progresso da equipe durante o anda
 
 <div align="center">
  
-![BurndownChart](A ser criado)
+![BurndownChart](./mgt/Imagem%20do%20WhatsApp%20de%202024-09-30%20à(s)%2009.26.30_1c7b38d1.jpg)
  </div>
 
  <br>
