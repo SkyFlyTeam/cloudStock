@@ -78,16 +78,16 @@ Rank | Prioridade | User Story | Estimativa | Sprint | Requisito
 | 15 | Baixa | Eu como funcionário gostaria de filtrar os produtos para melhor organização. | 2 | 4 | 03
 
 ### Requisitos Funcionais
-- Cadastro de Usuários: Diferenciar níveis de acesso (administrador, gerente, funcionário). 
-- Cadastro de Produtos: Incluindo código, nome, descrição, marca, modelo, categoria, quantidade, preço de custo e venda, unidade de medida, localização no estoque, fornecedor, imagem do produto, peso, dimensões, validade e setor de armazenagem. 
-- Cadastro de Categorias: Organização hierárquica dos produtos, facilitando a navegação.  Cadastro de Local, Fornecedor e Setor: Registro dos locais de armazenamento, fornecedores e Setores. 
-- Movimentação de Estoque: Registros de entrada e saída de produtos com controle de responsável e data. 
-- Relatórios de Estoque: Relatórios detalhados sobre o status do estoque, histórico de compras, e movimentações. 
-- Análise de Tendências: Ferramentas de análise para prever demandas futuras e planejar compras. 
-- Alertas de Baixo Estoque: Notificações automáticas para itens com estoque abaixo do nível mínimo. 
-- Notificações de Expiração: Avisos para produtos próximos da data de validade. 
-- Histórico de Compras e Auditoria: Registro de compras e logs de alterações no sistema.
-- Definir o estoque mínimo
+- 01: Cadastro de Usuários: Diferenciar níveis de acesso (administrador, gerente, funcionário). 
+- 02: Cadastro de Produtos: Incluindo código, nome, descrição, marca, modelo, categoria, quantidade, preço de custo e venda, unidade de medida, localização no estoque, fornecedor, imagem do produto, peso, dimensões, validade e setor de armazenagem. 
+- 03: Cadastro de Categorias: Organização hierárquica dos produtos, facilitando a navegação.  Cadastro de Local, Fornecedor e Setor: Registro dos locais de armazenamento, fornecedores e Setores. 
+- 04: Movimentação de Estoque: Registros de entrada e saída de produtos com controle de responsável e data. 
+- 05: Relatórios de Estoque: Relatórios detalhados sobre o status do estoque, histórico de compras, e movimentações. 
+- 06: Análise de Tendências: Ferramentas de análise para prever demandas futuras e planejar compras. 
+- 07: Alertas de Baixo Estoque: Notificações automáticas para itens com estoque abaixo do nível mínimo. 
+- 08: Notificações de Expiração: Avisos para produtos próximos da data de validade. 
+- 09: Histórico de Compras e Auditoria: Registro de compras e logs de alterações no sistema.
+- 10: Definir o estoque mínimo
 
 ### Requisitos Não Funcionais
 - Manual do Usuário: Documento claro e detalhado para auxiliar os usuários. 
