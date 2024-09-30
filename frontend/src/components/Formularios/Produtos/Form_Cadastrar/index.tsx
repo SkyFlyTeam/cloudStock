@@ -2,15 +2,13 @@ import { useState, forwardRef, useImperativeHandle, Ref } from 'react';
 import './style.css'
 import { ApiException } from '../../../../config/apiException';
 import { produtoServices } from '../../../../services/produtoServices';
-//
 import { IoAddCircleOutline } from "react-icons/io5";
 import Input from "../../../Input";
 import DivTitulo from "../../../DivTitulo";
-import './style.css'
 import BtnAzul from "../../../BtnAzul";
 
 interface Props {
-    onSuccess: (message: string) => void // Função pra quando dê certo 
+    onSuccess: (message: string) => void // Função para quando dê certo 
 }
 
 const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
@@ -32,210 +30,98 @@ const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
     const [Prod_unidadeId, setUnidadeID] = useState<null>(null)
     const [Prod_imagem, setImg] = useState<File | null>(null)
 
-
     const eventoFormulario = async () => {
-        const novoProduto = {
-            Prod_nome,
-            Prod_descricao,
-            Prod_preco,
-            Prod_custo,
-            Prod_peso,
-            Prod_altura,
-            Prod_largura,
-            Prod_comprimento,
-            Prod_marca,
-            Prod_modelo,
-            Prod_validade,
-            Prod_quantidade,
-            Prod_categoriaId,
-            Prod_unidadeId,
-            Prod_imagem
+        const formData = new FormData();
+        
+        // Adicione os dados do produto
+        formData.append('Prod_nome', Prod_nome);
+        formData.append('Prod_descricao', Prod_descricao);
+        formData.append('Prod_preco', Prod_preco.toString());
+        formData.append('Prod_custo', Prod_custo.toString());
+        formData.append('Prod_peso', Prod_peso.toString());
+        formData.append('Prod_altura', Prod_altura.toString());
+        formData.append('Prod_largura', Prod_largura.toString());
+        formData.append('Prod_comprimento', Prod_comprimento.toString());
+        formData.append('Prod_marca', Prod_marca);
+        formData.append('Prod_modelo', Prod_modelo);
+        formData.append('Prod_validade', Prod_validade ? 'true' : 'false');
+        formData.append('Prod_quantidade', Prod_quantidade.toString());
+
+        // Adicione o arquivo de imagem, se houver
+        if (Prod_imagem) {
+            formData.append('Prod_imagem', Prod_imagem);
         }
 
-        const response = await produtoServices.createProduto(novoProduto);
+        const response = await produtoServices.createProduto(formData); 
         if (response instanceof ApiException) {
             console.error(response.message);
         } else {
-            console.log("Produto criado com sucesso:", response)
-            setNome('')
-            setDescricao('')
-            setPreco(0)
-            setCusto(0)
-            setPeso(0)
-            setAltura(0)
-            setLargura(0)
-            setComprimento(0)
-            setMarca('')
-            setModelo('')
-            setValidade(false)
-            setQuantidade(0)
-            setCategoriaID(null)
-            setUnidadeID(null)
-            setImg(null)
-            props.onSuccess('Produto criado com sucesso!') // Mensagem que será exibida na tela
+            console.log("Produto criado com sucesso:", response);
+            // Resetar os campos
+            setNome('');
+            setDescricao('');
+            setPreco(0);
+            setCusto(0);
+            setPeso(0);
+            setAltura(0);
+            setLargura(0);
+            setComprimento(0);
+            setMarca('');
+            setModelo('');
+            setValidade(false);
+            setQuantidade(0);
+            setCategoriaID(null);
+            setUnidadeID(null);
+            setImg(null);
+            props.onSuccess('Produto criado com sucesso!');
         }
     }
 
-    // Função necessária para realizar o submit utilizando a referência
     useImperativeHandle(ref, () => ({
         submitForm() {
-            eventoFormulario()
+            eventoFormulario();
         }
     }))
 
-
     return (
         <form className="scroller" encType="multipart/form-data">
-            <div>
-                {/* PARA O OTÁRIO DO FUTURO (VULGO ARTHUR): Lembrar de transformar isso tudo num único Flex Row para versão Mobile! */}
-                <div className="dual rflex nwflex prod-cadastro">
-                    <div className="flex2 cflex nwflex spacerChild"> {/* Coluna dupla: [1] [2] */}
-                        {/* Linha: [1] */}
-                        <Input className=""
-                            label="Nome"
-                            placeholder="Nome do produto"
-                            onChange={(e) => setNome(e.target.value)}
-                            value={Prod_nome}
-                        />
-                        {/* Linha: [2] */}
-                        <div className="dual rflex nwflex">
-                            <Input className="flex1"
-                                label="Marca"
-                                placeholder="Marca"
-                                onChange={(e) => setMarca(e.target.value)}
-                                value={Prod_marca}
-                            />
-                            <Input className="flex1"
-                                label="Modelo"
-                                placeholder="Modelo"
-                                onChange={(e) => setModelo(e.target.value)}
-                                value={Prod_modelo}
-                            />
-                        </div>
-                        {/* Linha: [3] */}
-                        <div className="dual rflex nwflex">
-                            <Input className="flex1"
-                                label="Custo"
-                                placeholder="Custo"
-                                onChange={(e) => setCusto(parseFloat(e.target.value))}
-                                value={Prod_custo.toString()}
-                            />
-                            <Input className="flex1"
-                                label="Venda"
-                                placeholder="Venda"
-                                onChange={(e) => setPreco(parseFloat(e.target.value))}
-                                value={Prod_preco.toString()}
-                            //onChange={this.obterVenda}
-                            />
-                        </div>
-                    </div>
+            <div className="dual rflex nwflex prod-cadastro">
+                <div className="flex2 cflex nwflex spacerChild">
+                    <Input label="Nome" placeholder="Nome do produto" onChange={(e) => setNome(e.target.value)} value={Prod_nome} />
+                    <Input label="Marca" placeholder="Marca" onChange={(e) => setMarca(e.target.value)} value={Prod_marca} />
+                    <Input label="Modelo" placeholder="Modelo" onChange={(e) => setModelo(e.target.value)} value={Prod_modelo} />
+                    <Input label="Custo" placeholder="Custo" onChange={(e) => setCusto(parseFloat(e.target.value))} value={Prod_custo.toString()} />
+                    <Input label="Venda" placeholder="Venda" onChange={(e) => setPreco(parseFloat(e.target.value))} value={Prod_preco.toString()} />
+                </div>
+                <div className="flex1 cflex nwflex spacerChild">
+                    <Input label="Categoria" type="select" placeholder="Selecione..." value="" disabled={true} />
+                    <Input label="Quantidade" placeholder="Quantidade" onChange={(e) => setQuantidade(parseInt(e.target.value))} value={Prod_quantidade.toString()} />
+                </div>
+            </div>
 
-                    <div className="flex1 cflex nwflex spacerChild"> {/* Coluna simples: [3] */}
-                        {/* Linha: [1] */}
-                        {/*<Input className="flex1"
-                            label="Código"
-                            placeholder="Código do produto"
-                            value=""
-                        />*/}
-                        <Input className="flex1"
-                            label="Categoria"
-                            type="select"
-                            placeholder="Selecione..."
-                            value=""
-                            disabled={true}
-                        />
-                        {/* Linha: [2] */}
-                        <Input className="flex1"
-                            label="Quantidade"
-                            placeholder="Quantidade"
-                            onChange={(e) => setQuantidade(parseInt(e.target.value))}
-                            value={Prod_quantidade.toString()}
-                        />
-                        {/* Linha: [3] */}
-                        <div className="flex1"></div>
-                        {/*
-                        <Input className="flex1"
-                            label="Código"
-                            placeholder="Código do produto"
-                            value=""
-                        /> 
-                        Usar este aqui após terminado como gambiarra
-                            Uma solução melhor é NECESSÁRIA!
-                            <div className="flex1"></div>
-                        */}
+            <div className="nextSect">
+                <DivTitulo label="Especificações" />
+                <Input label="Peso" placeholder="Peso" onChange={(e) => setPeso(parseFloat(e.target.value))} value={Prod_peso.toString()} />
+                <Input label="Largura" placeholder="Largura" onChange={(e) => setLargura(parseFloat(e.target.value))} value={Prod_largura.toString()} />
+                <Input label="Comprimento" placeholder="Comprimento" onChange={(e) => setComprimento(parseFloat(e.target.value))} value={Prod_comprimento.toString()} />
+                <Input label="Altura" placeholder="Altura" onChange={(e) => setAltura(parseFloat(e.target.value))} value={Prod_altura.toString()} />
+                <div className="input-radio">
+                    <label>Possui validade?</label>
+                    <div className="radio-option">
+                        <input type="radio" name="prod_validade" onChange={(e) => setValidade(e.target.value === 'true')} />
+                        <label>Sim</label>
+                    </div>
+                    <div className="radio-option">
+                        <input type="radio" name="prod_validade" defaultChecked />
+                        <label>Não</label>
                     </div>
                 </div>
             </div>
 
             <div className="nextSect">
                 <DivTitulo className=""
-                    label="Especificações"
-                />
-                <div className="spacerChild prod-cadastro">
-                    {/* Linha: [1] */}
-                    <Input className="unidadeMedida"
-                        label="Unidade de Medida"
-                        type="select"
-                        placeholder="Selecione"
-                        disabled={true}
+                        label="Detalhes"
                     />
-                    {/* Linha: [2] */}
-                    <div className="dual rflex nwflex">
-                        <Input className="flex1"
-                            label="Peso"
-                            placeholder="Peso"
-                            onChange={(e) => setPeso(parseFloat(e.target.value))}
-                            value={Prod_peso.toString()}
-                        />
-                        <Input className="flex1"
-                            label="Largura"
-                            placeholder="Largura"
-                            onChange={(e) => setLargura(parseFloat(e.target.value))}
-                            value={Prod_largura.toString()}
-                        />
-                        <Input className="flex1"
-                            label="Comprimento"
-                            placeholder="Comprimento"
-                            onChange={(e) => setComprimento(parseFloat(e.target.value))}
-                            value={Prod_comprimento.toString()}
-                        />
-                        <Input className="flex1"
-                            label="Altura"
-                            placeholder="Altura"
-                            onChange={(e) => setAltura(parseFloat(e.target.value))}
-                            value={Prod_altura.toString()}
-                        />
-                    </div>
-                    {/* Linha: [3] */}
-                    <div className="radio-val">
-                        <label>Possui validade?</label>
-                        <label>
-                            <input type="radio" name="prod_validade"
-                                onChange={(e) => setValidade((e.target.value === 'true'))}
-                            />
-                            <span>Sim</span>
-                        </label>
-                        <label>
-                            <input type="radio" name="prod_validade" defaultChecked />
-                            <span>Não</span>
-                        </label>
-                    </div>
-                    {/* Criar component RadioButton!! */}
-                </div>
-            </div>
-
-            <div className="nextSect">
-                <DivTitulo className=""
-                    label="Detalhes"
-                />
-                <div className="spacerChild prod-cadastro">
-                    {/* Linha: [1] */}
-                    {/*<Input className="unidadeMedida"
-                        label="Localização no estoque"
-                        placeholder="Localização de armazenamento..."
-                        disabled={true}
-                    />*/}
-                    {/* Linha: [2] */}
                     <Input className=""
                         label="Descrição"
                         placeholder="Descreva o produto..."
@@ -243,28 +129,10 @@ const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
                         value={Prod_descricao}
                     />
                     {/* Linha: [3] */}
-                    {/*
-                    <input className=""
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => {
-                            if (e.target.files && e.target.files.length > 0) {
-                                setImg(e.target.files[0]);
-                            }
-                        }}
-                        disabled={true}
-                        
-                    //onChange={(e) => setImg((e.target as HTMLInputElement)?.files[0])}
-                    />*/}
-                </div>
+                <input type="file" onChange={(e) => e.target.files && setImg(e.target.files[0])} accept="image/*" />
             </div>
         </form>
     )
-
 })
 
-export default ProdutoFormulario
-
-
-
-
+export default ProdutoFormulario;

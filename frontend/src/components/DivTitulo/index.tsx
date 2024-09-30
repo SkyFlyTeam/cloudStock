@@ -10,7 +10,7 @@ const DivTitulo: React.FC<Props> = ({ className, label }) => {
 
   return (
     <div className="{className} divtitulo">
-      <h3 className="divtitulo">{label}</h3>
+      <h5 className="divtitulo">{label}</h5>
       <hr className="line divtitulo"></hr>
     </div>
   );

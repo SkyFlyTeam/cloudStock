@@ -2,14 +2,11 @@ div.divtitulo {
     display: flex;
     flex-direction: row;
     align-items: center;
+    gap: 1rem;
 }
 
-h3.divtitulo {
-    flex-grow: 0;
-}
 
-hr.divtitulo {
-    flex-grow: 1;
+.divtitulo hr {
     height: 0.2rem;
     margin-left: 0.5rem;
     background-color: black;

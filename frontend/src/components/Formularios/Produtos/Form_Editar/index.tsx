@@ -25,38 +25,51 @@ const ProdutoEditar = forwardRef((props: Props, ref: Ref<{ submitForm: () => voi
     const [Prod_quantidade, setQuantidade] = useState<number>(0)
     const [Categoria_Id, setCategoriaID] = useState<null>(null)
     const [UnidadeMedida_id, setUnidadeID] = useState<null>(null)
-    //const [Prod_imagem, setImg] = useState<File | null>(null)
+    const [Prod_imagem, setImg] = useState<File | null>(null)
 
     const eventoFormulario = async () => {
-        const produtoAtualizado = {
-            Prod_nome,
-            Prod_descricao,
-            Prod_preco,
-            Prod_custo,
-            Prod_peso,
-            Prod_altura,
-            Prod_largura,
-            Prod_comprimento,
-            Prod_marca,
-            Prod_modelo,
-            Prod_validade,
-            Prod_quantidade,
-            Categoria_Id,
-            UnidadeMedida_id
-            //UnidadeMedida_id,
-            //Prod_imagem
+        const formData = new FormData();
+
+        // Adicione os dados do produto
+        formData.append('Prod_nome', Prod_nome);
+        formData.append('Prod_descricao', Prod_descricao);
+        formData.append('Prod_preco', Prod_preco.toString());
+        formData.append('Prod_custo', Prod_custo.toString());
+        formData.append('Prod_peso', Prod_peso.toString());
+        formData.append('Prod_altura', Prod_altura.toString());
+        formData.append('Prod_largura', Prod_largura.toString());
+        formData.append('Prod_comprimento', Prod_comprimento.toString());
+        formData.append('Prod_marca', Prod_marca);
+        formData.append('Prod_modelo', Prod_modelo);
+        formData.append('Prod_validade', Prod_validade ? 'true' : 'false');
+        formData.append('Prod_quantidade', Prod_quantidade.toString());
+
+        // Adicione o arquivo de imagem, se houver
+        if (Prod_imagem) {
+            formData.append('Prod_imagem', Prod_imagem);
         }
 
         // Envia o id como parâmetro e as informações atualizdas
-        const response = await produtoServices.updateProduto(props.id, produtoAtualizado)
+        const response = await produtoServices.updateProduto(props.id, formData)
         if (response instanceof ApiException) {
-            console.log("Form_Editar:")
-            console.log(props.id)
-            console.log(produtoAtualizado)
             console.error(response.message)
         } else {
-            console.log("Produto atualizado com sucesso:", response)
-            props.onSuccess('Produto atualizado com sucesso!')
+            setNome('');
+            setDescricao('');
+            setPreco(0);
+            setCusto(0);
+            setPeso(0);
+            setAltura(0);
+            setLargura(0);
+            setComprimento(0);
+            setMarca('');
+            setModelo('');
+            setValidade(false);
+            setQuantidade(0);
+            setCategoriaID(null);
+            setUnidadeID(null);
+            setImg(null);
+            props.onSuccess('Produto atualizado com sucesso!');
         }
     }
 
@@ -96,7 +109,7 @@ const ProdutoEditar = forwardRef((props: Props, ref: Ref<{ submitForm: () => voi
 
     return (
 
-        <form className="scroller">
+        <form className="scroller" encType="multipart/form-data">
             <div>
                 {/* PARA O OTÁRIO DO FUTURO (VULGO ARTHUR): Lembrar de transformar isso tudo num único Flex Row para versão Mobile! */}
                 <div className="dual rflex nwflex prod-cadastro">
@@ -255,7 +268,7 @@ const ProdutoEditar = forwardRef((props: Props, ref: Ref<{ submitForm: () => voi
                         value={Prod_descricao}
                     />
                     {/* Linha: [3] */}
-                    {/*
+                    
                     <input className=""
                         type="file"
                         accept="image/*"
@@ -264,9 +277,7 @@ const ProdutoEditar = forwardRef((props: Props, ref: Ref<{ submitForm: () => voi
                                 setImg(e.target.files[0]);
                             }
                         }}
-                        disabled={true}
-                    //onChange={(e) => setImg((e.target as HTMLInputElement)?.files[0])}
-                    />*/}
+                    />
                 </div>
             </div>
         </form>

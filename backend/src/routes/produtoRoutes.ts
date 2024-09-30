@@ -18,7 +18,7 @@ router.get('/', controllerProducts.show)
 router.get('/:id', controllerProducts.showSpecific)
 
 // Rota para atualizar produto
-router.put('/:id', controllerProducts.update)
+router.put('/:id', upload.single('Prod_imagem'), controllerProducts.update)
 
 // Rota para mudar status do produto
 router.put('/status/:id', controllerProducts.changeStatus)

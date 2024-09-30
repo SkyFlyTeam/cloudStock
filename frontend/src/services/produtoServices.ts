@@ -47,15 +47,10 @@ const createProduto = async (produto: any): Promise<Produto | ApiException> => {
 }
 
 const updateProduto = async (id: number, produto: any): Promise<Produto | ApiException> => {
-  console.log("updateProduto: OK")
   try {
-    console.log("Try: OK")
-    
-    console.log("Pre-data:")
-    console.log(id)
     console.log(produto)
     const { data } = await Api().put<any>(`/produto/${id}`, produto, {
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'multipart/form-data' }
     });
     console.log("data: OK")
 

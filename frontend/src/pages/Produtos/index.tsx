@@ -229,7 +229,7 @@ function Produtos() {
       {produtoSelecionado && (
         <Modal
           isOpen={openEditModal}
-          label="Editar Fornecedor"
+          label="Editar Produto"
           setModalOpen={closeEditModal}
           buttons={
             <>
@@ -245,6 +245,7 @@ function Produtos() {
               setMensagemSucesso(message);
               closeEditModal();
               fetchProdutos(); // Atualiza a tabela após edição
+              window.location.reload();
             }}
           />
         </Modal>
