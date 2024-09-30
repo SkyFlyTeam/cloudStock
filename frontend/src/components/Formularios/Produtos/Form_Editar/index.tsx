@@ -1,21 +1,16 @@
-import { useState, forwardRef, useImperativeHandle, Ref } from 'react';
-import './style.css'
+import { useState, useEffect, forwardRef, useImperativeHandle, Ref } from 'react';
 import { ApiException } from '../../../../config/apiException';
 import { produtoServices } from '../../../../services/produtoServices';
 //
-import { IoAddCircleOutline } from "react-icons/io5";
 import Input from "../../../Input";
 import DivTitulo from "../../../DivTitulo";
-import './style.css'
-import BtnAzul from "../../../BtnAzul";
 
 interface Props {
-    onSuccess: (message: string) => void // Função pra quando dê certo 
+    id: number
+    onSuccess: (message: string) => void
 }
 
-const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
-    submitForm: () => void
-}>) => {
+const ProdutoEditar = forwardRef((props: Props, ref: Ref<{ submitForm: () => void }>) => {
     const [Prod_nome, setNome] = useState<string>('')
     const [Prod_descricao, setDescricao] = useState<string>('')
     const [Prod_preco, setPreco] = useState<number>(0)
@@ -28,13 +23,12 @@ const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
     const [Prod_modelo, setModelo] = useState<string>('')
     const [Prod_validade, setValidade] = useState<boolean>(false)
     const [Prod_quantidade, setQuantidade] = useState<number>(0)
-    const [Prod_categoriaId, setCategoriaID] = useState<null>(null)
-    const [Prod_unidadeId, setUnidadeID] = useState<null>(null)
-    const [Prod_imagem, setImg] = useState<File | null>(null)
-
+    const [Categoria_Id, setCategoriaID] = useState<null>(null)
+    const [UnidadeMedida_id, setUnidadeID] = useState<null>(null)
+    //const [Prod_imagem, setImg] = useState<File | null>(null)
 
     const eventoFormulario = async () => {
-        const novoProduto = {
+        const produtoAtualizado = {
             Prod_nome,
             Prod_descricao,
             Prod_preco,
@@ -47,44 +41,61 @@ const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
             Prod_modelo,
             Prod_validade,
             Prod_quantidade,
-            Prod_categoriaId,
-            Prod_unidadeId,
-            Prod_imagem
+            Categoria_Id,
+            UnidadeMedida_id
+            //UnidadeMedida_id,
+            //Prod_imagem
         }
 
-        const response = await produtoServices.createProduto(novoProduto);
+        // Envia o id como parâmetro e as informações atualizdas
+        const response = await produtoServices.updateProduto(props.id, produtoAtualizado)
         if (response instanceof ApiException) {
-            console.error(response.message);
+            console.log("Form_Editar:")
+            console.log(props.id)
+            console.log(produtoAtualizado)
+            console.error(response.message)
         } else {
-            console.log("Produto criado com sucesso:", response)
-            setNome('')
-            setDescricao('')
-            setPreco(0)
-            setCusto(0)
-            setPeso(0)
-            setAltura(0)
-            setLargura(0)
-            setComprimento(0)
-            setMarca('')
-            setModelo('')
-            setValidade(false)
-            setQuantidade(0)
-            setCategoriaID(null)
-            setUnidadeID(null)
-            setImg(null)
-            props.onSuccess('Produto criado com sucesso!') // Mensagem que será exibida na tela
+            console.log("Produto atualizado com sucesso:", response)
+            props.onSuccess('Produto atualizado com sucesso!')
         }
     }
 
-    // Função necessária para realizar o submit utilizando a referência
     useImperativeHandle(ref, () => ({
         submitForm() {
             eventoFormulario()
         }
     }))
 
+    // Preenche o formulário com as informações
+    useEffect(() => {
+        const fetchProduto = async () => {
+            const result = await produtoServices.getProdutoByID(props.id)
+            if (result instanceof ApiException) {
+                alert(result.message)
+            } else {
+                setNome(result.Prod_nome)
+                setDescricao(result.Prod_descricao)
+                setPreco(result.Prod_preco)
+                setCusto(result.Prod_custo)
+                setPeso(result.Prod_peso)
+                setAltura(result.Prod_altura)
+                setLargura(result.Prod_largura)
+                setComprimento(result.Prod_comprimento)
+                setMarca(result.Prod_marca)
+                setModelo(result.Prod_modelo)
+                setValidade(result.Prod_validade)
+                setQuantidade(result.Prod_quantidade)
+                setCategoriaID(result.Categoria_id)
+                setUnidadeID(result.UnidadeMedida_id)
+                //setImg(result.Prod_imagem)
+            }
+        };
+
+        fetchProduto()
+    }, []);
 
     return (
+
         <form className="scroller" encType="multipart/form-data">
             <div>
                 {/* PARA O OTÁRIO DO FUTURO (VULGO ARTHUR): Lembrar de transformar isso tudo num único Flex Row para versão Mobile! */}
@@ -133,10 +144,10 @@ const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
                     <div className="flex1 cflex nwflex spacerChild"> {/* Coluna simples: [3] */}
                         {/* Linha: [1] */}
                         {/*<Input className="flex1"
-                            label="Código"
-                            placeholder="Código do produto"
-                            value=""
-                        />*/}
+                    label="Código"
+                    placeholder="Código do produto"
+                    value=""
+                />*/}
                         <Input className="flex1"
                             label="Categoria"
                             type="select"
@@ -144,6 +155,7 @@ const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
                             value=""
                             disabled={true}
                         />
+
                         {/* Linha: [2] */}
                         <Input className="flex1"
                             label="Quantidade"
@@ -154,15 +166,15 @@ const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
                         {/* Linha: [3] */}
                         <div className="flex1"></div>
                         {/*
-                        <Input className="flex1"
-                            label="Código"
-                            placeholder="Código do produto"
-                            value=""
-                        /> 
-                        Usar este aqui após terminado como gambiarra
-                            Uma solução melhor é NECESSÁRIA!
-                            <div className="flex1"></div>
-                        */}
+                <Input className="flex1"
+                    label="Código"
+                    placeholder="Código do produto"
+                    value=""
+                /> 
+                Usar este aqui após terminado como gambiarra
+                    Uma solução melhor é NECESSÁRIA!
+                    <div className="flex1"></div>
+                */}
                     </div>
                 </div>
             </div>
@@ -231,10 +243,10 @@ const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
                 <div className="spacerChild prod-cadastro">
                     {/* Linha: [1] */}
                     {/*<Input className="unidadeMedida"
-                        label="Localização no estoque"
-                        placeholder="Localização de armazenamento..."
-                        disabled={true}
-                    />*/}
+                label="Localização no estoque"
+                placeholder="Localização de armazenamento..."
+                disabled={true}
+            />*/}
                     {/* Linha: [2] */}
                     <Input className=""
                         label="Descrição"
@@ -253,18 +265,12 @@ const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
                             }
                         }}
                         disabled={true}
-                        
                     //onChange={(e) => setImg((e.target as HTMLInputElement)?.files[0])}
                     />*/}
                 </div>
             </div>
         </form>
     )
-
 })
 
-export default ProdutoFormulario
-
-
-
-
+export default ProdutoEditar;

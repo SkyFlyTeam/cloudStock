@@ -13,12 +13,19 @@ import EditarRemoverBtn from "../../components/EditarRemoverBtn"
 import BtnAzul from "../../components/BtnAzul";
 import Modal from "../../components/Modal";
 import BtnCancelar from "../../components/BtnCancelar";
+
 import ProdutoFormulario from "../../components/Formularios/Produtos/Form_Cadastrar";
+import ProdutoExcluir from "../../components/Formularios/Produtos/Form_Excluir";
+import ProdutoEditar from "../../components/Formularios/Produtos/Form_Editar";
 
 import './style.css'
 /* Icons */
 import { IoAddCircleOutline } from "react-icons/io5"
 import { AiOutlineDelete } from "react-icons/ai"
+
+
+
+
 
 // Criar o helper para colunas
 const columnHelper = createColumnHelper<Produto>()
@@ -29,6 +36,8 @@ function Produtos() {
 
   // Estado para controlar os modais
   const [openModalCadastro, setOpenModalCadastro] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
   // Mensagem de sucesso das ações
   const [mensagemSucesso, setMensagemSucesso] = useState<string>('');
@@ -36,6 +45,8 @@ function Produtos() {
   // Referência ao forms para realizar o submit fora do componente do forms
   const formRef = useRef<{ submitForm: () => void }>(null);
 
+  // Guarda o ID dos fornecedores selecionados na tabela
+  const [produtoSelecionado, setProdutoSelecionado] = useState<number | null>(null);
 
   // Função para buscar todos os produtos
   const fetchProdutos = async () => {
@@ -72,18 +83,14 @@ function Produtos() {
       header: () => 'Nome',
       cell: info => info.getValue(),
     }),
-    columnHelper.accessor('Categoria', {
+    columnHelper.accessor('Categoria_id', {
       header: () => 'Categoria',
       cell: info => `${info.getValue()}`,
     }),
     columnHelper.accessor('Prod_quantidade', {
       header: () => 'Quantidade',
       cell: info => `${info.getValue()}`,
-    }),/* Comentado pois no momento não temos essa informação
-        columnHelper.accessor('Prod_quantidade', {
-            header: () => 'Quantidade',
-            cell: info => '0', 
-        }), */
+    }),
     columnHelper.accessor('Prod_validade', {
       header: () => 'Validade',
       cell: info => `${info.getValue()}`,
@@ -106,7 +113,13 @@ function Produtos() {
     }),
     columnHelper.display({
       id: 'actions',
-      cell: props => <EditarRemoverBtn />
+      cell: props => (
+        <EditarRemoverBtn
+          id={props.row.original.Prod_cod}
+          onEdit={() => handleEditClick(props.row.original.Prod_cod)}
+          onDelete={() => handleDeleteClick(props.row.original.Prod_cod)}
+        />
+      ),
     }),
   ]
 
@@ -116,6 +129,29 @@ function Produtos() {
     columns,
     getCoreRowModel: getCoreRowModel(),
   })
+
+
+  // FUNÇÕES PARA EVENTO DE MODALS
+  // Edição
+  const handleEditClick = (id: number) => {
+    setProdutoSelecionado(id)
+    setOpenEditModal(true) // Abre o modal de edição
+  }
+
+  const closeEditModal = () => {
+    setProdutoSelecionado(null)
+    setOpenEditModal(false)
+  }
+  // Excluir
+  const handleDeleteClick = (id: number) => {
+    setProdutoSelecionado(id)
+    setOpenDeleteModal(true)
+  }
+
+  const closeDeleteModal = () => {
+    setProdutoSelecionado(null)
+    setOpenDeleteModal(false)
+  }
 
   return (
     <main>
@@ -185,7 +221,54 @@ function Produtos() {
           }}
         />
       </Modal>
-
+      {/* Modal de Edição */}
+      {produtoSelecionado && (
+        <Modal
+          isOpen={openEditModal}
+          label="Editar Fornecedor"
+          setModalOpen={closeEditModal}
+          buttons={
+            <>
+              <BtnCancelar onClick={closeEditModal} />
+              <BtnAzul icon={<IoAddCircleOutline />} label="SALVAR" onClick={() => formRef.current?.submitForm()} />
+            </>
+          }
+        >
+          <ProdutoEditar
+            ref={formRef}
+            id={produtoSelecionado}
+            onSuccess={message => {
+              setMensagemSucesso(message);
+              closeEditModal();
+              fetchProdutos(); // Atualiza a tabela após edição
+            }}
+          />
+        </Modal>
+      )}
+      {/* Modal de Exclusão */}
+      {produtoSelecionado && (
+        <Modal
+          isOpen={openDeleteModal}
+          label="Excluir Produto"
+          setModalOpen={closeDeleteModal}
+          buttons={
+            <>
+              <BtnCancelar onClick={closeDeleteModal} />
+              <BtnAzul icon={<AiOutlineDelete />} label="Deletar" onClick={() => formRef.current?.submitForm()} />
+            </>
+          }
+        >
+          <ProdutoExcluir
+            ref={formRef}
+            id={produtoSelecionado}
+            onSuccess={message => {
+              setMensagemSucesso(message)
+              closeDeleteModal()
+              fetchProdutos()
+            }}
+          />
+        </Modal>
+      )}
 
     </main>
   )

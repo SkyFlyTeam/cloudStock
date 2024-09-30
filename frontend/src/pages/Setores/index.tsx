@@ -1,8 +1,138 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import InputBusca from "../../components/InputBusca";
+import { IoAddCircleOutline } from "react-icons/io5";
+import BtnAzul from "../../components/BtnAzul";
+import './style.css'
+import '../../style/global.css'
+import Modal from "../../components/Modal";
+import Input from "../../components/Input";
+import Card from "../../components/Card";
+import { FiEdit2 } from "react-icons/fi";
+import { IoIosArrowForward } from "react-icons/io";
+import { ApiException } from "../../config/apiException";
+import BtnCancelar from "../../components/BtnCancelar";
+import { Setor, setoresServices } from "../../services/setorServices";
+import SetorFormulario from "../../components/Formularios/Setores/Setor_Cadastrar";
+import Setor_editar from "../../components/Formularios/Setores/Setor_Editar";
 
 function Setores() {
+    const [openModalCadastro, setOpenModalCadastro] = useState(false)
+    const [openModalEdicao, setOpenModalEdicao] = useState(false)
+    const [openDeleteModal, setOpenDeleteModal] = useState(false)
+    
+    const [name, setName] = useState('')
+    const [sector, setSector] = useState('')
+    const [setores, setSetores] = useState<Setor[]>([]);
+
+    // Guarda o ID dos fornecedores selecionados na tabela
+    const [setorSelecionado, setSetorSelecionado] = useState<number | null>(null);
+
+    // Mensagem de sucesso das ações
+    const [mensagemSucesso, setMensagemSucesso] = useState<string>('');
+
+    // Referência ao forms para realizar o submit fora do componente do forms
+    const formRef = useRef<{ submitForm: () => void }>(null);
+
+    const handleEditClick = (id: number) => {
+      setSetorSelecionado(id)
+      setOpenModalEdicao(true) // Abre o modal de edição
+    }
+  
+    const closeEditModal = () => {
+      setSetorSelecionado(null)
+      setOpenModalEdicao(false)
+    }
+
+
+
+    const fetchSetores = async () => {
+        const result = await setoresServices.getAllSetores()
+        if (result instanceof ApiException) {
+          console.log(result.message)
+        } else {
+          setSetores(result);
+        }
+    }
+
+    useEffect(() => {
+        fetchSetores()
+    }, [])
+
     return (
-        <h1>Setores</h1>
+        <main>
+            <h1 className="title">Setores</h1>
+
+            <div className="inputButton">
+                <InputBusca />
+                <BtnAzul icon={<IoAddCircleOutline />} label='CADASTRAR' onClick={() => setOpenModalCadastro(true)} />
+            </div>
+
+        
+            <div className="cards-group">
+            {setores.map(setor => (
+                <Card className="card-item">
+                    <span>{setor.Setor_nome}</span> 
+                    <div className="actions">
+                        <FiEdit2 color="#61BDE0" size={20} className="edit-icon" onClick={() => handleEditClick(setor.Setor_id)}/>
+                        <IoIosArrowForward color="#61BDE0" size={25}/>
+                    </div>
+                </Card>
+            ))}
+            </div>
+
+      {/* MODALS*/}
+      {/* Modal de Cadastro */}
+      <Modal
+        isOpen={openModalCadastro} // Abre o modal
+        label="Cadastrar Setor" // Titulo do modal
+        setModalOpen={() => setOpenModalCadastro(false)} // Função para fechar dentro do modal
+        buttons={
+          <>
+            <BtnCancelar onClick={() => setOpenModalCadastro(false)} /> {/*Fechar o modal */}
+            <BtnAzul
+              icon={<IoAddCircleOutline />}
+              label="CADASTRAR"
+              onClick={() => formRef.current?.submitForm()} /* Passa a função da referencia do formulario para poder enviar o submit */
+            />
+          </>
+        }
+      >
+        <SetorFormulario
+          ref={formRef} /* Passa a referencia do formulario */
+          onSuccess={(message: React.SetStateAction<string>)  => {
+            setMensagemSucesso(message) 
+            setOpenModalCadastro(false)
+            fetchSetores() // Atualiza a tabela
+          }}
+        />
+      </Modal>
+
+      {/* Modal de Edição */}
+      {setorSelecionado && (
+        <Modal
+          isOpen={openModalEdicao}
+          label="Editar Setor"
+          setModalOpen={closeEditModal}
+          buttons={
+            <>
+              <BtnCancelar onClick={closeEditModal} />
+              <BtnAzul icon={<IoAddCircleOutline />} label="SALVAR" onClick={() => formRef.current?.submitForm()} />
+            </>
+          }
+        >
+          <Setor_editar
+            ref={formRef}
+            id={setorSelecionado}
+            onSuccess={message => {
+              setMensagemSucesso(message);
+              closeEditModal();
+              fetchSetores(); // Atualiza a tabela após edição
+            }}
+          />
+        </Modal>
+      )}
+            
+        </main>
     )
 }
 

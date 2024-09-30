@@ -7,6 +7,7 @@ import { FaWarehouse } from "react-icons/fa";
 import { FaSquareArrowUpRight } from "react-icons/fa6";
 import { PiSignOutBold } from "react-icons/pi";
 import { Link, useLocation} from "react-router-dom";
+import { MdAllInbox } from "react-icons/md";
 
 const Navbar: React.FC = () => {
   const location = useLocation(); // Hook para pegar a rota atual
@@ -40,6 +41,12 @@ const Navbar: React.FC = () => {
                 <div className={location.pathname === '/LocalArmazenamento' ? 'menu-item active' : 'menu-item'}>
                     <FaWarehouse />
                     <div className="navbartext"><span>Locais Armazenamento</span></div>
+                </div>
+              </Link>
+              <Link to="/Setores" className="link">
+                <div className={location.pathname === '/Setores' ? 'menu-item active' : 'menu-item'}>
+                    <MdAllInbox />
+                    <div className="navbartext"><span>Setores</span></div>
                 </div>
               </Link>
               <div className="menu-item">

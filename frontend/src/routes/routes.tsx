@@ -4,7 +4,7 @@ import LocalArmazenamento from "../pages/LocalArmazenamento/index";
 import Setores from "../pages/Setores/index";
 import Fornecedores from "../pages/Fornecedores/index";
 import Navbar from "../components/navbar";
-import Products from "../pages/produto"
+//import Products from "../pages/produto"
 
 
 import '../style/global.css';

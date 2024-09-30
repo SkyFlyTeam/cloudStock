@@ -48,7 +48,7 @@ export class Produto extends Model {
         type: DataType.BLOB('medium'),
         allowNull: true
     })
-    Prod_imagem?: Buffer;
+    Prod_imagem?: Buffer | null;
 
     @Column({
         type: DataType.DECIMAL(8,2),
@@ -87,10 +87,10 @@ export class Produto extends Model {
     Prod_modelo?: string;
 
     @Column({
-        type: DataType.DATE, 
+        type: DataType.BOOLEAN, 
         allowNull: true, 
       })
-      Prod_validade?: Date
+      Prod_validade?: Boolean
 
     @Column({
         type: DataType.BOOLEAN,
