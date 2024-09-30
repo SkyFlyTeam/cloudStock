@@ -61,21 +61,21 @@ As seguintes ferramentas, linguagens, bibliotecas e tecnologias foram usadas na 
 
 Rank | Prioridade | User Story | Estimativa | Sprint | Requisito
 |----|----|----------|----|----|----|
-| 1 | Alta | Eu como funcionário gostaria de cadastrar os produtos e suas propriedades para saber o que tem no estoque. | 6 | 1 | 02
+| 1 | Alta | Eu como funcionário gostaria de cadastrar os produtos e suas propriedades para saber o que tem no estoque.  | 6 | 1 | 02
 | 2 | Alta | Eu como gerente gostaria de cadastrar os locais, fornecedores e setores de cada produto para melhor gestão do estoque. | 4 | 1 | 04
-| 3 | Alta | Eu como gerente gostaria de realizar a compra de produtos. | 6 | 2 | 05 
-| 4 | Alta | Eu como funcionário gostaria de realizar a venda de produtos |4 | 2 | 05
-| 5 | Alta | Eu como gerente gostaria de ter registros da entrada e saída de produtos para não perder a sincronia do sistema e estoque. | 4 | 2 | 05
-| 6 | Alta | Eu como funcionário gostaria de acessar onde está localizado um produto para poder direcionar um comprador. | 2 | 2 | 04
-| 7 | Alta | Eu como administrador gostaria de ter três níveis de acesso diferente para atribuições individualizadas. | 7 | 3 | 01
-| 8 | Alta | Eu como gerente gostaria de definir o estoque mínimo de cada produto para que não haja falta de produtos. | 4 | 3 | 11
+| 3 | Alta | Eu como gerente gostaria de realizar a compra de produtos.  | 6 | 2 | 05 
+| 4 | Alta | Eu como funcionário gostaria de realizar a venda de produtos | 4 | 2 | 05
+| 5 | Alta | Eu como gerente gostaria de ter registros da entrada e saída de produtos para não perder a sincronia do sistema e estoque.| 4 | 2 | 05
+| 6 | Alta | Eu como funcionário gostaria de acessar onde está localizado um produto para poder direcionar um comprador.| 2 | 2 | 04
+| 7 | Alta | Eu como administrador gostaria de ter três níveis de acesso diferente para atribuições individualizadas.| 7 | 3 | 01
+| 8 | Alta | Eu como gerente gostaria de definir o estoque mínimo de cada produto para que não haja falta de produtos.  | 4 | 3 | 10
 | 9 | Alta | Eu como gerente e funcionário gostaria que sejam emitidos alertas de estoque baixo para controle de reposição. | 6 | 3 | 08
 | 10 | Alta | Eu como gerente e funcionário desejo que a plataforma emita avisos assim que um produto esteja próximo da data de validade para que eu possa substituir esses produtos por itens com validade mais longa e evitar perdas. | 4 | 3 | 09
-| 11 | Alta | Eu como gerente gostaria de possuir relatórios detalhados sobre o status do estoque, histórico de compras e movimentação para possuir o total controle do estoque. | 9 | 4 | 06
-| 12 | Alta | Eu como gerente gostaria de que hajam métricas de venda e perdas para planejar a compra de produtos de interesse. | 7 | 4 | 07
-| 13 | Média | Eu como gerente gostaria de ver um histórico de compras e alterações no sistema para auditar os registros de entrada e saída dos itens da loja. | 5 | 4 | 10
+| 11 | Alta | Eu como gerente gostaria de possuir relatórios detalhados sobre o status do estoque, histórico de compras e movimentação para possuir o total controle do estoque.  | 9 | 4 | 06
+| 12 | Alta | Eu como gerente gostaria de que hajam métricas de venda e perdas para planejar a compra de produtos de interesse.  | 7 | 4 | 07
+| 13 | Média | Eu como gerente gostaria de ver um histórico de compras e alterações no sistema para auditar os registros de entrada e saída dos itens da loja. | 5 | 4 | 09
 | 14 | Média | Eu como administrador gostaria de cadastrar novos usuários junto de suas respectivas funções para alimentar minha plataforma. | 3 | 4 | 01
-| 15 | Baixa | Eu como funcionário gostaria de filtrar os produtos para melhor organização. | 2 | 4 | 03
+| 15 | Baixa | Eu como funcionário gostaria de filtrar os produtos para melhor organização.| 2 | 4 | 03
 
 ### Requisitos Funcionais
 - 01: Cadastro de Usuários: Diferenciar níveis de acesso (administrador, gerente, funcionário). 
