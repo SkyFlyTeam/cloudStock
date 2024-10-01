@@ -28,8 +28,8 @@ O Cloud Stock é um sistema de controle de estoque desenvolvida para facilitar a
 Sprint | Previsão | Status | Relatório
 |------|--------|------|------|
 |Kick Off | 26/08/2024 a 30/08/2024 | ✔️ Concluída | -
-|01 | 09/09/2024 a 29/09/2024 | em andamento | [ver relatório](https://github.com/SkyFlyTeam/cloudStock/tree/sprint1) 
-|02|  30/09/2024 a 20/10/2024|  a fazer |
+|01 | 09/09/2024 a 29/09/2024 | ✔️ Concluída | [ver relatório](https://github.com/SkyFlyTeam/cloudStock/tree/sprint1) 
+|02|  30/09/2024 a 20/10/2024|  em andamento |
 |03| 21/10/2024 a 10/11/2024 |  a fazer |
 |04| 11/11/2024 a 01/12/2024 | a fazer |
 |Feira de Soluções| 12/12 | a fazer |
