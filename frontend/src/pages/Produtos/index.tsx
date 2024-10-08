@@ -24,16 +24,12 @@ import { IoAddCircleOutline } from "react-icons/io5"
 import { AiOutlineDelete } from "react-icons/ai"
 
 
-
-
-
 // Criar o helper para colunas
 const columnHelper = createColumnHelper<Produto>()
 
 function Produtos() {
   // Use state para armazenar uma array de Produto (interface) que será exibido na tabela
   const [data, setData] = useState<Produto[]>([])
-
 
   // Estado para controlar os modais
   const [openModalCadastro, setOpenModalCadastro] = useState(false);
@@ -204,7 +200,6 @@ function Produtos() {
       <Modal
         isOpen={openModalCadastro} // Abre o modal
         label="Cadastrar Produto" // Titulo do modal
-        setModalOpen={() => setOpenModalCadastro(false)} // Função para fechar dentro do modal
         buttons={
           <>
             <BtnCancelar onClick={() => setOpenModalCadastro(false)} /> {/*Fechar o modal */}
@@ -230,7 +225,6 @@ function Produtos() {
         <Modal
           isOpen={openEditModal}
           label="Editar Produto"
-          setModalOpen={closeEditModal}
           buttons={
             <>
               <BtnCancelar onClick={closeEditModal} />
@@ -255,7 +249,6 @@ function Produtos() {
         <Modal
           isOpen={openDeleteModal}
           label="Excluir Produto"
-          setModalOpen={closeDeleteModal}
           buttons={
             <>
               <BtnCancelar onClick={closeDeleteModal} />

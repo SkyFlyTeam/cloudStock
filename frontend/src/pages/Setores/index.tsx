@@ -85,7 +85,6 @@ function Setores() {
       <Modal
         isOpen={openModalCadastro} // Abre o modal
         label="Cadastrar Setor" // Titulo do modal
-        setModalOpen={() => setOpenModalCadastro(false)} // Função para fechar dentro do modal
         buttons={
           <>
             <BtnCancelar onClick={() => setOpenModalCadastro(false)} /> {/*Fechar o modal */}
@@ -112,7 +111,6 @@ function Setores() {
         <Modal
           isOpen={openModalEdicao}
           label="Editar Setor"
-          setModalOpen={closeEditModal}
           buttons={
             <>
               <BtnCancelar onClick={closeEditModal} />

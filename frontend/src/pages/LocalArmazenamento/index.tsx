@@ -84,7 +84,6 @@ function LocalArmazenamento() {
       <Modal
         isOpen={openModalCadastro} // Abre o modal
         label="Cadastrar Local de Armazenamento" // Titulo do modal
-        setModalOpen={() => setOpenModalCadastro(false)} // Função para fechar dentro do modal
         buttons={
           <>
             <BtnCancelar onClick={() => setOpenModalCadastro(false)} /> {/*Fechar o modal */}
@@ -111,7 +110,6 @@ function LocalArmazenamento() {
         <Modal
           isOpen={openModalEdicao}
           label="Editar Local"
-          setModalOpen={closeEditModal}
           buttons={
             <>
               <BtnCancelar onClick={closeEditModal} />

@@ -6,14 +6,12 @@ import BtnAzul from '../BtnAzul';
 
 interface ModalProps {
   isOpen: boolean;
-  setModalOpen: () => void;
   children: ReactNode;
   label: string;
   buttons?: ReactNode; 
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, setModalOpen, label, children, buttons }) => {
-  const [openModal, setOpenModal] = useState(false);
+const Modal: React.FC<ModalProps> = ({ isOpen, label, children, buttons }) => {
 
   if (isOpen) {
     return (
