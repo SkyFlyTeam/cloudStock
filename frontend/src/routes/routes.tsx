@@ -3,6 +3,7 @@ import Produtos from "../pages/Produtos/index";
 import LocalArmazenamento from "../pages/LocalArmazenamento/index";
 import Setores from "../pages/Setores/index";
 import Fornecedores from "../pages/Fornecedores/index";
+import Saidas from "../pages/Saidas/index";
 import Navbar from "../components/navbar";
 //import Products from "../pages/produto"
 
@@ -22,6 +23,7 @@ function MainRoutes(){
                         <Route path="/LocalArmazenamento" element={<LocalArmazenamento />} />
                         <Route path="/Setores" element={<Setores />} />
                         <Route path="/Fornecedores" element={<Fornecedores />} />
+                        <Route path="/Saidas" element={<Saidas />} />
                     </Routes>
                 </div>
             </div>

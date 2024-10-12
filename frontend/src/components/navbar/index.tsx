@@ -49,10 +49,12 @@ const Navbar: React.FC = () => {
                     <div className="navbartext"><span>Setores</span></div>
                 </div>
               </Link>
-              <div className="menu-item">
-                  <FaSquareArrowUpRight />
-                  <div className="navbartext"><span>Saída</span></div>
-              </div>
+              <Link to="/Saidas" className="link">
+                <div className={location.pathname === '/Saidas' ? 'menu-item active' : 'menu-item'}>
+                    <FaSquareArrowUpRight />
+                    <div className="navbartext"><span>Saídas</span></div>
+                </div>
+              </Link>
             </div>
           </div>
     
