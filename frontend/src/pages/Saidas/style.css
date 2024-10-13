@@ -131,3 +131,10 @@ hr.line {
     width: 291px;
     height: 178px;
 }
+
+.single-button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

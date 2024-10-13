@@ -10,9 +10,16 @@ import Input from "../../components/Input";
 /* Icons */
 import { IoAddCircleOutline } from "react-icons/io5";
 import { AiOutlineDelete } from "react-icons/ai";
-import { Api, hostname } from "../../config/apiConfig";
+import { Api} from "../../config/apiConfig";
+import Modal from "../../components/Modal";
+import BtnCancelar from "../../components/BtnCancelar";
 
 function Saidas() {
+  // Controlar estados dos Modais
+  const [openModalCadastro, setOpenModalCadastro] = useState(false); // concluir saida
+  const [openModalQuantidade, setOpenModalQuantidade] = useState(false); // verificar quantidade
+  const [openModalNulo, setOpenModalNulo] = useState(false); // garantir envio maior que 0
+
   // data - armazena todos produtos
   const [data, setData] = useState<Produto[]>([]);
 
@@ -28,11 +35,11 @@ function Saidas() {
     if (result instanceof ApiException) {
       console.log(result.message);
     } else {
-      setData(result);
+      const results = result.filter((produto) => produto.Prod_quantidade > 0) // Pegar apenas produtos com quantidade maior que 0
+      setData(results);
     }
   };
 
-  // Chama a função para pegar todos os produtos do BD ao montar o componente
   useEffect(() => {
     fetchProdutos();
   }, []);
@@ -63,6 +70,11 @@ function Saidas() {
 
   // Atualiza a quantidade selecionada pelo cliente e recalcula o subtotal
   const handleQuantidadeChange = (id: number, quantidade: number) => {
+    const produto = produtos.find((p) => p.Prod_cod === id)
+    if (produto && produto.Prod_quantidade !== undefined && quantidade > produto.Prod_quantidade){
+      setOpenModalQuantidade(true)
+      return
+    }
     setProdutosSelecionados((prev) =>
       prev?.map((produto) =>
         produto.id === id ? { ...produto, quantidade: quantidade } : produto
@@ -97,20 +109,30 @@ function Saidas() {
     );
   };
 
+  const concluir = () => {
+    if (produtosSelecionados?.find((produto) => produto.quantidade <= 0)) {
+      setOpenModalNulo(true)
+      return; 
+    }
+    setOpenModalCadastro(true)
+  }
+
   const handleConcluir = async () => {
     try {
-      // Chamada da API e aguarda a conclusão
-      const response = await Api().post<any>('/saida/teste', produtosSelecionados, {
+      // Faz a chamada à API
+      const response = await Api().post<any>('/saida', produtosSelecionados, {
         headers: { 'Content-Type': 'application/json' },
       });
-      console.log("Resposta da API:", response);
+      console.log('Resposta da API:', response);
       // Limpa os estados
       setProdutosSelecionados([]);
       setProdutos([]);
-  
-      console.log("Produtos removidos e estados limpos");
+      fetchProdutos(); // Atualiza os produtos
+      console.log('Produtos removidos e estados limpos');
+      // Fecha o modal após a conclusão
+      setOpenModalCadastro(false);
     } catch (error: any) {
-      console.error("Erro na função handleConcluir:", error);
+      console.error('Erro na função handleConcluir:', error);
     }
   }
     
@@ -164,11 +186,12 @@ function Saidas() {
               </div>
               <div className="quantidade">
                 <Input
+                  max={produto.Prod_quantidade}
                   label="Quantidade"
                   type="number"
                   value={quantidadeSelecionada}
                   onChange={(e) =>
-                    handleQuantidadeChange(produto.Prod_cod, Number(e.target.value))
+                    handleQuantidadeChange(produto.Prod_cod, +e.target.value)
                   }
                 />
               </div>
@@ -193,11 +216,52 @@ function Saidas() {
 
       {produtos.length > 0 && (
         <div className="btn-concluir">
-          <BtnAzul icon={<IoAddCircleOutline />} label="CONCLUIR" onClick={handleConcluir} />
+          <BtnAzul icon={<IoAddCircleOutline />} label="CONCLUIR" onClick={concluir} />
         </div>
       )}
     </div>
+
+    {/* MODALS */}
+    <Modal
+      isOpen={openModalCadastro} 
+      label="Cadastrar Saída?" 
+      buttons={
+        <>
+          <BtnCancelar onClick={() => setOpenModalCadastro(false)} /> 
+          <BtnAzul
+            icon={<IoAddCircleOutline />}
+            label="CADASTRAR"
+            onClick={handleConcluir} 
+          />
+        </>
+      }
+      children={undefined}
+    />
+
+    <Modal
+      isOpen={openModalNulo} 
+      label="Quantidade deve ser maior que 0"
+      buttons={
+        <div className="single-button">
+          <BtnCancelar onClick={() => setOpenModalNulo(false)} /> 
+        </div>
+      }
+      children={undefined}
+    />
+
+    <Modal
+      isOpen={openModalQuantidade} 
+      label="Quantidade insuficiente" 
+      buttons={
+        <div className="single-button">
+          <BtnCancelar onClick={() => setOpenModalQuantidade(false)} />
+        </div>
+      }
+      children={undefined}
+    />
   </main>
+
+  
   );
 }
 
