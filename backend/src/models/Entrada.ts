@@ -1,7 +1,8 @@
-import { Table, Column, Model, DataType, ForeignKey, BelongsToMany, BelongsTo } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, ForeignKey, BelongsToMany, BelongsTo, AfterCreate } from 'sequelize-typescript';
 import { Usuario } from './Usuario';
 import { Lote } from './Lote';
 import { Lote_Entrada } from './Lote_Entrada';
+import { Registros } from './Registros';
 
 @Table({
   tableName: 'Entrada',
@@ -41,4 +42,14 @@ export class Entrada extends Model {
 
 	@BelongsToMany(() => Lote, () => Lote_Entrada)
 	Lotes!: Lote[];
+
+	@AfterCreate
+	static async notificarRegistro(instance: Entrada) {
+		await Registros.create({
+			Registro_Mensagem: `Valor total: R$ ${instance.Ent_valortot}`,
+			Registro_Data: new Date(),
+			Registro_Repsonsavel: "User",
+			Registro_Tipo: "Entrada"
+		})
+	}
 }
