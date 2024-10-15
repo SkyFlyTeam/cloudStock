@@ -8,7 +8,7 @@ import BtnAzul from "../../components/BtnAzul";
 import Input from "../../components/Input";
 
 /* Icons */
-import { IoAddCircleOutline } from "react-icons/io5";
+import { IoAddCircleOutline, IoRadioButtonOnSharp } from "react-icons/io5";
 import { AiOutlineDelete } from "react-icons/ai";
 import { Api} from "../../config/apiConfig";
 import Modal from "../../components/Modal";
@@ -45,6 +45,11 @@ function Saidas() {
   }, []);
 
   const getProduto = async (id: number): Promise<Produto | undefined> => {
+    // não deixa adicionar o mesmo produto
+    if(produtos.find(p => p.Prod_cod === id)){
+      return
+    }
+
     const produto = data.find(
       (p: Produto) => p.Prod_cod === id
     );
@@ -65,8 +70,8 @@ function Saidas() {
       return prev ? [...prev, newProdutoSelecionado] : [newProdutoSelecionado];
     });
 
-        return produto;
-    };
+    return produto;
+  };
 
   // Atualiza a quantidade selecionada pelo cliente e recalcula o subtotal
   const handleQuantidadeChange = (id: number, quantidade: number) => {
@@ -82,7 +87,7 @@ function Saidas() {
     );
     setProdutos([...produtos]);
   };
-
+  
   const calcularSubtotal = (produto: Produto, quantidade: number) => {
     const custo = produto.Prod_custo || 0; // Make sure this value is correct
     const qtd = quantidade || 0;
@@ -90,13 +95,12 @@ function Saidas() {
   };
 
   const calcularTotal = () => {
-    const total = produtos
-      .reduce((acc, produto) => {
-        const quantidadeSelecionada = produtosSelecionados?.find(
+    const total = produtos.reduce((acc, produto) => { 
+        const quantidadeSelecionada = produtosSelecionados?.find( 
           (p) => p.id === produto.Prod_cod
         )?.quantidade || 0;
         const custo = produto.Prod_custo || 0; 
-        return acc + custo * quantidadeSelecionada;
+        return acc + custo * quantidadeSelecionada; 
       }, 0)
       .toFixed(2);
     return total;
@@ -226,14 +230,14 @@ function Saidas() {
       isOpen={openModalCadastro} 
       label="Cadastrar Saída?" 
       buttons={
-        <>
+        <div className="confirma-buttons">
           <BtnCancelar onClick={() => setOpenModalCadastro(false)} /> 
           <BtnAzul
             icon={<IoAddCircleOutline />}
             label="CADASTRAR"
             onClick={handleConcluir} 
           />
-        </>
+        </div>
       }
       children={undefined}
     />

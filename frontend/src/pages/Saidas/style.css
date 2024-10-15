@@ -4,6 +4,7 @@ main {
     flex-direction: column;
     gap: 1rem;
     padding: 2em;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .page-title {
@@ -79,7 +80,6 @@ hr.line {
 
 .label {
     font-weight: bold;
-    margin-bottom: 0.5rem;
 }
 
 .value {
@@ -130,6 +130,14 @@ hr.line {
 .emptyProducts img {
     width: 291px;
     height: 178px;
+}
+
+.confirma-buttons {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 1em;
 }
 
 .single-button {
