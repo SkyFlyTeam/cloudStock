@@ -1,8 +1,8 @@
-<h1 align='center'> Sprint 1: 09/09/2024 à 29/09/2024 </h1>
+<h1 align='center'> Sprint 2: 30/09/2024 à 20/10/2024 </h1>
 
 <br>
 
-Na primeira sprint realizamos o processo de prototipagem e criação de uma identidade visual, estruturação do projeto e criação do modelo lógico e conceitual do banco de dados. Ademais, implementamos funcionalidades básicas como cadastro de produtos, setores, locais de armazenamento e fornecedores.
+Na segunda sprint realizamos a criação de páginas dos registros de entrada e saída, tanto pagínas separadas de cada função quanto juntas, podendo ter uma melhor análise conforme o necessário, além disso, agora é exibido os produtos dentro dos seus devidos locais, e por fim, também é possível agora a movimentação de entrada e saída e já estar atualizado no mesmo instante na página de exibição da quantidade de produtos.
 
 <br>
 
@@ -19,8 +19,11 @@ Os requisitos desenvolvidos durante esta sprint foram:
 
 ID | User story | Estimativa
 |------|--------|------|
-| 1 | 	Eu como funcionário gostaria de cadastrar os produtos e suas propriedades para saber o que tem no estoque. | 6 |
-| 2 | 	Eu como gerente gostaria de cadastrar os locais, fornecedores e setores de cada produto para melhor gestão do estoque. | 4 |
+| 3 | 	Eu como gerente gostaria de realizar a compra de produtos para adicionar ao meu estoque | 6 |
+| 4 | 	Eu como funcionário gostaria de realizar a venda de produtos para continuar a gerar a demanda do estoque | 4 |
+| 5 | 	Eu como gerente gostaria de ter registros da entrada e saída de produtos para não perder a sincronia do sistema e estoque. | 2 |
+| 6 | 	Eu como funcionário gostaria de acessar onde está localizado um produto para poder direcionar um comprador. | 2 |
+
 
 <br>
 
