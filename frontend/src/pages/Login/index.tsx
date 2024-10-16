@@ -2,11 +2,14 @@ import { useRef, useState, useContext, useEffect } from 'react';
 import { useAuth } from '../../context/AuthProvider';
 import './style.css';
 import { useNavigate } from 'react-router-dom';
+import Card from '../../components/Card';
+import { IoCloseCircleOutline } from 'react-icons/io5';
 
 function Login() {
     const { handleLogin, currentUser } = useAuth()
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const [ email, setEmail ] = useState('')
+    const [ password, setPassword ] = useState('')
+    const [ message, setMessage ] = useState('')
 
     const navigate = useNavigate()
 
@@ -25,15 +28,15 @@ function Login() {
                 }
             }
         } catch (err) {
-            alert('Falha ao fazer login. Verifique suas credenciais.');
+            setMessage('Falha ao fazer login. Verifique suas credenciais.')
         }
     }
 
 
     return (
         <main>
-            <div className="card">
-                <div className="logo">
+            <Card className='card'>
+                <div className="card-logo">
                     <img src="https://i.ibb.co/LJFHWys/imagem-2024-09-17-201505544.png" alt=''></img>
                     <div className="textlogo"> <span>CLOUD STOCK</span> </div>
                 </div>
@@ -42,6 +45,8 @@ function Login() {
                     <h6>ENTRAR</h6>
                     <span>Preenche suas informações para realizar o login</span>
                 </div>
+
+                {message? (<div className='msg-error'><IoCloseCircleOutline color='#DB1111' size={22}/><span>{message}</span></div>) : ''}
 
                 <form onSubmit={handleSubmit}>
                     <div className="input-group">
@@ -54,9 +59,9 @@ function Login() {
                             <input type="password" name="password" id="password" onChange={(e) => setPassword(e.target.value)} value={password} required />
                         </div>
                     </div>
-                    <button>enviar</button>
+                    <button>ENVIAR</button>
                 </form>
-            </div>
+            </Card>
         </main>
     )
 }
