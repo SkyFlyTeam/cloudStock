@@ -11,6 +11,7 @@ import unidadeMedidaRoutes from './unidadeMedidaRoutes';
 import localArmazenamentoRoutes from './localArmazenamentoRoutes';
 import setorRoutes from './setorRoutes';
 import registroRoutes from './registrosRoutes';
+import authRoutes from './authRoutes'
 
 const router = Router();
 
@@ -49,5 +50,8 @@ router.use('/setor', setorRoutes);
 
 //Rota para Registros
 router.use('/registros', registroRoutes);
+
+//Rota para Autenticação
+router.use('/auth', authRoutes);
 
 export default router;

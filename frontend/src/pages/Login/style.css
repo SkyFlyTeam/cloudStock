@@ -1,0 +1,17 @@
+body{
+    background: rgb(97,189,224);
+    background: linear-gradient(90deg, rgba(97,189,224,1) 0%, rgba(76,131,153,1) 61%);
+}
+
+main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.card{
+    width: 40%;
+
+}
+

@@ -8,9 +8,12 @@ import { FaSquareArrowUpRight } from "react-icons/fa6";
 import { PiSignOutBold } from "react-icons/pi";
 import { Link, useLocation} from "react-router-dom";
 import { MdAllInbox } from "react-icons/md";
+import { useAuth } from "../../context/AuthProvider";
 
 const Navbar: React.FC = () => {
-  const location = useLocation(); // Hook para pegar a rota atual
+  const location = useLocation() // Hook para pegar a rota atual
+  const { handleLogout } = useAuth()
+  
     return (
         <div className="sidebar">
           <div className="logo">
@@ -56,7 +59,7 @@ const Navbar: React.FC = () => {
             </div>
           </div>
     
-          <div className="logout">
+          <div className="logout" onClick={handleLogout}>
             <span>Logout</span> 
             <PiSignOutBold />
           </div>
