@@ -11,7 +11,7 @@ Na segunda sprint realizamos a criação de páginas dos registros de entrada e 
 Os requisitos desenvolvidos durante esta sprint foram:
 
 - Cadastro de Local, Fornecedor e Setor: Registro dos locais de armazenamento, fornecedores e Setores.
-- Cadastro de Produtos: Incluindo código, nome, descrição, marca, modelo, categoria, quantidade, preço de custo e venda, unidade de medida, localização no estoque, fornecedor, imagem do produto, peso, dimensões, validade e setor de armazenagem.
+- Movimentação de Estoque: Registros de entrada e saída de produtos com controle de responsável e data. 
 
 <br>
 
