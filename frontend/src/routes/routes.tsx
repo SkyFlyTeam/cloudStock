@@ -9,6 +9,7 @@ import Navbar from "../components/navbar";
 
 import '../style/global.css';
 import BarraSuperior from "../components/Barra Superior";
+import Registros from "../pages/Registros";
 
 function MainRoutes(){
     return(
@@ -22,6 +23,7 @@ function MainRoutes(){
                         <Route path="/LocalArmazenamento" element={<LocalArmazenamento />} />
                         <Route path="/Setores" element={<Setores />} />
                         <Route path="/Fornecedores" element={<Fornecedores />} />
+                        <Route path="/Registros" element={<Registros />} />
                     </Routes>
                 </div>
             </div>
