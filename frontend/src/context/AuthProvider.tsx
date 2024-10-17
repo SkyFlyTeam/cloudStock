@@ -7,6 +7,7 @@ type AuthContext = {
     currentUser?: Usuario | null
     handleLogin: (email: string, senha: string) => Promise<void>
     handleLogout: () => Promise<void>
+    isLoading: boolean 
 }
 
 const AuthContext = createContext<AuthContext | undefined>(undefined)
@@ -16,8 +17,10 @@ type AuthProviderProps = PropsWithChildren
 export default function AuthProvider({children}: AuthProviderProps) {
     const [authToken, setAuthToken] = useState<string | null>()
     const [currentUser, setCurrentUser] = useState<Usuario | null>(null)
+    const [isLoading, setIsLoading] = useState(true) 
 
     async function handleLogin(email: string, senha: string) {
+        setIsLoading(true);
         const credenciais = {
             email, 
             senha
@@ -28,6 +31,7 @@ export default function AuthProvider({children}: AuthProviderProps) {
         if (response instanceof ApiException) {
             setAuthToken(null)
             setCurrentUser(null)
+            setIsLoading(false);
             throw new Error(response.message)
         } else {
             const { usuarioLogin, authToken } = response
@@ -35,13 +39,14 @@ export default function AuthProvider({children}: AuthProviderProps) {
             setCurrentUser(usuarioLogin)
             localStorage.setItem('authToken', authToken);
             localStorage.setItem('currentUser', JSON.stringify(usuarioLogin))
+            setIsLoading(false); 
         }
-        
     }
 
     async function handleLogout() {
         setAuthToken(null)
         setCurrentUser(null)
+        setIsLoading(false);
         localStorage.removeItem('authToken')
         localStorage.removeItem('currentUser')
     }
@@ -54,10 +59,11 @@ export default function AuthProvider({children}: AuthProviderProps) {
             setAuthToken(savedAuthToken);
             setCurrentUser(JSON.parse(savedUser));
         }
-    }, []);
-
+        setIsLoading(false); 
+    }, [])
+    
     return(
-        <AuthContext.Provider value={{authToken, currentUser, handleLogin, handleLogout}}>
+        <AuthContext.Provider value={{authToken, currentUser, handleLogin, handleLogout, isLoading}}>
             {children}
         </AuthContext.Provider>
     )

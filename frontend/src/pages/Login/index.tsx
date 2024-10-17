@@ -13,32 +13,33 @@ function Login() {
 
     const navigate = useNavigate()
 
-    const handleSubmit = async (e: any ) => {
+    const handleSubmit = async (e: any) => {
         e.preventDefault()
-        
         try {
             await handleLogin(email, password)
-            if (currentUser?.Cargo_id) {
-                if (currentUser.Cargo_id === 1) {
-                    navigate('/Produto');
-                } else if (currentUser.Cargo_id === 2) {
-                    navigate('/Entrada');
-                } else if (currentUser.Cargo_id === 3) {
-                    navigate('/Usuarios');
-                }
-            }
         } catch (err) {
             setMessage('Falha ao fazer login. Verifique suas credenciais.')
         }
     }
 
+    useEffect(() => {
+        if (currentUser?.Cargo_id) {
+            if (currentUser.Cargo_id === 1) {
+                navigate('/Produtos');
+            } else if (currentUser.Cargo_id === 2) {
+                navigate('/Entrada');
+            } else if (currentUser.Cargo_id === 3) {
+                navigate('/Usuarios');
+            }
+        }
+    }, [currentUser, navigate])
 
     return (
-        <main>
+        <main className="main-login">
             <Card className='card'>
                 <div className="card-logo">
                     <img src="https://i.ibb.co/LJFHWys/imagem-2024-09-17-201505544.png" alt=''></img>
-                    <div className="textlogo"> <span>CLOUD STOCK</span> </div>
+                    <div className="logo-text"> <span>CLOUD STOCK</span> </div>
                 </div>
 
                 <div className="card-title">
@@ -46,9 +47,9 @@ function Login() {
                     <span>Preenche suas informações para realizar o login</span>
                 </div>
 
-                {message? (<div className='msg-error'><IoCloseCircleOutline color='#DB1111' size={22}/><span>{message}</span></div>) : ''}
+                {message && (<div className='msg-error'><IoCloseCircleOutline color='#DB1111' size={22}/><span>{message}</span></div>)}
 
-                <form onSubmit={handleSubmit}>
+                <form className="login" onSubmit={handleSubmit}>
                     <div className="input-group">
                         <div className="input-item">
                             <label htmlFor="email">Email</label>
@@ -65,5 +66,6 @@ function Login() {
         </main>
     )
 }
+
 
 export default Login

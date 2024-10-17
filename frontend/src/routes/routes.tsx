@@ -22,7 +22,7 @@ function MainRoutes(){
                 <Route element={<Layout />}>
 
                     {/* Rotas do Funcionário */}
-                    <Route path="/Produto" element={<ProtectedRoute allowedRoles={[1]}><Produtos /></ProtectedRoute>}/>
+                    <Route path="/Produtos" element={<ProtectedRoute allowedRoles={[1, 2]}><Produtos /></ProtectedRoute>}/>
                     <Route path="/LocalArmazenamento" element={<ProtectedRoute allowedRoles={[1]}><LocalArmazenamento /></ProtectedRoute>}/>
                     <Route path="/Setores" element={<ProtectedRoute allowedRoles={[1]}><Setores /></ProtectedRoute>}/>
                     <Route path="/Fornecedores" element={<ProtectedRoute allowedRoles={[1]}><Setores /></ProtectedRoute>}/>

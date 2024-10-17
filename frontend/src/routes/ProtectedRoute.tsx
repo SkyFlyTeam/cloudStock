@@ -8,9 +8,13 @@ type ProtectedRouteProps = PropsWithChildren & {
 }
 
 export default function ProtectedRoute({allowedRoles, children}: ProtectedRouteProps){
-    const { currentUser } = useAuth()
+    const { currentUser, isLoading } = useAuth()
 
     console.log(currentUser)
+
+    if (isLoading) {
+        return <div>Carregando...</div>
+    }
 
     if(currentUser === null || currentUser === undefined){
         console.log('nao logado')
