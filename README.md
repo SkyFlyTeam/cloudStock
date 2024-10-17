@@ -30,19 +30,16 @@ ID | User story | Estimativa
 
 US | Task | Estimativa | Status
 |------|--------|------|-----|
-| 1 | Criação do modelo lógico do banco de dados | 4 | Feito ✔ |
-| 1 | Elaboração da identidade visual | 2 | Feito ✔ |
-| 1 | Estruturação da classe "produto" | 2 | Feito ✔ |
-| 1 | Elaboração do protóripo wireframe | 6 | Feito ✔ |
-| 1 | Estruturação das páginas bases em REACT | 12 | Feito ✔ |
-| 1 | Criação do servidor de banco de dados (mysql) | 3 | Feito ✔ |
-| 1 | Criação dos formulários de cadastro | 4 | Feito ✔ |
-| 1 | Integração do backend com o frontend | 2 | Feito ✔ |
-| 1 | Criação das rotas | 4 | Feito ✔ |
-| 1 | Estudo do ORM | 12 | Feito ✔ |
-| 2 | Estruturação da classe "setor" | 2 | Feito ✔ |
-| 2 | Estruturação da classe "local_armazenamento" | 2 | Feito ✔ |
-| 2 | Estruturação da classe "fornecedor" | 2 | Feito ✔ |
+| 3 | Cadastro de entrada no Front-End | 4 | Feito ✔ |
+| 3 | Atualizamento automático da quantidade exata disponível | 2 | Feito ✔ |
+| 3 | Página de entrada que ficará registrado os produtos | 2 | Feito ✔ |
+| 4 | Cadastro de saída no Front-End | 12 | Feito ✔ |
+| 4 | Atualizamento automático da quantidade exata disponível | 3 | Feito ✔ |
+| 4 | Página de saída que ficará registrado as saídas dos produtos | 4 | Feito ✔ |
+| 5 | Página com todos os registros, entrada e saída | 2 | Feito ✔ |
+| 5 | Criar os registros no Back-End | 4 | Feito ✔ |
+| 6 | Página de execução dos produtos contidos nos locais | 12 | Feito ✔ |
+| 7 | Diferenciação dos usuários | 6 | Feito ✔ |
 
 <br> 
 
