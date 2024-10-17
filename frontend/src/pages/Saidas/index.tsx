@@ -1,272 +1,246 @@
-import { useState, useEffect } from "react";
-import { Produto, produtoServices } from "../../services/produtoServices";
+import { useState, useEffect, useRef } from "react";
+import { Fornecedor, fornecedorServices } from "../../services/fornecedorServices";
+import { Saida, saidaServices } from "../../services/saidaServices";
 import { ApiException } from "../../config/apiException";
-import "./style.css";
+
+import './style.css';
+
+/* Tabela */
+import { Table } from "react-bootstrap";
+import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 
 /* Componentes */
+import ToggleBtn from "../../components/ToggleBtn";
+import EditarRemoverBtn from "../../components/EditarRemoverBtn";
 import BtnAzul from "../../components/BtnAzul";
-import Input from "../../components/Input";
-
-/* Icons */
-import { IoAddCircleOutline, IoRadioButtonOnSharp } from "react-icons/io5";
-import { AiOutlineDelete } from "react-icons/ai";
-import { Api} from "../../config/apiConfig";
 import Modal from "../../components/Modal";
 import BtnCancelar from "../../components/BtnCancelar";
+import FornecedorFormulario from "../../components/Formularios/Fornecedor/Forn_Cadastrar.tsx";
+import Forn_Edicao from "../../components/Formularios/Fornecedor/Forn_Editar";
+import Forn_Excluir from "../../components/Formularios/Fornecedor/Forn_Excluir";
+import OlhoSaida from "../../components/OlhoSaida";
+import SaidaFormulario from "../../components/Formularios/Saida/Saida_Cadastrar";
+import Saida_Edicao from "../../components/Formularios/Saida/Saida_Editar";
+
+/* Icons */
+import { IoAddCircleOutline } from "react-icons/io5"
+import { AiOutlineDelete } from "react-icons/ai"
+
+// Const para a criação de colunas; Define a Tipagem (Interface)
+const columnHelper = createColumnHelper<Saida>();
 
 function Saidas() {
-  // Controlar estados dos Modais
-  const [openModalCadastro, setOpenModalCadastro] = useState(false); // concluir saida
-  const [openModalQuantidade, setOpenModalQuantidade] = useState(false); // verificar quantidade
-  const [openModalNulo, setOpenModalNulo] = useState(false); // garantir envio maior que 0
+  // Estado para controlar os modais
+  const [openModalCadastro, setOpenModalCadastro] = useState(false);
+  const [openModalEdicao, setOpenModalEdicao] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
-  // data - armazena todos produtos
-  const [data, setData] = useState<Produto[]>([]);
+  // Guarda o ID dos fornecedores selecionados na tabela
+  const [fornecedorSelecionado, setFornecedorSelecionado] = useState<number | null>(null);
 
-  // produtosSelecionados - {id: id, quantidade: quantidade} - produtos que serão enviados ao back
-  const [produtosSelecionados, setProdutosSelecionados] = useState<Array<{ id: number, quantidade: number }> | null>([]);
+  // Mensagem de sucesso das ações
+  const [mensagemSucesso, setMensagemSucesso] = useState<string>('');
 
-  // produtos - produtos que serão exibidos
-  const [produtos, setProdutos] = useState<Produto[]>([]);
+  // Referência ao forms para realizar o submit fora do componente do forms
+  const formRef = useRef<{ submitForm: () => void }>(null);
 
-  // Função para buscar todos os produtos
-  const fetchProdutos = async () => {
-    const result = await produtoServices.getAllProdutos();
+  // Armazena as informações puxadas na tabela
+  const [data, setData] = useState<Saida[]>([]);
+
+  // Função para buscar todos as Saidas
+
+  const fetchSaidas = async () => {
+    const result = await saidaServices.getAllSaidas()
     if (result instanceof ApiException) {
-      console.log(result.message);
+      console.log(result.message)
     } else {
-      const results = result.filter((produto) => produto.Prod_quantidade > 0) // Pegar apenas produtos com quantidade maior que 0
-      setData(results);
+      setData(result);
     }
-  };
+  }
 
+  // Chama a função para pegar todos os fornecedores do BD ao montar o componente
   useEffect(() => {
-    fetchProdutos();
-  }, []);
+    fetchSaidas()
+  }, [])
 
-  const getProduto = async (id: number): Promise<Produto | undefined> => {
-    // não deixa adicionar o mesmo produto
-    if(produtos.find(p => p.Prod_cod === id)){
-      return
-    }
 
-    const produto = data.find(
-      (p: Produto) => p.Prod_cod === id
-    );
+  // Altera o Status do componente 
+  // const handleStatusChange = (forn_id: number, newStatus: boolean) => {
+  //   setData(prevData =>
+  //     prevData.map(produto =>
+  //       produto.Forn_id === forn_id ? { ...produto, prod_status: newStatus } : produto
+  //     )
+  //   )
+  // }
 
-    if (!produto) {
-      return undefined;
-    }
-
-    // Atualiza o estado de produtos a serem exibidos
-    setProdutos((prev) => {
-      const newProduto = produto;
-      return prev ? [...prev, newProduto] : [newProduto];
-    });
-
-    // Atualiza o estado de produtosSelecionados
-    setProdutosSelecionados((prev) => {
-      const newProdutoSelecionado = { id: produto.Prod_cod, quantidade: 0 };
-      return prev ? [...prev, newProdutoSelecionado] : [newProdutoSelecionado];
-    });
-
-    return produto;
-  };
-
-  // Atualiza a quantidade selecionada pelo cliente e recalcula o subtotal
-  const handleQuantidadeChange = (id: number, quantidade: number) => {
-    const produto = produtos.find((p) => p.Prod_cod === id)
-    if (produto && produto.Prod_quantidade !== undefined && quantidade > produto.Prod_quantidade){
-      setOpenModalQuantidade(true)
-      return
-    }
-    setProdutosSelecionados((prev) =>
-      prev?.map((produto) =>
-        produto.id === id ? { ...produto, quantidade: quantidade } : produto
-      ) || []
-    );
-    setProdutos([...produtos]);
-  };
-  
-  const calcularSubtotal = (produto: Produto, quantidade: number) => {
-    const custo = produto.Prod_custo || 0; // Make sure this value is correct
-    const qtd = quantidade || 0;
-    return (custo * qtd).toFixed(2);
-  };
-
-  const calcularTotal = () => {
-    const total = produtos.reduce((acc, produto) => { 
-        const quantidadeSelecionada = produtosSelecionados?.find( 
-          (p) => p.id === produto.Prod_cod
-        )?.quantidade || 0;
-        const custo = produto.Prod_custo || 0; 
-        return acc + custo * quantidadeSelecionada; 
-      }, 0)
-      .toFixed(2);
-    return total;
-  };
-
-  const handleRemoveProduct = (id: number) => {
-    setProdutos((prev) => prev.filter((produto) => produto.Prod_cod !== id));
-    setProdutosSelecionados((prev) =>
-      prev ? prev.filter((produto) => produto.id !== id) : []
-    );
-  };
-
-  const concluir = () => {
-    if (produtosSelecionados?.find((produto) => produto.quantidade <= 0)) {
-      setOpenModalNulo(true)
-      return; 
-    }
-    setOpenModalCadastro(true)
-  }
-
-  const handleConcluir = async () => {
-    try {
-      // Faz a chamada à API
-      const response = await Api().post<any>('/saida', produtosSelecionados, {
-        headers: { 'Content-Type': 'application/json' },
-      });
-      console.log('Resposta da API:', response);
-      // Limpa os estados
-      setProdutosSelecionados([]);
-      setProdutos([]);
-      fetchProdutos(); // Atualiza os produtos
-      console.log('Produtos removidos e estados limpos');
-      // Fecha o modal após a conclusão
-      setOpenModalCadastro(false);
-    } catch (error: any) {
-      console.error('Erro na função handleConcluir:', error);
-    }
-  }
-    
-  return (
-    <main>
-    <div className="page-title">
-      <h1 className="title">Saídas</h1>
-      <hr className="line" />
-    </div>
-
-    <div className="saidas-container">
-      <div className="inputContainer">
-        <div>Produto</div>
-        <div className="inputButton">
-          <select 
-            className="form-select-custom" 
-            aria-label="Default select example" 
-            onChange={(e) => getProduto(+e.target.value)}
-          >
-            <option value="" selected>Buscar...</option>
-            {data.map((d) => (
-              <option key={d.Prod_cod} value={d.Prod_cod}>
-                {d.Prod_nome} {d.Prod_marca} {d.Prod_modelo}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
-
-      <div className="cards-group">
-        {produtos.length <= 0 && (
-          <div className="emptyProducts">
-            <img src="https://i.ibb.co/MVgn94H/Imagem-09-08-58-4d6e6647.jpg" alt="" />
-            <p>Adicione um produto para continuar</p>
-          </div>
-        )}
-        {produtos.map((produto) => {
-          const quantidadeSelecionada =
-            produtosSelecionados?.find((p) => p.id === produto.Prod_cod)?.quantidade || 0;
-          return (
-            <div className="card-item" key={produto.Prod_cod}>
-            <div className="card-name">
-              <span>
-                {produto.Prod_nome} {produto.Prod_marca} {produto.Prod_modelo}
-              </span>
-            </div>
-            <div className="custo-quantidade">
-              <div className="custo">
-                <span className="label">Custo</span>
-                <span className="value">R${produto.Prod_custo}</span>
-              </div>
-              <div className="quantidade">
-                <Input
-                  max={produto.Prod_quantidade}
-                  label="Quantidade"
-                  type="number"
-                  value={quantidadeSelecionada}
-                  onChange={(e) =>
-                    handleQuantidadeChange(produto.Prod_cod, +e.target.value)
-                  }
-                />
-              </div>
-              <div className="subtotal">
-                <span className="label">Subtotal</span>
-                <span className="value">R${calcularSubtotal(produto, quantidadeSelecionada)}</span>
-              </div>
-            </div>
-            <AiOutlineDelete
-              size={24}
-              className="delete-icon"
-              onClick={() => handleRemoveProduct(produto.Prod_cod)}
-            />
-          </div>
-          );
-        })}
-      </div>
-
-      <div className="total-container">
-        <span>Total: R${calcularTotal()}</span>
-      </div>
-
-      {produtos.length > 0 && (
-        <div className="btn-concluir">
-          <BtnAzul icon={<IoAddCircleOutline />} label="CONCLUIR" onClick={concluir} />
-        </div>
-      )}
-    </div>
-
-    {/* MODALS */}
-    <Modal
-      isOpen={openModalCadastro} 
-      label="Cadastrar Saída?" 
-      buttons={
-        <div className="confirma-buttons">
-          <BtnCancelar onClick={() => setOpenModalCadastro(false)} /> 
-          <BtnAzul
-            icon={<IoAddCircleOutline />}
-            label="CADASTRAR"
-            onClick={handleConcluir} 
+  // Define as colunas
+  const columns: ColumnDef<Saida, any>[] = [
+    columnHelper.accessor('Saida_id', {
+      header: () => 'Código',
+      cell: info => info.getValue(),
+    }),
+    columnHelper.accessor('Saida_valorTot', {
+      header: () => 'Valor Total',
+      cell: info => `R$ ${info.getValue()}`,
+    }),
+    columnHelper.display({
+      id: 'actions',
+      cell: props => (
+        <div className="action-cell">
+          <OlhoSaida
+            id={props.row.original.Saida_id}
+            onEdit={() => handleEditClick(props.row.original.Saida_id)}
           />
         </div>
-      }
-      children={undefined}
-    />
+      ),
+    }),
+  ];
 
-    <Modal
-      isOpen={openModalNulo} 
-      label="Quantidade deve ser maior que 0"
-      buttons={
-        <div className="single-button">
-          <BtnCancelar onClick={() => setOpenModalNulo(false)} /> 
-        </div>
-      }
-      children={undefined}
-    />
+  // Configurações da tabela
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+  });
 
-    <Modal
-      isOpen={openModalQuantidade} 
-      label="Quantidade insuficiente" 
-      buttons={
-        <div className="single-button">
-          <BtnCancelar onClick={() => setOpenModalQuantidade(false)} />
-        </div>
-      }
-      children={undefined}
-    />
-  </main>
+  // FUNÇÕES PARA EVENTO DE MODALS
+  // Edição
+  const handleEditClick = (id: number) => {
+    setFornecedorSelecionado(id)
+    setOpenModalEdicao(true) // Abre o modal de edição
+  }
 
-  
+  const closeEditModal = () => {
+    setFornecedorSelecionado(null)
+    setOpenModalEdicao(false)
+  }
+
+  // Excluir
+  const handleDeleteClick = (id: number) => {
+    setFornecedorSelecionado(id)
+    setOpenDeleteModal(true)
+  }
+
+  const closeDeleteModal = () => {
+    setFornecedorSelecionado(null)
+    setOpenDeleteModal(false)
+  }
+
+  return (
+    <main>
+      <div className="page-title">
+        <h1 className="title">Saídas</h1>
+        <hr className="line" />
+      </div>
+
+      <div className="actions-group">
+        <BtnAzul icon={<IoAddCircleOutline />} label="CADASTRAR" onClick={() => setOpenModalCadastro(true)} />
+      </div>
+
+      {/* Implementação para o futuro, precisa adicionar tempo e + coisas {mensagemSucesso && <div className="success-message">{mensagemSucesso}</div>} */}
+
+      <Table hover responsive size="lg">
+        <thead>
+          {table.getHeaderGroups().map(headerGroup => (
+            <tr className="heading" key={headerGroup.id}>
+              {headerGroup.headers.map(header => (
+                <th key={header.id} colSpan={header.colSpan}>
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(header.column.columnDef.header, header.getContext())}
+                </th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody>
+          {table.getRowModel().rows.map(row => (
+            <tr className="table-row" key={row.id}>
+              {row.getVisibleCells().map(cell => (
+                <td key={cell.id}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+
+      {/* MODALS*/}
+      {/* Modal de Cadastro */}
+      <Modal
+        isOpen={openModalCadastro} // Abre o modal
+        label="Cadastrar Saída" // Titulo do modal
+        buttons={
+          <>
+            <BtnCancelar onClick={() => setOpenModalCadastro(false)} /> {/*Fechar o modal */}
+            <BtnAzul
+              icon={<IoAddCircleOutline />}
+              label="CADASTRAR"
+              onClick={() => formRef.current?.submitForm()} /* Passa a função da referencia do formulario para poder enviar o submit */
+            />
+          </>
+        }
+      >
+        <SaidaFormulario
+          ref={formRef} /* Passa a referencia do formulario */
+          onSuccess={message => {
+            setMensagemSucesso(message) 
+            setOpenModalCadastro(false)
+            // fetchFornecedores() // Atualiza a tabela
+          }}
+        />
+      </Modal>
+
+      {/* Modal de Edição */}
+      {fornecedorSelecionado && (
+        <Modal
+          isOpen={openModalEdicao}
+          label="Editar Saida"
+          buttons={
+            <>
+              <BtnCancelar onClick={closeEditModal} />
+              <BtnAzul icon={<IoAddCircleOutline />} label="SALVAR" onClick={() => formRef.current?.submitForm()} />
+            </>
+          }
+        >
+          <Saida_Edicao
+            ref={formRef}
+            id={fornecedorSelecionado}
+            onSuccess={message => {
+              setMensagemSucesso(message);
+              closeEditModal();
+              // fetchFornecedores(); // Atualiza a tabela após edição
+            }}
+          />
+        </Modal>
+      )}
+
+      {/* Modal de Exclusão */}
+      {fornecedorSelecionado && (
+        <Modal
+          isOpen={openDeleteModal}
+          label="Excluir Fornecedor"
+          buttons={
+            <>
+              <BtnCancelar onClick={closeDeleteModal} />
+              <BtnAzul icon={<AiOutlineDelete />} label="Deletar" onClick={() => formRef.current?.submitForm()} />
+            </>
+          }
+        >
+          <Forn_Excluir
+            ref={formRef}
+            id={fornecedorSelecionado}
+            onSuccess={message => {
+              setMensagemSucesso(message)
+              closeDeleteModal()
+              // fetchFornecedores()
+            }}
+          />
+        </Modal>
+      )}
+    </main>
   );
 }
 
-export default Saidas;
+export default Saidas

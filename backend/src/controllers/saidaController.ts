@@ -98,5 +98,17 @@ export const saidaController = {
             console.error(error);
             return res.status(500).json({ message: 'Erro ao buscar saídas', error });
         }
-    }
+    },
+    showSpecific: async(req: Request, res: Response) => {
+        const { id } = req.params;
+        try {
+            const saida = await Saida.findByPk(id);
+            if (!saida) {
+                return res.status(404).json({ message: 'Saida não encontrado' });
+            }
+                return res.status(200).json(saida);
+            }catch (error) {
+                return res.status(400).json({ error: 'Erro ao buscar saida', details: error.message });
+            }
+        },
 }
