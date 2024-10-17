@@ -71,7 +71,7 @@ Rank | Prioridade | User Story | Estimativa | Sprint | Requisito
 | 4 | Alta | Eu como funcionário gostaria de realizar a venda de produtos para auxiliar no sistemas de venda  | 4 | 2 | 05
 | 5 | Alta | Eu como gerente gostaria de ter registros da entrada e saída de produtos para não perder a sincronia do sistema e estoque.| 4 | 2 | 05
 | 6 | Alta | Eu como funcionário gostaria de acessar onde está localizado um produto para poder direcionar um comprador.| 2 | 2 | 04
-| 7 | Alta | Eu como administrador gostaria de ter três níveis de acesso diferente para atribuições individualizadas.| 7 | 3 | 01
+| 7 | Alta | Eu como administrador gostaria de ter três níveis de acesso diferente para atribuições individualizadas.| 7 | 2 | 01
 | 8 | Alta | Eu como gerente gostaria de definir o estoque mínimo de cada produto para que não haja falta de produtos.  | 4 | 3 | 10
 | 9 | Alta | Eu como gerente e funcionário gostaria que sejam emitidos alertas de estoque baixo para controle de reposição. | 6 | 3 | 08
 | 10 | Alta | Eu como gerente e funcionário desejo que a plataforma emita avisos assim que um produto esteja próximo da data de validade para que eu possa substituir esses produtos por itens com validade mais longa e evitar perdas. | 4 | 3 | 09
