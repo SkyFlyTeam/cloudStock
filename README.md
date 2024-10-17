@@ -23,6 +23,7 @@ ID | User story | Estimativa
 | 4 | 	Eu como funcionário gostaria de realizar a venda de produtos para continuar a gerar a demanda do estoque | 4 |
 | 5 | 	Eu como gerente gostaria de ter registros da entrada e saída de produtos para não perder a sincronia do sistema e estoque. | 2 |
 | 6 | 	Eu como funcionário gostaria de acessar onde está localizado um produto para poder direcionar um comprador. | 2 |
+| 7 |  Eu como administrador gostaria de ter três níveis de acesso diferente para atribuições individualizadas.| 7 |
 
 
 <br>
