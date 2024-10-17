@@ -1,0 +1,148 @@
+/* Main layout styling */
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 2em;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.page-title {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+hr.line {
+    margin: 0;
+    width: 100%;
+    border: 0.2px solid rgb(170, 170, 170);
+}
+
+.saidas-container {
+    background-color: #fff;
+    border-radius: 0.5rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1em;
+    padding: 3em 1.5em;
+    flex-grow: 1;
+}
+
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.inputContainer .inputButton {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.cards-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.card-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    border: 2px solid #61bde0;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    gap: 2rem;
+}
+
+.card-name {
+    flex: 2;
+    text-align: left; 
+}
+
+.custo-quantidade {
+    display: flex;
+    flex: 4; 
+    justify-content: space-between;
+    gap: 2rem; 
+}
+
+.custo, .quantidade, .subtotal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 1; 
+}
+
+.label {
+    font-weight: bold;
+}
+
+.value {
+    min-width: 80px; 
+}
+
+.delete-icon {
+    cursor: pointer;
+    color: red;
+}
+
+.total-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 1rem 0;
+    border-top: 1px solid #ccc;
+}
+
+.total-container span {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.btn-concluir {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.card-name {
+    font-weight: 500;
+}
+
+.form-select-custom {
+    border-radius: 8px;
+    width: 300px; 
+    height: 40px; 
+}
+
+.emptyProducts {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+}
+.emptyProducts img {
+    width: 291px;
+    height: 178px;
+}
+
+.confirma-buttons {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 1em;
+}
+
+.single-button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
