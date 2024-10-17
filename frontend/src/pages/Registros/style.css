@@ -1,0 +1,57 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f6fa;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.registros-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px;
+}
+
+.registro-item {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    border-left: 8px solid;
+    box-shadow: 0 1px 3px rgba(236, 5, 5, 0.1);
+}
+
+.registro-item.entrada {
+    border-color: #61BDE0; /* Verde para Entradas */
+    background-color: #61bce027;
+}
+
+.registro-item.saida {
+    border-color: #61BDE0; /* Vermelho para Saídas */
+}
+
+.icon {
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.info {
+    flex-grow: 1;
+}
+
+.info h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.info p {
+    margin: 5px 0;
+    color: #555;
+}

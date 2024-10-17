@@ -1,86 +1,128 @@
-import React, { useState, useEffect, useRef } from "react";
-import { IoAddCircleOutline } from "react-icons/io5";
-import BtnAzul from "../../components/BtnAzul";
-import './style.css'
-import Modal from "../../components/Modal";
-import Card from "../../components/Card";
-import { FiEdit2 } from "react-icons/fi";
-import { IoIosArrowForward } from "react-icons/io";
+// import React, { useState, useEffect } from "react";
+// import { ApiException } from "../../config/apiException";
+// import { Registro, registrosServices } from "../../services/registrosServices";
+// import './style.css';
+ 
+// function Registros() {
+ 
+//   const registrosOperacionais = [
+//     {
+//       "Registro_id": 1,
+//       "Registro_Mensagem": "Valor total: R$ 1320",
+//       "Registro_Data": "2024-10-14T20:36:09.000Z",
+//       "Registro_Responsavel": "User",
+//       "Registro_Tipo": "Entrada"
+//     },
+//     {
+//       "Registro_id": 2,
+//       "Registro_Mensagem": "Valor total: R$ 1320",
+//       "Registro_Data": "2024-10-14T20:36:09.000Z",
+//       "Registro_Responsavel": "User",
+//       "Registro_Tipo": "Entrada"
+//     }
+//   ];
+ 
+//   const [registros, setRegistros] = useState<Registro[]>([]);
+ 
+//   // Função para puxar as informações do banco de dados
+//   const fetchRegistros = async () => {
+//     const result = await registrosServices.getAllRegistros();
+//     if (result instanceof ApiException) {
+//       console.log(result.message);
+//     } else {
+//       setRegistros(result);
+//     }
+//   };
+ 
+//   useEffect(() => {
+//     fetchRegistros();
+//   }, []);
+ 
+//   return (
+//     <main>
+//       <h1 className="title">Registros</h1>
+//       <div className="registros-container">
+//         {registrosOperacionais.map((registro) => {
+//           return (
+//             <div key={registro.Registro_id} className={`registro-item ${registro.Registro_Tipo.toLowerCase()}`}>
+//               <h2>Registro #{registro.Registro_id}</h2>
+//               <p>{registro.Registro_Mensagem}</p>
+//               <p>Data: {new Date(registro.Registro_Data).toLocaleString()}</p>
+//               <p>Responsável: {registro.Registro_Responsavel}</p>
+//               <p>Tipo: {registro.Registro_Tipo}</p>
+//             </div>
+//           );
+//         })}
+//       </div>
+//     </main>
+//   );
+// }
+ 
+// export default Registros;
+import React, { useState, useEffect } from "react";
 import { ApiException } from "../../config/apiException";
-import BtnCancelar from "../../components/BtnCancelar";
 import { Registro, registrosServices } from "../../services/registrosServices";
-import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
-import { FaRegArrowAltCircleRight } from "react-icons/fa";
-
-
+import { FaRegArrowAltCircleRight } from "react-icons/fa"; // Importando o ícone
+import './style.css';
 
 function Registros() {
-    
-    let [registrosOperacionais, setRegistrosOperacionais] = useState<any[]>([])
-
-    registrosOperacionais = [
-      {
-        "Registro_id": 1,
-        "Registro_Mensagem": "Valor total: R$ 1320",
-        "Registro_Data": "2024-10-14T20:36:09.000Z",
-        "Registro_Repsonsavel": "User",
-        "Registro_Tipo": "Entrada"
-      },
-      {
-        "Registro_id": 1,
-        "Registro_Mensagem": "Valor total: R$ 1320",
-        "Registro_Data": "2024-10-14T20:36:09.000Z",
-        "Registro_Repsonsavel": "User",
-        "Registro_Tipo": "Entrada"
-      }
-    ]
-
-    
-    
-    
-    // Registro do BD
-    const [registros, setRegistros] = useState<Registro[]>([]);
-  
-     // puxar as informações do banco de dados 
-      const fetchRegistros = async () => {
-        const result = await registrosServices.getAllRegistros()
-        if (result instanceof ApiException) {
-          console.log(result.message)
-        } else {
-          setRegistros(result);
-        }
+  const registrosOperacionais = [
+    {
+      "Registro_id": 1,
+      "Registro_Mensagem": "Valor total: R$ 1320",
+      "Registro_Data": "2024-10-14T20:36:09.000Z",
+      "Registro_Responsavel": "User",
+      "Registro_Tipo": "Entrada"
+    },
+    {
+      "Registro_id": 2,
+      "Registro_Mensagem": "Valor total: R$ 1320",
+      "Registro_Data": "2024-10-14T20:36:09.000Z",
+      "Registro_Responsavel": "User",
+      "Registro_Tipo": "Saída"
     }
+  ];
 
-    useEffect(() => {
-        fetchRegistros()
-    }, [])
+  const [registros, setRegistros] = useState<Registro[]>([]);
 
-    return (
-        <main>
+  const fetchRegistros = async () => {
+    const result = await registrosServices.getAllRegistros();
+    if (result instanceof ApiException) {
+      console.log(result.message);
+    } else {
+      setRegistros(result);
+    }
+  };
 
-            <h1 className="title">Registros</h1>
-            {/* parte do botão  */}
-            <Tabs
-              defaultActiveKey="home"
-              transition={false}
-              id="noanim-tab-example"
-              className="mb-3"
-            >
-              <Tab eventKey="home" title="Home">
-                Tab content for Home
-              </Tab>
-              <Tab eventKey="profile" title="Profile">
-                Tab content for Profile
-              </Tab>
-              <Tab eventKey="contact" title="Contact" disabled>
-                Tab content for Contact
-              </Tab>
-            </Tabs>
+  useEffect(() => {
+    fetchRegistros();
+  }, []);
 
-            <FaRegArrowAltCircleRight color="red"/>
-        </main>
-    )
+  // Função para retornar a cor e ícone baseado no tipo de registro
+  const getIconStyle = (tipo: string) => {
+    return tipo === "Entrada" ? { color: "#2ecc71" } : { color: "#ff6b6b" }; // Verde para Entrada, Vermelho para Saída
+  };
+
+  return (
+    <main>
+      <h1 className="title">Registros</h1>
+      <div className="registros-container">
+        {registrosOperacionais.map((registro) => {
+          return (
+            <div key={registro.Registro_id} className={`registro-item ${registro.Registro_Tipo.toLowerCase()}`}>
+              <FaRegArrowAltCircleRight className="icon" style={getIconStyle(registro.Registro_Tipo)} />
+              <div className="info">
+                <h2>Registro #{registro.Registro_id}</h2>
+                <p>{registro.Registro_Mensagem}</p>
+                <p>Data: {new Date(registro.Registro_Data).toLocaleString()}</p>
+                <p>Responsável: {registro.Registro_Responsavel}</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </main>
+  );
 }
 
-export default Registros
+export default Registros;
