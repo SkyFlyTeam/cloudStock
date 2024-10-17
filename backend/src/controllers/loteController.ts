@@ -42,5 +42,21 @@ export const controllerLote = {
             console.error('Error fetching lote with related data: ', error);
             return res.status(500).json({ error: 'Internal server error' });
         }
+    },
+
+    showByLocal: async(req, res) => {
+        const id = +req.params.id
+        try {
+            const lotes = await Lote.findAll({
+                include: [Produto, Local_Armazenamento],
+            });
+    
+            // Filtra os lotes que pertencem ao Local_Armazenamento com o id específico
+            let produtos = lotes.filter(lote => lote.Locais_Armazenamento['LocAr_id'] === id).map((p) => p.Produtos)
+            return res.status(200).json(produtos);
+        } catch (error) {
+            console.error('Error fetching lote with related data: ', error);
+            return res.status(500).json({ error: 'Internal server error' });
+        }
     }
 }

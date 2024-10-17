@@ -17,4 +17,7 @@ router.post('/lote-entrada', controllerEntrada.addLoteToEntrada)
 // Associar lote a saida
 router.post('/lote-saida', saidaController.addLoteToSaida)
 
+// Lote por local
+router.get('/local/:id', controllerLote.showByLocal)
+
 export default router

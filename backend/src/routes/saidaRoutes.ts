@@ -9,4 +9,7 @@ router.post('/', saidaController.save)
 // buscar saídas
 router.get('/', saidaController.show)
 
+router.post('/teste', saidaController.teste)
+
+
 export default router

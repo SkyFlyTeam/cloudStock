@@ -5,6 +5,12 @@ import { Lote } from '../models/Lote';
 import { Lote_Saida } from '../models/Lote_Saida';
 
 export const saidaController = {
+    teste: async (req: Request, res: Response) => {
+        const produtos = req.body
+        console.log(produtos)
+        res.json({message: 'TESTE OK'})
+    },
+
     // POST criar uma nova saida
     save: async (req: Request, res: Response) => {
         try {
