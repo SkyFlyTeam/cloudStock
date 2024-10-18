@@ -19,7 +19,7 @@ export const controllerAuth = {
             return res.status(404).json({ error: 'Email ou senha inválidos.' });
           }
 
-          const authToken = jwt.sign({id: usuario['Usuario_id'], cargo: usuario['Cargo_id']}, process.env.JWT_PASSWORD, {expiresIn: '8h'}) // gerando token 
+          const authToken = jwt.sign({id: usuario['Usuario_id'], cargo: usuario['Cargo_id']}, 'SkyFly', {expiresIn: '8h'}) // gerando token 
           
           const { Usuario_senha, ...usuarioLogin } = usuario.toJSON() //tirando a senha antes de retornar
 
