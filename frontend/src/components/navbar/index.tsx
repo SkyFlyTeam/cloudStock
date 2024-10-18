@@ -112,17 +112,15 @@ const Navbar: React.FC = () => {
                 </Link>
                 </>
               }
-                </div>
-              </Link>
             </div>
           </div>
-    
+  
           <div className="logout" onClick={handleLogout}>
             <span>Logout</span> 
             <PiSignOutBold />
           </div>
         </div>
-      );
+  );
 }
     
     
