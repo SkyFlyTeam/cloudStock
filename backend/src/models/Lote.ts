@@ -62,4 +62,6 @@ export class Lote extends Model {
 
     @BelongsToMany(() => Saida, () => Lote_Saida)
     Saidas!: Saida[];
+
+    
 }
