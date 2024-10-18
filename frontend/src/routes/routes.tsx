@@ -1,15 +1,19 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+
 import Produtos from "../pages/Produtos/index";
 import LocalArmazenamento from "../pages/LocalArmazenamento/index";
 import Setores from "../pages/Setores/index";
 import Fornecedores from "../pages/Fornecedores/index";
 import Login from "../pages/Login";
-import Layout from "./Layout";
-import ProtectedRoute from "./ProtectedRoute";
 
-import '../style/global.css';
+import Saidas from "../pages/Saidas/index";
 import Entrada from "../pages/Entrada";
 import Usuarios from "../pages/Usuarios";
+
+import '../style/global.css';
+
+import Layout from "./Layout";
+import ProtectedRoute from "./ProtectedRoute";
 
 function MainRoutes(){
     return(
@@ -26,6 +30,7 @@ function MainRoutes(){
                     <Route path="/LocalArmazenamento" element={<ProtectedRoute allowedRoles={[1]}><LocalArmazenamento /></ProtectedRoute>}/>
                     <Route path="/Setores" element={<ProtectedRoute allowedRoles={[1]}><Setores /></ProtectedRoute>}/>
                     <Route path="/Fornecedores" element={<ProtectedRoute allowedRoles={[1]}><Setores /></ProtectedRoute>}/>
+                    <Route path="/Saidas" element={<ProtectedRoute allowedRoles={[1]}><Saidas /></ProtectedRoute>}/>
 
                     {/* Rotas do Gerente */}
                     <Route path="/Entrada" element={<ProtectedRoute allowedRoles={[2]}><Entrada /></ProtectedRoute>}/>

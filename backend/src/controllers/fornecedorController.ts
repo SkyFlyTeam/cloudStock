@@ -117,6 +117,34 @@ export const controllerFornecedor = {
     }
   },
 
+    // PUT /status/:id 
+    changeStatus: async (req, res) => {
+      const { id } = req.params;
+      try {
+        // Procurar o produto pelo ID
+        const fornecedor = await Fornecedor.findByPk(id);
+    
+        if (!fornecedor) {
+          return res.status(404).json({ error: 'Produto não encontrado' });
+        }
+    
+        // Alternar o status atual (se for true, muda para false e vice-versa)
+        const novoStatus = !fornecedor.Forn_status;
+    
+        // Atualizar o status no banco de dados
+        await Fornecedor.update(
+          { Forn_status: novoStatus },
+          { where: { Forn_id: id } }
+        );
+    
+        // Retornar o novo status atualizado
+        return res.status(200).json({ fornecedor });
+      } catch (error) {
+        console.error('Erro ao alterar o status do produto:', error);
+        return res.status(500).json({ error: 'Erro interno no servidor' });
+      }
+    },
+
   delete: async(req: Request, resp: Response) => {
     const {id} =  req.params
       try {

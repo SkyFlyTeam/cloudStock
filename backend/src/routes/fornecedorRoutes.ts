@@ -14,6 +14,9 @@ routes.delete('/:id', controllerFornecedor.delete);  // deletar fornecedores
 
 routes.put('/:id', controllerFornecedor.update);  // update fornecedores
 
+// Rota para mudar status do produto
+routes.put('/status/:id', controllerFornecedor.changeStatus)
+
 routes.get('/:id', controllerFornecedor.showSpecific);
 
 export default routes;

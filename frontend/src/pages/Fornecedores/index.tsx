@@ -21,6 +21,7 @@ import Forn_Excluir from "../../components/Formularios/Fornecedor/Forn_Excluir";
 /* Icons */
 import { IoAddCircleOutline } from "react-icons/io5"
 import { AiOutlineDelete } from "react-icons/ai"
+import { hostname } from "../../config/apiConfig";
 
 // Const para a criação de colunas; Define a Tipagem (Interface)
 const columnHelper = createColumnHelper<Fornecedor>();
@@ -85,7 +86,7 @@ function Fornecedores() {
           <ToggleBtn
             checked={info.getValue() == 1}
             cod={info.row.original.Forn_id}
-            rota={'fornecedor'}
+            rota={`${hostname}fornecedor`}
             onStatusChange={(newStatus: any) => handleStatusChange(info.row.original.Forn_id, newStatus)}
           />
         </div>

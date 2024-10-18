@@ -34,11 +34,29 @@ export const controllerLocalArmazenamento = {
     try{
       const local = await Local_Armazenamento.findByPk(id)
       if (!local){
-        return res.status(404).json({ message: 'local encontrado' });
+        return res.status(404).json({ message: 'local não encontrado' });
       }
 
       return res.status(200).json(local)
     } catch(error){
+      return res.status(400).json({ error: 'Erro ao buscar local', details: error.message });
+    }
+  },
+
+  showBySetor: async(req: Request, res: Response) => {
+    const id = req.params.id
+    try {
+      const locais = await Local_Armazenamento.findAll({
+        where: {
+          Setor_id: id
+        },
+      })
+      console.log(locais)
+      if(!locais){
+        return res.status(404).json({ message: 'local não encontrado' });
+      }
+      res.status(200).json(locais)
+    } catch (error) {
       return res.status(400).json({ error: 'Erro ao buscar local', details: error.message });
     }
   },

@@ -26,6 +26,7 @@ const Navbar: React.FC = () => {
 
           <div className="sidebar-menu">
             <div className="itens_menu">
+              
               {/* Rotas do Funcionário */}
               {currentUser?.Cargo_id === 1 &&
               <>
@@ -62,10 +63,12 @@ const Navbar: React.FC = () => {
                   </div>
                 </Link>
                 
-                <div className="menu-item">
-                  <FaSquareArrowUpRight />
-                  <div className="navbartext"><span>Saída</span></div>
+              <Link to="/Saidas" className="link">
+                <div className={location.pathname === '/Saidas' ? 'menu-item active' : 'menu-item'}>
+                    <FaSquareArrowUpRight />
+                    <div className="navbartext"><span>Saídas</span></div>
                 </div>
+              </Link>
               </>
               }
 
@@ -109,6 +112,8 @@ const Navbar: React.FC = () => {
                 </Link>
                 </>
               }
+                </div>
+              </Link>
             </div>
           </div>
     

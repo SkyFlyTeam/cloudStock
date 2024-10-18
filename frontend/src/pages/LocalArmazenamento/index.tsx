@@ -59,11 +59,22 @@ function LocalArmazenamento() {
 
     return (
         <main>
+          <div className="page-title">
             <h1 className="title">Local Armazenamento</h1>
+            <hr className="line" />
+          </div>
 
-            <div className="inputButton">
+
+            {/* Barra de pesquisa */}
+            {/* <div className="inputButton">
                 <InputBusca />
                 <BtnAzul icon={<IoAddCircleOutline />} label='CADASTRAR' onClick={() => setOpenModalCadastro(true)} />
+            </div> */}
+
+
+            
+            <div className="actions-group">
+              <BtnAzul className="rfloat" icon={<IoAddCircleOutline />} label="CADASTRAR" onClick={() => setOpenModalCadastro(true)} />
             </div>
 
         

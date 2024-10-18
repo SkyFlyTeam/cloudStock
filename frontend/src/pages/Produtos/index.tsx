@@ -22,6 +22,7 @@ import './style.css'
 /* Icons */
 import { IoAddCircleOutline } from "react-icons/io5"
 import { AiOutlineDelete } from "react-icons/ai"
+import { hostname } from "../../config/apiConfig"
 
 
 // Criar o helper para colunas
@@ -82,10 +83,10 @@ function Produtos() {
       header: () => 'Nome',
       cell: info => info.getValue(),
     }),
-    columnHelper.accessor('Categoria_id', {
+    /*columnHelper.accessor('Categoria_id', {
       header: () => 'Categoria',
       cell: info => `${info.getValue()}`,
-    }),
+    }),*/
     columnHelper.accessor('Prod_quantidade', {
       header: () => 'Quantidade',
       cell: info => `${info.getValue()}`,
@@ -105,6 +106,7 @@ function Produtos() {
           <ToggleBtn
             checked={info.getValue() == 1}
             cod={info.row.original.Prod_cod}
+            rota={`${hostname}produto`}
             onStatusChange={(newStatus: any) => handleStatusChange(info.row.original.Prod_cod, newStatus)}
           />
         </div>
