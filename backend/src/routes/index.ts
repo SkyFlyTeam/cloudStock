@@ -55,7 +55,7 @@ router.use('/registros', registroRoutes);
 
 //Rota para Autenticação
 router.use('/auth', authRoutes);
-=======
+
 //Rota para Lote Entrada
 router.use('/loteEntrada', loteEntradaRoutes);
 
