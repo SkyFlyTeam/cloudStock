@@ -26,6 +26,9 @@ function Saidas() {
   // produtosSelecionados - {id: id, quantidade: quantidade} - produtos que serão enviados ao back
   const [produtosSelecionados, setProdutosSelecionados] = useState<Array<{ id: number, quantidade: number }> | null>([]);
 
+  // saidasSelecionadas - {Saida_valortot: Valor, Usuario_id: id} - Saidas que serão enviados ao back
+  const [saidasSelecionadas, setSaidasSelecionadas] = useState<{ Saida_valorTot: number, Usuario_id: number } | null>(null);
+
   // produtos - produtos que serão exibidos
   const [produtos, setProdutos] = useState<Produto[]>([]);
 
@@ -105,6 +108,7 @@ function Saidas() {
       .toFixed(2);
     return total;
   };
+  
 
   const handleRemoveProduct = (id: number) => {
     setProdutos((prev) => prev.filter((produto) => produto.Prod_cod !== id));
@@ -122,9 +126,14 @@ function Saidas() {
   }
 
   const handleConcluir = async () => {
+    
+    setSaidasSelecionadas({
+      Saida_valorTot: parseFloat(calcularTotal()),
+      Usuario_id: 1 
+    })
     try {
       // Faz a chamada à API
-      const response = await Api().post<any>('/saida', produtosSelecionados, {
+      const response = await Api().post<any>('/saida', saidasSelecionadas, {
         headers: { 'Content-Type': 'application/json' },
       });
       console.log('Resposta da API:', response);
