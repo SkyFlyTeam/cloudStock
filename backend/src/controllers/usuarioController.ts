@@ -3,12 +3,31 @@ import { Usuario } from '../models/Usuario';
 import { Entrada } from '../models/Entrada';
 import { Saida } from '../models/Saida';
 import { Cargo } from '../models/Cargo';
+import bcrypt from 'bcrypt'
 
 export const controllerUsuario = {
   // POST /usuario
   save: async (req: Request, res: Response) => {
     try {
-      const usuario = await Usuario.create(req.body);
+      const { Usuario_nome, Usuario_email, Usuario_senha, Cargo_id } = req.body;
+
+      const userExists = await Usuario.findOne({ where: { Usuario_email: Usuario_email }});
+
+      if (userExists){
+        return res.status(404).json({ message: 'Email já cadastrado'});
+      }
+      
+      const hashPassword = await bcrypt.hash(Usuario_senha, 10)
+
+      const usuario = await Usuario.create({
+        Usuario_email,
+        Usuario_senha: hashPassword,
+        Usuario_nome,
+        Usuario_status: true,
+        Usuario_dataCriacao: new Date(),
+        Cargo_id
+      });
+
       return res.status(201).json(usuario);
     } catch (error) {
       return res.status(400).json({ error: 'Error saving Usuario', details: error.message });
@@ -32,10 +51,11 @@ export const controllerUsuario = {
     const { id } = req.params
     try{
       const usuario = await Usuario.findByPk(id, {
+        attributes: {exclude: ['Usuario_senha']},
         include: [Cargo, Entrada, Saida]
       })
       if (!usuario){
-        return res.status(404).json({ message: 'usuario encontrado' });
+        return res.status(404).json({ message: 'Usuário não encontrado' });
       }
 
       return res.status(200).json(usuario)
