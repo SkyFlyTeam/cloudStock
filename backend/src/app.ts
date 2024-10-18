@@ -1,5 +1,6 @@
 import router from "./routes";
 import sequelize from "./config/connection"; // Import the sequelize instance
+import init from "./config/init";
 
 const express = require('express');
 const app = express();
@@ -15,8 +16,11 @@ const PORT = process.env.PORT || 5000;
 
 // Sync database and then start the server
 sequelize.sync({ force: false })  // Altere para `true` se quiser recriar as tabelas durante o desenvolvimento
-  .then(() => {
+  .then(async () => {
     console.log('Database synchronized');
+
+    await init();
+    
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
     });
