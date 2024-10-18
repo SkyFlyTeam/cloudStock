@@ -33,12 +33,9 @@ const getAllProdutos = async (): Promise<Produto[] | ApiException> => {
 
 const createProduto = async (produto: any): Promise<Produto | ApiException> => {
   try {
-    console.log("Batata")
-    console.log(produto)
     const { data } = await Api().post<any>('/produto', produto, {
       headers: { 'Content-Type': 'multipart/form-data' }
     });
-    console.log("Quente")
     const produto_criado: Produto = data;
     return produto_criado;
   } catch (error: any) {

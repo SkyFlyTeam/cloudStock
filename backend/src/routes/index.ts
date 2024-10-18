@@ -11,8 +11,7 @@ import unidadeMedidaRoutes from './unidadeMedidaRoutes';
 import localArmazenamentoRoutes from './localArmazenamentoRoutes';
 import setorRoutes from './setorRoutes';
 import registroRoutes from './registrosRoutes';
-// import loteEntradaRoutes from './loteEntradaRoutes';
-// import loteSaidaRoutes from './loteSaidaRoutes';
+import authRoutes from './authRoutes'
 import loteEntradaRoutes from './loteEntradaRoutes';
 import loteSaidaRoutes from './loteSaidaRoutes';
 
@@ -54,10 +53,14 @@ router.use('/setor', setorRoutes);
 //Rota para Registros
 router.use('/registros', registroRoutes);
 
+//Rota para Autenticação
+router.use('/auth', authRoutes);
+=======
 //Rota para Lote Entrada
 router.use('/loteEntrada', loteEntradaRoutes);
 
 //Rota para lote Saida
 router.use('/loteSaida', loteSaidaRoutes );
+
 
 export default router;
