@@ -24,7 +24,7 @@ function Saidas() {
   const [data, setData] = useState<Produto[]>([]);
 
   // produtosSelecionados - {id: id, quantidade: quantidade} - produtos que serão enviados ao back
-  const [produtosSelecionados, setProdutosSelecionados] = useState<Array<{ id: number, quantidade: number }> | null>([]);
+  const [produtosSelecionados, setProdutosSelecionados] = useState<Array<{ idProd: number, quantidade: number, Usuario_id: number }> | null>([]);
 
   // saidasSelecionadas - {Saida_valortot: Valor, Usuario_id: id} - Saidas que serão enviados ao back
   const [saidasSelecionadas, setSaidasSelecionadas] = useState<{ Saida_valorTot: number, Usuario_id: number } | null>(null);
@@ -69,7 +69,7 @@ function Saidas() {
 
     // Atualiza o estado de produtosSelecionados
     setProdutosSelecionados((prev) => {
-      const newProdutoSelecionado = { id: produto.Prod_cod, quantidade: 0 };
+      const newProdutoSelecionado = { idProd: produto.Prod_cod, quantidade: 0, Usuario_id: 1 };
       return prev ? [...prev, newProdutoSelecionado] : [newProdutoSelecionado];
     });
 
@@ -85,7 +85,7 @@ function Saidas() {
     }
     setProdutosSelecionados((prev) =>
       prev?.map((produto) =>
-        produto.id === id ? { ...produto, quantidade: quantidade } : produto
+        produto.idProd === id ? { ...produto, quantidade: quantidade } : produto
       ) || []
     );
     setProdutos([...produtos]);
@@ -100,7 +100,7 @@ function Saidas() {
   const calcularTotal = () => {
     const total = produtos.reduce((acc, produto) => { 
         const quantidadeSelecionada = produtosSelecionados?.find( 
-          (p) => p.id === produto.Prod_cod
+          (p) => p.idProd === produto.Prod_cod
         )?.quantidade || 0;
         const custo = produto.Prod_custo || 0; 
         return acc + custo * quantidadeSelecionada; 
@@ -113,7 +113,7 @@ function Saidas() {
   const handleRemoveProduct = (id: number) => {
     setProdutos((prev) => prev.filter((produto) => produto.Prod_cod !== id));
     setProdutosSelecionados((prev) =>
-      prev ? prev.filter((produto) => produto.id !== id) : []
+      prev ? prev.filter((produto) => produto.idProd !== id) : []
     );
   };
 
@@ -126,14 +126,9 @@ function Saidas() {
   }
 
   const handleConcluir = async () => {
-    
-    setSaidasSelecionadas({
-      Saida_valorTot: parseFloat(calcularTotal()),
-      Usuario_id: 1 
-    })
     try {
       // Faz a chamada à API
-      const response = await Api().post<any>('/saida', saidasSelecionadas, {
+      const response = await Api().post<any>('/saida', produtosSelecionados, {
         headers: { 'Content-Type': 'application/json' },
       });
       console.log('Resposta da API:', response);
@@ -184,7 +179,7 @@ function Saidas() {
         )}
         {produtos.map((produto) => {
           const quantidadeSelecionada =
-            produtosSelecionados?.find((p) => p.id === produto.Prod_cod)?.quantidade || 0;
+            produtosSelecionados?.find((p) => p.idProd === produto.Prod_cod)?.quantidade || 0;
           return (
             <div className="card-item" key={produto.Prod_cod}>
             <div className="card-name">
