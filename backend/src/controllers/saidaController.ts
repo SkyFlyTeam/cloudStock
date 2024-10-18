@@ -3,6 +3,8 @@ import { Saida } from '../models/Saida';
 import { Usuario } from '../models/Usuario';
 import { Lote } from '../models/Lote';
 import { Lote_Saida } from '../models/Lote_Saida';
+import { Produto } from '../models/Produto';
+import { Op } from 'sequelize';
 
 export const saidaController = {
     teste: async (req: Request, res: Response) => {
@@ -14,36 +16,42 @@ export const saidaController = {
     // POST criar uma nova saida
     save: async (req: Request, res: Response) => {
         try {
-            const { Saida_valorTot, Saida_dataCriacao, Usuario_id, lote_ids, lote_quantidades, lote_valores } = req.body;
+            const saidasSelecionadas = req.body
+            const ids = saidasSelecionadas.map((saidas: any) => saidas.idProd)
+            const Usuario_id = saidasSelecionadas.map(s => s.Usuario_id)[0] 
+            const produtos = await Produto.findAll({
+                where: {
+                    Prod_cod: {
+                        [Op.in]: ids,
+                    }
+                }
+            })
 
-            // Verificar se o usuário_id é válido
-            const usuario = await Usuario.findByPk(Usuario_id);
-            if (!usuario) {
-                return res.status(404).json({ message: 'Usuário não encontrado' });
+            let Saida_valorTot = 0;
+            for (const produto of produtos) {
+                // Verificando se há uma correspondência exata com o produto
+                const saidaCorrespondente = saidasSelecionadas.find(
+                    (saida) => saida.idProd === produto.Prod_cod
+                );
+
+                if (saidaCorrespondente) {
+                    // Calculando o total para o produto específico
+                    Saida_valorTot += produto.Prod_custo * saidaCorrespondente.quantidade;
+                }
             }
 
-            // Criar a nova saída
+            const date = new Date();
+            const day = String(date.getDate()).padStart(2, '0')
+            const month = String(date.getMonth() + 1).padStart(2, '0')
+            const year = date.getFullYear()
+
+            const Saida_dataCriacao = `${year}-${month}-${day}`
+
             const novaSaida = await Saida.create({
                 Saida_valorTot,
                 Saida_dataCriacao,
                 Usuario_id
             });
-
-            // Verificar se os lotes e suas respectivas quantidades e valores foram fornecidos
-            if (lote_ids && lote_ids.length > 0 && lote_quantidades && lote_valores) {
-                for (let i = 0; i < lote_ids.length; i++) {
-                    const lote = await Lote.findByPk(lote_ids[i]);
-                    if (lote) {
-                        // Criar as entradas na tabela Lote_Saida
-                        await Lote_Saida.create({
-                            Lote_id: lote_ids[i],
-                            Saida_id: novaSaida.Saida_id,
-                            Saida_quantidade: lote_quantidades[i],
-                            Saida_valor: lote_valores[i]
-                        });
-                    }
-                }
-            }
 
             return res.status(201).json(novaSaida);
         } catch (error) {
