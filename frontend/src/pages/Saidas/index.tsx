@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Produto, produtoServices } from "../../services/produtoServices";
 import { ApiException } from "../../config/apiException";
-import { useAuth } from '../../context/AuthProvider'
 import "./style.css";
 
 /* Componentes */
@@ -16,7 +15,6 @@ import Modal from "../../components/Modal";
 import BtnCancelar from "../../components/BtnCancelar";
 
 function Saidas() {
-  const { currentUser } = useAuth()
   // Controlar estados dos Modais
   const [openModalCadastro, setOpenModalCadastro] = useState(false); // concluir saida
   const [openModalQuantidade, setOpenModalQuantidade] = useState(false); // verificar quantidade
@@ -26,7 +24,10 @@ function Saidas() {
   const [data, setData] = useState<Produto[]>([]);
 
   // produtosSelecionados - {id: id, quantidade: quantidade} - produtos que serão enviados ao back
-  const [produtosSelecionados, setProdutosSelecionados] = useState<Array<{ idProd: number, quantidade: number, Usuario_id: number | undefined }> | null>([]);
+  const [produtosSelecionados, setProdutosSelecionados] = useState<Array<{ idProd: number, quantidade: number, Usuario_id: number }> | null>([]);
+
+  // saidasSelecionadas - {Saida_valortot: Valor, Usuario_id: id} - Saidas que serão enviados ao back
+  const [saidasSelecionadas, setSaidasSelecionadas] = useState<{ Saida_valorTot: number, Usuario_id: number } | null>(null);
 
   // produtos - produtos que serão exibidos
   const [produtos, setProdutos] = useState<Produto[]>([]);
@@ -68,7 +69,7 @@ function Saidas() {
 
     // Atualiza o estado de produtosSelecionados
     setProdutosSelecionados((prev) => {
-      const newProdutoSelecionado = { idProd: produto.Prod_cod, quantidade: 0, Usuario_id: currentUser?.Usuario_id };
+      const newProdutoSelecionado = { idProd: produto.Prod_cod, quantidade: 0, Usuario_id: 1 };
       return prev ? [...prev, newProdutoSelecionado] : [newProdutoSelecionado];
     });
 

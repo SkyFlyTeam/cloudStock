@@ -38,17 +38,20 @@ export class Saida extends Model{
 	Usuario_id!: number;
 
 	@BelongsTo(() => Usuario)
-	Usuarios!: Usuario[];
+	Usuarios!: Usuario;
 
 	@BelongsToMany(() => Lote, () => Lote_Saida)
 	Lotes!: Lote[]
 
 	@AfterCreate
 	static async notificarRegistro(instance: Saida) {
+
+		const nome = await fetch(`http://localhost:5000/usuario/${instance.Usuario_id}`);
+		const jsonData = await nome.json();
 		await Registros.create({
 			Registro_Mensagem: `Valor total: R$ ${instance.Saida_valorTot}`,
 			Registro_Data: new Date(),
-			Registro_Repsonsavel: "User",
+			Registro_Repsonsavel: `${jsonData.Usuario_nome}`,
 			Registro_Tipo: "Saida"
 		})
 	}
