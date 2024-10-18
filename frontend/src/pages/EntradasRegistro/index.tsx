@@ -1,16 +1,12 @@
 import React from "react"
-
 import './style.css'
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import BtnAzul from "../../components/BtnAzul"
 import InputBusca from "../../components/InputBusca"
 import { IoAddCircleOutline, IoArrowBackCircleOutline } from "react-icons/io5"
 import { useNavigate } from 'react-router-dom';
-import Listagem from "../../components/Listagem"
 import { Entrada, entradaServices } from "../../services/entradaServices"
 import { ApiException } from "../../config/apiException";
-import ToggleBtn from "../../components/ToggleBtn";
-import EditarRemoverBtn from "../../components/EditarRemoverBtn";
 import Modal from "../../components/Modal";
 
 /* Tabela */
@@ -18,33 +14,22 @@ import { Table } from "react-bootstrap";
 import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import BtnCancelar from "../../components/BtnCancelar";
 import VisualizarBtn from "../../components/VisualizarBtn";
-import { resourceLimits } from "worker_threads";
-import Local_Editar from "../../components/Formularios/Locais/Local_Editar";
 
 // Const para a criação de colunas; Define a Tipagem (Interface)
 const columnHelper = createColumnHelper<Entrada>();
 
 function EntradasRegistro() {
-
-    //Estado para controlar o modal
     const [openModalVisualizar, setOpenModalVisualizar] = useState(false)
-
-    // Salvar informações do json
     const [entradaInfo, setEntradaInfo] = useState<Entrada | null>(null)
-
-    //Guarda o ID da Entrada selecionada
     const [entradaSelecionada, serEntradaSelecionada] = useState<number | null>(null);
-
     const navigate = useNavigate();
 
     const handleRedirect = () => {
         navigate('/Entradas');
     };
 
-    // Armazena as informações puxadas na tabela
     const [data, setData] = useState<Entrada[]>([]);
 
-    // Função para buscar todos as entradas
     const fetchEntrada = async () => {
         const result = await entradaServices.getAllEntrada()
         if (result instanceof ApiException) {
@@ -54,12 +39,10 @@ function EntradasRegistro() {
         }
     }
 
-    // Chama a função para pegar todos as entradas do BD ao montar o componente
     useEffect(() => {
         fetchEntrada()
     }, [])
 
-    // Define as colunas
     const columns: ColumnDef<Entrada, any>[] = [
         columnHelper.accessor('Ent_id', {
             header: () => 'Código',
@@ -80,33 +63,30 @@ function EntradasRegistro() {
         }),
     ];
 
-    // Configurações da tabela
     const table = useReactTable({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
     });
 
-    //Função para evento de modais
     const handleVisualizarClick = (id: number) => {
         serEntradaSelecionada(id)
-        setOpenModalVisualizar(true) // Abre o modal de edição
+        setOpenModalVisualizar(true)
 
-        async function fetchEntradaById(id: number) { //
+        async function fetchEntradaById(id: number) {
             const response = await entradaServices.getEntradaByID(id)
-            console.log(response) // VER AS INFORMAÇÕES RETORNADAS
-
             if (response instanceof ApiException) {
                 alert(response.message)
             } else {
                 setEntradaInfo(response)
             }
         }
-
         fetchEntradaById(id)
     }
 
-
+    const calcularSubtotal = (quantidade: number, custo: number) => {
+        return (quantidade * custo).toFixed(2);
+    }
 
     return (
         <main>
@@ -145,30 +125,48 @@ function EntradasRegistro() {
             </Table>
 
             {/* Modal de visualizar */}
-
             <Modal
-                isOpen={openModalVisualizar} // Abre o modal
-                label="Visualizar entrada - " // Titulo do modal
-                id={entradaSelecionada}
-                buttons={
-                    <>
-                        <BtnAzul icon={<IoArrowBackCircleOutline />} label='VOLTAR' onClick={() => setOpenModalVisualizar(false)} />
-                    </>
-                }
-            >
-                {entradaInfo ? (
-                    <div>
-                        <p>Data de Criação: {new Date(entradaInfo.Ent_dataCriacao).toLocaleDateString()}</p>
-                        <p>Valor Total: {entradaInfo.Ent_valortot}</p>
-                        <p>Valor Total: {entradaInfo.Usuario_id}</p>
-                        
-                    </div> 
-                ) : (
-                    <p>Carregando informações da entrada...</p>
-                )}
-            </Modal>
+    isOpen={openModalVisualizar}
+    label={`Visualizar Entrada - ID ${entradaSelecionada}`}
+    buttons={
+        <BtnAzul icon={<IoArrowBackCircleOutline />} label='VOLTAR' onClick={() => setOpenModalVisualizar(false)} />
+    }
+>
+    {entradaInfo ? (
+        <div className="modal-content">
+            <h3 className="modal-title">Produtos</h3>
+
+            {entradaInfo.Lotes?.map((lote, index) => (
+                <div key={index} className="lote-container">
+                    <div className="produto-info">
+                        <p><strong>{lote.Produtos?.Prod_nome}</strong></p>
+                        <p>Quantidade: {lote.Lote_quantidade}</p>
+                        <p>Custo: R${lote.Produtos?.Prod_custo}</p>
+                        <p>Fornecedor: {lote.Produtos?.Fornecedor?.Forn_nome}</p>
+                        <p>Lote: {lote.Lote_cod}</p>
+                        <p>Validade: {lote.Lote_validade}</p>
+                        <p>Local de armazenamento: {lote.Locais_Armazenamento?.LocAr_nome}</p>
+                        <p>Subtotal: R${calcularSubtotal(lote.Lote_quantidade, parseFloat(lote.Produtos?.Prod_custo || '0'))}</p>
+                    </div>
+                </div>
+            ))}
+
+            <hr />
+
+            <div className="detalhes-container">
+                <h3>Detalhes</h3>
+                <p><strong>Total: </strong>R${entradaInfo.Ent_valortot}</p>
+                <p><strong>Data: </strong>{new Date(entradaInfo.Ent_dataCriacao).toLocaleDateString()} às {new Date(entradaInfo.Ent_dataCriacao).toLocaleTimeString()}</p>
+                <p><strong>Realizado por: </strong>Nome do Usuário</p>
+            </div>
+        </div>
+    ) : (
+        <p>Carregando informações da entrada...</p>
+    )}
+</Modal>
+
         </main>
     )
 }
 
-export default EntradasRegistro
+export default EntradasRegistro;
