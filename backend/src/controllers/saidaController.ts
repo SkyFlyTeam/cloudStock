@@ -47,7 +47,7 @@ export const saidaController = {
                 Usuario_id
             });
 
-            return res.status(201).json(Saida_valorTot);
+            return res.status(201).json(novaSaida);
         } catch (error) {
             console.error(error);
             return res.status(500).json({ message: 'Erro ao criar saída e associar lotes', error });
