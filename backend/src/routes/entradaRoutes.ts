@@ -9,4 +9,7 @@ router.post('/', controllerEntrada.save)
 // Rota para obter todas as entradas
 router.get('/', controllerEntrada.show)
 
+// Rota para obter entrada pelo Id
+router.get('/:id', controllerEntrada.showSpecific)
+
 export default router
