@@ -10,6 +10,7 @@ import fornecedorRoutes from './fornecedorRoutes';
 import unidadeMedidaRoutes from './unidadeMedidaRoutes';
 import localArmazenamentoRoutes from './localArmazenamentoRoutes';
 import setorRoutes from './setorRoutes';
+import registroRoutes from './registrosRoutes';
 
 const router = Router();
 
@@ -45,5 +46,8 @@ router.use('/localarmazenamento', localArmazenamentoRoutes);
 
 // Rota para Setor
 router.use('/setor', setorRoutes);
+
+//Rota para Registros
+router.use('/registros', registroRoutes);
 
 export default router;

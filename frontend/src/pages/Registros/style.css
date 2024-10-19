@@ -7,7 +7,7 @@ body {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 20px;
-    color: #333;
+    color: #030303;
 }
 
 .registros-container {
@@ -24,17 +24,21 @@ body {
     border-radius: 8px;
     background-color: #ffffff;
     border-left: 8px solid;
-    box-shadow: 0 1px 3px rgba(236, 5, 5, 0.1);
+    
 }
 
-.registro-item.entrada {
-    border-color: #61BDE0; /* Verde para Entradas */
-    background-color: #61bce027;
+div.registro-item:nth-child(even){
+    background-color: #79d3f727;
 }
 
-.registro-item.saida {
-    border-color: #61BDE0; /* Vermelho para Saídas */
+div.registro-item:nth-child(odd){
+    background-color: #ffffff;
 }
+
+.registro-item {
+    border-color: #21a4e6; /* Verde para Entradas */
+}
+
 
 .icon {
     font-size: 24px;
@@ -42,7 +46,14 @@ body {
 }
 
 .info {
+    display: flex;
+    flex-direction: column;
     flex-grow: 1;
+}
+
+.info-body, .info-title{
+    display: flex;
+    justify-content: space-between;
 }
 
 .info h2 {
@@ -51,7 +62,7 @@ body {
     font-weight: bold;
 }
 
-.info p {
+.info span{
     margin: 5px 0;
     color: #555;
 }

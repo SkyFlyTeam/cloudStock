@@ -2,14 +2,16 @@ import { Api } from "../config/apiConfig"
 import { ApiException } from "../config/apiException"
 
 export interface Registro {
-  Setor_nome: string
-  Setor_id: number
-  Setor_status: boolean 
+  Registro_id: number
+  Registro_Mensagem: string
+  Registro_Data: Date
+  Registro_Responsavel: string
+  Registro_Tipo: string
 }
 
 const getAllRegistros = async (): Promise<Registro[] | ApiException> => {
     try{
-      const { data } = await Api().get('/setor')
+      const { data } = await Api().get('/registros')
       return data
     } catch(error: any){
       return new ApiException(error.message || 'Erro ao consultar a API.')
