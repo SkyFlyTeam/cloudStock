@@ -10,6 +10,7 @@ import Navbar from "../components/navbar";
 
 import '../style/global.css';
 import BarraSuperior from "../components/Barra Superior";
+import Saida_cadastro from "../pages/Saidas_cadastro";
 
 function MainRoutes(){
     return(
@@ -24,6 +25,7 @@ function MainRoutes(){
                         <Route path="/Setores" element={<Setores />} />
                         <Route path="/Fornecedores" element={<Fornecedores />} />
                         <Route path="/Saidas" element={<Saidas />} />
+                        <Route path="/Saidas-cadastro" element={<Saida_cadastro/>} />
                     </Routes>
                 </div>
             </div>
