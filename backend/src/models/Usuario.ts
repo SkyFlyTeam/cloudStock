@@ -27,7 +27,13 @@ export class Usuario extends Model {
         type: DataType.STRING(30),
         allowNull: false
     })
+    
     Usuario_senha!: string;
+    @Column({
+        type: DataType.STRING(60),
+        allowNull: false
+    })
+    Usuario_nome!: string;
 
     @Column({
         type: DataType.BOOLEAN,
