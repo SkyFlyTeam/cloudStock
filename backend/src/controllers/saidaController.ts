@@ -17,6 +17,12 @@ export const saidaController = {
     save: async (req: Request, res: Response) => {
         try {
             const saidasSelecionadas = req.body
+            const Lotes = await Lote.findAll({
+                order: [
+                    ['Lote_validade', 'ASC']
+                ]
+            })
+            console.log(saidasSelecionadas)
             const ids = saidasSelecionadas.map((saidas: any) => saidas.idProd)
             const Usuario_id = saidasSelecionadas.map(s => s.Usuario_id)[0] 
             const produtos = await Produto.findAll({
@@ -35,6 +41,38 @@ export const saidaController = {
                 );
 
                 if (saidaCorrespondente) {
+                    let quantidadeDinamica = saidaCorrespondente.quantidade
+
+                    for(const l of Lotes){
+                        if (l.Prod_cod === produto.Prod_cod && l.Lote_quantidade > 0){
+                            if (quantidadeDinamica <= l.Lote_quantidade){
+                                await Lote.update({
+                                    Lote_id: l.Lote_id,
+                                    Lote_validade: l.Lote_validade,
+                                    Lote_quantidade: l.Lote_quantidade -= quantidadeDinamica,
+                                    Lote_cod: l.Lote_cod,
+                                    LocAr_id: l.LocAr_id
+
+                                }, {where: {Lote_id: l.Lote_id}})
+                                break;
+                            }
+
+                            else {
+                                quantidadeDinamica -= l.Lote_quantidade
+
+                                await Lote.update({
+                                    Lote_id: l.Lote_id,
+                                    Lote_validade: l.Lote_validade,
+                                    Lote_quantidade: 0,
+                                    Lote_cod: l.Lote_cod,
+                                    LocAr_id: l.LocAr_id
+
+                                }, {where: {Lote_id: l.Lote_id}})
+                            }
+                            
+                        }
+                    };
+
                     // Calculando o total para o produto específico
                     Saida_valorTot += produto.Prod_custo * saidaCorrespondente.quantidade;
                 }

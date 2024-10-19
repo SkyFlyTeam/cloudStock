@@ -10,7 +10,7 @@ import Input from "../../components/Input";
 /* Icons */
 import { IoAddCircleOutline, IoRadioButtonOnSharp } from "react-icons/io5";
 import { AiOutlineDelete } from "react-icons/ai";
-import { Api} from "../../config/apiConfig";
+import { Api, hostname} from "../../config/apiConfig";
 import Modal from "../../components/Modal";
 import BtnCancelar from "../../components/BtnCancelar";
 
@@ -77,9 +77,10 @@ function Saidas() {
   };
 
   // Atualiza a quantidade selecionada pelo cliente e recalcula o subtotal
-  const handleQuantidadeChange = (id: number, quantidade: number) => {
+  const handleQuantidadeChange = async (id: number, quantidade: number) => {
     const produto = produtos.find((p) => p.Prod_cod === id)
-    if (produto && produto.Prod_quantidade !== undefined && quantidade > produto.Prod_quantidade){
+    const prodQuantidade = await (await fetch(`${hostname}lote/quantidade/${id}`)).json()
+    if (produto !== undefined && quantidade > prodQuantidade){
       setOpenModalQuantidade(true)
       return
     }
