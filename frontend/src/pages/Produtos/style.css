@@ -61,13 +61,13 @@ td{
 }
 
 td img{
-    width: 5rem;
-    height: 5rem;
+    width: 5.5rem;
+    height: 4.5rem;
     object-fit: cover;
-    border-radius: 50%;
+    border-radius: 10px;
 }
 
-div.td-center, div.th-center{
+div.td-center{
     display: flex;
     justify-content: center;
 }
