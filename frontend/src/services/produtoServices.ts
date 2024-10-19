@@ -25,7 +25,21 @@ export interface Produto {
 const getAllProdutos = async (): Promise<Produto[] | ApiException> => {
   try {
     const { data } = await Api().get('/produto')
-    return data
+    const produtos = await Promise.all(
+      data.map(async (produto: Produto) => {
+        // Faz a requisição para pegar a quantidade do produto por Prod_cod
+        const { data: quantidade } = await Api().get<any>(`/lote/quantidade/${produto.Prod_cod}`);
+
+        // Retorna o produto com a quantidade adicionada
+        return {
+          ...produto, // Inclui os dados atuais do produto
+          Prod_quantidade: quantidade // Adiciona a quantidade retornada da segunda chamada
+        };
+      })
+    )
+
+    return produtos
+
   } catch (error: any) {
     return new ApiException(error.message || 'Erro ao consultar a API.')
   }
@@ -88,10 +102,68 @@ const deleteProduto = async (id: number): Promise<any | ApiException> => {
   }
 }
 
+const getProdutosByLocal = async (id: number): Promise<Produto[] | ApiException> => {
+  try {
+    const { data } = await Api().get<any>(`/lote/local/${id}`, {
+      headers: { 'Content-Type': 'application/json' }
+    })
+    console.log('local', data)
+
+    // Filtra os produtos para garantir que não haja duplicatas (baseado em Prod_cod)
+    const uniqueProducts = data.filter(
+      (produto: Produto, index: number, self: Produto[]) =>
+        index === self.findIndex((p) => p.Prod_cod === produto.Prod_cod)
+    )
+
+    // Faz outra chamada assíncrona para obter a quantidade para cada produto
+    const produtos = await Promise.all(
+      uniqueProducts.map(async (produto: Produto) => {
+        // Faz a requisição para pegar a quantidade do produto por Prod_cod
+        const { data: quantidade } = await Api().get<any>(`/lote/quantidade/${produto.Prod_cod}`);
+
+        // Retorna o produto com a quantidade adicionada
+        return {
+          ...produto, // Inclui os dados atuais do produto
+          Prod_quantidade: quantidade // Adiciona a quantidade retornada da segunda chamada
+        };
+      })
+    )
+
+    return produtos
+
+  } catch (error: any) {
+    return new ApiException(error.message || 'Erro ao buscar locais pelo ID.')
+  }
+}
+
+export interface Lote {
+  Lote_id: number
+  Lote_validade: Date
+  Lote_quantidade: number
+  Lote_cod: string
+  Prod_cod: number
+  LocAr_id: number
+}
+
+const getProdutoLotes = async (Produto_id: number, Local_id: number): Promise<Lote[] | ApiException> => {
+  try {
+    const { data } = await Api().get<any>(`/lote/produto/${Produto_id}/${Local_id}`, {
+      headers: { 'Content-Type': 'application/json' }
+    })
+
+    return data
+
+  } catch (error: any) {
+    return new ApiException(error.message || 'Erro ao listar lotes.')
+  }
+}
+
 export const produtoServices = {
   getAllProdutos,
   createProduto,
   getProdutoByID,
   deleteProduto,
-  updateProduto
+  updateProduto,
+  getProdutosByLocal,
+  getProdutoLotes
 }
