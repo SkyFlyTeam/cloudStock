@@ -52,7 +52,8 @@ export class Saida extends Model{
 			Registro_Mensagem: `Valor total: R$ ${instance.Saida_valorTot}`,
 			Registro_Data: new Date(),
 			Registro_Repsonsavel: `${jsonData.Usuario_nome}`,
-			Registro_Tipo: "Saida"
+			Registro_Tipo: "Saida",
+			Registro_Chave: instance.Saida_id
 		})
 	}
 }

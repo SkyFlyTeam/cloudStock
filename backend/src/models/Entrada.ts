@@ -51,7 +51,8 @@ export class Entrada extends Model {
 			Registro_Mensagem: `Valor total: R$ ${instance.Ent_valortot}`,
 			Registro_Data: new Date(),
 			Registro_Repsonsavel: `${jsonData.Usuario_nome}`,
-			Registro_Tipo: "Entrada"
+			Registro_Tipo: "Entrada",
+			Registro_Chave: instance.Ent_id
 		})
 	}
 }
