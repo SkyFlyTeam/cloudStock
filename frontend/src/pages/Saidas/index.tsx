@@ -13,8 +13,12 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { Api, hostname} from "../../config/apiConfig";
 import Modal from "../../components/Modal";
 import BtnCancelar from "../../components/BtnCancelar";
+import { useAuth } from "../../context/AuthProvider";
 
 function Saidas() {
+  // Usuário logado
+  const user = useAuth().currentUser
+
   // Controlar estados dos Modais
   const [openModalCadastro, setOpenModalCadastro] = useState(false); // concluir saida
   const [openModalQuantidade, setOpenModalQuantidade] = useState(false); // verificar quantidade
@@ -69,7 +73,7 @@ function Saidas() {
 
     // Atualiza o estado de produtosSelecionados
     setProdutosSelecionados((prev) => {
-      const newProdutoSelecionado = { idProd: produto.Prod_cod, quantidade: 0, Usuario_id: 1 };
+      const newProdutoSelecionado = { idProd: produto.Prod_cod, quantidade: 0, Usuario_id: Number(user?.Usuario_id) };
       return prev ? [...prev, newProdutoSelecionado] : [newProdutoSelecionado];
     });
 
