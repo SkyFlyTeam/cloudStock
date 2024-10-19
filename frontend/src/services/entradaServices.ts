@@ -5,8 +5,13 @@ export interface Entrada {
   Ent_id: number;
   Ent_valortot: number;
   Ent_dataCriacao: Date;
-  Usuario_id: number;
+  Usuario: Usuario; 
   Lotes?: Lote[];
+}
+
+export interface Usuario {
+  Usuario_id: number;
+  Usuario_email: string;
 }
 
 export interface Lote {

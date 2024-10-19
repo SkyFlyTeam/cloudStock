@@ -126,44 +126,76 @@ function EntradasRegistro() {
 
             {/* Modal de visualizar */}
             <Modal
-    isOpen={openModalVisualizar}
-    label={`Visualizar Entrada - ID ${entradaSelecionada}`}
-    buttons={
-        <BtnAzul icon={<IoArrowBackCircleOutline />} label='VOLTAR' onClick={() => setOpenModalVisualizar(false)} />
-    }
->
-    {entradaInfo ? (
-        <div className="modal-content">
-            <h3 className="modal-title">Produtos</h3>
+                isOpen={openModalVisualizar}
+                label={`Visualizar Entrada - ID ${entradaSelecionada}`}
+                buttons={
+                    <BtnAzul icon={<IoArrowBackCircleOutline />} label='VOLTAR' onClick={() => setOpenModalVisualizar(false)} />
+                }
+            >
+                {entradaInfo ? (
+                    <div className="modal-content">
+                        {/* PRODUTOS */}
+                        <div className="grid-container">
+                            <h3 className="modal-title">Produtos</h3>
+                            <hr />
+                        </div>
 
-            {entradaInfo.Lotes?.map((lote, index) => (
-                <div key={index} className="lote-container">
-                    <div className="produto-info">
-                        <p><strong>{lote.Produtos?.Prod_nome}</strong></p>
-                        <p>Quantidade: {lote.Lote_quantidade}</p>
-                        <p>Custo: R${lote.Produtos?.Prod_custo}</p>
-                        <p>Fornecedor: {lote.Produtos?.Fornecedor?.Forn_nome}</p>
-                        <p>Lote: {lote.Lote_cod}</p>
-                        <p>Validade: {lote.Lote_validade}</p>
-                        <p>Local de armazenamento: {lote.Locais_Armazenamento?.LocAr_nome}</p>
-                        <p>Subtotal: R${calcularSubtotal(lote.Lote_quantidade, parseFloat(lote.Produtos?.Prod_custo || '0'))}</p>
+                        {entradaInfo.Lotes?.map((lote, index) => (
+                            <div key={index} className="lote-container">
+                                <div className="produto-info">
+                                    <h5><strong>{lote.Produtos?.Prod_nome}</strong></h5>
+                                    <div className="info-row">
+                                        <div className="info-item">
+                                            <span>Quantidade</span>
+                                            <span>{lote.Lote_quantidade}</span>
+                                        </div>
+                                        <div className="info-item">
+                                            <span>Custo</span>
+                                            <span>R${lote.Produtos?.Prod_custo}</span>
+                                        </div>
+                                        <div className="info-item">
+                                            <span>Fornecedor</span>
+                                            <span>{lote.Produtos?.Fornecedor?.Forn_nome}</span>
+                                        </div>
+                                        <div className="info-item">
+                                            <span>Lote</span>
+                                            <span>{lote.Lote_cod}</span>
+                                        </div>
+                                        <div className="info-item">
+                                            <span>Validade</span>
+                                            <span>{new Date(lote.Lote_validade).toLocaleDateString('pt-BR')}</span> {/* Transforma a data em dd/mm/aaaa */}
+                                        </div>
+                                        <div className="info-item">
+                                            <span>Local de armazenamento</span>
+                                            <span>{lote.Locais_Armazenamento?.LocAr_nome}</span>
+                                        </div>
+                                        <div className="info-item">
+                                            <span>Subtotal</span>
+                                            <span>R${calcularSubtotal(lote.Lote_quantidade, parseFloat(lote.Produtos?.Prod_custo || '0'))}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        ))}
+
+                        {/*DETALHES */}
+
+                        <div className="grid-container">
+                            <h3 className="modal-title">Detalhes</h3>
+                            <hr />
+                        </div>
+
+                        <div className="detalhes-container">
+                            <p><strong>Total: </strong>R${entradaInfo.Ent_valortot}</p>
+                            <p><strong>Data: </strong>{new Date(entradaInfo.Ent_dataCriacao).toLocaleDateString()}</p>
+                            <p><strong>Realizado por: </strong>{entradaInfo.Usuario?.Usuario_email}</p>
+                        </div>
                     </div>
-                </div>
-            ))}
-
-            <hr />
-
-            <div className="detalhes-container">
-                <h3>Detalhes</h3>
-                <p><strong>Total: </strong>R${entradaInfo.Ent_valortot}</p>
-                <p><strong>Data: </strong>{new Date(entradaInfo.Ent_dataCriacao).toLocaleDateString()} às {new Date(entradaInfo.Ent_dataCriacao).toLocaleTimeString()}</p>
-                <p><strong>Realizado por: </strong>Nome do Usuário</p>
-            </div>
-        </div>
-    ) : (
-        <p>Carregando informações da entrada...</p>
-    )}
-</Modal>
+                ) : (
+                    <p>Carregando informações da entrada...</p>
+                )}
+            </Modal>
 
         </main>
     )
