@@ -22,10 +22,10 @@ import Forn_Excluir from "../../components/Formularios/Fornecedor/Forn_Excluir";
 import OlhoSaida from "../../components/OlhoSaida";
 import SaidaFormulario from "../../components/Formularios/Saida/Saida_Cadastrar";
 import Saida_Edicao from "../../components/Formularios/Saida/Saida_Editar";
-
+import VisualizarBtn from "../../components/VisualizarBtn";
 /* Icons */
-import { IoAddCircleOutline } from "react-icons/io5"
 import { AiOutlineDelete } from "react-icons/ai"
+import { IoAddCircleOutline, IoArrowBackCircleOutline } from "react-icons/io5"
 
 // Const para a criação de colunas; Define a Tipagem (Interface)
 const columnHelper = createColumnHelper<Saida>();
@@ -33,11 +33,13 @@ const columnHelper = createColumnHelper<Saida>();
 function Saidas() {
   // Estado para controlar os modais
   const [openModalCadastro, setOpenModalCadastro] = useState(false);
-  const [openModalEdicao, setOpenModalEdicao] = useState(false);
+  const [openModalVisualizar, setopenModalVisualizar] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
+  const [saidaInfo, setSaidaInfo] = useState<Saida | null>(null)
+
   // Guarda o ID dos fornecedores selecionados na tabela
-  const [fornecedorSelecionado, setFornecedorSelecionado] = useState<number | null>(null);
+  const [saidaSelecionada, setSaidaSelecionada] = useState<number | null>(null);
 
   // Mensagem de sucesso das ações
   const [mensagemSucesso, setMensagemSucesso] = useState<string>('');
@@ -63,10 +65,9 @@ function Saidas() {
   }
 
   // Chama a função para pegar todos os fornecedores do BD ao montar o componente
-  useEffect(() => {
-    fetchSaidas()
-  }, [])
-
+useEffect(() => {
+  fetchSaidas()
+}, [])
 
   // Altera o Status do componente 
   // const handleStatusChange = (forn_id: number, newStatus: boolean) => {
@@ -93,7 +94,7 @@ function Saidas() {
         <div className="action-cell">
           <OlhoSaida
             id={props.row.original.Saida_id}
-            onEdit={() => handleEditClick(props.row.original.Saida_id)}
+            onEdit={() => handleVisualizarClick(props.row.original.Saida_id)}
           />
         </div>
       ),
@@ -109,24 +110,36 @@ function Saidas() {
 
   // FUNÇÕES PARA EVENTO DE MODALS
   // Edição
-  const handleEditClick = (id: number) => {
-    setFornecedorSelecionado(id)
-    setOpenModalEdicao(true) // Abre o modal de edição
+  const handleVisualizarClick = (id: number) => {
+    setSaidaSelecionada(id)
+    setopenModalVisualizar(true) // Abre o modal de edição
+    
+    async function fetchSaidaById(id: number) { //
+      const response = await saidaServices.getSaidaByID(id)
+      console.log(response) // VER AS INFORMAÇÕES RETORNADAS
+      if (response instanceof ApiException) {
+          alert(`aaaaaa ${response.message}`)
+      } else {
+          setSaidaInfo(response)
+      }
+    }
+
+    fetchSaidaById(id)
   }
 
   const closeEditModal = () => {
-    setFornecedorSelecionado(null)
-    setOpenModalEdicao(false)
+    setSaidaSelecionada(null)
+    setopenModalVisualizar(false)
   }
 
   // Excluir
   const handleDeleteClick = (id: number) => {
-    setFornecedorSelecionado(id)
+    setSaidaSelecionada(id)
     setOpenDeleteModal(true)
   }
 
   const closeDeleteModal = () => {
-    setFornecedorSelecionado(null)
+    setSaidaSelecionada(null)
     setOpenDeleteModal(false)
   }
 
@@ -171,78 +184,32 @@ function Saidas() {
       </Table>
 
       {/* MODALS*/}
-      {/* Modal de Cadastro */}
-      <Modal
-        isOpen={openModalCadastro} // Abre o modal
-        label="Cadastrar Saída" // Titulo do modal
-        buttons={
-          <>
-            <BtnCancelar onClick={() => setOpenModalCadastro(false)} /> {/*Fechar o modal */}
-            <BtnAzul
-              icon={<IoAddCircleOutline />}
-              label="CADASTRAR"
-              onClick={() => formRef.current?.submitForm()} /* Passa a função da referencia do formulario para poder enviar o submit */
-            />
-          </>
-        }
-      >
-        <SaidaFormulario
-          ref={formRef} /* Passa a referencia do formulario */
-          onSuccess={message => {
-            setMensagemSucesso(message) 
-            setOpenModalCadastro(false)
-            // fetchFornecedores() // Atualiza a tabela
-          }}
-        />
-      </Modal>
-
       {/* Modal de Edição */}
-      {fornecedorSelecionado && (
+
+      {saidaSelecionada && (
         <Modal
-          isOpen={openModalEdicao}
-          label="Editar Saida"
-          buttons={
+        isOpen={openModalVisualizar} // Abre o modal
+        label="Visualizar saída - " // Titulo do modal
+        id={saidaSelecionada}
+        buttons={
             <>
-              <BtnCancelar onClick={closeEditModal} />
-              <BtnAzul icon={<IoAddCircleOutline />} label="SALVAR" onClick={() => formRef.current?.submitForm()} />
+                <BtnAzul icon={<IoArrowBackCircleOutline />} label='VOLTAR' onClick={() => setopenModalVisualizar(false)} />
             </>
-          }
-        >
-          <Saida_Edicao
-            ref={formRef}
-            id={fornecedorSelecionado}
-            onSuccess={message => {
-              setMensagemSucesso(message);
-              closeEditModal();
-              // fetchFornecedores(); // Atualiza a tabela após edição
-            }}
-          />
-        </Modal>
+        }
+    >
+        {saidaInfo ? (
+            <div>
+                <p>Data de Criação: {new Date(saidaInfo.Saida_dataCriacao).toLocaleDateString()}</p>
+                <p>Valor Total: {saidaInfo.Saida_valorTot}</p>
+                <p>Criado por: {saidaInfo.Usuarios.Usuario_email}</p>
+                
+            </div> 
+        ) : (
+            <p>Carregando informações da entrada...</p>
+        )}
+    </Modal>
       )}
 
-      {/* Modal de Exclusão */}
-      {fornecedorSelecionado && (
-        <Modal
-          isOpen={openDeleteModal}
-          label="Excluir Fornecedor"
-          buttons={
-            <>
-              <BtnCancelar onClick={closeDeleteModal} />
-              <BtnAzul icon={<AiOutlineDelete />} label="Deletar" onClick={() => formRef.current?.submitForm()} />
-            </>
-          }
-        >
-          <Forn_Excluir
-            ref={formRef}
-            id={fornecedorSelecionado}
-            onSuccess={message => {
-              setMensagemSucesso(message)
-              closeDeleteModal()
-              // fetchFornecedores()
-            }}
-          />
-        </Modal>
-      )}
     </main>
   );
 }

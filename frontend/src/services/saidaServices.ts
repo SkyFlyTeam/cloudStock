@@ -5,6 +5,40 @@ export interface Saida {
     Saida_id: number
     Saida_valorTot: string
     Saida_dataCriacao: Date
+    Usuario: Usuario
+    Usuarios: Usuario
+    Lotes?: Lote[];
+}
+
+export interface Usuario {
+  Usuario_id: number;
+  Usuario_email: string;
+}
+
+export interface Lote {
+  Lote_id: number;
+  Lote_cod: string;
+  Lote_quantidade: number;
+  Lote_validade: string;
+  Locais_Armazenamento?: LocalArmazenamento;
+  Produtos?: Produto;
+}
+
+export interface Produto {
+  Prod_id: number;
+  Prod_nome: string;
+  Prod_custo: string;
+  Fornecedor?: Fornecedor;
+}
+
+export interface Fornecedor {
+  Forn_id: number;
+  Forn_nome: string;
+}
+
+interface LocalArmazenamento {
+  LocAr_id: number;
+  LocAr_nome: string;
 }
 
 const getAllSaidas = async (): Promise<Saida[] | ApiException> => {
@@ -46,10 +80,11 @@ const updateSaida = async (id: number, saida: any): Promise<Saida | ApiException
 
 const getSaidaByID = async (id: number): Promise<Saida | ApiException> => {
   try {
+    console.log(`tecnosh ${id}`)
     const { data } = await Api().get<any>(`/saida/${id}`, {
       headers: { 'Content-Type': 'application/json' }
     })
-
+    
     const saida: Saida = data;
     return saida
 

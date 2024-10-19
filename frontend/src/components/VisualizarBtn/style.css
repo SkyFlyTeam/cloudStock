@@ -1,0 +1,8 @@
+div.td-actions{
+    display: flex;
+    gap: 0.5rem;
+}
+
+.view-icon{
+  cursor: pointer;
+}
