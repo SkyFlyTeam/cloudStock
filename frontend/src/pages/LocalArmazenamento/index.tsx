@@ -97,7 +97,7 @@ const closeEditModal = () => {
       
           <div className="cards-group">
           {locais.map(local => (
-              <Card className="card-item">
+              <Card className="card-i">
                   <span>{local.LocAr_nome}</span> 
                   <div className="actions">
                       <FiEdit2 color="#61BDE0" size={20} className="edit-icon"  onClick={() => handleEditClick(local.LocAr_id)}/>

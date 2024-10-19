@@ -81,7 +81,7 @@ function Setores() {
         
             <div className="cards-group">
             {setores.map(setor => (
-                <Card className="card-item">
+                <Card className="card-i">
                     <span>{setor.Setor_nome}</span> 
                     <div className="actions">
                         <FiEdit2 color="#61BDE0" size={20} className="edit-icon" onClick={() => handleEditClick(setor.Setor_id)}/>

@@ -173,9 +173,9 @@ function LocalProduto() {
                   <th className="th-lote">Código</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="table-lp">
               {lotesInfo.map(lote => (
-                <tr key={lote.Lote_id}>
+                <tr key={lote.Lote_id} className="table-lp">
                   <td className="td-lote">{lote.Lote_cod}</td>
                   <td className="td-lote">{new Date(lote.Lote_validade).toLocaleDateString()}</td>
                   <td className="td-lote">{lote.Lote_quantidade}</td>
