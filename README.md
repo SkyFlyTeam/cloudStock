@@ -67,7 +67,7 @@ Apresentação das funcionalidades desenvolvidas até o momento:
 
 Documentos produzidos durante a sprint:
 
-Modelo lógico do Banco de Dados: [vertabello_modelo](https://github.com/user-attachments/assets/44f5c70d-fe6d-451d-a009-a0b1723421d5) 
+Modelo lógico do Banco de Dados: [vertabello_modelo](https://github.com/user-attachments/assets/816b7fb0-d5e7-4edf-bbcf-c5f745787ceb)
 <br>
 Backlog do Produto: [CloudStock-Backlog do Produto.pdf](https://github.com/user-attachments/files/17026988/SKYF-Backlog.do.Produto-170924-104112.pdf)
 
