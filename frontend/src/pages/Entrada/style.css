@@ -61,7 +61,7 @@
 
 .quantidade-container,
 .fornecedor-container,
-.lote-container,
+.lote-container-entrada,
 .entrada-validade,
 .local-container {
     display: flex;
@@ -78,7 +78,7 @@
   width: min-content;
 }
 
-.quantidade-container input, .lote-container input{
+.quantidade-container input, .lote-container-entrada input{
   width: 6.2rem;
 }
 

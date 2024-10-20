@@ -221,7 +221,7 @@ function Entradas() {
       console.error('Erro na função handleConcluir:', error);
     }
   }
-    
+
   return (
     <main>
     <div className="page-title">
@@ -274,8 +274,8 @@ function Entradas() {
                     label="Quantidade"
                     type="number"
                     className="quantidade-container"
-                    value={quantidadeSelecionada}
-                    onChange={(e) => handleQuantidadeChange(produto.Prod_cod, +e.target.value)}
+                    value={entrada.Lote_quantidade}
+                    onChange={(e) => handleQuantidadeChange(entrada.id, +e.target.value)}
                   />
 
                   <div className="custo-entrada">
@@ -287,8 +287,8 @@ function Entradas() {
                     <select 
                       id="inFornecedor"
                       className="form-select-custom"
-                      value={fornecedorSelecionado}
-                      onChange={(e) => handleFornecedorChange(produto.Prod_cod, +e.target.value)}
+                      value={entrada.Fornecedor_id}
+                      onChange={(e) => handleFornecedorChange(entrada.id, +e.target.value)}
                     >
                       <option value="" selected>Buscar...</option>
                       {fornecedores.map((f) => (
@@ -302,25 +302,25 @@ function Entradas() {
                   <Input 
                     label="Lote"
                     type="text"
-                    className="lote-container"
-                    value={loteCodSelecionado}
-                    onChange={(e) => handleLoteCodChange(produto.Prod_cod, e.target.value)}
+                    className="lote-container-entrada"
+                    value={entrada.Lote_cod}
+                    onChange={(e) => handleLoteCodChange(entrada.id, e.target.value)}
                   />
 
                     <Input 
                       label="Validade"
                       type="date"
                       className="entrada-validade"
-                      value={loteValidadeSelecionada}
-                      onChange={(e) => handleLoteValidadeChange(produto.Prod_cod, e.target.value)}
+                      value={entrada.Lote_validade.toISOString().substr(0, 10)}
+                      onChange={(e) => handleLoteValidadeChange(entrada.id, e.target.value)}
                     />
                   <div className="local-container">
                       <label htmlFor="inLocal">Local Armazenamento</label>
                       <select 
                         id="inLocal"
                         className="form-select-custom"
-                        value={localSelecionado}
-                        onChange={(e) => handleLocalChange(produto.Prod_cod, +e.target.value)}
+                        value={entrada.LocAr_id}
+                        onChange={(e) => handleLocalChange(entrada.id, +e.target.value)}
                       >
                         <option value="" selected>Buscar...</option>
                         {locais.map((d) => (
@@ -332,7 +332,7 @@ function Entradas() {
                     </div>
                     <div className="subtotal-entrada">
                       <span className="label">Subtotal</span>
-                      <span className="value">R${calcularSubtotal(produto, quantidadeSelecionada)}</span>
+                      <span className="value">R${calcularSubtotal(produto, entrada.Lote_quantidade)}</span>
                     </div>
                     <AiOutlineDelete
                       size={24}

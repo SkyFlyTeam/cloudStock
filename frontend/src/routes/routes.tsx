@@ -42,6 +42,7 @@ function MainRoutes(){
 
                     {/* Rotas do Gerente */}
                     <Route path="/Entrada" element={<ProtectedRoute allowedRoles={[2]}><Entrada /></ProtectedRoute>}/>
+                    <Route path="/RegistrosEntrada" element={<ProtectedRoute allowedRoles={[2]}><EntradasRegistro /></ProtectedRoute>}/>
 
                     {/* Rotas do Admin */}
                     <Route path="/Usuarios" element={<ProtectedRoute allowedRoles={[3]}><Usuarios /></ProtectedRoute>}/>

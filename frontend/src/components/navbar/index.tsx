@@ -85,8 +85,8 @@ const Navbar: React.FC = () => {
                   <div className="navbartext"><span>Registros</span></div>
                 </div>
 
-                <Link to="/Entrada" className="link">
-                  <div className={location.pathname === '/Entrada' ? 'menu-item active' : 'menu-item'}>
+                <Link to="/RegistrosEntrada" className="link">
+                  <div className={location.pathname === '/RegistrosEntrada' ? 'menu-item active' : 'menu-item'}>
                     <PiRowsPlusTopFill />
                     <div className="navbartext"><span>Entrada</span></div>
                   </div>

@@ -25,7 +25,7 @@ function EntradasRegistro() {
     const navigate = useNavigate();
 
     const handleRedirect = () => {
-        navigate('/Entradas');
+        navigate('/Entrada');
     };
 
     const [data, setData] = useState<Entrada[]>([]);
@@ -92,10 +92,12 @@ function EntradasRegistro() {
 
     return (
         <main>
-            <h1 className="title">Entrada</h1>
+            <div className="page-title">
+                <h1 className="title">Entradas</h1>
+                <hr className="line" />
+            </div>
 
-            <div className="inputButton">
-                <InputBusca />
+            <div className="actions-group">
                 <BtnAzul icon={<IoAddCircleOutline />} label='CADASTRAR' onClick={handleRedirect} />
             </div>
 
