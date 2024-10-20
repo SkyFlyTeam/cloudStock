@@ -60,6 +60,15 @@ export const controllerEntrada = {
                             { where: { Lote_cod: entrada.Lote_cod }, transaction }
                         );
                         loteId = lote.Lote_id;
+
+                        const envio = {
+                            Lote_id: loteId,
+                            Ent_id: entradaEnvio.Ent_id,
+                            Ent_quantidade: entrada.Lote_quantidade,  // Check if this is null or undefined
+                            Ent_valor: (produtoCorrespondente.Prod_custo * entrada.Lote_quantidade)
+                        };
+    
+                        controllerEntrada.addLoteToEntradaFunc(envio, transaction)
                     } else {
                         // Cria um novo lote
                         const newLote = await Lote.create({
@@ -78,6 +87,8 @@ export const controllerEntrada = {
                         Ent_quantidade: entrada.Lote_quantidade,  // Check if this is null or undefined
                         Ent_valor: (produtoCorrespondente.Prod_custo * entrada.Lote_quantidade)
                     };
+
+                    controllerEntrada.addLoteToEntradaFunc(envio, transaction)
                     
                     console.log('Envio:', envio);
 
