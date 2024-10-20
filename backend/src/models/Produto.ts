@@ -98,12 +98,6 @@ export class Produto extends Model {
     })
     Prod_status!: boolean;
 
-    @Column({
-        type: DataType.INTEGER,
-        allowNull: true
-    })
-    Prod_quantidade!: number;
-
     @ForeignKey(() => Categoria)
     @Column({
       type: DataType.INTEGER,

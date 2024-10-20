@@ -22,6 +22,7 @@ import './style.css'
 /* Icons */
 import { IoAddCircleOutline } from "react-icons/io5"
 import { AiOutlineDelete } from "react-icons/ai"
+import { hostname } from "../../config/apiConfig"
 
 
 // Criar o helper para colunas
@@ -82,21 +83,21 @@ function Produtos() {
       header: () => 'Nome',
       cell: info => info.getValue(),
     }),
-    columnHelper.accessor('Categoria_id', {
+    /*columnHelper.accessor('Categoria_id', {
       header: () => 'Categoria',
       cell: info => `${info.getValue()}`,
-    }),
+    }),*/
     columnHelper.accessor('Prod_quantidade', {
       header: () => 'Quantidade',
       cell: info => `${info.getValue()}`,
     }),
-    columnHelper.accessor('Prod_validade', {
-      header: () => 'Validade',
-      cell: info => `${info.getValue()}`,
-    }),
     columnHelper.accessor('Prod_preco', {
-      header: () => 'Preço',
-      cell: info => `${info.getValue()}`,
+      header: () => 'Preço Venda',
+      cell: info => info.getValue(),
+    }),
+    columnHelper.accessor('Prod_custo', {
+        header: () => 'Preco Custo',
+        cell: info => info.getValue(),
     }),
     columnHelper.accessor('Prod_status', {
       header: () => <div className="th-center"> Status</div>,
@@ -105,6 +106,7 @@ function Produtos() {
           <ToggleBtn
             checked={info.getValue() == 1}
             cod={info.row.original.Prod_cod}
+            rota={`${hostname}produto`}
             onStatusChange={(newStatus: any) => handleStatusChange(info.row.original.Prod_cod, newStatus)}
           />
         </div>
@@ -181,9 +183,9 @@ function Produtos() {
         <tbody>
           {table.getRowModel().rows.map(row => ( // Mapeia as linhas e células de cada coluna
             <React.Fragment key={row.id}>
-              <tr className="table-row">
+              <tr className="table-row table-rounded">
                 {row.getVisibleCells().map(cell => (
-                  <td key={cell.id}>
+                  <td key={cell.id} className="table-rounded"> 
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}

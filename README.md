@@ -1,8 +1,8 @@
-<h1 align='center'> Sprint 1: 09/09/2024 à 29/09/2024 </h1>
+<h1 align='center'> Sprint 2: 30/09/2024 à 20/10/2024 </h1>
 
 <br>
 
-Na primeira sprint realizamos o processo de prototipagem e criação de uma identidade visual, estruturação do projeto e criação do modelo lógico e conceitual do banco de dados. Ademais, implementamos funcionalidades básicas como cadastro de produtos, setores, locais de armazenamento e fornecedores.
+Na segunda sprint realizamos a criação de páginas dos registros de entrada e saída, tanto pagínas separadas de cada função quanto juntas, podendo ter uma melhor análise conforme o necessário, além disso, agora é exibido os produtos dentro dos seus devidos locais, e por fim, também é possível agora a movimentação de entrada e saída e já estar atualizado no mesmo instante na página de exibição da quantidade de produtos.
 
 <br>
 
@@ -11,7 +11,7 @@ Na primeira sprint realizamos o processo de prototipagem e criação de uma iden
 Os requisitos desenvolvidos durante esta sprint foram:
 
 - Cadastro de Local, Fornecedor e Setor: Registro dos locais de armazenamento, fornecedores e Setores.
-- Cadastro de Produtos: Incluindo código, nome, descrição, marca, modelo, categoria, quantidade, preço de custo e venda, unidade de medida, localização no estoque, fornecedor, imagem do produto, peso, dimensões, validade e setor de armazenagem.
+- Movimentação de Estoque: Registros de entrada e saída de produtos com controle de responsável e data. 
 
 <br>
 
@@ -19,26 +19,27 @@ Os requisitos desenvolvidos durante esta sprint foram:
 
 ID | User story | Estimativa
 |------|--------|------|
-| 1 | 	Eu como funcionário gostaria de cadastrar os produtos e suas propriedades para saber o que tem no estoque. | 6 |
-| 2 | 	Eu como gerente gostaria de cadastrar os locais, fornecedores e setores de cada produto para melhor gestão do estoque. | 4 |
+| 3 | 	Eu como gerente gostaria de realizar a compra de produtos para adicionar ao meu estoque | 6 |
+| 4 | 	Eu como funcionário gostaria de realizar a venda de produtos para continuar a gerar a demanda do estoque | 4 |
+| 5 | 	Eu como gerente gostaria de ter registros da entrada e saída de produtos para não perder a sincronia do sistema e estoque. | 2 |
+| 6 | 	Eu como funcionário gostaria de acessar onde está localizado um produto para poder direcionar um comprador. | 2 |
+| 7 |  Eu como administrador gostaria de ter três níveis de acesso diferente para atribuições individualizadas.| 7 |
+
 
 <br>
 
 US | Task | Estimativa | Status
 |------|--------|------|-----|
-| 1 | Criação do modelo lógico do banco de dados | 4 | Feito ✔ |
-| 1 | Elaboração da identidade visual | 2 | Feito ✔ |
-| 1 | Estruturação da classe "produto" | 2 | Feito ✔ |
-| 1 | Elaboração do protóripo wireframe | 6 | Feito ✔ |
-| 1 | Estruturação das páginas bases em REACT | 12 | Feito ✔ |
-| 1 | Criação do servidor de banco de dados (mysql) | 3 | Feito ✔ |
-| 1 | Criação dos formulários de cadastro | 4 | Feito ✔ |
-| 1 | Integração do backend com o frontend | 2 | Feito ✔ |
-| 1 | Criação das rotas | 4 | Feito ✔ |
-| 1 | Estudo do ORM | 12 | Feito ✔ |
-| 2 | Estruturação da classe "setor" | 2 | Feito ✔ |
-| 2 | Estruturação da classe "local_armazenamento" | 2 | Feito ✔ |
-| 2 | Estruturação da classe "fornecedor" | 2 | Feito ✔ |
+| 3 | Cadastro de entrada no Front-End | 4 | Feito ✔ |
+| 3 | Atualizamento automático da quantidade exata disponível | 2 | Feito ✔ |
+| 3 | Página de entrada que ficará registrado os produtos | 2 | Feito ✔ |
+| 4 | Cadastro de saída no Front-End | 12 | Feito ✔ |
+| 4 | Atualizamento automático da quantidade exata disponível | 3 | Feito ✔ |
+| 4 | Página de saída que ficará registrado as saídas dos produtos | 4 | Feito ✔ |
+| 5 | Página com todos os registros, entrada e saída | 2 | Feito ✔ |
+| 5 | Criar os registros no Back-End | 4 | Feito ✔ |
+| 6 | Página de execução dos produtos contidos nos locais | 12 | Feito ✔ |
+| 7 | Diferenciação dos usuários | 6 | Feito ✔ |
 
 <br> 
 

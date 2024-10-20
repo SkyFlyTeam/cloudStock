@@ -1,4 +1,4 @@
-import { Table, Column, Model, ForeignKey, DataType } from 'sequelize-typescript';
+import { Table, Column, Model, ForeignKey, DataType, BelongsTo } from 'sequelize-typescript';
 import { Lote } from './Lote';
 import { Saida } from './Saida'
 
@@ -32,4 +32,11 @@ export class Lote_Saida extends Model {
 		allowNull: false,
 	})
 	Saida_valor!: number;
+
+	// Relacionamentos
+	@BelongsTo(() => Lote)
+	Lote!: Lote;
+  
+	@BelongsTo(() => Saida)
+	Saida!: Saida;
 }

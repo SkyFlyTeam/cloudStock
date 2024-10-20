@@ -11,6 +11,9 @@ routes.get('/', controllerLocalArmazenamento.show);
 // Local específico
 routes.get('/:id', controllerLocalArmazenamento.showSpecific);  
 
+// Local por setor
+routes.get('/setor/:id', controllerLocalArmazenamento.showBySetor)
+
 // Atualizar LocalArmazenamento
 routes.put('/:id', controllerLocalArmazenamento.update); 
 

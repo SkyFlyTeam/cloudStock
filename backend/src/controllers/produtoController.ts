@@ -1,3 +1,4 @@
+import { Lote } from '../models/Lote';
 import { Produto } from '../models/Produto';
 import { Request, response, Response } from 'express';
 
@@ -28,7 +29,6 @@ export const controllerProducts = {
         Prod_modelo, 
         Prod_validade, 
         Prod_status: true,
-        Prod_quantidade, 
         Categoria_id, 
         UnidadeMedida_id,
         Prod_imagem
@@ -45,7 +45,8 @@ export const controllerProducts = {
   show: async (req, res) => {
     try {
       const products = await Produto.findAll({
-        attributes: ['Prod_cod', 'Prod_nome', 'Prod_preco', 'Prod_status', 'Categoria_id', 'Prod_validade', 'Prod_quantidade']
+        attributes: ['Prod_cod', 'Prod_nome', 'Prod_marca', 'Prod_modelo','Prod_preco', 'Prod_custo',  'Prod_status', 'Categoria_id', 'Prod_validade'],
+        include: [Lote]
       })
 
       return res.status(200).json(products);
@@ -91,7 +92,7 @@ export const controllerProducts = {
   // PUT /produto/:id - Atualizar produto
   update: async (req: Request, res: Response) => {
     const { id } = req.params;
-    let { Prod_nome, Prod_preco, Prod_descricao, Prod_custo, Prod_peso, Prod_altura, Prod_largura, Prod_comprimento, Prod_marca, Prod_modelo, Prod_validade, Prod_quantidade, Prod_status, Categoria_id, UnidadeMedida_id 
+    let { Prod_nome, Prod_preco, Prod_descricao, Prod_custo, Prod_peso, Prod_altura, Prod_largura, Prod_comprimento, Prod_marca, Prod_modelo, Prod_validade, Prod_status, Categoria_id, UnidadeMedida_id 
     } = req.body;
       let Prod_imagem = req.file ? req.file.buffer : null;
       /*if (!Prod_nome || !Prod_preco) {
@@ -114,7 +115,6 @@ export const controllerProducts = {
         Prod_marca, 
         Prod_modelo, 
         Prod_validade,
-        Prod_quantidade, 
         Prod_status, 
         Categoria_id, 
         UnidadeMedida_id,

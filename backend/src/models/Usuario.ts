@@ -24,11 +24,12 @@ export class Usuario extends Model {
     Usuario_email!: string;
 
     @Column({
-        type: DataType.STRING(30),
+        type: DataType.STRING(60),
         allowNull: false
     })
     
     Usuario_senha!: string;
+
     @Column({
         type: DataType.STRING(60),
         allowNull: false

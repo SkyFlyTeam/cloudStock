@@ -12,7 +12,8 @@ export interface Saida {
 
 export interface Usuario {
   Usuario_id: number;
-  Usuario_nome: string;
+  Usuario_nome: string,
+  Usuario_email: string;
 }
 
 export interface Lote {
@@ -28,7 +29,7 @@ export interface Produto {
   Prod_id: number;
   Prod_nome: string;
   Prod_custo: string;
-  Fornecedores?: Fornecedor[];
+  Fornecedor?: Fornecedor;
 }
 
 export interface Fornecedor {
@@ -83,8 +84,6 @@ const getSaidaByID = async (id: number): Promise<Saida | ApiException> => {
     const { data } = await Api().get<any>(`/saida/${id}`, {
       headers: { 'Content-Type': 'application/json' }
     })
-
-    console.log(data)
     
     const saida: Saida = data;
     return saida

@@ -14,6 +14,7 @@ import BtnCancelar from "../../components/BtnCancelar";
 import { Setor, setoresServices } from "../../services/setorServices";
 import SetorFormulario from "../../components/Formularios/Setores/Setor_Cadastrar";
 import Setor_editar from "../../components/Formularios/Setores/Setor_Editar";
+import { Link } from "react-router-dom";
 
 function Setores() {
     const [openModalCadastro, setOpenModalCadastro] = useState(false)
@@ -60,21 +61,31 @@ function Setores() {
 
     return (
         <main>
+          <div className="page-title">
             <h1 className="title">Setores</h1>
+            <hr className="line" />
+          </div>
 
-            <div className="inputButton">
+
+            {/* Barra de pesquisa */}
+            {/* <div className="inputButton">
                 <InputBusca />
                 <BtnAzul icon={<IoAddCircleOutline />} label='CADASTRAR' onClick={() => setOpenModalCadastro(true)} />
+            </div> */}
+
+
+            <div className="actions-group">
+              <BtnAzul className="rfloat" icon={<IoAddCircleOutline />} label="CADASTRAR" onClick={() => setOpenModalCadastro(true)} />
             </div>
 
         
             <div className="cards-group">
             {setores.map(setor => (
-                <Card className="card-item">
+                <Card className="card-i">
                     <span>{setor.Setor_nome}</span> 
                     <div className="actions">
                         <FiEdit2 color="#61BDE0" size={20} className="edit-icon" onClick={() => handleEditClick(setor.Setor_id)}/>
-                        <IoIosArrowForward color="#61BDE0" size={25}/>
+                        <Link to={`/LocalArmazenamento/${setor.Setor_id}`}><IoIosArrowForward color="#61BDE0" size={25} /></Link>
                     </div>
                 </Card>
             ))}
