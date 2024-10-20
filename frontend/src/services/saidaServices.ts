@@ -80,7 +80,6 @@ const updateSaida = async (id: number, saida: any): Promise<Saida | ApiException
 
 const getSaidaByID = async (id: number): Promise<Saida | ApiException> => {
   try {
-    console.log(`tecnosh ${id}`)
     const { data } = await Api().get<any>(`/saida/${id}`, {
       headers: { 'Content-Type': 'application/json' }
     })

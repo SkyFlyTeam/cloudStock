@@ -127,6 +127,10 @@ useEffect(() => {
     fetchSaidaById(id)
   }
 
+  const calcularSubtotal = (quantidade: number, custo: number) => {
+    return (quantidade * custo).toFixed(2);
+  }
+
   const closeEditModal = () => {
     setSaidaSelecionada(null)
     setopenModalVisualizar(false)
@@ -198,6 +202,70 @@ useEffect(() => {
         }
     >
         {saidaInfo ? (
+            <div className="modal-content">
+              {/* PRODUTOS */}
+              <div className="grid-container">
+              <h3 className="modal-title">Produtos</h3>
+              <hr />
+            </div>
+
+            {saidaInfo.Lotes?.map((lote, index) => (
+              <div key={index} className="lote-container">
+                <div className="produto-info">
+                  <h5><strong>{lote.Produtos?.Prod_nome}</strong></h5>
+                  <div className="info-row">
+                    <div className="info-item">
+                      <span>Quantidade</span>
+                      <span>{lote.Lote_quantidade}</span>
+                    </div>
+                    <div className="info-item">
+                      <span>Custo</span>
+                      <span>R${lote.Produtos?.Prod_custo}</span>
+                    </div>
+                    <div className="info-item">
+                      <span>Fornecedor</span>
+                      <span>{lote.Produtos?.Fornecedor?.Forn_nome}</span>
+                    </div>
+                    <div className="info-item">
+                      <span>Lote</span>
+                      <span>{lote.Lote_cod}</span>
+                    </div>
+                    <div className="info-item">
+                      <span>Validade</span>
+                      <span>{new Date(lote.Lote_validade).toLocaleDateString('pt-BR')}</span> {/* Transforma a data em dd/mm/aaaa */}
+                    </div>
+                    <div className="info-item">
+                      <span>Local de armazenamento</span>
+                      <span>{lote.Locais_Armazenamento?.LocAr_nome}</span>
+                    </div>
+                    <div className="info-item">
+                      <span>Subtotal</span>
+                      <span>R${calcularSubtotal(lote.Lote_quantidade, parseFloat(lote.Produtos?.Prod_custo || '0'))}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+                        ))}
+
+                        {/*DETALHES */}
+
+                        <div className="grid-container">
+                            <h3 className="modal-title">Detalhes</h3>
+                            <hr />
+                        </div>
+                        <div className="detalhes-container">
+                          <p>Data de Criação: {new Date(saidaInfo.Saida_dataCriacao).toLocaleDateString()}</p>
+                          <p>Valor Total: {saidaInfo.Saida_valorTot}</p>
+                          <p>Criado por: {saidaInfo.Usuarios.Usuario_email}</p>          
+                        </div> 
+                    </div>
+                ) : (
+                    <p>Carregando informações da entrada...</p>
+                )}
+
+        {/* {saidaInfo ? (
+          
             <div>
                 <p>Data de Criação: {new Date(saidaInfo.Saida_dataCriacao).toLocaleDateString()}</p>
                 <p>Valor Total: {saidaInfo.Saida_valorTot}</p>
@@ -206,7 +274,7 @@ useEffect(() => {
             </div> 
         ) : (
             <p>Carregando informações da entrada...</p>
-        )}
+        )} */}
     </Modal>
       )}
 
