@@ -3,91 +3,133 @@ import { Entrada } from '../models/Entrada'; // Importando o modelo Entrada
 import { Lote } from '../models/Lote'; // Importando o modelo Lote
 import { Usuario } from '../models/Usuario'; // Importando o modelo Usuario
 import { Lote_Entrada } from '../models/Lote_Entrada'; // Importando a tabela de junção
+import { Produto } from '../models/Produto';
+import { Op } from 'sequelize';
 
 export const controllerEntrada = {
     // POST /entrada - Criar uma nova entrada
     save: async (req: Request, res: Response) => {
+        const transaction = await Entrada.sequelize?.transaction();
         try {
-            const { Ent_valortot, Ent_dataCriacao, Usuario_id, lotes } = req.body;
+            const entradasSelecionadas = req.body;
+            const ids = entradasSelecionadas.map((entrada: any) => entrada.Prod_cod);
+            const Usuario_id = entradasSelecionadas[0]?.Usuario_id;
 
-            // Verifica se o usuário existe
-            const usuario = await Usuario.findByPk(Usuario_id);
-            if (!usuario) {
-                return res.status(404).json({ error: 'Usuário não encontrado' });
-            }
-
-            // Cria a entrada
-            const novaEntrada = await Entrada.create({
-                Ent_valortot,
-                Ent_dataCriacao,
-                Usuario_id,
+            // Recuperar os produtos envolvidos na entrada
+            const produtos = await Produto.findAll({
+                where: {
+                    Prod_cod: {
+                        [Op.in]: ids,
+                    }
+                },
+                transaction
             });
 
-            // Verifica se os lotes existem e associa à nova entrada
-            if (lotes && lotes.length > 0) {
-                for (const { loteId, Ent_quantidade, Ent_valor } of lotes) {
-                    const lote = await Lote.findByPk(loteId);
-                    if (!lote) {
-                        return res.status(404).json({ error: `Lote com ID ${loteId} não encontrado` });
+            // Criar uma nova entrada
+            const entradaEnvio = await Entrada.create({
+                Ent_valortot: 0,
+                Ent_dataCriacao: new Date(),
+                Usuario_id: Usuario_id
+            }, { transaction });
+
+            let valorTotal = 0;
+
+            for (const entrada of entradasSelecionadas) {
+                console.log('Entrada Lote_quantidade:', entrada.Lote_quantidade);  // Check the value of Lote_quantidade
+            
+                if (!entrada.Lote_quantidade || isNaN(entrada.Lote_quantidade)) {
+                    throw new Error('Lote_quantidade is missing or invalid');
+                }
+            
+                const produtoCorrespondente = produtos.find(p => p.Prod_cod === entrada.Prod_cod);
+                if (produtoCorrespondente) {
+                    valorTotal += (produtoCorrespondente.Prod_custo * entrada.Lote_quantidade);
+
+                    // Verifica se o lote já existe
+                    const lote = await Lote.findOne({
+                        where: { Lote_cod: entrada.Lote_cod },
+                        transaction
+                    });
+
+                    let loteId;
+                    if (lote) {
+                        // Atualiza a quantidade do lote existente
+                        const novaQuantidade = lote.Lote_quantidade + entrada.Lote_quantidade;
+                        await Lote.update(
+                            { Lote_quantidade: novaQuantidade },
+                            { where: { Lote_cod: entrada.Lote_cod }, transaction }
+                        );
+                        loteId = lote.Lote_id;
+                    } else {
+                        // Cria um novo lote
+                        const newLote = await Lote.create({
+                            Lote_validade: entrada.Lote_validade,
+                            Lote_quantidade: entrada.Lote_quantidade,
+                            Lote_cod: entrada.Lote_cod,
+                            Prod_cod: entrada.Prod_cod,
+                            LocAr_id: entrada.LocAr_id
+                        }, { transaction });
+                        loteId = newLote.Lote_id;
                     }
 
-                    // Cria a relação na tabela Lote_Entrada
-                    await Lote_Entrada.create({
+                    const envio = {
                         Lote_id: loteId,
-                        Ent_id: novaEntrada.Ent_id,
-                        Ent_quantidade: Ent_quantidade || lote.Lote_quantidade, // Se não especificado, usar a quantidade do lote
-                        Ent_valor: Ent_valor
-                    });
+                        Ent_id: entradaEnvio.Ent_id,
+                        Ent_quantidade: entrada.Lote_quantidade,  // Check if this is null or undefined
+                        Ent_valor: (produtoCorrespondente.Prod_custo * entrada.Lote_quantidade)
+                    };
+                    
+                    console.log('Envio:', envio);
+
+                    // Atualiza a quantidade do produto
+                    const novaQuantidadeProduto = produtoCorrespondente.Prod_quantidade + entrada.Lote_quantidade;
+                    await Produto.update(
+                        { Prod_quantidade: novaQuantidadeProduto },
+                        { where: { Prod_cod: entrada.Prod_cod }, transaction }
+                    );
                 }
             }
 
-            res.status(201).json({ message: 'Entrada criada com sucesso', entrada: novaEntrada });
+            // Atualiza o valor total da entrada
+            entradaEnvio.Ent_valortot = valorTotal;
+            await entradaEnvio.save({ transaction });
+
+            // Finaliza a transação
+            await transaction?.commit();
+
+            res.status(201).json({ message: 'Entrada criada com sucesso', entradaEnvio });
         } catch (error) {
-            console.error('Erro ao criar entrada:', error);
-            res.status(500).json({ error: 'Erro ao criar entrada' });
+            console.error('Error in creating entry:', error);
+            await transaction?.rollback();
+            res.status(500).json({ error: 'Error in creating entry' })
         }
     },
 
-    // POST /entrada_lote - Associar lote a uma entrada existente
-    addLoteToEntrada: async (req: Request, res: Response) => {
+    // Função para associar o lote à entrada
+    addLoteToEntradaFunc: async (envio: any, transaction: any) => {
         try {
-            const { Lote_id, Ent_id, Ent_quantidade, Ent_valor } = req.body;
+            const { Lote_id, Ent_id, Ent_quantidade, Ent_valor } = envio;
 
-            // Verifica se a entrada já existe
-            const entrada = await Entrada.findByPk(Ent_id);
-            if (!entrada) {
-                return res.status(404).json({ error: 'Entrada não encontrada' });
-            }
-
-            // Verifica se o lote já existe
-            const lote = await Lote.findByPk(Lote_id);
-            if (!lote) {
-                return res.status(404).json({ error: 'Lote não encontrado' });
-            }
-
-            // Cria a relação na tabela Lote_Entrada
-            const loteEntrada = await Lote_Entrada.create({
-                Lote_id: Lote_id,
-                Ent_id: Ent_id,
-                Ent_quantidade: Ent_quantidade || lote.Lote_quantidade, // Se não for especificada, usar a quantidade do lote
-                Ent_valor: Ent_valor || 0 // Define valor padrão se não especificado
-            });
-
-            res.status(201).json({ message: 'Lote associado à entrada com sucesso', loteEntrada });
+            await Lote_Entrada.create({
+                Lote_id,
+                Ent_id,
+                Ent_quantidade,
+                Ent_valor
+            }, { transaction });
         } catch (error) {
             console.error('Erro ao associar lote à entrada:', error);
-            res.status(500).json({ error: 'Erro ao associar lote à entrada' });
+            throw error;
         }
     },
 
     // GET /entrada - Mostrar todas as entradas
     show: async (req: Request, res: Response) => {
         try {
-            // Recupera todas as entradas, incluindo as associações com Lotes e a tabela de junção LoteEntrada
+            // Recupera todas as entradas, incluindo as associações com Lotes e a tabela de junção Lote_Entrada
             const entradas = await Entrada.findAll({
                 include: [{
                     model: Lote,
-                    through: {}  
+                    through: {}  // Incluindo o relacionamento de junção
                 }],
             });
 
