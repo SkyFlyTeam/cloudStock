@@ -33,7 +33,7 @@ function MainRoutes(){
                     <Route path="/Setores" element={<ProtectedRoute allowedRoles={[1]}><Setores /></ProtectedRoute>}/>
                     <Route path="/Fornecedores" element={<ProtectedRoute allowedRoles={[1]}><Fornecedores /></ProtectedRoute>}/>
                     <Route path="/Saidas" element={<ProtectedRoute allowedRoles={[1]}><Saidas /></ProtectedRoute>}/>
-                    <Route path="/Saidas-cadastro" element={<Saidas_cadastro/>}/>
+                    <Route path="/Saidas-cadastro" element={<ProtectedRoute allowedRoles={[1]}><Saidas_cadastro/></ProtectedRoute>}/>
                     <Route path="/LocalProduto/:id" element={<ProtectedRoute allowedRoles={[1]}><LocalProduto /></ProtectedRoute>}/>
 
                     {/* Rotas do Gerente */}
