@@ -10,11 +10,15 @@ import Input from "../../components/Input";
 /* Icons */
 import { IoAddCircleOutline, IoRadioButtonOnSharp } from "react-icons/io5";
 import { AiOutlineDelete } from "react-icons/ai";
-import { Api} from "../../config/apiConfig";
+import { Api, hostname} from "../../config/apiConfig";
 import Modal from "../../components/Modal";
 import BtnCancelar from "../../components/BtnCancelar";
+import { useAuth } from "../../context/AuthProvider";
 
 function Saidas() {
+  // Usuário logado
+  const user = useAuth().currentUser
+
   // Controlar estados dos Modais
   const [openModalCadastro, setOpenModalCadastro] = useState(false); // concluir saida
   const [openModalQuantidade, setOpenModalQuantidade] = useState(false); // verificar quantidade
@@ -69,7 +73,7 @@ function Saidas() {
 
     // Atualiza o estado de produtosSelecionados
     setProdutosSelecionados((prev) => {
-      const newProdutoSelecionado = { idProd: produto.Prod_cod, quantidade: 0, Usuario_id: 1 };
+      const newProdutoSelecionado = { idProd: produto.Prod_cod, quantidade: 0, Usuario_id: Number(user?.Usuario_id) };
       return prev ? [...prev, newProdutoSelecionado] : [newProdutoSelecionado];
     });
 
@@ -77,9 +81,10 @@ function Saidas() {
   };
 
   // Atualiza a quantidade selecionada pelo cliente e recalcula o subtotal
-  const handleQuantidadeChange = (id: number, quantidade: number) => {
+  const handleQuantidadeChange = async (id: number, quantidade: number) => {
     const produto = produtos.find((p) => p.Prod_cod === id)
-    if (produto && produto.Prod_quantidade !== undefined && quantidade > produto.Prod_quantidade){
+    const prodQuantidade = await (await fetch(`${hostname}lote/quantidade/${id}`)).json()
+    if (produto !== undefined && quantidade > prodQuantidade){
       setOpenModalQuantidade(true)
       return
     }

@@ -83,6 +83,7 @@ export const controllerLote = {
 
     showByProdId: async (req, res) => {
         const { idProduto, idLocal } = req.params
+
         try {
             const lotes = await Lote.findAll({});
     
