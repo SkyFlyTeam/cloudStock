@@ -9,10 +9,10 @@ router.post('/', saidaController.save)
 // buscar saídas
 router.get('/', saidaController.show)
 
+// buscar saídas por id
+router.get('/:id', saidaController.showSpecific)
+
 // Criar um envio em lote-saida
 router.post('/lote-saida', saidaController.addLoteToSaida)
-
-router.post('/teste', saidaController.teste)
-
 
 export default router
