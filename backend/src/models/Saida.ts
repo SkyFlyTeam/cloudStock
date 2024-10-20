@@ -43,6 +43,7 @@ export class Saida extends Model{
 	@BelongsToMany(() => Lote, () => Lote_Saida)
 	Lotes!: Lote[]
 
+
 	@AfterUpdate // Ativa o hook após a criação e após a atualização
 	static async notificarRegistro(instance: Saida) {
 	  try {
@@ -62,4 +63,3 @@ export class Saida extends Model{
 	  }
 	}
 }
-

@@ -27,8 +27,9 @@ export class Usuario extends Model {
         type: DataType.STRING(60),
         allowNull: false
     })
-    Usuario_senha!: string;
     
+    Usuario_senha!: string;
+
     @Column({
         type: DataType.STRING(60),
         allowNull: false

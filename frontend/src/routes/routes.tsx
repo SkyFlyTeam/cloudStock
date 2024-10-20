@@ -15,6 +15,7 @@ import Saidas from "../pages/Saidas/index";
 import Saidas_cadastro from "../pages/Saidas_cadastro/index";
 import Entrada from "../pages/Entrada";
 import Usuarios from "../pages/Usuarios";
+import Registros from "../pages/Registros";
 
 import '../style/global.css';
 

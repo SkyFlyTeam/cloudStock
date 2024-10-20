@@ -1,0 +1,152 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f6fa;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #030303;
+}
+
+.registros-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px;
+}
+
+.registro-item {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    border-left: 8px solid;
+    
+}
+
+div.registro-item:nth-child(even){
+    background-color: #79d3f727;
+}
+
+div.registro-item:nth-child(odd){
+    background-color: #ffffff;
+}
+
+.registro-item {
+    border-color: #21a4e6; /* Verde para Entradas */
+}
+
+
+.icon {
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.info-body, .info-title{
+    display: flex;
+    justify-content: space-between;
+}
+
+.info h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.info span{
+    margin: 5px 0;
+    color: #555;
+}
+
+/* Modal */
+.modal-content {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.modal-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.lote-container {
+    border: 2px solid #61BDE0; 
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+}
+
+.produto-info {
+    display: flex;
+    flex-direction: column; 
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between; 
+    margin: 5px 20px;
+}
+
+.info-item {
+    flex: 1;
+    text-align: center; 
+    margin-right: 30px; /* Aumenta o espaçamento entre os itens */
+}
+
+.info-item:last-child {
+    margin-right: 0; 
+}
+
+.info-item span:first-child {
+    display: block; 
+    font-weight: 700;
+    color: #ACACAC
+}
+
+.produto-info p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+/* Linha cinza ao lado do título "Produto" e "Detalhes" */
+hr {
+    border: 1px solid #C4C4C4;
+    margin: 20px 0;
+}
+
+.detalhes-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.detalhes-container p {
+    margin: 0;
+}
+
+/* Título */
+h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto 1fr; 
+    align-items: center; 
+}
+
+.grid-container hr {
+    margin: 0 0 0 10px;
+}

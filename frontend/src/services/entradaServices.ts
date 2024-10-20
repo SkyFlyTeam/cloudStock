@@ -65,3 +65,4 @@ export const entradaServices = {
   getAllEntrada,
   getEntradaByID,
 };
+

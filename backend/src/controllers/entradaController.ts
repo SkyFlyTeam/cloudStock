@@ -3,6 +3,9 @@ import { Entrada } from '../models/Entrada'; // Importando o modelo Entrada
 import { Lote } from '../models/Lote'; // Importando o modelo Lote
 import { Usuario } from '../models/Usuario'; // Importando o modelo Usuario
 import { Lote_Entrada } from '../models/Lote_Entrada'; // Importando a tabela de junção
+import { Produto } from '../models/Produto'; // Importando a tabela de junção
+import { Local_Armazenamento } from '../models/Local_Armazenamento';
+import { Fornecedor } from '../models/Fornecedor';
 
 import { Produto } from '../models/Produto'; // Importando a tabela de junção
 import { Local_Armazenamento } from '../models/Local_Armazenamento';
@@ -151,7 +154,11 @@ export const controllerEntrada = {
             const entradas = await Entrada.findAll({
                 include: [{
                     model: Lote,
-                    through: {}  // Incluindo o relacionamento de junção
+                    through: {}
+                },{
+                    model: Usuario,
+                    through: {}
+
                 }],
             });
 
@@ -208,5 +215,6 @@ export const controllerEntrada = {
             res.status(500).json({ error: 'Erro ao recuperar as entradas' });
         }
     },
+
 
 };

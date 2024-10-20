@@ -43,6 +43,7 @@ export class Entrada extends Model {
 	@BelongsToMany(() => Lote, () => Lote_Entrada)
 	Lotes!: Lote[];
 
+
 	@AfterUpdate
 	static async notificarRegistro(instance: Entrada) {
 	try{
