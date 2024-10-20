@@ -17,7 +17,7 @@ import { useAuth } from "../../context/AuthProvider";
 import { Fornecedor, fornecedorServices } from "../../services/fornecedorServices";
 import { Local_Armazenamento, localServices } from "../../services/localServices";
 
-function Saidas() {
+function Entradas() {
   // Usuário logado
   const user = useAuth().currentUser
 
@@ -213,11 +213,11 @@ function Saidas() {
   return (
     <main>
     <div className="page-title">
-      <h1 className="title">Saídas</h1>
+      <h1 className="title">Entradas</h1>
       <hr className="line" />
     </div>
 
-    <div className="saidas-container">
+    <div className="entradas-container">
       <div className="inputContainer">
         <div>Produto</div>
         <div className="inputButton">
@@ -236,7 +236,7 @@ function Saidas() {
         </div>
       </div>
 
-      <div className="cards-group">
+
         {produtos.length <= 0 && (
           <div className="emptyProducts">
             <img src="https://i.ibb.co/MVgn94H/Imagem-09-08-58-4d6e6647.jpg" alt="" />
@@ -251,90 +251,93 @@ function Saidas() {
             const localSelecionado = entradasSelecionadas?.find((p) => p.Prod_cod === produto.Prod_cod)?.Local_id || 0;
 
             return (
-                <div className="card-entrada-item" key={produto.Prod_cod}>
-                <div>
-                    <div className="card-name">
-                    <span>{produto.Prod_nome} {produto.Prod_marca} {produto.Prod_modelo}</span>
-                    </div>
-                </div>
-                <div className="entrada-options">
-                    <div className="quantidade">
-                    <Input
-                        max={produto.Prod_quantidade}
-                        label="Quantidade"
-                        type="number"
-                        value={quantidadeSelecionada}
-                        onChange={(e) => handleQuantidadeChange(produto.Prod_cod, +e.target.value)}
-                    />
-                    </div>
-                    <div className="custo">
+
+
+                          
+            <div className="card-item" key={produto.Prod_cod}>
+              {/* Nome do produto em negrito e em uma linha separada */}
+              <span className="nome-produto">{produto.Prod_nome}</span>
+
+            
+              {/* Demais labels e inputs */}
+              <div className="entrada-options">
+
+                  <Input
+                    max={produto.Prod_quantidade}
+                    label="Quantidade"
+                    type="number"
+                    className="quantidade-container"
+                    value={quantidadeSelecionada}
+                    onChange={(e) => handleQuantidadeChange(produto.Prod_cod, +e.target.value)}
+                  />
+
+                  <div className="custo-entrada">
                     <span className="label">Custo</span>
                     <span className="value">R${produto.Prod_custo}</span>
-                    </div>
-                    <div>
+                  </div>
+                  <div className="fornecedor-container">
                     <label htmlFor="inFornecedor">Fornecedor</label>
                     <select 
-                        id="inFornecedor"
-                        className="form-select-custom"
-                        value={fornecedorSelecionado}
-                        onChange={(e) => handleFornecedorChange(produto.Prod_cod, +e.target.value)}
+                      id="inFornecedor"
+                      className="form-select-custom"
+                      value={fornecedorSelecionado}
+                      onChange={(e) => handleFornecedorChange(produto.Prod_cod, +e.target.value)}
                     >
-                        <option value="" selected>Buscar...</option>
-                        {fornecedores.map((f) => (
+                      <option value="" selected>Buscar...</option>
+                      {fornecedores.map((f) => (
                         <option key={f.Forn_id} value={f.Forn_id}>
-                            {f.Forn_razaoSocial}
+                          {f.Forn_razaoSocial}
                         </option>
-                        ))}
+                      ))}
                     </select>
-                    </div>
-                    <div className="entrada-lote">
+                  </div>
+
+                  <Input 
+                    label="Lote"
+                    type="text"
+                    className="lote-container"
+                    value={loteCodSelecionado}
+                    onChange={(e) => handleLoteCodChange(produto.Prod_cod, e.target.value)}
+                  />
+
                     <Input 
-                        label="Lote"
-                        type="text"
-                        value={loteCodSelecionado}
-                        onChange={(e) => handleLoteCodChange(produto.Prod_cod, e.target.value)}
+                      label="Validade"
+                      type="date"
+                      className="entrada-validade"
+                      value={loteValidadeSelecionada}
+                      onChange={(e) => handleLoteValidadeChange(produto.Prod_cod, e.target.value)}
                     />
-                    </div>
-                    <div className="entrada-validade">
-                    <Input 
-                        label="Validade"
-                        type="date"
-                        value={loteValidadeSelecionada}
-                        onChange={(e) => handleLoteValidadeChange(produto.Prod_cod, e.target.value)}
-                    />
-                    </div>
-                    <div>
-                    <label htmlFor="inLocal">Local Armazenamento</label>
-                    <select 
+                  <div className="local-container">
+                      <label htmlFor="inLocal">Local Armazenamento</label>
+                      <select 
                         id="inLocal"
                         className="form-select-custom"
                         value={localSelecionado}
                         onChange={(e) => handleLocalChange(produto.Prod_cod, +e.target.value)}
-                    >
+                      >
                         <option value="" selected>Buscar...</option>
                         {locais.map((d) => (
-                        <option key={d.LocAr_id} value={d.LocAr_id}>
+                          <option key={d.LocAr_id} value={d.LocAr_id}>
                             {d.LocAr_nome}
-                        </option>
+                          </option>
                         ))}
-                    </select>
+                      </select>
                     </div>
-                    <div className="subtotal">
-                    <span className="label">Subtotal</span>
-                    <span className="value">R${calcularSubtotal(produto, quantidadeSelecionada)}</span>
+                    <div className="subtotal-entrada">
+                      <span className="label">Subtotal</span>
+                      <span className="value">R${calcularSubtotal(produto, quantidadeSelecionada)}</span>
                     </div>
                     <AiOutlineDelete
                       size={24}
                       className="delete-icon"
                       onClick={() => handleRemoveProduct(index)}
-                  />
-                </div>
-                </div>
+                    />
+              </div>
+            </div>
             );
         })}
-      </div>
 
-      <div className="total-container">
+      <div className="total-container-entrada">
         <span>Total: R${calcularTotal()}</span>
       </div>
 
@@ -348,7 +351,7 @@ function Saidas() {
     {/* MODALS */}
     <Modal
       isOpen={openModalCadastro} 
-      label="Cadastrar Saída?" 
+      label="Cadastrar Entrada?" 
       buttons={
         <div className="confirma-buttons">
           <BtnCancelar onClick={() => setOpenModalCadastro(false)} /> 
@@ -378,4 +381,4 @@ function Saidas() {
   );
 }
 
-export default Saidas;
+export default Entradas;
