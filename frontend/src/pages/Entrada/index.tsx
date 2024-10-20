@@ -43,7 +43,7 @@ function Saidas() {
     Lote_validade: Date, 
     Usuario_id: number, 
     Fornecedor_id: number, 
-    Local_id: number 
+    LocAr_id: number 
   }>>([]);
 
   // produtos - produtos que serão exibidos
@@ -110,7 +110,7 @@ function Saidas() {
         Lote_validade: new Date(),
         Usuario_id: user?.Usuario_id || 0,
         Fornecedor_id: 0,
-        Local_id: 0
+        LocAr_id: 0
       }
     ]);
 
@@ -138,11 +138,11 @@ function Saidas() {
     );
   };
   
-  const handleLocalChange = (id: number, Local_id: number) => {
+  const handleLocalChange = (id: number, LocAr_id: number) => {
     setEntradasSelecionadas((prev) => 
       prev.map((entrada) => 
         entrada.id === id 
-          ? { ...entrada, Local_id }
+          ? { ...entrada, LocAr_id }
           : entrada
       )
     );
@@ -190,7 +190,7 @@ function Saidas() {
   const handleRemoveProduct = (id: number) => {
     setProdutos((prev) => prev.filter((produto) => produto.Prod_cod !== id));
     setEntradasSelecionadas((prev) => prev.filter((entrada) => entrada.id !== id));
-  }
+  };
 
   const concluir = () => {
     if (entradasSelecionadas?.find((produto) => produto.Lote_quantidade <= 0)) {
@@ -316,8 +316,8 @@ function Saidas() {
                   <select 
                     id="inLocal"
                     className="form-select-custom"
-                    value={entrada.Fornecedor_id}
-                    onChange={(e) => handleFornecedorChange(entrada.id, +e.target.value)}
+                    value={entrada.LocAr_id}
+                    onChange={(e) => handleLocalChange(entrada.id, +e.target.value)}
                   >
                     <option value="" selected>Buscar...</option>
                     {locais.map((l) => (
