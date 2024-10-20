@@ -5,12 +5,17 @@ import { BsBoxSeamFill } from "react-icons/bs";
 import { FaUserGroup } from "react-icons/fa6";
 import { FaWarehouse } from "react-icons/fa";
 import { FaSquareArrowUpRight } from "react-icons/fa6";
-import { PiSignOutBold } from "react-icons/pi";
+import { PiRowsPlusTopFill, PiSignOutBold } from "react-icons/pi";
 import { Link, useLocation} from "react-router-dom";
-import { MdAllInbox } from "react-icons/md";
+import { MdAllInbox, MdOutlineAppRegistration } from "react-icons/md";
+import { HiDocumentReport } from "react-icons/hi";
+import { HiMiniUsers } from "react-icons/hi2";
+import { useAuth } from "../../context/AuthProvider";
 
 const Navbar: React.FC = () => {
-  const location = useLocation(); // Hook para pegar a rota atual
+  const location = useLocation() // Hook para pegar a rota atual
+  const { handleLogout, currentUser } = useAuth()
+  
     return (
         <div className="sidebar">
           <div className="logo">
@@ -21,47 +26,94 @@ const Navbar: React.FC = () => {
 
           <div className="sidebar-menu">
             <div className="itens_menu">
-              <Link to="/" className="link">
-                <div className={location.pathname === '/' ? 'menu-item active' : 'menu-item'}>
+              
+              {/* Rotas do Funcionário */}
+              {currentUser?.Cargo_id === 1 &&
+              <>
+                <Link to="/Produtos" className="link">
+                  <div className={location.pathname === '/Produtos' ? 'menu-item active' : 'menu-item'}>
                     <BsBoxSeamFill />
                     <div className="navbartext"><span>Produtos</span></div>
-                </div>
-              </Link>
-              <div className={location.pathname === '/Categorias' ? 'menu-item active' : 'menu-item'}>
+                  </div>
+                </Link>
+
+                <div className={location.pathname === '/Categorias' ? 'menu-item active' : 'menu-item'}>
                   <IoMdPricetags />
-                <div className="navbartext"><span>Categorias</span></div>
-              </div>
-              <Link to="/Fornecedores" className="link" >
-                <div className={location.pathname === '/Fornecedores' ? 'menu-item active' : 'menu-item'}>
+                  <div className="navbartext"><span>Categorias</span></div>
+                </div>
+
+                <Link to="/Fornecedores" className="link">
+                  <div className={location.pathname === '/Fornecedores' ? 'menu-item active' : 'menu-item'}>
                     <FaUserGroup />
                     <div className="navbartext"><span>Fornecedores</span></div>
-                </div>
-              </Link>
-              <Link to="/LocalArmazenamento" className="link">
-                <div className={location.pathname === '/LocalArmazenamento' ? 'menu-item active' : 'menu-item'}>
-                    <FaWarehouse />
-                    <div className="navbartext"><span>Locais Armazenamento</span></div>
-                </div>
-              </Link>
-              <Link to="/Setores" className="link">
-                <div className={location.pathname === '/Setores' ? 'menu-item active' : 'menu-item'}>
+                  </div>
+                </Link>
+                
+                <Link to="/Setores" className="link">
+                  <div className={location.pathname === '/Setores' ? 'menu-item active' : 'menu-item'}>
                     <MdAllInbox />
                     <div className="navbartext"><span>Setores</span></div>
+                  </div>
+                </Link>
+                
+              <Link to="/Saidas" className="link">
+                <div className={location.pathname === '/Saidas' ? 'menu-item active' : 'menu-item'}>
+                    <FaSquareArrowUpRight />
+                    <div className="navbartext"><span>Saídas</span></div>
                 </div>
               </Link>
-              <div className="menu-item">
-                  <FaSquareArrowUpRight />
-                  <div className="navbartext"><span>Saída</span></div>
-              </div>
+              </>
+              }
+
+              {/* Rotas do Gerente */}
+              {currentUser?.Cargo_id === 2 &&
+                <>
+                <Link to="/Produtos" className="link">
+                  <div className={location.pathname === '/Produtos' ? 'menu-item active' : 'menu-item'}>
+                    <BsBoxSeamFill />
+                    <div className="navbartext"><span>Produtos</span></div>
+                  </div>
+                </Link>
+
+                <div className={location.pathname === '/Relatorio' ? 'menu-item active' : 'menu-item'}>
+                  <HiDocumentReport />
+                  <div className="navbartext"><span>Relatório</span></div>
+                </div>
+
+                <div className={location.pathname === '/Registros' ? 'menu-item active' : 'menu-item'}>
+                  <MdOutlineAppRegistration />
+                  <div className="navbartext"><span>Registros</span></div>
+                </div>
+
+                <Link to="/Entrada" className="link">
+                  <div className={location.pathname === '/Entrada' ? 'menu-item active' : 'menu-item'}>
+                    <PiRowsPlusTopFill />
+                    <div className="navbartext"><span>Entrada</span></div>
+                  </div>
+                </Link>
+                </>
+              }
+
+              {/* Rotas do Usuário */}
+              {currentUser?.Cargo_id === 3 &&
+                <>
+                <Link to="/Usuarios" className="link">
+                  <div className={location.pathname === '/Usuarios' ? 'menu-item active' : 'menu-item'}>
+                    <HiMiniUsers />
+                    <div className="navbartext"><span>Usuários</span></div>
+                  </div>
+                </Link>
+                </>
+              }
             </div>
           </div>
-    
-          <div className="logout">
+  
+          <div className="logout" onClick={handleLogout}>
             <span>Logout</span> 
             <PiSignOutBold />
           </div>
         </div>
-      );
+  );
 }
     
     

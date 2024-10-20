@@ -11,10 +11,16 @@ router.post('/', controllerLote.save);
 // rota para visualizar produto
 router.get('/', controllerLote.show)
 
-// Rota para associar lote a entrada
-router.post('/lote-entrada', controllerEntrada.addLoteToEntrada)
+// Rota para visualizar a quantidade total de um produto
+router.get('/quantidade/:id', controllerLote.showQuantidade)
+
+// Rota para visualizar os lotes de um produto
+router.get('/produto/:idProduto/:idLocal', controllerLote.showByProdId)
 
 // Associar lote a saida
 router.post('/lote-saida', saidaController.addLoteToSaida)
+
+// Lote por local
+router.get('/local/:id', controllerLote.showByLocal)
 
 export default router

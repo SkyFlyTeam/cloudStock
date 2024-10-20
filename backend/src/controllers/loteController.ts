@@ -12,17 +12,26 @@ export const controllerLote = {
             if (!Lote_validade || !Lote_quantidade || !Lote_cod || !Prod_cod || !LocAr_id) {
                 return res.status(400).json({ error: "All fields are required: Lote_id, Lote_validade, Lote_quantidade, Lote_cod, Prod_cod, LocAr_id" });
             }
+
+            const lote = await Lote.findOne({
+                where: {Lote_cod: Lote_cod}
+            })
+
+            if (lote){
+                lote.Lote_quantidade += Lote_quantidade
+                lote.save()
+                return res.status(201).json({message: 'Lote adicionado com sucesso'})
+            }
             
-            // Create the Lote
-            const lote = await Lote.create({
+            await Lote.create({
                 Lote_validade,
                 Lote_quantidade,
                 Lote_cod,
                 Prod_cod,
                 LocAr_id
             });
-            
-            return res.status(201).json(lote);
+
+            return res.status(201).json({message: 'Lote criado com sucesso'});
         } catch (error) {
             console.error('Error creating lote:', error);
             return res.status(500).json({ error: 'Internal server error' });
@@ -38,6 +47,63 @@ export const controllerLote = {
             });
 
             return res.status(200).json(lote);
+        } catch (error) {
+            console.error('Error fetching lote with related data: ', error);
+            return res.status(500).json({ error: 'Internal server error' });
+        }
+    },
+
+    showByLocal: async(req, res) => {
+        const id = +req.params.id
+        try {
+            const lotes = await Lote.findAll({
+                include: [Produto, Local_Armazenamento],
+            });
+    
+            // Filtra os lotes que pertencem ao Local_Armazenamento com o id específico
+            let produtos = lotes.filter(lote => lote.Locais_Armazenamento['LocAr_id'] === id).map((p) => p.Produtos)
+            return res.status(200).json(produtos);
+        } catch (error) {
+            console.error('Error fetching lote with related data: ', error);
+            return res.status(500).json({ error: 'Internal server error' });
+        }
+    },
+
+    // Exibe a quantidade de um produto x presente nos lotes
+    showQuantidade: async(req, res) => {
+        const id = +req.params.id
+        try{
+            const lotes = await Lote.findAll({
+                include: [Produto, Local_Armazenamento]
+            });
+
+            let quantidade = 0;
+            lotes.forEach(l => {
+                if (l.Prod_cod === id){
+                    quantidade += l.Lote_quantidade
+                }
+            });
+            
+            return res.status(200).json(quantidade)
+        } catch(error){
+            return res.status(400).json({ error: 'Erro ao buscar a quantidade', details: error.message });
+          }
+    },
+
+    showByProdId: async (req, res) => {
+        const { idProduto, idLocal } = req.params
+
+        try {
+            const lotes = await Lote.findAll({});
+    
+            // Filtra os lotes que pertencem ao produto com o id específico
+            let lotesProd = []
+            lotes.forEach(l => {
+                if (l.Prod_cod == idProduto && l.LocAr_id == idLocal){
+                    lotesProd.push(l)
+                }
+            });
+            return res.status(200).json(lotesProd);
         } catch (error) {
             console.error('Error fetching lote with related data: ', error);
             return res.status(500).json({ error: 'Internal server error' });

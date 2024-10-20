@@ -36,4 +36,10 @@ export class Registros extends Model{
         allowNull: false
     })
     Registro_Tipo!: string;
+
+    @Column({
+        type: DataType.INTEGER,
+        allowNull: false
+    })
+    Registro_Chave!: number;
 }

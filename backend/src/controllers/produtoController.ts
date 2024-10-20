@@ -1,3 +1,4 @@
+import { Lote } from '../models/Lote';
 import { Produto } from '../models/Produto';
 import { Request, response, Response } from 'express';
 
@@ -45,7 +46,8 @@ export const controllerProducts = {
   show: async (req, res) => {
     try {
       const products = await Produto.findAll({
-        attributes: ['Prod_cod', 'Prod_nome', 'Prod_preco', 'Prod_status', 'Categoria_id', 'Prod_validade', 'Prod_quantidade']
+        attributes: ['Prod_cod', 'Prod_nome', 'Prod_marca', 'Prod_modelo','Prod_preco', 'Prod_custo',  'Prod_status', 'Categoria_id', 'Prod_validade', 'Prod_quantidade'],
+        include: [Lote]
       })
 
       return res.status(200).json(products);
