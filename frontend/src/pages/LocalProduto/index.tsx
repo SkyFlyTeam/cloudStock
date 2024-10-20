@@ -97,7 +97,7 @@ function LocalProduto() {
         cell: info => info.getValue(),
     }),
     columnHelper.accessor('Prod_custo', {
-        header: () => 'Preco Custo',
+        header: () => 'Preço Custo',
         cell: info => info.getValue(),
     }),
     columnHelper.display({
@@ -170,7 +170,7 @@ function LocalProduto() {
                 <tr>
                   <th className="th-lote">Código</th>
                   <th className="th-lote">Validade</th>
-                  <th className="th-lote">Código</th>
+                  <th className="th-lote">Quantidade</th>
                 </tr>
               </thead>
               <tbody className="table-lp">
