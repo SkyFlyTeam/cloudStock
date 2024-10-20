@@ -75,10 +75,6 @@ function Saidas() {
   }, []);
 
   const getProduto = async (id: number): Promise<Produto | undefined> => {
-    // não deixa adicionar o mesmo produto
-    if(produtos.find(p => p.Prod_cod === id)){
-      return
-    }
 
     const produto = data.find(
       (p: Produto) => p.Prod_cod === id
@@ -181,11 +177,9 @@ function Saidas() {
   };
   
 
-  const handleRemoveProduct = (id: number) => {
-    setProdutos((prev) => prev.filter((produto) => produto.Prod_cod !== id));
-    setEntradasSelecionadas((prev) =>
-      prev ? prev.filter((produto) => produto.Prod_cod !== id) : []
-    );
+  const handleRemoveProduct = (index: number) => {
+    setProdutos((prev) => prev.filter((_, i) => i !== index));
+    setEntradasSelecionadas((prev) => prev ? prev.filter((_, i) => i !== index) : []);
   };
 
   const concluir = () => {
@@ -249,7 +243,7 @@ function Saidas() {
             <p>Adicione um produto para continuar</p>
           </div>
         )}
-        {produtos.map((produto) => {
+        {produtos.map((produto, index) => {
             const quantidadeSelecionada = entradasSelecionadas?.find((p) => p.Prod_cod === produto.Prod_cod)?.Lote_quantidade || 0;
             const loteCodSelecionado = entradasSelecionadas?.find((p) => p.Prod_cod === produto.Prod_cod)?.Lote_cod || '';
             const loteValidadeSelecionada = entradasSelecionadas?.find((p) => p.Prod_cod === produto.Prod_cod)?.Lote_validade?.toISOString().substr(0, 10) || ''; // Format date to YYYY-MM-DD
@@ -330,10 +324,10 @@ function Saidas() {
                     <span className="value">R${calcularSubtotal(produto, quantidadeSelecionada)}</span>
                     </div>
                     <AiOutlineDelete
-                    size={24}
-                    className="delete-icon"
-                    onClick={() => handleRemoveProduct(produto.Prod_cod)}
-                    />
+                      size={24}
+                      className="delete-icon"
+                      onClick={() => handleRemoveProduct(index)}
+                  />
                 </div>
                 </div>
             );
