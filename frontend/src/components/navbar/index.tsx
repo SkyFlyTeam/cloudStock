@@ -49,13 +49,6 @@ const Navbar: React.FC = () => {
                   </div>
                 </Link>
                 
-                <Link to="/LocalArmazenamento" className="link">
-                  <div className={location.pathname === '/LocalArmazenamento' ? 'menu-item active' : 'menu-item'}>
-                    <FaWarehouse />
-                    <div className="navbartext"><span>Locais Armazenamento</span></div>
-                  </div>
-                </Link>
-                
                 <Link to="/Setores" className="link">
                   <div className={location.pathname === '/Setores' ? 'menu-item active' : 'menu-item'}>
                     <MdAllInbox />
@@ -126,4 +119,3 @@ const Navbar: React.FC = () => {
     
 
 export default Navbar;
-    

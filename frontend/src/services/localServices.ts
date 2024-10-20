@@ -70,11 +70,25 @@ const createLocal = async (local: any): Promise<Local_Armazenamento | ApiExcepti
       return new ApiException(error.message || 'Erro ao deletar o registro.')
     }
   }
+
+  const getLocaisBySetor = async (id: number): Promise<Local_Armazenamento[] | ApiException> => {
+    try {
+      const { data } = await Api().get<any>(`/localarmazenamento/setor/${id}`, {
+        headers: { 'Content-Type': 'application/json' }
+      })
+  
+      return data
+  
+    } catch (error: any) {
+      return new ApiException(error.message || 'Erro ao buscar locais pelo ID.')
+    }
+  }
   
 export const localServices = {
     getAllLocais,
     createLocal,
     updateLocal,
     getLocalByID,
-    deleteLocal
+    deleteLocal,
+    getLocaisBySetor
 }

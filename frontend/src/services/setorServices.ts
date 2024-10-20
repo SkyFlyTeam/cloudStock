@@ -65,7 +65,7 @@ const deleteSetor = async (id: number): Promise<any | ApiException> => {
     } catch (error: any) {
       return new ApiException(error.message || 'Erro ao criar o registro.')
     }
-  }
+}
 
   
 export const setoresServices = {

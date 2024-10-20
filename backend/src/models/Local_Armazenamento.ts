@@ -39,5 +39,5 @@ export class Local_Armazenamento extends Model {
 	Setores!: Setor[];
 
 	@HasMany(() => Lote)
-  Lotes!: Lote[];
+  	Lotes!: Lote[];
 }
