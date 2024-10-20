@@ -128,6 +128,9 @@ export const controllerEntrada = {
                           model: Local_Armazenamento // Inclui os locais de armazenamento do lote
                         }
                       ]
+                    },
+                    {
+                        model: Usuario,
                     }
                   ]
             });

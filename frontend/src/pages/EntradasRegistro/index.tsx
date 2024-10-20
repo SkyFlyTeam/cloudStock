@@ -75,6 +75,7 @@ function EntradasRegistro() {
 
         async function fetchEntradaById(id: number) {
             const response = await entradaServices.getEntradaByID(id)
+            console.log(response)
             if (response instanceof ApiException) {
                 alert(response.message)
             } else {
@@ -82,6 +83,7 @@ function EntradasRegistro() {
             }
         }
         fetchEntradaById(id)
+        
     }
 
     const calcularSubtotal = (quantidade: number, custo: number) => {
@@ -155,7 +157,7 @@ function EntradasRegistro() {
                                         </div>
                                         <div className="info-item">
                                             <span>Fornecedor</span>
-                                            <span>{lote.Produtos?.Fornecedor?.Forn_nome}</span>
+                                            <span>{lote.Produtos?.Fornecedores?.[0]?.Forn_nome ?? 'Fornecedor não informado'}</span>
                                         </div>
                                         <div className="info-item">
                                             <span>Lote</span>
@@ -189,7 +191,7 @@ function EntradasRegistro() {
                         <div className="detalhes-container">
                             <p><strong>Total: </strong>R${entradaInfo.Ent_valortot}</p>
                             <p><strong>Data: </strong>{new Date(entradaInfo.Ent_dataCriacao).toLocaleDateString()}</p>
-                            <p><strong>Realizado por: </strong>{entradaInfo.Usuario?.Usuario_email}</p>
+                            <p><strong>Realizado por: </strong>{entradaInfo.Usuario?.Usuario_nome}</p>
                         </div>
                     </div>
                 ) : (
