@@ -187,10 +187,10 @@ function Saidas() {
   };
   
 
-  const handleRemoveProduct = (index: number) => {
-    setProdutos((prev) => prev.filter((_, i) => i !== index));
-    setEntradasSelecionadas((prev) => prev ? prev.filter((_, i) => i !== index) : []);
-  };
+  const handleRemoveProduct = (id: number) => {
+    setProdutos((prev) => prev.filter((produto) => produto.Prod_cod !== id));
+    setEntradasSelecionadas((prev) => prev.filter((entrada) => entrada.id !== id));
+  }
 
   const concluir = () => {
     if (entradasSelecionadas?.find((produto) => produto.Lote_quantidade <= 0)) {
