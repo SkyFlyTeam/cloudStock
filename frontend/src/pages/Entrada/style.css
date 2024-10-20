@@ -4,8 +4,11 @@
 }
 
 .entrada-options {
-    display: flex;
-}
+    display: flex; /* Usar flexbox para alinhamento */
+    align-items: center; /* Alinhar todos os itens ao centro verticalmente */
+    justify-content: space-between;
+    width: 100%;
+  }
 
 .cards-group {
     display: flex;
@@ -14,17 +17,116 @@
 }
 
 .card-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem;
+    padding: 15px;
     border: 2px solid #61bde0;
-    border-radius: 10px;
-    margin-bottom: 1rem;
-    gap: 2rem;
-}
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 0.5rem;
+  }
 
 .card-name {
     flex: 2;
     text-align: left; 
+}
+
+.entradas-container {
+    background-color: #fff;
+    border-radius: 0.5rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1em;
+    padding: 3em 1.5em;
+    flex-grow: 1;
+}
+
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-select-custom {
+    border-radius: 8px;
+    width: 300px; 
+    height: 40px; 
+}
+
+.cards-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.quantidade-container,
+.fornecedor-container,
+.lote-container,
+.entrada-validade,
+.local-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Alinhar à esquerda */
+    gap: 0.3rem;
+}
+
+.custo-entrada, .subtotal-entrada {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Alinhar à esquerda */
+  gap: 0.6rem;
+  width: min-content;
+}
+
+.quantidade-container input, .lote-container input{
+  width: 6.2rem;
+}
+
+.fornecedor-container select, .local-container select{
+  width: 15rem;
+}
+
+/* Estilo para inputs e selects */
+.form-select-custom,
+input[type="text"], 
+input[type="number"], 
+input[type="date"] {
+  height: 40px; /* Defina a altura desejada */
+  padding: 0.375rem 0.75rem; /* Ajuste o padding conforme necessário */
+  border: 1px solid #ced4da; /* Ajuste a borda conforme necessário */
+  border-radius: 0.25rem; /* Bordas arredondadas */
+  font-size: 1rem; /* Tamanho da fonte */
+  line-height: 1.5; /* Ajuste a altura da linha se necessário */
+}
+
+.validade-container {
+    margin-top: 10px; /* Espaço acima da validade */
+  }
+
+  /* Margens para evitar que os campos fiquem colados */
+  .nome-produto {
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 10px; /* Espaçamento entre o nome e os outros campos */
+  }
+
+.nome-produto-container {
+    display: flex;
+    font-weight: bold;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+
+  .total-container-entrada {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 1rem 0;
+    border-top: 1px solid #ccc;
+}
+
+.total-container-entrada span {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-right: 4rem;
 }
