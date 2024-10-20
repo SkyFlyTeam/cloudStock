@@ -84,12 +84,12 @@ export const controllerEntrada = {
     
                     console.log('Envio:', envio);
     
-                    // Atualiza a quantidade do produto
-                    const novaQuantidadeProduto = produtoCorrespondente.Prod_quantidade + entrada.Lote_quantidade;
-                    await Produto.update(
-                        { Prod_quantidade: novaQuantidadeProduto },
-                        { where: { Prod_cod: entrada.Prod_cod }, transaction }
-                    );
+                    // // Atualiza a quantidade do produto
+                    // const novaQuantidadeProduto = produtoCorrespondente.Prod_quantidade + entrada.Lote_quantidade;
+                    // await Produto.update(
+                    //     { Prod_quantidade: novaQuantidadeProduto },
+                    //     { where: { Prod_cod: entrada.Prod_cod }, transaction }
+                    // );
                 }
             }
     

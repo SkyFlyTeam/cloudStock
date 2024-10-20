@@ -170,12 +170,12 @@ const ProdutoEditar = forwardRef((props: Props, ref: Ref<{ submitForm: () => voi
                         />
 
                         {/* Linha: [2] */}
-                        <Input className="flex1"
+                        {/* <Input className="flex1"
                             label="Quantidade"
                             placeholder="Quantidade"
                             onChange={(e) => setQuantidade(parseInt(e.target.value))}
                             value={Prod_quantidade.toString()}
-                        />
+                        /> */}
                         {/* Linha: [3] */}
                         <div className="flex1"></div>
                         {/*

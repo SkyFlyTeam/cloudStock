@@ -91,13 +91,13 @@ function Produtos() {
       header: () => 'Quantidade',
       cell: info => `${info.getValue()}`,
     }),
-    columnHelper.accessor('Prod_validade', {
-      header: () => 'Validade',
-      cell: info => `${info.getValue()}`,
-    }),
     columnHelper.accessor('Prod_preco', {
-      header: () => 'Preço',
-      cell: info => `${info.getValue()}`,
+      header: () => 'Preço Venda',
+      cell: info => info.getValue(),
+    }),
+    columnHelper.accessor('Prod_custo', {
+        header: () => 'Preco Custo',
+        cell: info => info.getValue(),
     }),
     columnHelper.accessor('Prod_status', {
       header: () => <div className="th-center"> Status</div>,
@@ -183,9 +183,9 @@ function Produtos() {
         <tbody>
           {table.getRowModel().rows.map(row => ( // Mapeia as linhas e células de cada coluna
             <React.Fragment key={row.id}>
-              <tr className="table-row">
+              <tr className="table-row table-rounded">
                 {row.getVisibleCells().map(cell => (
-                  <td key={cell.id}>
+                  <td key={cell.id} className="table-rounded"> 
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}

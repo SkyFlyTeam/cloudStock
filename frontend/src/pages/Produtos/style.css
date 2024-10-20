@@ -53,21 +53,21 @@ tr.table-row{
 }
 
 
-tr td:first-child { border-bottom-left-radius: 10px; border-top-left-radius: 10px }
-tr td:last-child { border-bottom-right-radius: 10px; border-top-right-radius: 10px }
+tr.table-rounded td:first-child { border-bottom-left-radius: 10px !important; border-top-left-radius: 10px !important }
+tr.table-rounded td:last-child { border-bottom-right-radius: 10px !important; border-top-right-radius: 10px !important}
 
 td{
     vertical-align: middle;
 }
 
 td img{
-    width: 5rem;
-    height: 5rem;
-    object-fit: contain;
-    border-radius: 50%;
+    width: 5.5rem;
+    height: 4.5rem;
+    object-fit: cover;
+    border-radius: 10px;
 }
 
-div.td-center, div.th-center{
+div.td-center{
     display: flex;
     justify-content: center;
 }

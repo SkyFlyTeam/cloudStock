@@ -91,14 +91,15 @@ export const controllerLote = {
     },
 
     showByProdId: async (req, res) => {
-        const id = +req.params.id
+        const { idProduto, idLocal } = req.params
+
         try {
             const lotes = await Lote.findAll({});
     
             // Filtra os lotes que pertencem ao produto com o id específico
             let lotesProd = []
             lotes.forEach(l => {
-                if (l.Prod_cod === id){
+                if (l.Prod_cod == idProduto && l.LocAr_id == idLocal){
                     lotesProd.push(l)
                 }
             });

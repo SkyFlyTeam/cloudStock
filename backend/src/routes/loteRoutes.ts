@@ -14,8 +14,8 @@ router.get('/', controllerLote.show)
 // Rota para visualizar a quantidade total de um produto
 router.get('/quantidade/:id', controllerLote.showQuantidade)
 
-// Rota para visualizar a quantidade total de um produto
-router.get('/produto/:id', controllerLote.showByProdId)
+// Rota para visualizar os lotes de um produto
+router.get('/produto/:idProduto/:idLocal', controllerLote.showByProdId)
 
 // Associar lote a saida
 router.post('/lote-saida', saidaController.addLoteToSaida)
