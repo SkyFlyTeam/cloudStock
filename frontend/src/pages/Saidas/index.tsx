@@ -225,6 +225,7 @@ useEffect(() => {
                     <div className="info-item">
                       <span>Fornecedor</span>
                       <span>{lote.Produtos?.Fornecedor?.Forn_nome}</span>
+                      <span>{lote.Produtos?.Fornecedor?.Forn_nome}</span>
                     </div>
                     <div className="info-item">
                       <span>Lote</span>
@@ -263,18 +264,6 @@ useEffect(() => {
                 ) : (
                     <p>Carregando informações da entrada...</p>
                 )}
-
-        {/* {saidaInfo ? (
-          
-            <div>
-                <p>Data de Criação: {new Date(saidaInfo.Saida_dataCriacao).toLocaleDateString()}</p>
-                <p>Valor Total: {saidaInfo.Saida_valorTot}</p>
-                <p>Criado por: {saidaInfo.Usuarios.Usuario_email}</p>
-                
-            </div> 
-        ) : (
-            <p>Carregando informações da entrada...</p>
-        )} */}
     </Modal>
       )}
 
