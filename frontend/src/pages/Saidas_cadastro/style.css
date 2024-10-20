@@ -47,7 +47,7 @@ hr.line {
     gap: 1.5rem;
 }
 
-.card-item {
+.card-item-saida {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -58,7 +58,7 @@ hr.line {
     gap: 2rem;
 }
 
-.card-name {
+.card-name-saida {
     flex: 2;
     text-align: left; 
 }
@@ -70,7 +70,7 @@ hr.line {
     gap: 2rem; 
 }
 
-.custo, .quantidade, .subtotal {
+.custo-saida, .quantidade-saida, .subtotal-saida {
     display: flex;
     flex-direction: column;
     align-items: center;

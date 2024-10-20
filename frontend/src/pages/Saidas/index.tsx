@@ -258,7 +258,7 @@ useEffect(() => {
                         <div className="detalhes-container">
                           <p>Data de Criação: {new Date(saidaInfo.Saida_dataCriacao).toLocaleDateString()}</p>
                           <p>Valor Total: {saidaInfo.Saida_valorTot}</p>
-                          <p>Criado por: {saidaInfo.Usuarios.Usuario_email}</p>          
+                          <p>Criado por: {saidaInfo.Usuarios.Usuario_nome}</p>          
                         </div> 
                     </div>
                 ) : (

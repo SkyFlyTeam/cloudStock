@@ -184,18 +184,18 @@ function Saidas() {
           const quantidadeSelecionada =
             produtosSelecionados?.find((p) => p.idProd === produto.Prod_cod)?.quantidade || 0;
           return (
-            <div className="card-item" key={produto.Prod_cod}>
-            <div className="card-name">
+            <div className="card-item-saida" key={produto.Prod_cod}>
+            <div className="card-name-saida">
               <span>
                 {produto.Prod_nome} {produto.Prod_marca} {produto.Prod_modelo}
               </span>
             </div>
             <div className="custo-quantidade">
-              <div className="custo">
+              <div className="custo-saida">
                 <span className="label">Custo</span>
                 <span className="value">R${produto.Prod_custo}</span>
               </div>
-              <div className="quantidade">
+              <div className="quantidade-saida">
                 <Input
                   max={produto.Prod_quantidade}
                   label="Quantidade"
@@ -206,7 +206,7 @@ function Saidas() {
                   }
                 />
               </div>
-              <div className="subtotal">
+              <div className="subtotal-saida">
                 <span className="label">Subtotal</span>
                 <span className="value">R${calcularSubtotal(produto, quantidadeSelecionada)}</span>
               </div>

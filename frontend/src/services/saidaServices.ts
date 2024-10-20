@@ -12,6 +12,7 @@ export interface Saida {
 
 export interface Usuario {
   Usuario_id: number;
+  Usuario_nome: string,
   Usuario_email: string;
 }
 
