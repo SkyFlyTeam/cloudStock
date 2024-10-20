@@ -95,7 +95,7 @@ const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
                 </div>
                 <div className="flex1 cflex nwflex spacerChild">
                     <Input label="Categoria" type="select" placeholder="Selecione..." value="" disabled={true} />
-                    <Input label="Quantidade" placeholder="Quantidade" onChange={(e) => setQuantidade(parseInt(e.target.value))} value={Prod_quantidade.toString()} />
+                    {/* <Input label="Quantidade" placeholder="Quantidade" onChange={(e) => setQuantidade(parseInt(e.target.value))} value={Prod_quantidade.toString()} /> */}
                 </div>
             </div>
 
