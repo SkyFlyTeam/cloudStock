@@ -79,11 +79,13 @@ const Navbar: React.FC = () => {
                   <HiDocumentReport />
                   <div className="navbartext"><span>Relatório</span></div>
                 </div>
-
-                <div className={location.pathname === '/Registros' ? 'menu-item active' : 'menu-item'}>
-                  <MdOutlineAppRegistration />
-                  <div className="navbartext"><span>Registros</span></div>
-                </div>
+                
+                <Link to="/Registros" className="link">
+                  <div className={location.pathname === '/Registros' ? 'menu-item active' : 'menu-item'}>
+                    <MdOutlineAppRegistration />
+                    <div className="navbartext"><span>Registros</span></div>
+                  </div>
+                </Link>
 
                 <Link to="/RegistrosEntrada" className="link">
                   <div className={location.pathname === '/RegistrosEntrada' ? 'menu-item active' : 'menu-item'}>

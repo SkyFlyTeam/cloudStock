@@ -29,10 +29,10 @@ export interface Produto {
   Prod_id: number;
   Prod_nome: string;
   Prod_custo: string;
-  Fornecedor?: Fornecedor;
+  Fornecedores?: Fornecedores[];
 }
 
-export interface Fornecedor {
+export interface Fornecedores {
   Forn_id: number;
   Forn_nome: string;
 }

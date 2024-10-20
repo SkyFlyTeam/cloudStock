@@ -10,7 +10,6 @@ import Navbar from "../components/navbar";
 //import Products from "../pages/produto"
 import Login from "../pages/Login";
 
-
 import Saidas from "../pages/Saidas/index";
 import Saidas_cadastro from "../pages/Saidas_cadastro/index";
 import Entrada from "../pages/Entrada";
@@ -44,6 +43,7 @@ function MainRoutes(){
                     <Route path="/LocalProduto/:id" element={<ProtectedRoute allowedRoles={[1]}><LocalProduto /></ProtectedRoute>}/>
 
                     {/* Rotas do Gerente */}
+                    <Route path="/Registros" element={<ProtectedRoute allowedRoles={[2]}><Registros /></ProtectedRoute>}/>
                     <Route path="/Entrada" element={<ProtectedRoute allowedRoles={[2]}><Entrada /></ProtectedRoute>}/>
                     <Route path="/RegistrosEntrada" element={<ProtectedRoute allowedRoles={[2]}><EntradasRegistro /></ProtectedRoute>}/>
 

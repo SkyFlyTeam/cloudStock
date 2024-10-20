@@ -6,10 +6,6 @@ import { Lote_Entrada } from '../models/Lote_Entrada'; // Importando a tabela de
 import { Produto } from '../models/Produto'; // Importando a tabela de junção
 import { Local_Armazenamento } from '../models/Local_Armazenamento';
 import { Fornecedor } from '../models/Fornecedor';
-
-import { Produto } from '../models/Produto'; // Importando a tabela de junção
-import { Local_Armazenamento } from '../models/Local_Armazenamento';
-import { Fornecedor } from '../models/Fornecedor';
 import { Op } from 'sequelize';
 
 

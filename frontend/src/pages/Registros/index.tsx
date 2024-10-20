@@ -81,7 +81,7 @@ function Registros() {
               </div>
               <div className="info-body">
                 <span>{registro.Registro_Mensagem}</span>
-                <span>Responsável: {registro.Registro_Usuario} - {new Date(registro.Registro_Data).toLocaleString()}</span>
+                <span>Responsável: {registro.Registro_Repsonsavel} - {new Date(registro.Registro_Data).toLocaleString()}</span>
               </div>
             </div>
           </div>
