@@ -4,7 +4,12 @@ import Produtos from "../pages/Produtos/index";
 import LocalArmazenamento from "../pages/LocalArmazenamento/index";
 import Setores from "../pages/Setores/index";
 import Fornecedores from "../pages/Fornecedores/index";
+
+import EntradasRegistro from "../pages/EntradasRegistro/index";
+import Navbar from "../components/navbar";
+//import Products from "../pages/produto"
 import Login from "../pages/Login";
+
 
 import Saidas from "../pages/Saidas/index";
 import Entrada from "../pages/Entrada";
@@ -15,6 +20,7 @@ import '../style/global.css';
 import Layout from "./Layout";
 import ProtectedRoute from "./ProtectedRoute";
 import LocalProduto from "../pages/LocalProduto";
+
 
 function MainRoutes(){
     return(

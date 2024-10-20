@@ -3,8 +3,12 @@ import { Entrada } from '../models/Entrada'; // Importando o modelo Entrada
 import { Lote } from '../models/Lote'; // Importando o modelo Lote
 import { Usuario } from '../models/Usuario'; // Importando o modelo Usuario
 import { Lote_Entrada } from '../models/Lote_Entrada'; // Importando a tabela de junção
-import { Produto } from '../models/Produto';
+
+import { Produto } from '../models/Produto'; // Importando a tabela de junção
+import { Local_Armazenamento } from '../models/Local_Armazenamento';
+import { Fornecedor } from '../models/Fornecedor';
 import { Op } from 'sequelize';
+
 
 export const controllerEntrada = {
     // POST /entrada - Criar uma nova entrada
@@ -162,5 +166,47 @@ export const controllerEntrada = {
             console.error('Erro ao recuperar as entradas:', error);
             res.status(500).json({ error: 'Erro ao recuperar as entradas' });
         }
-    }
+    },
+
+    // GET /entrada - Mostrar entradas por Id
+    showSpecific: async (req: Request, res: Response) => {
+        const {id} = req.params
+
+        try {
+            // Recupera todas as entradas, incluindo as associações com Lotes e a tabela de junção LoteEntrada
+            const entrada = await Entrada.findByPk(id, {
+                include: [
+                    {
+                      model: Lote,
+                      include: [
+                        {
+                          model: Produto,
+                          include: [
+                            { model: Fornecedor } // Inclui os fornecedores do produto
+                          ]
+                        },
+                        {
+                          model: Local_Armazenamento // Inclui os locais de armazenamento do lote
+                        }
+                      ]
+                    },
+                    {
+                        model: Usuario,
+                    }
+                  ]
+            });
+
+            // Se não houver entradas, retorna uma resposta apropriada
+            if (!entrada) {
+                return res.status(404).json({ message: 'Nenhuma entrada encontrada' });
+            }
+
+            // Retorna as entradas encontradas
+            res.status(200).json(entrada);
+        } catch (error) {
+            console.error('Erro ao recuperar as entradas:', error);
+            res.status(500).json({ error: 'Erro ao recuperar as entradas' });
+        }
+    },
+
 };

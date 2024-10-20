@@ -1,0 +1,122 @@
+
+/* Estrutura principal */
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Tabela */
+table {
+    font-family: "Montserrat", sans-serif;
+    border-collapse: collapse; /* Remover espaços e bordas entre as células */
+}
+
+tr.table-row {
+    background-color: white;
+}
+
+th {
+    color: #ACACAC !important;
+    font-weight: 500 !important;
+    border: none !important;
+}
+
+td {
+    vertical-align: middle;
+    border: none !important;
+    padding: 10px;
+}
+
+/* Alternar a cor das linhas da tabela */
+tbody tr:nth-child(even) {
+    background-color: #61bce027; /* Cor para as linhas pares */
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #ffffff; /* Cor para as linhas ímpares */
+}
+
+/* Modal */
+.modal-content {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.modal-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.lote-container {
+    border: 2px solid #61BDE0; 
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+}
+
+.produto-info {
+    display: flex;
+    flex-direction: column; 
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between; 
+    margin: 5px 20px;
+}
+
+.info-item {
+    flex: 1;
+    text-align: center; 
+    margin-right: 30px; /* Aumenta o espaçamento entre os itens */
+}
+
+.info-item:last-child {
+    margin-right: 0; 
+}
+
+.info-item span:first-child {
+    display: block; 
+    font-weight: 700;
+    color: #ACACAC
+}
+
+.produto-info p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+/* Linha cinza ao lado do título "Produto" e "Detalhes" */
+hr {
+    border: 1px solid #C4C4C4;
+    margin: 20px 0;
+}
+
+.detalhes-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.detalhes-container p {
+    margin: 0;
+}
+
+/* Título */
+h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto 1fr; 
+    align-items: center; 
+}
+
+.grid-container hr {
+    margin: 0 0 0 10px;
+}

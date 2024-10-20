@@ -1,0 +1,55 @@
+.listagem-container {
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .listagem-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    font-weight: bold;
+    background-color: #f5f5f5;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+  
+  .listagem-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+  }
+  
+  .even {
+    background-color: white;
+  }
+  
+  .odd {
+    background-color: rgba(97, 189, 224, 0.1); /* Cor #61BDE0 com 10% de opacidade */
+  }
+  
+  .first-item {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+  
+  .last-item {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+  
+  .listagem-header span,
+  .listagem-item span {
+    flex: 1;
+  }
+  
+  .listagem-header span:last-child,
+  .listagem-item span:last-child {
+    text-align: center;
+  }
+  
+  .valor-total {
+    text-align: center; /* Centraliza a coluna de valor total */
+  }
+  
