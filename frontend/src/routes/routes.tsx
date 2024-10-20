@@ -12,6 +12,7 @@ import Login from "../pages/Login";
 
 
 import Saidas from "../pages/Saidas/index";
+import Saidas_cadastro from "../pages/Saidas_cadastro/index";
 import Entrada from "../pages/Entrada";
 import Usuarios from "../pages/Usuarios";
 
@@ -38,6 +39,7 @@ function MainRoutes(){
                     <Route path="/Setores" element={<ProtectedRoute allowedRoles={[1]}><Setores /></ProtectedRoute>}/>
                     <Route path="/Fornecedores" element={<ProtectedRoute allowedRoles={[1]}><Fornecedores /></ProtectedRoute>}/>
                     <Route path="/Saidas" element={<ProtectedRoute allowedRoles={[1]}><Saidas /></ProtectedRoute>}/>
+                    <Route path="/Saidas-cadastro" element={<ProtectedRoute allowedRoles={[1]}><Saidas_cadastro/></ProtectedRoute>}/>
                     <Route path="/LocalProduto/:id" element={<ProtectedRoute allowedRoles={[1]}><LocalProduto /></ProtectedRoute>}/>
 
                     {/* Rotas do Gerente */}

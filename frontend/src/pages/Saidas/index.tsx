@@ -1,281 +1,274 @@
-import { useState, useEffect } from "react";
-import { Produto, produtoServices } from "../../services/produtoServices";
+import { useState, useEffect, useRef } from "react";
+import { Fornecedor, fornecedorServices } from "../../services/fornecedorServices";
+import { Saida, saidaServices } from "../../services/saidaServices";
 import { ApiException } from "../../config/apiException";
-import "./style.css";
+import { useNavigate } from 'react-router-dom';
+
+import './style.css';
+
+/* Tabela */
+import { Table } from "react-bootstrap";
+import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 
 /* Componentes */
+import ToggleBtn from "../../components/ToggleBtn";
+import EditarRemoverBtn from "../../components/EditarRemoverBtn";
 import BtnAzul from "../../components/BtnAzul";
-import Input from "../../components/Input";
-
-/* Icons */
-import { IoAddCircleOutline, IoRadioButtonOnSharp } from "react-icons/io5";
-import { AiOutlineDelete } from "react-icons/ai";
-import { Api, hostname} from "../../config/apiConfig";
 import Modal from "../../components/Modal";
 import BtnCancelar from "../../components/BtnCancelar";
-import { useAuth } from "../../context/AuthProvider";
+import FornecedorFormulario from "../../components/Formularios/Fornecedor/Forn_Cadastrar.tsx";
+import Forn_Edicao from "../../components/Formularios/Fornecedor/Forn_Editar";
+import Forn_Excluir from "../../components/Formularios/Fornecedor/Forn_Excluir";
+import OlhoSaida from "../../components/OlhoSaida";
+import SaidaFormulario from "../../components/Formularios/Saida/Saida_Cadastrar";
+import Saida_Edicao from "../../components/Formularios/Saida/Saida_Editar";
+import VisualizarBtn from "../../components/VisualizarBtn";
+/* Icons */
+import { AiOutlineDelete } from "react-icons/ai"
+import { IoAddCircleOutline, IoArrowBackCircleOutline } from "react-icons/io5"
+
+// Const para a criação de colunas; Define a Tipagem (Interface)
+const columnHelper = createColumnHelper<Saida>();
 
 function Saidas() {
-  // Usuário logado
-  const user = useAuth().currentUser
+  // Estado para controlar os modais
+  const [openModalCadastro, setOpenModalCadastro] = useState(false);
+  const [openModalVisualizar, setopenModalVisualizar] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
-  // Controlar estados dos Modais
-  const [openModalCadastro, setOpenModalCadastro] = useState(false); // concluir saida
-  const [openModalQuantidade, setOpenModalQuantidade] = useState(false); // verificar quantidade
-  const [openModalNulo, setOpenModalNulo] = useState(false); // garantir envio maior que 0
+  const [saidaInfo, setSaidaInfo] = useState<Saida | null>(null)
 
-  // data - armazena todos produtos
-  const [data, setData] = useState<Produto[]>([]);
+  // Guarda o ID dos fornecedores selecionados na tabela
+  const [saidaSelecionada, setSaidaSelecionada] = useState<number | null>(null);
 
-  // produtosSelecionados - {id: id, quantidade: quantidade} - produtos que serão enviados ao back
-  const [produtosSelecionados, setProdutosSelecionados] = useState<Array<{ idProd: number, quantidade: number, Usuario_id: number }> | null>([]);
+  // Mensagem de sucesso das ações
+  const [mensagemSucesso, setMensagemSucesso] = useState<string>('');
 
-  // saidasSelecionadas - {Saida_valortot: Valor, Usuario_id: id} - Saidas que serão enviados ao back
-  const [saidasSelecionadas, setSaidasSelecionadas] = useState<{ Saida_valorTot: number, Usuario_id: number } | null>(null);
+  // Referência ao forms para realizar o submit fora do componente do forms
+  const formRef = useRef<{ submitForm: () => void }>(null);
 
-  // produtos - produtos que serão exibidos
-  const [produtos, setProdutos] = useState<Produto[]>([]);
+  // Armazena as informações puxadas na tabela
+  const [data, setData] = useState<Saida[]>([]);
 
-  // Função para buscar todos os produtos
-  const fetchProdutos = async () => {
-    const result = await produtoServices.getAllProdutos();
+  // Declarar essa variável pra ajudar no botão
+  const navigate = useNavigate();
+
+  // Função para buscar todos as Saidas
+
+  const fetchSaidas = async () => {
+    const result = await saidaServices.getAllSaidas()
     if (result instanceof ApiException) {
-      console.log(result.message);
+      console.log(result.message)
     } else {
-      const results = result.filter((produto) => produto.Prod_quantidade > 0) // Pegar apenas produtos com quantidade maior que 0
-      setData(results);
-    }
-  };
-
-  useEffect(() => {
-    fetchProdutos();
-  }, []);
-
-  const getProduto = async (id: number): Promise<Produto | undefined> => {
-    // não deixa adicionar o mesmo produto
-    if(produtos.find(p => p.Prod_cod === id)){
-      return
-    }
-
-    const produto = data.find(
-      (p: Produto) => p.Prod_cod === id
-    );
-
-    if (!produto) {
-      return undefined;
-    }
-
-    // Atualiza o estado de produtos a serem exibidos
-    setProdutos((prev) => {
-      const newProduto = produto;
-      return prev ? [...prev, newProduto] : [newProduto];
-    });
-
-    // Atualiza o estado de produtosSelecionados
-    setProdutosSelecionados((prev) => {
-      const newProdutoSelecionado = { idProd: produto.Prod_cod, quantidade: 0, Usuario_id: Number(user?.Usuario_id) };
-      return prev ? [...prev, newProdutoSelecionado] : [newProdutoSelecionado];
-    });
-
-    return produto;
-  };
-
-  // Atualiza a quantidade selecionada pelo cliente e recalcula o subtotal
-  const handleQuantidadeChange = async (id: number, quantidade: number) => {
-    const produto = produtos.find((p) => p.Prod_cod === id)
-    const prodQuantidade = await (await fetch(`${hostname}lote/quantidade/${id}`)).json()
-    if (produto !== undefined && quantidade > prodQuantidade){
-      setOpenModalQuantidade(true)
-      return
-    }
-    setProdutosSelecionados((prev) =>
-      prev?.map((produto) =>
-        produto.idProd === id ? { ...produto, quantidade: quantidade } : produto
-      ) || []
-    );
-    setProdutos([...produtos]);
-  };
-  
-  const calcularSubtotal = (produto: Produto, quantidade: number) => {
-    const custo = produto.Prod_custo || 0; // Make sure this value is correct
-    const qtd = quantidade || 0;
-    return (custo * qtd).toFixed(2);
-  };
-
-  const calcularTotal = () => {
-    const total = produtos.reduce((acc, produto) => { 
-        const quantidadeSelecionada = produtosSelecionados?.find( 
-          (p) => p.idProd === produto.Prod_cod
-        )?.quantidade || 0;
-        const custo = produto.Prod_custo || 0; 
-        return acc + custo * quantidadeSelecionada; 
-      }, 0)
-      .toFixed(2);
-    return total;
-  };
-  
-
-  const handleRemoveProduct = (id: number) => {
-    setProdutos((prev) => prev.filter((produto) => produto.Prod_cod !== id));
-    setProdutosSelecionados((prev) =>
-      prev ? prev.filter((produto) => produto.idProd !== id) : []
-    );
-  };
-
-  const concluir = () => {
-    if (produtosSelecionados?.find((produto) => produto.quantidade <= 0)) {
-      setOpenModalNulo(true)
-      return; 
-    }
-    setOpenModalCadastro(true)
-  }
-
-  const handleConcluir = async () => {
-    try {
-      // Faz a chamada à API
-      const response = await Api().post<any>('/saida', produtosSelecionados, {
-        headers: { 'Content-Type': 'application/json' },
-      });
-      console.log('Resposta da API:', response);
-      // Limpa os estados
-      setProdutosSelecionados([]);
-      setProdutos([]);
-      fetchProdutos(); // Atualiza os produtos
-      console.log('Produtos removidos e estados limpos');
-      // Fecha o modal após a conclusão
-      setOpenModalCadastro(false);
-    } catch (error: any) {
-      console.error('Erro na função handleConcluir:', error);
+      setData(result);
     }
   }
-    
-  return (
-    <main>
-    <div className="page-title">
-      <h1 className="title">Saídas</h1>
-      <hr className="line" />
-    </div>
 
-    <div className="saidas-container">
-      <div className="inputContainer">
-        <div>Produto</div>
-        <div className="inputButton">
-          <select 
-            className="form-select-custom" 
-            aria-label="Default select example" 
-            onChange={(e) => getProduto(+e.target.value)}
-          >
-            <option value="" selected>Buscar...</option>
-            {data.map((d) => (
-              <option key={d.Prod_cod} value={d.Prod_cod}>
-                {d.Prod_nome} {d.Prod_marca} {d.Prod_modelo}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
+  // Chama a função para pegar todos os fornecedores do BD ao montar o componente
+useEffect(() => {
+  fetchSaidas()
+}, [])
 
-      <div className="cards-group">
-        {produtos.length <= 0 && (
-          <div className="emptyProducts">
-            <img src="https://i.ibb.co/MVgn94H/Imagem-09-08-58-4d6e6647.jpg" alt="" />
-            <p>Adicione um produto para continuar</p>
-          </div>
-        )}
-        {produtos.map((produto) => {
-          const quantidadeSelecionada =
-            produtosSelecionados?.find((p) => p.idProd === produto.Prod_cod)?.quantidade || 0;
-          return (
-            <div className="card-item" key={produto.Prod_cod}>
-            <div className="card-name">
-              <span>
-                {produto.Prod_nome} {produto.Prod_marca} {produto.Prod_modelo}
-              </span>
-            </div>
-            <div className="custo-quantidade">
-              <div className="custo">
-                <span className="label">Custo</span>
-                <span className="value">R${produto.Prod_custo}</span>
-              </div>
-              <div className="quantidade">
-                <Input
-                  max={produto.Prod_quantidade}
-                  label="Quantidade"
-                  type="number"
-                  value={quantidadeSelecionada}
-                  onChange={(e) =>
-                    handleQuantidadeChange(produto.Prod_cod, +e.target.value)
-                  }
-                />
-              </div>
-              <div className="subtotal">
-                <span className="label">Subtotal</span>
-                <span className="value">R${calcularSubtotal(produto, quantidadeSelecionada)}</span>
-              </div>
-            </div>
-            <AiOutlineDelete
-              size={24}
-              className="delete-icon"
-              onClick={() => handleRemoveProduct(produto.Prod_cod)}
-            />
-          </div>
-          );
-        })}
-      </div>
+  // Altera o Status do componente 
+  // const handleStatusChange = (forn_id: number, newStatus: boolean) => {
+  //   setData(prevData =>
+  //     prevData.map(produto =>
+  //       produto.Forn_id === forn_id ? { ...produto, prod_status: newStatus } : produto
+  //     )
+  //   )
+  // }
 
-      <div className="total-container">
-        <span>Total: R${calcularTotal()}</span>
-      </div>
-
-      {produtos.length > 0 && (
-        <div className="btn-concluir">
-          <BtnAzul icon={<IoAddCircleOutline />} label="CONCLUIR" onClick={concluir} />
-        </div>
-      )}
-    </div>
-
-    {/* MODALS */}
-    <Modal
-      isOpen={openModalCadastro} 
-      label="Cadastrar Saída?" 
-      buttons={
-        <div className="confirma-buttons">
-          <BtnCancelar onClick={() => setOpenModalCadastro(false)} /> 
-          <BtnAzul
-            icon={<IoAddCircleOutline />}
-            label="CADASTRAR"
-            onClick={handleConcluir} 
+  // Define as colunas
+  const columns: ColumnDef<Saida, any>[] = [
+    columnHelper.accessor('Saida_id', {
+      header: () => 'Código',
+      cell: info => info.getValue(),
+    }),
+    columnHelper.accessor('Saida_valorTot', {
+      header: () => 'Valor Total',
+      cell: info => `R$ ${info.getValue()}`,
+    }),
+    columnHelper.display({
+      id: 'actions',
+      cell: props => (
+        <div className="action-cell">
+          <OlhoSaida
+            id={props.row.original.Saida_id}
+            onEdit={() => handleVisualizarClick(props.row.original.Saida_id)}
           />
         </div>
-      }
-      children={undefined}
-    />
+      ),
+    }),
+  ];
 
-    <Modal
-      isOpen={openModalNulo} 
-      label="Quantidade deve ser maior que 0"
-      buttons={
-        <div className="single-button">
-          <BtnCancelar onClick={() => setOpenModalNulo(false)} /> 
-        </div>
-      }
-      children={undefined}
-    />
+  // Configurações da tabela
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+  });
 
-    <Modal
-      isOpen={openModalQuantidade} 
-      label="Quantidade insuficiente" 
-      buttons={
-        <div className="single-button">
-          <BtnCancelar onClick={() => setOpenModalQuantidade(false)} />
-        </div>
+  // FUNÇÕES PARA EVENTO DE MODALS
+  // Edição
+  const handleVisualizarClick = (id: number) => {
+    setSaidaSelecionada(id)
+    setopenModalVisualizar(true) // Abre o modal de edição
+    
+    async function fetchSaidaById(id: number) { //
+      const response = await saidaServices.getSaidaByID(id)
+      console.log(response) // VER AS INFORMAÇÕES RETORNADAS
+      if (response instanceof ApiException) {
+          alert(`aaaaaa ${response.message}`)
+      } else {
+          setSaidaInfo(response)
       }
-      children={undefined}
-    />
-  </main>
+    }
 
-  
+    fetchSaidaById(id)
+  }
+
+  const calcularSubtotal = (quantidade: number, custo: number) => {
+    return (quantidade * custo).toFixed(2);
+  }
+
+  const closeEditModal = () => {
+    setSaidaSelecionada(null)
+    setopenModalVisualizar(false)
+  }
+
+  // Excluir
+  const handleDeleteClick = (id: number) => {
+    setSaidaSelecionada(id)
+    setOpenDeleteModal(true)
+  }
+
+  const closeDeleteModal = () => {
+    setSaidaSelecionada(null)
+    setOpenDeleteModal(false)
+  }
+
+  return (
+    <main>
+      <div className="page-title">
+        <h1 className="title">Saídas</h1>
+        <hr className="line" />
+      </div>
+
+      <div className="actions-group">
+        <BtnAzul icon={<IoAddCircleOutline />} label="CADASTRAR" onClick={() => navigate('/Saidas-cadastro')} />
+      </div>
+
+      {/* Implementação para o futuro, precisa adicionar tempo e + coisas {mensagemSucesso && <div className="success-message">{mensagemSucesso}</div>} */}
+
+      <Table hover responsive size="lg">
+        <thead>
+          {table.getHeaderGroups().map(headerGroup => (
+            <tr className="heading" key={headerGroup.id}>
+              {headerGroup.headers.map(header => (
+                <th key={header.id} colSpan={header.colSpan}>
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(header.column.columnDef.header, header.getContext())}
+                </th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody>
+          {table.getRowModel().rows.map(row => (
+            <tr className="table-row" key={row.id}>
+              {row.getVisibleCells().map(cell => (
+                <td key={cell.id}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+
+      {/* MODALS*/}
+      {/* Modal de Edição */}
+
+      {saidaSelecionada && (
+        <Modal
+        isOpen={openModalVisualizar} // Abre o modal
+        label="Visualizar saída - " // Titulo do modal
+        id={saidaSelecionada}
+        buttons={
+            <>
+                <BtnAzul icon={<IoArrowBackCircleOutline />} label='VOLTAR' onClick={() => setopenModalVisualizar(false)} />
+            </>
+        }
+    >
+        {saidaInfo ? (
+            <div className="modal-content">
+              {/* PRODUTOS */}
+              <div className="grid-container">
+              <h3 className="modal-title">Produtos</h3>
+              <hr />
+            </div>
+
+            {saidaInfo.Lotes?.map((lote, index) => (
+              <div key={index} className="lote-container">
+                <div className="produto-info">
+                  <h5><strong>{lote.Produtos?.Prod_nome}</strong></h5>
+                  <div className="info-row">
+                    <div className="info-item">
+                      <span>Quantidade</span>
+                      <span>{lote.Lote_quantidade}</span>
+                    </div>
+                    <div className="info-item">
+                      <span>Custo</span>
+                      <span>R${lote.Produtos?.Prod_custo}</span>
+                    </div>
+                    <div className="info-item">
+                      <span>Fornecedor</span>
+                      <span>{lote.Produtos?.Fornecedor?.Forn_nome}</span>
+                      <span>{lote.Produtos?.Fornecedor?.Forn_nome}</span>
+                    </div>
+                    <div className="info-item">
+                      <span>Lote</span>
+                      <span>{lote.Lote_cod}</span>
+                    </div>
+                    <div className="info-item">
+                      <span>Validade</span>
+                      <span>{new Date(lote.Lote_validade).toLocaleDateString('pt-BR')}</span> {/* Transforma a data em dd/mm/aaaa */}
+                    </div>
+                    <div className="info-item">
+                      <span>Local de armazenamento</span>
+                      <span>{lote.Locais_Armazenamento?.LocAr_nome}</span>
+                    </div>
+                    <div className="info-item">
+                      <span>Subtotal</span>
+                      <span>R${calcularSubtotal(lote.Lote_quantidade, parseFloat(lote.Produtos?.Prod_custo || '0'))}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+                        ))}
+
+                        {/*DETALHES */}
+
+                        <div className="grid-container">
+                            <h3 className="modal-title">Detalhes</h3>
+                            <hr />
+                        </div>
+                        <div className="detalhes-container">
+                          <p>Data de Criação: {new Date(saidaInfo.Saida_dataCriacao).toLocaleDateString()}</p>
+                          <p>Valor Total: {saidaInfo.Saida_valorTot}</p>
+                          <p>Criado por: {saidaInfo.Usuarios.Usuario_email}</p>          
+                        </div> 
+                    </div>
+                ) : (
+                    <p>Carregando informações da entrada...</p>
+                )}
+    </Modal>
+      )}
+
+    </main>
   );
 }
 
-export default Saidas;
+export default Saidas

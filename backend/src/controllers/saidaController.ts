@@ -4,7 +4,9 @@ import { Usuario } from '../models/Usuario';
 import { Lote } from '../models/Lote';
 import { Lote_Saida } from '../models/Lote_Saida';
 import { Produto } from '../models/Produto';
-import { Op, where } from 'sequelize';
+import { Op } from 'sequelize';
+import { Local_Armazenamento } from '../models/Local_Armazenamento';
+import { Fornecedor } from '../models/Fornecedor';
 
 export const saidaController = {
     teste: async (req: Request, res: Response) => {
@@ -207,6 +209,42 @@ export const saidaController = {
         } catch (error) {
             console.error(error);
             return res.status(500).json({ message: 'Erro ao buscar saídas', error });
+        }
+    },
+    showSpecific: async (req: Request, res: Response) => {
+        const {id} = req.params
+        try {
+            // Recupera todas as entradas, incluindo as associações com Lotes e a tabela de junção LoteEntrada
+            const saida = await Saida.findByPk(id, {
+                include: [
+                    { 
+                      model: Lote,
+                      include: [
+                        {
+                          model: Produto,
+                          include: [
+                            { model: Fornecedor } // Inclui os fornecedores do produto
+                          ]
+                        },
+                        {
+                          model: Local_Armazenamento // Inclui os locais de armazenamento do lote
+                        }
+                      ]
+                    },
+                    {
+                        model: Usuario
+                    }
+                  ]
+            });
+            // Se não houver entradas, retorna uma resposta apropriada
+            if (!saida) {
+                return res.status(404).json({ message: 'Nenhuma saida encontrada' });
+            }
+            // Retorna as entradas encontradas
+            res.status(200).json(saida);
+        } catch (error) {
+            console.error('Erro ao recuperar as saidas:', error);
+            res.status(500).json({ error: 'Erro ao recuperar as saidas' });
         }
     }
 }
