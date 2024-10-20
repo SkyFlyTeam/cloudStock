@@ -17,9 +17,6 @@ router.get('/quantidade/:id', controllerLote.showQuantidade)
 // Rota para visualizar os lotes de um produto
 router.get('/produto/:idProduto/:idLocal', controllerLote.showByProdId)
 
-// Rota para associar lote a entrada
-router.post('/lote-entrada', controllerEntrada.addLoteToEntrada)
-
 // Associar lote a saida
 router.post('/lote-saida', saidaController.addLoteToSaida)
 

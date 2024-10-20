@@ -12,17 +12,26 @@ export const controllerLote = {
             if (!Lote_validade || !Lote_quantidade || !Lote_cod || !Prod_cod || !LocAr_id) {
                 return res.status(400).json({ error: "All fields are required: Lote_id, Lote_validade, Lote_quantidade, Lote_cod, Prod_cod, LocAr_id" });
             }
+
+            const lote = await Lote.findOne({
+                where: {Lote_cod: Lote_cod}
+            })
+
+            if (lote){
+                lote.Lote_quantidade += Lote_quantidade
+                lote.save()
+                return res.status(201).json({message: 'Lote adicionado com sucesso'})
+            }
             
-            // Create the Lote
-            const lote = await Lote.create({
+            await Lote.create({
                 Lote_validade,
                 Lote_quantidade,
                 Lote_cod,
                 Prod_cod,
                 LocAr_id
             });
-            
-            return res.status(201).json(lote);
+
+            return res.status(201).json({message: 'Lote criado com sucesso'});
         } catch (error) {
             console.error('Error creating lote:', error);
             return res.status(500).json({ error: 'Internal server error' });

@@ -1,0 +1,30 @@
+.card-entrada-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.entrada-options {
+    display: flex;
+}
+
+.cards-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.card-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    border: 2px solid #61bde0;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    gap: 2rem;
+}
+
+.card-name {
+    flex: 2;
+    text-align: left; 
+}
