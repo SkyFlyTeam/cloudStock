@@ -35,7 +35,16 @@ function Saidas() {
 
 
   // entradasSelecionadas - {id: id, quantidade: quantidade} - produtos que serão enviados ao back
-  const [entradasSelecionadas, setEntradasSelecionadas] = useState<Array<{ Prod_cod: number, Lote_quantidade: number, Lote_cod: string, Lote_validade: Date, Usuario_id: number , Fornecedor_id: number, Local_id: number}> | null>([]);
+  const [entradasSelecionadas, setEntradasSelecionadas] = useState<Array<{ 
+    id: number, 
+    Prod_cod: number, 
+    Lote_quantidade: number, 
+    Lote_cod: string, 
+    Lote_validade: Date, 
+    Usuario_id: number, 
+    Fornecedor_id: number, 
+    Local_id: number 
+  }>>([]);
 
   // produtos - produtos que serão exibidos
   const [produtos, setProdutos] = useState<Produto[]>([]);
@@ -91,75 +100,76 @@ function Saidas() {
     });
 
     // Atualiza o estado de entradasSelecionadas
-    setEntradasSelecionadas((prev) => {
-        const newProdutoSelecionado = { 
-          Prod_cod: produto.Prod_cod, 
-          Lote_quantidade: 0, 
-          Lote_cod: '', 
-          Lote_validade: new Date(), 
-          Usuario_id: Number(user?.Usuario_id), 
-          Fornecedor_id: 0,
-          Local_id: 0 
-        };
-        return prev ? [...prev, newProdutoSelecionado] : [newProdutoSelecionado];
-      });
+    setEntradasSelecionadas((prev) => [
+      ...prev,
+      {
+        id: Date.now(), // ou use outro método para gerar um id único
+        Prod_cod: produto.Prod_cod,
+        Lote_quantidade: 0,
+        Lote_cod: '',
+        Lote_validade: new Date(),
+        Usuario_id: user?.Usuario_id || 0,
+        Fornecedor_id: 0,
+        Local_id: 0
+      }
+    ]);
 
     return produto;
   };
 
   // Atualiza a quantidade selecionada pelo cliente e recalcula o subtotal
-  const handleQuantidadeChange = (Prod_cod: number, quantidade: number) => {
+  const handleQuantidadeChange = (id: number, quantidade: number) => {
     setEntradasSelecionadas((prev) => 
-      prev?.map((entrada) => 
-        entrada.Prod_cod === Prod_cod 
+      prev.map((entrada) => 
+        entrada.id === id 
           ? { ...entrada, Lote_quantidade: quantidade > 0 ? quantidade : 1 } 
           : entrada
-      ) || []
+      )
     );
   };
 
-  const handleFornecedorChange = (Prod_cod: number, Fornecedor_id: number) => {
-    setEntradasSelecionadas((prev) =>
-      prev?.map((entrada) =>
-        entrada.Prod_cod === Prod_cod
+  const handleFornecedorChange = (id: number, Fornecedor_id: number) => {
+    setEntradasSelecionadas((prev) => 
+      prev.map((entrada) => 
+        entrada.id === id 
           ? { ...entrada, Fornecedor_id }
           : entrada
-      ) || []
+      )
     );
   };
   
-  const handleLocalChange = (Prod_cod: number, Local_id: number) => {
-    setEntradasSelecionadas((prev) =>
-      prev?.map((entrada) =>
-        entrada.Prod_cod === Prod_cod
+  const handleLocalChange = (id: number, Local_id: number) => {
+    setEntradasSelecionadas((prev) => 
+      prev.map((entrada) => 
+        entrada.id === id 
           ? { ...entrada, Local_id }
           : entrada
-      ) || []
+      )
     );
   };
   
-  const handleLoteCodChange = (Prod_cod: number, Lote_cod: string) => {
-    setEntradasSelecionadas((prev) =>
-      prev?.map((entrada) =>
-        entrada.Prod_cod === Prod_cod
+  const handleLoteCodChange = (id: number, Lote_cod: string) => {
+    setEntradasSelecionadas((prev) => 
+      prev.map((entrada) => 
+        entrada.id === id 
           ? { ...entrada, Lote_cod }
           : entrada
-      ) || []
+      )
     );
   };
   
-  const handleLoteValidadeChange = (Prod_cod: number, Lote_validade: string) => {
-    setEntradasSelecionadas((prev) =>
-      prev?.map((entrada) =>
-        entrada.Prod_cod === Prod_cod
+  const handleLoteValidadeChange = (id: number, Lote_validade: string) => {
+    setEntradasSelecionadas((prev) => 
+      prev.map((entrada) => 
+        entrada.id === id 
           ? { ...entrada, Lote_validade: new Date(Lote_validade) }
           : entrada
-      ) || []
+      )
     );
   };
   
   const calcularSubtotal = (produto: Produto, quantidade: number) => {
-    const custo = produto.Prod_custo || 0; // Make sure this value is correct
+    const custo = produto.Prod_custo || 0; 
     const qtd = quantidade || 0;
     return (custo * qtd).toFixed(2);
   };
@@ -243,95 +253,95 @@ function Saidas() {
             <p>Adicione um produto para continuar</p>
           </div>
         )}
-        {produtos.map((produto, index) => {
-            const quantidadeSelecionada = entradasSelecionadas?.find((p) => p.Prod_cod === produto.Prod_cod)?.Lote_quantidade || 0;
-            const loteCodSelecionado = entradasSelecionadas?.find((p) => p.Prod_cod === produto.Prod_cod)?.Lote_cod || '';
-            const loteValidadeSelecionada = entradasSelecionadas?.find((p) => p.Prod_cod === produto.Prod_cod)?.Lote_validade?.toISOString().substr(0, 10) || ''; // Format date to YYYY-MM-DD
-            const fornecedorSelecionado = entradasSelecionadas?.find((p) => p.Prod_cod === produto.Prod_cod)?.Fornecedor_id || 0;
-            const localSelecionado = entradasSelecionadas?.find((p) => p.Prod_cod === produto.Prod_cod)?.Local_id || 0;
+        {entradasSelecionadas.map((entrada, index) => {
+          const produto = produtos.find((p) => p.Prod_cod === entrada.Prod_cod);
 
-            return (
-                <div className="card-entrada-item" key={produto.Prod_cod}>
-                <div>
-                    <div className="card-name">
-                    <span>{produto.Prod_nome} {produto.Prod_marca} {produto.Prod_modelo}</span>
-                    </div>
+          if (!produto) return null;
+
+          return (
+            <div className="card-entrada-item" key={entrada.id}>
+              <div>
+                <div className="card-name">
+                  <span>{produto.Prod_nome} {produto.Prod_marca} {produto.Prod_modelo}</span>
                 </div>
-                <div className="entrada-options">
-                    <div className="quantidade">
-                    <Input
-                        max={produto.Prod_quantidade}
-                        label="Quantidade"
-                        type="number"
-                        value={quantidadeSelecionada}
-                        onChange={(e) => handleQuantidadeChange(produto.Prod_cod, +e.target.value)}
-                    />
-                    </div>
-                    <div className="custo">
-                    <span className="label">Custo</span>
-                    <span className="value">R${produto.Prod_custo}</span>
-                    </div>
-                    <div>
-                    <label htmlFor="inFornecedor">Fornecedor</label>
-                    <select 
-                        id="inFornecedor"
-                        className="form-select-custom"
-                        value={fornecedorSelecionado}
-                        onChange={(e) => handleFornecedorChange(produto.Prod_cod, +e.target.value)}
-                    >
-                        <option value="" selected>Buscar...</option>
-                        {fornecedores.map((f) => (
-                        <option key={f.Forn_id} value={f.Forn_id}>
-                            {f.Forn_razaoSocial}
-                        </option>
-                        ))}
-                    </select>
-                    </div>
-                    <div className="entrada-lote">
-                    <Input 
-                        label="Lote"
-                        type="text"
-                        value={loteCodSelecionado}
-                        onChange={(e) => handleLoteCodChange(produto.Prod_cod, e.target.value)}
-                    />
-                    </div>
-                    <div className="entrada-validade">
-                    <Input 
-                        label="Validade"
-                        type="date"
-                        value={loteValidadeSelecionada}
-                        onChange={(e) => handleLoteValidadeChange(produto.Prod_cod, e.target.value)}
-                    />
-                    </div>
-                    <div>
-                    <label htmlFor="inLocal">Local Armazenamento</label>
-                    <select 
-                        id="inLocal"
-                        className="form-select-custom"
-                        value={localSelecionado}
-                        onChange={(e) => handleLocalChange(produto.Prod_cod, +e.target.value)}
-                    >
-                        <option value="" selected>Buscar...</option>
-                        {locais.map((d) => (
-                        <option key={d.LocAr_id} value={d.LocAr_id}>
-                            {d.LocAr_nome}
-                        </option>
-                        ))}
-                    </select>
-                    </div>
-                    <div className="subtotal">
-                    <span className="label">Subtotal</span>
-                    <span className="value">R${calcularSubtotal(produto, quantidadeSelecionada)}</span>
-                    </div>
-                    <AiOutlineDelete
-                      size={24}
-                      className="delete-icon"
-                      onClick={() => handleRemoveProduct(index)}
+              </div>
+              <div className="entrada-options">
+                <div className="quantidade">
+                  <Input
+                    max={produto.Prod_quantidade}
+                    label="Quantidade"
+                    type="number"
+                    value={entrada.Lote_quantidade}
+                    onChange={(e) => handleQuantidadeChange(entrada.id, +e.target.value)}
                   />
                 </div>
+                <div className="custo">
+                  <span className="label">Custo</span>
+                  <span className="value">R${produto.Prod_custo}</span>
                 </div>
-            );
+                <div>
+                  <label htmlFor="inFornecedor">Fornecedor</label>
+                  <select 
+                    id="inFornecedor"
+                    className="form-select-custom"
+                    value={entrada.Fornecedor_id}
+                    onChange={(e) => handleFornecedorChange(entrada.id, +e.target.value)}
+                  >
+                    <option value="" selected>Buscar...</option>
+                    {fornecedores.map((f) => (
+                      <option key={f.Forn_id} value={f.Forn_id}>
+                        {f.Forn_razaoSocial}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="entrada-lote">
+                  <Input 
+                    label="Lote"
+                    type="text"
+                    value={entrada.Lote_cod}
+                    onChange={(e) => handleLoteCodChange(entrada.id, e.target.value)}
+                  />
+                </div>
+                <div className="entrada-validade">
+                  <Input 
+                    label="Validade"
+                    type="date"
+                    value={entrada.Lote_validade.toISOString().substr(0, 10)}
+                    onChange={(e) => handleLoteValidadeChange(entrada.id, e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="inLocal">Local Armazenamento</label>
+                  <select 
+                    id="inLocal"
+                    className="form-select-custom"
+                    value={entrada.Fornecedor_id}
+                    onChange={(e) => handleFornecedorChange(entrada.id, +e.target.value)}
+                  >
+                    <option value="" selected>Buscar...</option>
+                    {locais.map((l) => (
+                      <option key={l.LocAr_id} value={l.LocAr_id}>
+                        {l.LocAr_nome}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="subtotal">
+                  <span className="label">Subtotal</span>
+                  <span className="value">R${calcularSubtotal(produto, entrada.Lote_quantidade)}</span>
+                </div>
+                <AiOutlineDelete
+                  size={24}
+                  className="delete-icon"
+                  onClick={() => handleRemoveProduct(entrada.id)}
+                />
+              </div>
+            </div>
+          );
         })}
+
+
       </div>
 
       <div className="total-container">
