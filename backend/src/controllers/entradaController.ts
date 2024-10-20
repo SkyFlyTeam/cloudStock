@@ -14,7 +14,7 @@ export const controllerEntrada = {
             const entradasSelecionadas = req.body;
             const ids = entradasSelecionadas.map((entrada: any) => entrada.Prod_cod);
             const Usuario_id = entradasSelecionadas[0]?.Usuario_id;
-
+    
             // Recuperar os produtos envolvidos na entrada
             const produtos = await Produto.findAll({
                 where: {
@@ -24,33 +24,33 @@ export const controllerEntrada = {
                 },
                 transaction
             });
-
+    
             // Criar uma nova entrada
             const entradaEnvio = await Entrada.create({
                 Ent_valortot: 0,
                 Ent_dataCriacao: new Date(),
                 Usuario_id: Usuario_id
             }, { transaction });
-
+    
             let valorTotal = 0;
-
+    
             for (const entrada of entradasSelecionadas) {
-                console.log('Entrada Lote_quantidade:', entrada.Lote_quantidade);  // Check the value of Lote_quantidade
-            
+                console.log('Entrada Lote_quantidade:', entrada.Lote_quantidade);
+    
                 if (!entrada.Lote_quantidade || isNaN(entrada.Lote_quantidade)) {
                     throw new Error('Lote_quantidade is missing or invalid');
                 }
-            
+    
                 const produtoCorrespondente = produtos.find(p => p.Prod_cod === entrada.Prod_cod);
                 if (produtoCorrespondente) {
                     valorTotal += (produtoCorrespondente.Prod_custo * entrada.Lote_quantidade);
-
+    
                     // Verifica se o lote já existe
-                    const lote = await Lote.findOne({
+                    let lote = await Lote.findOne({
                         where: { Lote_cod: entrada.Lote_cod },
                         transaction
                     });
-
+    
                     let loteId;
                     if (lote) {
                         // Atualiza a quantidade do lote existente
@@ -71,16 +71,19 @@ export const controllerEntrada = {
                         }, { transaction });
                         loteId = newLote.Lote_id;
                     }
-
+    
+                    // Cria uma nova associação de lote e entrada
                     const envio = {
                         Lote_id: loteId,
                         Ent_id: entradaEnvio.Ent_id,
-                        Ent_quantidade: entrada.Lote_quantidade,  // Check if this is null or undefined
+                        Ent_quantidade: entrada.Lote_quantidade,
                         Ent_valor: (produtoCorrespondente.Prod_custo * entrada.Lote_quantidade)
                     };
-                    
+    
+                    await controllerEntrada.addLoteToEntradaFunc(envio, transaction);
+    
                     console.log('Envio:', envio);
-
+    
                     // Atualiza a quantidade do produto
                     const novaQuantidadeProduto = produtoCorrespondente.Prod_quantidade + entrada.Lote_quantidade;
                     await Produto.update(
@@ -89,19 +92,19 @@ export const controllerEntrada = {
                     );
                 }
             }
-
+    
             // Atualiza o valor total da entrada
             entradaEnvio.Ent_valortot = valorTotal;
             await entradaEnvio.save({ transaction });
-
+    
             // Finaliza a transação
             await transaction?.commit();
-
+    
             res.status(201).json({ message: 'Entrada criada com sucesso', entradaEnvio });
         } catch (error) {
             console.error('Error in creating entry:', error);
             await transaction?.rollback();
-            res.status(500).json({ error: 'Error in creating entry' })
+            res.status(500).json({ error: 'Error in creating entry' });
         }
     },
 
@@ -109,13 +112,28 @@ export const controllerEntrada = {
     addLoteToEntradaFunc: async (envio: any, transaction: any) => {
         try {
             const { Lote_id, Ent_id, Ent_quantidade, Ent_valor } = envio;
-
-            await Lote_Entrada.create({
-                Lote_id,
-                Ent_id,
-                Ent_quantidade,
-                Ent_valor
-            }, { transaction });
+    
+            // Verificar se já existe a combinação de Lote_id e Ent_id
+            const loteEntradaExistente = await Lote_Entrada.findOne({
+                where: {
+                    Lote_id,
+                    Ent_id
+                },
+                transaction
+            });
+    
+            if (!loteEntradaExistente) {
+                // Se não existe, cria a nova associação de lote e entrada
+                await Lote_Entrada.create({
+                    Lote_id,
+                    Ent_id,
+                    Ent_quantidade,
+                    Ent_valor
+                }, { transaction });
+            } else {
+                // Se já existe essa combinação de Lote_id e Ent_id, lançamos um erro ou avisamos
+                console.log(`A associação para Lote ${Lote_id} e Entrada ${Ent_id} já existe.`);
+            }
         } catch (error) {
             console.error('Erro ao associar lote à entrada:', error);
             throw error;
