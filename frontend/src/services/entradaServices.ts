@@ -20,8 +20,10 @@ export interface Lote {
   Lote_cod: string;
   Lote_quantidade: number;
   Lote_validade: string;
+  Forn_id: number;
   Locais_Armazenamento?: LocalArmazenamento;
   Produtos?: Produto;
+  Fornecedores?: Fornecedores;
 }
 
 export interface Produto {
@@ -55,6 +57,18 @@ const getEntradaByID = async (id: number): Promise<Entrada | ApiException> => {
     const { data } = await Api().get<any>(`/entrada/${id}`, {
       headers: { 'Content-Type': 'application/json' }
     })
+    console.log(data)
+    return data;
+  } catch (error: any) {
+    return new ApiException(error.message || 'Erro ao buscar o registro.')
+  }
+}
+
+export const getFornecedorByID = async (id: number): Promise<Fornecedores | ApiException> => {
+  try {
+    const { data } = await Api().get<any>(`/fornecedor/${id}`, {
+      headers: { 'Content-Type': 'application/json' }
+    })
     return data;
   } catch (error: any) {
     return new ApiException(error.message || 'Erro ao buscar o registro.')
@@ -64,5 +78,6 @@ const getEntradaByID = async (id: number): Promise<Entrada | ApiException> => {
 export const entradaServices = {
   getAllEntrada,
   getEntradaByID,
+  getFornecedorByID
 };
 

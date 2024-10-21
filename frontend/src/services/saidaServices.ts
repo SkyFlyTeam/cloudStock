@@ -21,8 +21,10 @@ export interface Lote {
   Lote_cod: string;
   Lote_quantidade: number;
   Lote_validade: string;
+  Forn_id: number;
   Locais_Armazenamento?: LocalArmazenamento;
   Produtos?: Produto;
+  Fornecedores?: Fornecedores;
 }
 
 export interface Produto {

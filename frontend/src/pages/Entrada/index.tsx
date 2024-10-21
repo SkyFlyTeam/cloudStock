@@ -43,7 +43,7 @@ function Entradas() {
     Lote_cod: string, 
     Lote_validade: Date, 
     Usuario_id: number, 
-    Fornecedor_id: number, 
+    Forn_id: number, 
     LocAr_id: number 
   }>>([]);
 
@@ -110,7 +110,7 @@ function Entradas() {
         Lote_cod: '',
         Lote_validade: new Date(),
         Usuario_id: user?.Usuario_id || 0,
-        Fornecedor_id: 0,
+        Forn_id: 0,
         LocAr_id: 0
       }
     ]);
@@ -129,11 +129,11 @@ function Entradas() {
     );
   };
 
-  const handleFornecedorChange = (id: number, Fornecedor_id: number) => {
+  const handleFornecedorChange = (id: number, Forn_id: number) => {
     setEntradasSelecionadas((prev) => 
       prev.map((entrada) => 
         entrada.id === id 
-          ? { ...entrada, Fornecedor_id }
+          ? { ...entrada, Forn_id } // Propriedade correta
           : entrada
       )
     );
@@ -287,7 +287,6 @@ function Entradas() {
                     <select 
                       id="inFornecedor"
                       className="form-select-custom"
-                      value={entrada.Fornecedor_id}
                       onChange={(e) => handleFornecedorChange(entrada.id, +e.target.value)}
                     >
                       <option value="" selected>Buscar...</option>

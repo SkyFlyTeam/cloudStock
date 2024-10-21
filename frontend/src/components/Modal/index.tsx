@@ -10,14 +10,15 @@ interface ModalProps {
   label: string;
   buttons?: ReactNode; 
   id?: number | null
+  className?: string;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, label, children, buttons, id }) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, label, children, buttons, id, className }) => {
 
   if (isOpen) {
     return (
-      <div className='backgroundStyle'>
-        <div className='modalStyle'>
+      <div className='backgroundStyle' >
+        <div className={`modalStyle ${className}`}>
           <h1 className='title'>{label}<span className='title-id'>{id}</span></h1>
           <div className='content'>{children}</div>
 

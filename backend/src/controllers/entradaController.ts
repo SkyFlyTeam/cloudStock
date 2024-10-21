@@ -70,7 +70,8 @@ export const controllerEntrada = {
                             Lote_quantidade: entrada.Lote_quantidade,
                             Lote_cod: entrada.Lote_cod,
                             Prod_cod: entrada.Prod_cod,
-                            LocAr_id: entrada.LocAr_id
+                            LocAr_id: entrada.LocAr_id,
+                            Forn_id: entrada.Forn_id
                         }, { transaction });
                         loteId = newLote.Lote_id;
                     }
@@ -148,14 +149,12 @@ export const controllerEntrada = {
         try {
             // Recupera todas as entradas, incluindo as associações com Lotes e a tabela de junção Lote_Entrada
             const entradas = await Entrada.findAll({
-                include: [{
-                    model: Lote,
-                    through: {}
-                },{
-                    model: Usuario,
-                    through: {}
-
-                }],
+                include: [
+                    {
+                        model: Lote,
+                        through: {}
+                    }
+                ],
             });
 
             // Se não houver entradas, retorna uma resposta apropriada
@@ -184,12 +183,12 @@ export const controllerEntrada = {
                       include: [
                         {
                           model: Produto,
-                          include: [
-                            { model: Fornecedor } // Inclui os fornecedores do produto
-                          ]
                         },
                         {
                           model: Local_Armazenamento // Inclui os locais de armazenamento do lote
+                        },
+                        {
+                          model: Fornecedor // Inclui os locais de armazenamento do lote
                         }
                       ]
                     },

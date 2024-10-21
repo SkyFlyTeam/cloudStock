@@ -159,7 +159,7 @@ function EntradasRegistro() {
                                         </div>
                                         <div className="info-item">
                                             <span>Fornecedor</span>
-                                            <span>{lote.Produtos?.Fornecedores?.[0]?.Forn_nome ?? 'Fornecedor não informado'}</span>
+                                            <span>{lote.Fornecedores?.Forn_nome ?? 'Fornecedor não informado'}</span>
                                         </div>
                                         <div className="info-item">
                                             <span>Lote</span>

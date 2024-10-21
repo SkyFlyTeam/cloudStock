@@ -84,53 +84,105 @@ const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
     }))
 
     return (
-        <form className="scroller" encType="multipart/form-data">
-            <div className="dual rflex nwflex prod-cadastro">
-                <div className="flex2 cflex nwflex spacerChild">
-                    <Input label="Nome" placeholder="Nome do produto" onChange={(e) => setNome(e.target.value)} value={Prod_nome} />
-                    <Input label="Marca" placeholder="Marca" onChange={(e) => setMarca(e.target.value)} value={Prod_marca} />
-                    <Input label="Modelo" placeholder="Modelo" onChange={(e) => setModelo(e.target.value)} value={Prod_modelo} />
-                    <Input label="Custo" placeholder="Custo" onChange={(e) => setCusto(parseFloat(e.target.value))} value={Prod_custo.toString()} />
-                    <Input label="Venda" placeholder="Venda" onChange={(e) => setPreco(parseFloat(e.target.value))} value={Prod_preco.toString()} />
-                </div>
-                <div className="flex1 cflex nwflex spacerChild">
-                    <Input label="Categoria" type="select" placeholder="Selecione..." value="" disabled={true} />
-                    {/* <Input label="Quantidade" placeholder="Quantidade" onChange={(e) => setQuantidade(parseInt(e.target.value))} value={Prod_quantidade.toString()} /> */}
-                </div>
-            </div>
-
-            <div className="nextSect">
-                <DivTitulo label="Especificações" />
-                <Input label="Peso" placeholder="Peso" onChange={(e) => setPeso(parseFloat(e.target.value))} value={Prod_peso.toString()} />
-                <Input label="Largura" placeholder="Largura" onChange={(e) => setLargura(parseFloat(e.target.value))} value={Prod_largura.toString()} />
-                <Input label="Comprimento" placeholder="Comprimento" onChange={(e) => setComprimento(parseFloat(e.target.value))} value={Prod_comprimento.toString()} />
-                <Input label="Altura" placeholder="Altura" onChange={(e) => setAltura(parseFloat(e.target.value))} value={Prod_altura.toString()} />
-                <div className="input-radio">
-                    <label>Possui validade?</label>
-                    <div className="radio-option">
-                        <input type="radio" name="prod_validade" onChange={(e) => setValidade(e.target.value === 'true')} />
-                        <label>Sim</label>
-                    </div>
-                    <div className="radio-option">
-                        <input type="radio" name="prod_validade" defaultChecked />
-                        <label>Não</label>
-                    </div>
-                </div>
-            </div>
-
-            <div className="nextSect">
-                <DivTitulo className=""
-                        label="Detalhes"
+        <form className="form-prod" encType="multipart/form-data">
+            <section className="form-prod">
+                <div className="input-group-prod">
+                    <Input 
+                        className="input-item-prod large"
+                        label="Nome"
+                        placeholder="Nome do produto"
+                        onChange={(e) => setNome(e.target.value)}
+                        value={Prod_nome}
                     />
-                    <Input className=""
+                </div>
+                <div className="input-group-prod">
+                    <Input className="input-item-prod"
+                        label="Marca"
+                        placeholder="Marca"
+                        onChange={(e) => setMarca(e.target.value)}
+                        value={Prod_marca}
+                    />
+                    <Input className="input-item-prod"
+                        label="Modelo"
+                        placeholder="Modelo"
+                        onChange={(e) => setModelo(e.target.value)}
+                        value={Prod_modelo}
+                    />
+                </div>
+                <div className="input-group-prod">
+                    <Input className="input-item-prod"
+                        label="Custo"
+                        placeholder="Custo"
+                        onChange={(e) => setCusto(parseFloat(e.target.value))}
+                        value={Prod_custo.toString()}
+                    />
+                    <Input className="input-item-prod"
+                        label="Venda"
+                        placeholder="Venda"
+                        onChange={(e) => setPreco(parseFloat(e.target.value))}
+                        value={Prod_preco.toString()}
+                    />
+                </div>
+            </section>
+            <div className='subtitle-form-prod'>
+                <span>Especificações</span>
+                <hr className="line"/>
+            </div>
+            <section className='form-prod'>
+                <div className="input-group-prod">
+                    <Input className="input-item-prod"
+                        label="Peso"
+                        placeholder="Peso"
+                        onChange={(e) => setPeso(parseFloat(e.target.value))}
+                        value={Prod_peso.toString()}
+                    />
+                    <Input className="input-item-prod"
+                        label="Largura"
+                        placeholder="Largura"
+                        onChange={(e) => setLargura(parseFloat(e.target.value))}
+                        value={Prod_largura.toString()}
+                    />
+                </div>
+                <div className="input-group-prod">
+                    <Input className="input-item-prod"
+                        label="Comprimento"
+                        placeholder="Comprimento"
+                        onChange={(e) => setComprimento(parseFloat(e.target.value))}
+                        value={Prod_comprimento.toString()}
+                    />
+                    <Input className="input-item-prod"
+                        label="Altura"
+                        placeholder="Altura"
+                        onChange={(e) => setAltura(parseFloat(e.target.value))}
+                        value={Prod_altura.toString()}
+                    />
+                </div>
+            </section>
+            <div className='subtitle-form-prod'>
+                <span>Detalhes</span>
+                <hr className="line"/>
+            </div>
+            <section className='form-prod'>
+                <div className="input-group-prod">
+                    <Input className="input-item-prod large"
                         label="Descrição"
                         placeholder="Descreva o produto..."
                         onChange={(e) => setDescricao(e.target.value)}
                         value={Prod_descricao}
                     />
-                    {/* Linha: [3] */}
-                <input type="file" onChange={(e) => e.target.files && setImg(e.target.files[0])} accept="image/*" />
-            </div>
+                </div>
+                <div className="input-group-prod">
+                    <input className="input-item-prod large"
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => {
+                            if (e.target.files && e.target.files.length > 0) {
+                                setImg(e.target.files[0]);
+                            }
+                        }}
+                    />
+                </div>
+            </section>
         </form>
     )
 })

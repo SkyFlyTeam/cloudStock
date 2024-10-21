@@ -76,3 +76,7 @@ div.td-numeric{
     text-align: end;
     width: min-content;
 }
+
+.modal-prod{
+    height: 35rem;
+}

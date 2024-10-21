@@ -222,12 +222,12 @@ export const saidaController = {
                       include: [
                         {
                           model: Produto,
-                          include: [
-                            { model: Fornecedor } // Inclui os fornecedores do produto
-                          ]
                         },
                         {
-                          model: Local_Armazenamento // Inclui os locais de armazenamento do lote
+                          model: Local_Armazenamento 
+                        },
+                        {
+                          model: Fornecedor 
                         }
                       ]
                     },

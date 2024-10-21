@@ -116,10 +116,9 @@ useEffect(() => {
     
     async function fetchSaidaById(id: number) { //
       const response = await saidaServices.getSaidaByID(id)
-      console.log(response) // VER AS INFORMAÇÕES RETORNADAS
       if (response instanceof ApiException) {
-          alert(`aaaaaa ${response.message}`)
       } else {
+          console.log(response)
           setSaidaInfo(response)
       }
     }
@@ -208,7 +207,6 @@ useEffect(() => {
               <h3 className="modal-title">Produtos</h3>
               <hr />
             </div>
-
             {saidaInfo.Lotes?.map((lote, index) => (
               <div key={index} className="lote-container">
                 <div className="produto-info">
@@ -224,7 +222,7 @@ useEffect(() => {
                     </div>
                     <div className="info-item">
                       <span>Fornecedor</span>
-                      <span>{lote.Produtos?.Fornecedores?.[0]?.Forn_nome ?? 'Fornecedor não informado'}</span>
+                      <span>{lote.Fornecedores?.Forn_nome ?? 'Fornecedor não informado'}</span>
                     </div>
                     <div className="info-item">
                       <span>Lote</span>

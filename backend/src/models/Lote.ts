@@ -6,6 +6,7 @@ import { Produto } from './Produto';
 import { Local_Armazenamento } from './Local_Armazenamento';
 import { Saida } from './Saida';
 import { Lote_Saida } from './Lote_Saida';
+import { Fornecedor } from './Fornecedor';
 
 @Table({
     tableName: 'Lote',
@@ -48,6 +49,12 @@ export class Lote extends Model {
     })
     LocAr_id!: number;
 
+    @ForeignKey(() => Fornecedor)
+    @Column({
+        type: DataType.INTEGER,
+    })
+    Forn_id!: number;
+
 
     //Cardinalidades
     @BelongsTo(() => Produto)
@@ -56,12 +63,13 @@ export class Lote extends Model {
     @BelongsTo(() => Local_Armazenamento)
     Locais_Armazenamento!: Local_Armazenamento[]
 
+    @BelongsTo(() => Fornecedor)
+    Fornecedores!: Fornecedor[]
+
     // Associação com Entrada através de LoteEntrada
     @BelongsToMany(() => Entrada, () => Lote_Entrada)
     Entradas!: Entrada[];
 
     @BelongsToMany(() => Saida, () => Lote_Saida)
-    Saidas!: Saida[];
-
-    
+    Saidas!: Saida[];   
 }

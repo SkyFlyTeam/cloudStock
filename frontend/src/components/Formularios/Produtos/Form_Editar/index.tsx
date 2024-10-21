@@ -5,6 +5,8 @@ import { produtoServices } from '../../../../services/produtoServices';
 import Input from "../../../Input";
 import DivTitulo from "../../../DivTitulo";
 
+import './style.css'
+
 interface Props {
     id: number
     onSuccess: (message: string) => void
@@ -109,167 +111,109 @@ const ProdutoEditar = forwardRef((props: Props, ref: Ref<{ submitForm: () => voi
 
     return (
 
-        <form className="scroller" encType="multipart/form-data">
-            <div>
-                {/* PARA O OTÁRIO DO FUTURO (VULGO ARTHUR): Lembrar de transformar isso tudo num único Flex Row para versão Mobile! */}
-                <div className="dual rflex nwflex prod-cadastro">
-                    <div className="flex2 cflex nwflex spacerChild"> {/* Coluna dupla: [1] [2] */}
-                        {/* Linha: [1] */}
-                        <Input className=""
-                            label="Nome"
-                            placeholder="Nome do produto"
-                            onChange={(e) => setNome(e.target.value)}
-                            value={Prod_nome}
-                        />
-                        {/* Linha: [2] */}
-                        <div className="dual rflex nwflex">
-                            <Input className="flex1"
-                                label="Marca"
-                                placeholder="Marca"
-                                onChange={(e) => setMarca(e.target.value)}
-                                value={Prod_marca}
-                            />
-                            <Input className="flex1"
-                                label="Modelo"
-                                placeholder="Modelo"
-                                onChange={(e) => setModelo(e.target.value)}
-                                value={Prod_modelo}
-                            />
-                        </div>
-                        {/* Linha: [3] */}
-                        <div className="dual rflex nwflex">
-                            <Input className="flex1"
-                                label="Custo"
-                                placeholder="Custo"
-                                onChange={(e) => setCusto(parseFloat(e.target.value))}
-                                value={Prod_custo.toString()}
-                            />
-                            <Input className="flex1"
-                                label="Venda"
-                                placeholder="Venda"
-                                onChange={(e) => setPreco(parseFloat(e.target.value))}
-                                value={Prod_preco.toString()}
-                            //onChange={this.obterVenda}
-                            />
-                        </div>
-                    </div>
-
-                    <div className="flex1 cflex nwflex spacerChild"> {/* Coluna simples: [3] */}
-                        {/* Linha: [1] */}
-                        {/*<Input className="flex1"
-                    label="Código"
-                    placeholder="Código do produto"
-                    value=""
-                />*/}
-                        <Input className="flex1"
-                            label="Categoria"
-                            type="select"
-                            placeholder="Selecione..."
-                            value=""
-                            disabled={true}
-                        />
-
-                        {/* Linha: [2] */}
-                        {/* <Input className="flex1"
-                            label="Quantidade"
-                            placeholder="Quantidade"
-                            onChange={(e) => setQuantidade(parseInt(e.target.value))}
-                            value={Prod_quantidade.toString()}
-                        /> */}
-                        {/* Linha: [3] */}
-                        <div className="flex1"></div>
-                        {/*
-                <Input className="flex1"
-                    label="Código"
-                    placeholder="Código do produto"
-                    value=""
-                /> 
-                Usar este aqui após terminado como gambiarra
-                    Uma solução melhor é NECESSÁRIA!
-                    <div className="flex1"></div>
-                */}
-                    </div>
-                </div>
-            </div>
-
-            <div className="nextSect">
-                <DivTitulo className=""
-                    label="Especificações"
-                />
-                <div className="spacerChild prod-cadastro">
-                    {/* Linha: [1] */}
-                    <Input className="unidadeMedida"
-                        label="Unidade de Medida"
-                        type="select"
-                        placeholder="Selecione"
-                        disabled={true}
+        <form className="form-prod" encType="multipart/form-data">
+            <section className="form-prod">
+                <div className="input-group-prod">
+                    <Input 
+                        className="input-item-prod large"
+                        label="Nome"
+                        placeholder="Nome do produto"
+                        onChange={(e) => setNome(e.target.value)}
+                        value={Prod_nome}
                     />
-                    {/* Linha: [2] */}
-                    <div className="dual rflex nwflex">
-                        <Input className="flex1"
-                            label="Peso"
-                            placeholder="Peso"
-                            onChange={(e) => setPeso(parseFloat(e.target.value))}
-                            value={Prod_peso.toString()}
-                        />
-                        <Input className="flex1"
-                            label="Largura"
-                            placeholder="Largura"
-                            onChange={(e) => setLargura(parseFloat(e.target.value))}
-                            value={Prod_largura.toString()}
-                        />
-                        <Input className="flex1"
-                            label="Comprimento"
-                            placeholder="Comprimento"
-                            onChange={(e) => setComprimento(parseFloat(e.target.value))}
-                            value={Prod_comprimento.toString()}
-                        />
-                        <Input className="flex1"
-                            label="Altura"
-                            placeholder="Altura"
-                            onChange={(e) => setAltura(parseFloat(e.target.value))}
-                            value={Prod_altura.toString()}
-                        />
-                    </div>
-                    {/* Linha: [3] */}
-                    <div className="radio-val">
-                        <label>Possui validade?</label>
-                        <label>
-                            <input type="radio" name="prod_validade"
-                                onChange={(e) => setValidade((e.target.value === 'true'))}
-                            />
-                            <span>Sim</span>
-                        </label>
-                        <label>
-                            <input type="radio" name="prod_validade" defaultChecked />
-                            <span>Não</span>
-                        </label>
-                    </div>
-                    {/* Criar component RadioButton!! */}
                 </div>
+                <div className="input-group-prod">
+                    <Input className="input-item-prod"
+                        label="Marca"
+                        placeholder="Marca"
+                        onChange={(e) => setMarca(e.target.value)}
+                        value={Prod_marca}
+                    />
+                    <Input className="input-item-prod"
+                        label="Modelo"
+                        placeholder="Modelo"
+                        onChange={(e) => setModelo(e.target.value)}
+                        value={Prod_modelo}
+                    />
+                </div>
+                <div className="input-group-prod">
+                    <Input className="input-item-prod"
+                        label="Custo"
+                        placeholder="Custo"
+                        onChange={(e) => setCusto(parseFloat(e.target.value))}
+                        value={Prod_custo.toString()}
+                    />
+                    <Input className="input-item-prod"
+                        label="Venda"
+                        placeholder="Venda"
+                        onChange={(e) => setPreco(parseFloat(e.target.value))}
+                        value={Prod_preco.toString()}
+                    />
+                </div>
+                <div className="input-group-prod">
+                    <Input className="input-item-prod"
+                        label="Custo"
+                        placeholder="Custo"
+                        onChange={(e) => setCusto(parseFloat(e.target.value))}
+                        value={Prod_custo.toString()}
+                    />
+                    <Input className="input-item-prod"
+                        label="Venda"
+                        placeholder="Venda"
+                        onChange={(e) => setPreco(parseFloat(e.target.value))}
+                        value={Prod_preco.toString()}
+                    />
+                </div>
+            </section>
+            <div className='subtitle-form-prod'>
+                <span>Especificações</span>
+                <hr className="line"/>
             </div>
-
-            <div className="nextSect">
-                <DivTitulo className=""
-                    label="Detalhes"
-                />
-                <div className="spacerChild prod-cadastro">
-                    {/* Linha: [1] */}
-                    {/*<Input className="unidadeMedida"
-                label="Localização no estoque"
-                placeholder="Localização de armazenamento..."
-                disabled={true}
-            />*/}
-                    {/* Linha: [2] */}
-                    <Input className=""
+            <section className='form-prod'>
+                <div className="input-group-prod">
+                    <Input className="input-item-prod"
+                        label="Peso"
+                        placeholder="Peso"
+                        onChange={(e) => setPeso(parseFloat(e.target.value))}
+                        value={Prod_peso.toString()}
+                    />
+                    <Input className="input-item-prod"
+                        label="Largura"
+                        placeholder="Largura"
+                        onChange={(e) => setLargura(parseFloat(e.target.value))}
+                        value={Prod_largura.toString()}
+                    />
+                </div>
+                <div className="input-group-prod">
+                    <Input className="input-item-prod"
+                        label="Comprimento"
+                        placeholder="Comprimento"
+                        onChange={(e) => setComprimento(parseFloat(e.target.value))}
+                        value={Prod_comprimento.toString()}
+                    />
+                    <Input className="input-item-prod"
+                        label="Altura"
+                        placeholder="Altura"
+                        onChange={(e) => setAltura(parseFloat(e.target.value))}
+                        value={Prod_altura.toString()}
+                    />
+                </div>
+            </section>
+            <div className='subtitle-form-prod'>
+                <span>Detalhes</span>
+                <hr className="line"/>
+            </div>
+            <section className='form-prod'>
+                <div className="input-group-prod">
+                    <Input className="input-item-prod large"
                         label="Descrição"
                         placeholder="Descreva o produto..."
                         onChange={(e) => setDescricao(e.target.value)}
                         value={Prod_descricao}
                     />
-                    {/* Linha: [3] */}
-                    
-                    <input className=""
+                </div>
+                <div className="input-group-prod">
+                    <input className="input-item-prod large"
                         type="file"
                         accept="image/*"
                         onChange={(e) => {
@@ -279,7 +223,7 @@ const ProdutoEditar = forwardRef((props: Props, ref: Ref<{ submitForm: () => voi
                         }}
                     />
                 </div>
-            </div>
+            </section>
         </form>
     )
 })

@@ -1,6 +1,7 @@
-import { Table, Column, Model, DataType, BelongsToMany } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, BelongsToMany, HasMany } from 'sequelize-typescript';
 import { Fornecedor_Produto } from './Fornecedor_Produto';
 import { Produto } from './Produto';
+import { Lote } from './Lote';
 
 @Table({
     tableName: 'Fornecedor',
@@ -42,6 +43,9 @@ export class Fornecedor extends Model {
 
     @BelongsToMany(() => Produto, () => Fornecedor_Produto)
     Produtos!: Produto[];
+
+    @HasMany(() => Lote)
+    Lotes!: Lote[]
 }
 
 

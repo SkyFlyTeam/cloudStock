@@ -233,6 +233,7 @@ function Produtos() {
               <BtnAzul icon={<IoAddCircleOutline />} label="SALVAR" onClick={() => formRef.current?.submitForm()} />
             </>
           }
+          className="modal-prod"
         >
           <ProdutoEditar
             ref={formRef}
