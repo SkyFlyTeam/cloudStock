@@ -108,9 +108,43 @@ Rank | Prioridade | User Story | Estimativa | Sprint | Requisito
 
 Apresentação das funcionalidades desenvolvidas até o momento:
 
-[SprintReview1](https://youtu.be/eyDyj7bAfGM)
+[![SprintReview1](https://i9.ytimg.com/vi/eyDyj7bAfGM/mqdefault.jpg?sqp=CJD72LgG-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGDYgXChlMA8=&rs=AOn4CLA0ROuTqxKhA0yjHv6yfVB8hL920w)](https://youtu.be/eyDyj7bAfGM)
 
 <br>
+
+## 🔎 Instalação e utilização
+### Configuração do backend
+Dentro da pasta "backend" crie um novo arquivo chamado .env e dentro dele coloque as configurações do seu banco de dados da seguinte forma:
+```
+DB_NAME: 'Nome do Schema a ser usado'
+DB_USER: 'Usuário de conexão do banco'
+DB_PASSWORD: 'Senha de conexão do banco referente ao usuário'
+DB_HOST: 'ip do banco de dados'
+```
+
+Após configurar estes arquivos digite o seguinte comando dentro da pasta para instalar o backend:
+```node 
+npm install
+```
+
+E por fim para iniciar o backend digite o comando:
+```node
+npm start
+```
+
+### Configuração do frontend
+Dentro da pasta "frontend" execute o seguinte comando para instalação do frontend:
+```node
+npm install
+```
+
+E por fim para iniciar o frontend digite o seguinte comando:
+```npm
+npm start
+```
+
+
+<br> 
 
 <span id="autores">
 
