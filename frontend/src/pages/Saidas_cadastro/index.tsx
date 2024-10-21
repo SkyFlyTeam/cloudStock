@@ -13,8 +13,14 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { Api} from "../../config/apiConfig";
 import Modal from "../../components/Modal";
 import BtnCancelar from "../../components/BtnCancelar";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthProvider";
 
 function Saidas() {
+  
+  const user = useAuth().currentUser
+  const navigate = useNavigate() // Funções para navegar
+  
   // Controlar estados dos Modais
   const [openModalCadastro, setOpenModalCadastro] = useState(false); // concluir saida
   const [openModalQuantidade, setOpenModalQuantidade] = useState(false); // verificar quantidade
@@ -70,7 +76,7 @@ function Saidas() {
 
     // Atualiza o estado de produtosSelecionados
     setProdutosSelecionados((prev) => {
-      const newProdutoSelecionado = { idProd: produto.Prod_cod, quantidade: 0, Usuario_id: 1 };
+      const newProdutoSelecionado = { idProd: produto.Prod_cod, quantidade: 0, Usuario_id: user?.Usuario_id! };
       return prev ? [...prev, newProdutoSelecionado] : [newProdutoSelecionado];
     });
 
@@ -142,6 +148,7 @@ function Saidas() {
       console.log('Produtos removidos e estados limpos');
       // Fecha o modal após a conclusão
       setOpenModalCadastro(false);
+      navigate('/Saidas')
     } catch (error: any) {
       console.error('Erro na função handleConcluir:', error);
     }

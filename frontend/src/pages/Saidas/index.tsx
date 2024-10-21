@@ -214,7 +214,7 @@ useEffect(() => {
                   <div className="info-row">
                     <div className="info-item">
                       <span>Quantidade</span>
-                      <span>{lote.Lote_quantidade}</span>
+                      <span>{lote.Lote_Saida?.Saida_quantidade!}</span>
                     </div>
                     <div className="info-item">
                       <span>Custo</span>
@@ -230,7 +230,7 @@ useEffect(() => {
                     </div>
                     <div className="info-item">
                       <span>Validade</span>
-                      <span>{new Date(lote.Lote_validade).toLocaleDateString('pt-BR')}</span> {/* Transforma a data em dd/mm/aaaa */}
+                      <span>{new Date(lote.Lote_validade).toLocaleDateString()}</span> {/* Transforma a data em dd/mm/aaaa */}
                     </div>
                     <div className="info-item">
                       <span>Local de armazenamento</span>
@@ -238,7 +238,7 @@ useEffect(() => {
                     </div>
                     <div className="info-item">
                       <span>Subtotal</span>
-                      <span>R${calcularSubtotal(lote.Lote_quantidade, parseFloat(lote.Produtos?.Prod_custo || '0'))}</span>
+                      <span>R${calcularSubtotal(lote.Lote_Saida?.Saida_quantidade!, parseFloat(lote.Produtos?.Prod_custo || '0'))}</span>
                     </div>
                   </div>
                 </div>

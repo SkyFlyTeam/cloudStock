@@ -16,11 +16,13 @@ import BtnCancelar from "../../components/BtnCancelar";
 import { useAuth } from "../../context/AuthProvider";
 import { Fornecedor, fornecedorServices } from "../../services/fornecedorServices";
 import { Local_Armazenamento, localServices } from "../../services/localServices";
+import { useNavigate } from "react-router-dom";
 
 
 function Entradas() {
   // Usuário logado
   const user = useAuth().currentUser
+  const navigate = useNavigate() 
 
   // Controlar estados dos Modais
   const [openModalCadastro, setOpenModalCadastro] = useState(false); // concluir saida
@@ -217,6 +219,7 @@ function Entradas() {
       setProdutos([]);
       fetchProdutos();
       setOpenModalCadastro(false);
+      navigate('/RegistrosEntrada')
     } catch (error: any) {
       console.error('Erro na função handleConcluir:', error);
     }

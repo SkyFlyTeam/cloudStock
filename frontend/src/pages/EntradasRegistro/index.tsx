@@ -151,7 +151,7 @@ function EntradasRegistro() {
                                     <div className="info-row">
                                         <div className="info-item">
                                             <span>Quantidade</span>
-                                            <span>{lote.Lote_quantidade}</span>
+                                            <span>{lote.Lote_Entrada?.Ent_quantidade!}</span>
                                         </div>
                                         <div className="info-item">
                                             <span>Custo</span>
@@ -175,7 +175,7 @@ function EntradasRegistro() {
                                         </div>
                                         <div className="info-item">
                                             <span>Subtotal</span>
-                                            <span>R${calcularSubtotal(lote.Lote_quantidade, parseFloat(lote.Produtos?.Prod_custo || '0'))}</span>
+                                            <span>R${calcularSubtotal(lote.Lote_Entrada?.Ent_quantidade!, parseFloat(lote.Produtos?.Prod_custo || '0'))}</span>
                                         </div>
                                     </div>
                                 </div>

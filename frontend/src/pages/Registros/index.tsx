@@ -119,7 +119,7 @@ function Registros() {
                             </div>
                             <div className="info-item">
                                 <span>Validade</span>
-                                <span>{new Date(lote.Lote_validade).toLocaleDateString('pt-BR')}</span>
+                                <span>{new Date(lote.Lote_validade).toLocaleDateString()}</span>
                             </div>
                             <div className="info-item">
                                 <span>Local de armazenamento</span>
@@ -177,7 +177,7 @@ function Registros() {
                             </div>
                             <div className="info-item">
                                 <span>Validade</span>
-                                <span>{new Date(lote.Lote_validade).toLocaleDateString('pt-BR')}</span>
+                                <span>{new Date(lote.Lote_validade).toLocaleDateString()}</span>
                             </div>
                             <div className="info-item">
                                 <span>Local de armazenamento</span>
