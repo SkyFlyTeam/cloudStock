@@ -2,7 +2,7 @@
 
 <br>
 
-Na segunda sprint realizamos a criação de páginas dos registros de entrada e saída, tanto pagínas separadas de cada função quanto juntas, podendo ter uma melhor análise conforme o necessário, além disso, agora é exibido os produtos dentro dos seus devidos locais, e por fim, também é possível agora a movimentação de entrada e saída e já estar atualizado no mesmo instante na página de exibição da quantidade de produtos.
+Na segunda sprint, foram criadas páginas para registrar entradas e saídas de produtos, separadas e unificadas, permitindo uma análise mais detalhada. Além disso, agora os produtos são exibidos em seus respectivos locais de armazenamento. Também foi implementada a movimentação de produtos com atualização imediata na exibição das quantidades e diferenciação nos níveis de acesso ao fazer login.
 
 <br>
 
@@ -12,6 +12,7 @@ Os requisitos desenvolvidos durante esta sprint foram:
 
 - Cadastro de Local, Fornecedor e Setor: Registro dos locais de armazenamento, fornecedores e Setores.
 - Movimentação de Estoque: Registros de entrada e saída de produtos com controle de responsável e data. 
+- Cadastro de Usuários: Diferenciar níveis de acesso (administrador, gerente, funcionário).
 
 <br>
 
@@ -31,11 +32,11 @@ ID | User story | Estimativa
 US | Task | Estimativa | Status
 |------|--------|------|-----|
 | 3 | Cadastro de entrada no Front-End | 4 | Feito ✔ |
-| 3 | Atualizamento automático da quantidade exata disponível | 2 | Feito ✔ |
-| 3 | Página de entrada que ficará registrado os produtos | 2 | Feito ✔ |
+| 3 | Atualização automática da quantidade de produtos após entrada | 2 | Feito ✔ |
+| 3 | Página de registro de entrada de produtos | 2 | Feito ✔ |
 | 4 | Cadastro de saída no Front-End | 12 | Feito ✔ |
-| 4 | Atualizamento automático da quantidade exata disponível | 3 | Feito ✔ |
-| 4 | Página de saída que ficará registrado as saídas dos produtos | 4 | Feito ✔ |
+| 4 | Atualização automática da quantidade de produtos após saída | 3 | Feito ✔ |
+| 4 | Página de registro de saidas de produtos | 4 | Feito ✔ |
 | 5 | Página com todos os registros, entrada e saída | 2 | Feito ✔ |
 | 5 | Criar os registros no Back-End | 4 | Feito ✔ |
 | 6 | Página de execução dos produtos contidos nos locais | 12 | Feito ✔ |
