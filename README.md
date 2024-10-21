@@ -49,8 +49,9 @@ US | Task | Estimativa | Status
 Utilizamos o Burndown chart para acompanhar o progresso da equipe durante o andamento da sprint (o eixo X são os dias trabalhados na sprint e os valores do eixo Y representam as entregas e esforços realizados com o passar do tempo)
 
 <div align="center">
- 
-![BurndownChart](./mgt/Imagem%20do%20WhatsApp%20de%202024-09-30%20à(s)%2009.26.30_1c7b38d1.jpg)
+
+![BurndownChart](https://github.com/user-attachments/assets/f716c9c2-3236-4a27-b90b-8c83924af378)
+
  </div>
 
  <br>
@@ -60,18 +61,11 @@ Utilizamos o Burndown chart para acompanhar o progresso da equipe durante o anda
 Apresentação das funcionalidades desenvolvidas até o momento:
 <div align="center">
  
-[Cloudstock - demonstration](https://youtu.be/eyDyj7bAfGM)
+[![SprintReview2](https://i9.ytimg.com/vi/eyDyj7bAfGM/mqdefault.jpg?sqp=CJD72LgG-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGDYgXChlMA8=&rs=AOn4CLA0ROuTqxKhA0yjHv6yfVB8hL920w)](https://youtu.be/eyDyj7bAfGM)
+
 </div>
 
 <br>
-
-## :link: Links úteis
-
-Documentos produzidos durante a sprint:
-
-Modelo lógico do Banco de Dados: [vertabello_modelo](https://github.com/user-attachments/assets/44f5c70d-fe6d-451d-a009-a0b1723421d5) 
-<br>
-Backlog do Produto: [CloudStock-Backlog do Produto.pdf](https://github.com/user-attachments/files/17026988/SKYF-Backlog.do.Produto-170924-104112.pdf)
 
 
 
