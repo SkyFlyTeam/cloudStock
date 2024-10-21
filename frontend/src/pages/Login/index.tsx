@@ -24,10 +24,8 @@ function Login() {
 
     useEffect(() => {
         if (currentUser?.Cargo_id) {
-            if (currentUser.Cargo_id === 1) {
+            if (currentUser.Cargo_id === 1 || currentUser.Cargo_id === 2 ) {
                 navigate('/Produtos');
-            } else if (currentUser.Cargo_id === 2) {
-                navigate('/Entrada');
             } else if (currentUser.Cargo_id === 3) {
                 navigate('/Usuarios');
             }

@@ -174,13 +174,14 @@ function LocalProduto() {
                 </tr>
               </thead>
               <tbody className="table-lp">
-              {lotesInfo.map(lote => (
-                <tr key={lote.Lote_id} className="table-lp">
-                  <td className="td-lote">{lote.Lote_cod}</td>
-                  <td className="td-lote">{new Date(lote.Lote_validade).toLocaleDateString()}</td>
-                  <td className="td-lote">{lote.Lote_quantidade}</td>
-                </tr>
-              ))}
+              {lotesInfo.filter(lote => lote.Lote_quantidade > 0).map(lote => (
+                  <tr key={lote.Lote_id} className="table-lp">
+                    <td className="td-lote">{lote.Lote_cod}</td>
+                    <td className="td-lote">{new Date(lote.Lote_validade).toLocaleDateString()}</td>
+                    <td className="td-lote">{lote.Lote_quantidade}</td>
+                  </tr>
+                ))
+              }
               </tbody>
             </table>
 				) : (
