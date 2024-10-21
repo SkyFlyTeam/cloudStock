@@ -25,6 +25,7 @@ export interface Lote {
   Locais_Armazenamento?: LocalArmazenamento;
   Produtos?: Produto;
   Fornecedores?: Fornecedores;
+  Lote_Saida?: Lote_Saida;
 }
 
 export interface Produto {
@@ -42,6 +43,10 @@ export interface Fornecedores {
 interface LocalArmazenamento {
   LocAr_id: number;
   LocAr_nome: string;
+}
+
+interface Lote_Saida {
+  Saida_quantidade: number;
 }
 
 const getAllSaidas = async (): Promise<Saida[] | ApiException> => {

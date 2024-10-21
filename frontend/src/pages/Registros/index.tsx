@@ -28,18 +28,8 @@ function Registros() {
       if (result instanceof ApiException) {
         console.error(result.message);
       } else {
-        const registrosComResponsaveis = await Promise.all(
-          result.map(async (registro) => {
-            const usuario = await usuarioServices.getUsuarioById(parseInt(registro.Registro_Repsonsavel));
-            console.log('user', usuario)
-            if (!(usuario instanceof ApiException)) {
-              registro.Registro_Usuario = usuario.Usuario_nome;
-            }
-            return registro;
-          })
-        );
 
-        setRegistros(registrosComResponsaveis);
+        setRegistros(result);
       }
     };
 
@@ -52,9 +42,11 @@ function Registros() {
 
     if (tipo === "Entrada") {
       const response = await entradaServices.getEntradaByID(id);
+      console.log('entrada', response)
       response instanceof ApiException ? alert(response.message) : setEntradaInfo(response);
     } else if (tipo === "Saida") {
       const response = await saidaServices.getSaidaByID(id);
+      console.log('saida', response)
       response instanceof ApiException ? alert(response.message) : setSaidaInfo(response);
     }
   };
@@ -111,7 +103,7 @@ function Registros() {
                         <div className="info-row">
                             <div className="info-item">
                                 <span>Quantidade</span>
-                                <span>{lote.Lote_quantidade}</span>
+                                <span>{lote.Lote_Entrada?.Ent_quantidade}</span>
                             </div>
                             <div className="info-item">
                                 <span>Custo</span>
@@ -135,7 +127,7 @@ function Registros() {
                             </div>
                             <div className="info-item">
                                 <span>Subtotal</span>
-                                <span>R${calcularSubtotal(lote.Lote_quantidade, parseFloat(lote.Produtos?.Prod_custo || '0'))}</span>
+                                <span>R${calcularSubtotal(lote.Lote_Entrada?.Ent_quantidade!, parseFloat(lote.Produtos?.Prod_custo || '0'))}</span>
                             </div>
                         </div>
                     </div>
@@ -169,7 +161,7 @@ function Registros() {
                         <div className="info-row">
                             <div className="info-item">
                                 <span>Quantidade</span>
-                                <span>{lote.Lote_quantidade}</span>
+                                <span>{lote.Lote_Saida?.Saida_quantidade!}</span>
                             </div>
                             <div className="info-item">
                                 <span>Custo</span>
@@ -193,7 +185,7 @@ function Registros() {
                             </div>
                             <div className="info-item">
                                 <span>Subtotal</span>
-                                <span>R${calcularSubtotal(lote.Lote_quantidade, parseFloat(lote.Produtos?.Prod_custo || '0'))}</span>
+                                <span>R${calcularSubtotal(lote.Lote_Saida?.Saida_quantidade!, parseFloat(lote.Produtos?.Prod_custo || '0'))}</span>
                             </div>
                         </div>
                     </div>
