@@ -59,7 +59,7 @@ Utilizamos o Burndown chart para acompanhar o progresso da equipe durante o anda
 Apresentação das funcionalidades desenvolvidas até o momento:
 <div align="center">
  
-[![Cloudstock - demonstration](https://youtu.be/eyDyj7bAfGM)
+[Cloudstock - demonstration](https://youtu.be/eyDyj7bAfGM)
 </div>
 
 <br>
