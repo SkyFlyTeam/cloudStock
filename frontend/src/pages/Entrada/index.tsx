@@ -37,7 +37,7 @@ function Entradas() {
 
   // entradasSelecionadas - {id: id, quantidade: quantidade} - produtos que serão enviados ao back
   const [entradasSelecionadas, setEntradasSelecionadas] = useState<Array<{ 
-    id: number, 
+    id: string, 
     Prod_cod: number, 
     Lote_quantidade: number, 
     Lote_cod: string, 
@@ -85,26 +85,20 @@ function Entradas() {
   }, []);
 
   const getProduto = async (id: number): Promise<Produto | undefined> => {
-
-    const produto = data.find(
-      (p: Produto) => p.Prod_cod === id
-    );
-
+    const produto = data.find((p: Produto) => p.Prod_cod === id);
+  
     if (!produto) {
       return undefined;
     }
-
-    // Atualiza o estado de produtos a serem exibidos
+  
     setProdutos((prev) => {
-      const newProduto = produto;
-      return prev ? [...prev, newProduto] : [newProduto];
+      const produtoJaAdicionado = prev?.some((p) => p.Prod_cod === produto.Prod_cod);
+      return prev ? [...prev, produto] : [produto];
     });
-
-    // Atualiza o estado de entradasSelecionadas
-    setEntradasSelecionadas((prev) => [
-      ...prev,
-      {
-        id: Date.now(), // ou use outro método para gerar um id único
+  
+    setEntradasSelecionadas((prev) => {
+      const newEntrada = {
+        id: `${produto.Prod_cod}-${Date.now()}`, // Make sure the ID is a string
         Prod_cod: produto.Prod_cod,
         Lote_quantidade: 0,
         Lote_cod: '',
@@ -112,14 +106,14 @@ function Entradas() {
         Usuario_id: user?.Usuario_id || 0,
         Forn_id: 0,
         LocAr_id: 0
-      }
-    ]);
-
+      };
+      return prev ? [...prev, newEntrada] : [newEntrada];
+    });
     return produto;
   };
 
   // Atualiza a quantidade selecionada pelo cliente e recalcula o subtotal
-  const handleQuantidadeChange = (id: number, quantidade: number) => {
+  const handleQuantidadeChange = (id: string, quantidade: number) => {
     setEntradasSelecionadas((prev) => 
       prev.map((entrada) => 
         entrada.id === id 
@@ -129,7 +123,7 @@ function Entradas() {
     );
   };
 
-  const handleFornecedorChange = (id: number, Forn_id: number) => {
+  const handleFornecedorChange = (id: string, Forn_id: number) => {
     setEntradasSelecionadas((prev) => 
       prev.map((entrada) => 
         entrada.id === id 
@@ -139,7 +133,7 @@ function Entradas() {
     );
   };
   
-  const handleLocalChange = (id: number, LocAr_id: number) => {
+  const handleLocalChange = (id: string, LocAr_id: number) => {
     setEntradasSelecionadas((prev) => 
       prev.map((entrada) => 
         entrada.id === id 
@@ -149,7 +143,7 @@ function Entradas() {
     );
   };
   
-  const handleLoteCodChange = (id: number, Lote_cod: string) => {
+  const handleLoteCodChange = (id: string, Lote_cod: string) => {
     setEntradasSelecionadas((prev) => 
       prev.map((entrada) => 
         entrada.id === id 
@@ -159,7 +153,7 @@ function Entradas() {
     );
   };
   
-  const handleLoteValidadeChange = (id: number, Lote_validade: string) => {
+  const handleLoteValidadeChange = (id: string, Lote_validade: string) => {
     setEntradasSelecionadas((prev) => 
       prev.map((entrada) => 
         entrada.id === id 
@@ -187,11 +181,17 @@ function Entradas() {
     return total;
   };
   
-
-
-  const handleRemoveProduct = (id: number) => {
-    setProdutos((prev) => prev.filter((produto) => produto.Prod_cod !== id));
-    setEntradasSelecionadas((prev) => prev.filter((entrada) => entrada.id !== id));
+  const handleRemoveProduct = (id: string) => {
+    setEntradasSelecionadas((prevEntradas) => {
+      const updatedEntradas = prevEntradas.filter((entrada) => entrada.id !== id);
+  
+      const updatedProdutos = produtos.filter((produto) =>
+        updatedEntradas.some((entrada) => entrada.Prod_cod === produto.Prod_cod)
+      );
+  
+      setProdutos(updatedProdutos);
+      return updatedEntradas;
+    });
   };
 
   const concluir = () => {
@@ -248,7 +248,7 @@ function Entradas() {
         </div>
       </div>
 
-        {produtos.length <= 0 && (
+        {entradasSelecionadas.length <= 0 && (
           <div className="emptyProducts">
             <img src="https://i.ibb.co/MVgn94H/Imagem-09-08-58-4d6e6647.jpg" alt="" />
             <p>Adicione um produto para continuar</p>
@@ -259,14 +259,12 @@ function Entradas() {
           const produto = produtos.find((p) => p.Prod_cod === entrada.Prod_cod);
 
           if (!produto) return null;
-        
-            return (
-           
-             <div className="card-item" key={produto.Prod_cod}>
+
+          return (
+            <div className="card-item" key={entrada.id}> 
               {/* Nome do produto em negrito e em uma linha separada */}
               <span className="nome-produto">{produto.Prod_nome}</span>
 
-            
               {/* Demais labels e inputs */}
               <div className="entrada-options">
                   <Input
@@ -336,18 +334,18 @@ function Entradas() {
                     <AiOutlineDelete
                       size={24}
                       className="delete-icon"
-                      onClick={() => handleRemoveProduct(index)}
+                      onClick={() => handleRemoveProduct(entrada.id)} 
                     />
               </div>
             </div>
-            );
+          );
         })}
 
       <div className="total-container-entrada">
         <span>Total: R${calcularTotal()}</span>
       </div>
 
-      {produtos.length > 0 && (
+      {entradasSelecionadas.length > 0 && (
         <div className="btn-concluir">
           <BtnAzul icon={<IoAddCircleOutline />} label="CONCLUIR" onClick={concluir} />
         </div>
