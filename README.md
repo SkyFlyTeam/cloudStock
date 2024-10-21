@@ -33,7 +33,7 @@ Sprint | Previsão | Status | Relatório
 |------|--------|------|------|
 |Kick Off | 26/08/2024 a 30/08/2024 | ✔️ Concluída | -
 |01 | 09/09/2024 a 29/09/2024 | ✔️ Concluída | [ver relatório](https://github.com/SkyFlyTeam/cloudStock/tree/sprint1) 
-|02|  30/09/2024 a 20/10/2024|  em andamento |
+|02|  30/09/2024 a 20/10/2024|  ✔️ Concluída | [ver relatório](https://github.com/SkyFlyTeam/cloudStock/tree/sprint2) 
 |03| 21/10/2024 a 10/11/2024 |  a fazer |
 |04| 11/11/2024 a 01/12/2024 | a fazer |
 |Feira de Soluções| 12/12 | a fazer |
@@ -108,7 +108,7 @@ Rank | Prioridade | User Story | Estimativa | Sprint | Requisito
 
 Apresentação das funcionalidades desenvolvidas até o momento:
 
-[![SprintReview1](https://i9.ytimg.com/vi/eyDyj7bAfGM/mqdefault.jpg?sqp=CJD72LgG-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGDYgXChlMA8=&rs=AOn4CLA0ROuTqxKhA0yjHv6yfVB8hL920w)](https://youtu.be/eyDyj7bAfGM)
+[![SprintReview2](https://i9.ytimg.com/vi/eyDyj7bAfGM/mqdefault.jpg?sqp=CJD72LgG-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGDYgXChlMA8=&rs=AOn4CLA0ROuTqxKhA0yjHv6yfVB8hL920w)](https://youtu.be/eyDyj7bAfGM)
 
 <br>
 
@@ -142,9 +142,6 @@ E por fim para iniciar o frontend digite o seguinte comando:
 ```npm
 npm start
 ```
-
-
-<br> 
 
 <span id="autores">
 
