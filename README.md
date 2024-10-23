@@ -10,7 +10,9 @@
     <a href="#demostracao">Demostração</a>  |  
     <a href="#tecnologias">Tecnologias utilizadas</a>  |  
     <a href="#backlog">Backlog do produto</a>  |  
-    <a href="#autores">Autores</a>
+    <a href="#autores">Autores</a>  |
+    <a href= "#sprint1">Sprint 1</a>  |
+    <a href= "#sprint2">Sprint 2</a>
 </p>
 
 <br>
@@ -142,6 +144,161 @@ E por fim para iniciar o frontend digite o seguinte comando:
 ```npm
 npm start
 ```
+
+<br>
+
+##  
+
+<span id="sprint1">
+
+<h1 align='center'> Sprint 1: 09/09/2024 à 29/09/2024 </h1>
+
+<br>
+
+Na primeira sprint realizamos o processo de prototipagem e criação de uma identidade visual, estruturação do projeto e criação do modelo lógico e conceitual do banco de dados. Ademais, implementamos funcionalidades básicas como cadastro de produtos, setores, locais de armazenamento e fornecedores.
+
+<br>
+
+## 🧾 Requisitos Funcionais
+
+Os requisitos desenvolvidos durante esta sprint foram:
+
+- Cadastro de Local, Fornecedor e Setor: Registro dos locais de armazenamento, fornecedores e Setores.
+- Cadastro de Produtos: Incluindo código, nome, descrição, marca, modelo, categoria, quantidade, preço de custo e venda, unidade de medida, localização no estoque, fornecedor, imagem do produto, peso, dimensões, validade e setor de armazenagem.
+
+<br>
+
+## 🎯 Sprint backlog
+
+ID | User story | Estimativa
+|------|--------|------|
+| 1 | 	Eu como funcionário gostaria de cadastrar os produtos e suas propriedades para saber o que tem no estoque. | 6 |
+| 2 | 	Eu como gerente gostaria de cadastrar os locais, fornecedores e setores de cada produto para melhor gestão do estoque. | 4 |
+
+<br>
+
+US | Task | Estimativa | Status
+|------|--------|------|-----|
+| 1 | Criação do modelo lógico do banco de dados | 4 | Feito ✔ |
+| 1 | Elaboração da identidade visual | 2 | Feito ✔ |
+| 1 | Estruturação da classe "produto" | 2 | Feito ✔ |
+| 1 | Elaboração do protóripo wireframe | 6 | Feito ✔ |
+| 1 | Estruturação das páginas bases em REACT | 12 | Feito ✔ |
+| 1 | Criação do servidor de banco de dados (mysql) | 3 | Feito ✔ |
+| 1 | Criação dos formulários de cadastro | 4 | Feito ✔ |
+| 1 | Integração do backend com o frontend | 2 | Feito ✔ |
+| 1 | Criação das rotas | 4 | Feito ✔ |
+| 1 | Estudo do ORM | 12 | Feito ✔ |
+| 2 | Estruturação da classe "setor" | 2 | Feito ✔ |
+| 2 | Estruturação da classe "local_armazenamento" | 2 | Feito ✔ |
+| 2 | Estruturação da classe "fornecedor" | 2 | Feito ✔ |
+
+<br> 
+
+## 📅 Métricas do Time
+
+Utilizamos o Burndown chart para acompanhar o progresso da equipe durante o andamento da sprint (o eixo X são os dias trabalhados na sprint e os valores do eixo Y representam as entregas e esforços realizados com o passar do tempo)
+
+<div align="center">
+ 
+![BurndownChart](./mgt/Imagem%20do%20WhatsApp%20de%202024-09-30%20à(s)%2009.26.30_1c7b38d1.jpg)
+ </div>
+
+ <br>
+ 
+## 💻 Demonstração
+
+Apresentação das funcionalidades desenvolvidas até o momento:
+<div align="center">
+ 
+[![Cloudstock - demonstration](https://youtu.be/eyDyj7bAfGM)
+</div>
+
+<br>
+
+## :link: Links úteis
+
+Documentos produzidos durante a sprint:
+
+Modelo lógico do Banco de Dados: [vertabello_modelo](https://github.com/user-attachments/assets/816b7fb0-d5e7-4edf-bbcf-c5f745787ceb)
+<br>
+Backlog do Produto: [CloudStock-Backlog do Produto.pdf](https://github.com/user-attachments/files/17026988/SKYF-Backlog.do.Produto-170924-104112.pdf)
+
+<br>
+
+##
+
+<span id="sprint2">
+
+<h1 align='center'> Sprint 2: 30/09/2024 à 20/10/2024 </h1>
+
+<br>
+
+Na segunda sprint, foram criadas páginas para registrar entradas e saídas de produtos, separadas e unificadas, permitindo uma análise mais detalhada. Além disso, agora os produtos são exibidos em seus respectivos locais de armazenamento. Também foi implementada a movimentação de produtos com atualização imediata na exibição das quantidades e diferenciação nos níveis de acesso ao fazer login.
+
+<br>
+
+## 🧾 Requisitos Funcionais
+
+Os requisitos desenvolvidos durante esta sprint foram:
+
+- Cadastro de Local, Fornecedor e Setor: Registro dos locais de armazenamento, fornecedores e Setores.
+- Movimentação de Estoque: Registros de entrada e saída de produtos com controle de responsável e data. 
+- Cadastro de Usuários: Diferenciar níveis de acesso (administrador, gerente, funcionário).
+
+<br>
+
+## 🎯 Sprint backlog
+
+ID | User story | Estimativa
+|------|--------|------|
+| 3 | 	Eu como gerente gostaria de realizar a compra de produtos para adicionar ao meu estoque | 6 |
+| 4 | 	Eu como funcionário gostaria de realizar a venda de produtos para continuar a gerar a demanda do estoque | 4 |
+| 5 | 	Eu como gerente gostaria de ter registros da entrada e saída de produtos para não perder a sincronia do sistema e estoque. | 2 |
+| 6 | 	Eu como funcionário gostaria de acessar onde está localizado um produto para poder direcionar um comprador. | 2 |
+| 7 |  Eu como administrador gostaria de ter três níveis de acesso diferente para atribuições individualizadas.| 7 |
+
+
+<br>
+
+US | Task | Estimativa | Status
+|------|--------|------|-----|
+| 3 | Cadastro de entrada no Front-End | 4 | Feito ✔ |
+| 3 | Atualização automática da quantidade de produtos após entrada | 2 | Feito ✔ |
+| 3 | Página de registro de entrada de produtos | 2 | Feito ✔ |
+| 4 | Cadastro de saída no Front-End | 12 | Feito ✔ |
+| 4 | Atualização automática da quantidade de produtos após saída | 3 | Feito ✔ |
+| 4 | Página de registro de saidas de produtos | 4 | Feito ✔ |
+| 5 | Página com todos os registros, entrada e saída | 2 | Feito ✔ |
+| 5 | Criar os registros no Back-End | 4 | Feito ✔ |
+| 6 | Página de execução dos produtos contidos nos locais | 12 | Feito ✔ |
+| 7 | Diferenciação dos usuários | 6 | Feito ✔ |
+
+<br> 
+
+## 📅 Métricas do Time
+
+Utilizamos o Burndown chart para acompanhar o progresso da equipe durante o andamento da sprint (o eixo X são os dias trabalhados na sprint e os valores do eixo Y representam as entregas e esforços realizados com o passar do tempo)
+
+<div align="center">
+
+![BurndownChart](https://github.com/user-attachments/assets/f716c9c2-3236-4a27-b90b-8c83924af378)
+
+ </div>
+
+ <br>
+ 
+## 💻 Demonstração
+
+Apresentação das funcionalidades desenvolvidas até o momento:
+<div align="center">
+ 
+[![SprintReview2](https://i9.ytimg.com/vi/eyDyj7bAfGM/mqdefault.jpg?sqp=CJD72LgG-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGDYgXChlMA8=&rs=AOn4CLA0ROuTqxKhA0yjHv6yfVB8hL920w)](https://youtu.be/eyDyj7bAfGM)
+
+</div>
+
+<br>
+
 
 <span id="autores">
 
