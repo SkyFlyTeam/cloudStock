@@ -28,6 +28,10 @@ function Entradas() {
   const [openModalCadastro, setOpenModalCadastro] = useState(false); // concluir saida
   const [openModalQuantidade, setOpenModalQuantidade] = useState(false); // verificar quantidade
   const [openModalNulo, setOpenModalNulo] = useState(false); // garantir envio maior que 0
+  const [openModalFornecedor, setOpenModalFornecedor] = useState(false) // verifica fornecedor
+  const [openModalLote, setOpenModalLote] = useState(false) // verifica lote
+  const [openModalLocalArmazenamento, setOpenModalLocalArmazenamento] = useState(false) // verifica local de armazenamento
+  const [openModalValidade, setOpenModalValidade] = useState(false)
 
   // data - armazena todos produtos
   const [data, setData] = useState<Produto[]>([]);
@@ -43,10 +47,11 @@ function Entradas() {
     Prod_cod: number, 
     Lote_quantidade: number, 
     Lote_cod: string, 
-    Lote_validade: Date, 
+    Lote_validade: any, 
     Usuario_id: number, 
     Forn_id: number, 
-    LocAr_id: number 
+    LocAr_id: number ,
+    Prod_custo: number
   }>>([]);
 
   // produtos - produtos que serão exibidos
@@ -104,10 +109,11 @@ function Entradas() {
         Prod_cod: produto.Prod_cod,
         Lote_quantidade: 0,
         Lote_cod: '',
-        Lote_validade: new Date(),
+        Lote_validade: null,
         Usuario_id: user?.Usuario_id || 0,
         Forn_id: 0,
-        LocAr_id: 0
+        LocAr_id: 0,
+        Prod_custo: 0
       };
       return prev ? [...prev, newEntrada] : [newEntrada];
     });
@@ -119,10 +125,10 @@ function Entradas() {
     setEntradasSelecionadas((prev) => 
       prev.map((entrada) => 
         entrada.id === id 
-          ? { ...entrada, Lote_quantidade: quantidade > 0 ? quantidade : 1 } 
+          ? { ...entrada, Lote_quantidade: quantidade } 
           : entrada
       )
-    );
+    )
   };
 
   const handleFornecedorChange = (id: string, Forn_id: number) => {
@@ -156,10 +162,12 @@ function Entradas() {
   };
   
   const handleLoteValidadeChange = (id: string, Lote_validade: string) => {
-    setEntradasSelecionadas((prev) => 
-      prev.map((entrada) => 
-        entrada.id === id 
-          ? { ...entrada, Lote_validade: new Date(Lote_validade) }
+    const date = new Date(Lote_validade);
+    date.setHours(12)
+    setEntradasSelecionadas((prev) =>
+      prev.map((entrada) =>
+        entrada.id === id
+          ? { ...entrada, Lote_validade: date }
           : entrada
       )
     );
@@ -172,15 +180,12 @@ function Entradas() {
   };
 
   const calcularTotal = () => {
-    const total = produtos.reduce((acc, produto) => { 
-        const quantidadeSelecionada = entradasSelecionadas?.find( 
-          (p) => p.Prod_cod=== produto.Prod_cod
-        )?.Lote_quantidade || 0;
-        const custo = produto.Prod_custo || 0; 
-        return acc + custo * quantidadeSelecionada; 
-      }, 0)
-      .toFixed(2);
-    return total;
+    const total = entradasSelecionadas.reduce((acc, entrada) => { 
+      const produto = produtos.find((p) => p.Prod_cod === entrada.Prod_cod)
+      const custo = produto ? produto.Prod_custo : 0 
+      return acc + (custo * entrada.Lote_quantidade)
+    }, 0).toFixed(2)
+    return total
   };
   
   const handleRemoveProduct = (id: string) => {
@@ -199,7 +204,26 @@ function Entradas() {
   const concluir = () => {
     if (entradasSelecionadas?.find((produto) => produto.Lote_quantidade <= 0)) {
       setOpenModalNulo(true)
-      return; 
+      return
+    }
+    if (entradasSelecionadas?.find((produto) => produto.Forn_id === 0)){
+      setOpenModalFornecedor(true)
+      return
+    }
+    if (entradasSelecionadas?.find((produto) => produto.Lote_cod === '')){
+      setOpenModalLote(true)
+      return
+    }
+    for (const entrada of entradasSelecionadas){
+      const prod = produtos.find((p) => p.Prod_cod === entrada.Prod_cod)
+      if(prod?.Prod_validade == true && (entrada.Lote_validade === null || entrada.Lote_validade === '')){
+        setOpenModalValidade(true)
+        return
+      }
+    }
+    if (entradasSelecionadas?.find((produto) => produto.LocAr_id === 0)){
+      setOpenModalLocalArmazenamento(true)
+      return
     }
     setOpenModalCadastro(true)
   }
@@ -290,7 +314,7 @@ function Entradas() {
                       className="form-select-custom"
                       onChange={(e) => handleFornecedorChange(entrada.id, +e.target.value)}
                     >
-                      <option value="" selected>Buscar...</option>
+                      <option value="" selected disabled>Buscar...</option>
                       {fornecedores.map((f) => (
                         <option key={f.Forn_id} value={f.Forn_id}>
                           {f.Forn_razaoSocial}
@@ -307,13 +331,15 @@ function Entradas() {
                     onChange={(e) => handleLoteCodChange(entrada.id, e.target.value)}
                   />
 
-                    <Input 
-                      label="Validade"
-                      type="date"
-                      className="entrada-validade"
-                      value={entrada.Lote_validade.toISOString().substr(0, 10)}
-                      onChange={(e) => handleLoteValidadeChange(entrada.id, e.target.value)}
-                    />
+                  <Input 
+                    label="Validade"
+                    type="date"
+                    className="entrada-validade"
+                    value={entrada.Lote_validade ? entrada.Lote_validade.toISOString().substr(0, 10) : ''} 
+                    onChange={(e) => handleLoteValidadeChange(entrada.id, e.target.value)}
+                    disabled={produto.Prod_validade ? false : true} 
+                  />
+
                   <div className="local-container">
                       <label htmlFor="inLocal">Local Armazenamento</label>
                       <select 
@@ -378,6 +404,50 @@ function Entradas() {
       buttons={
         <div className="single-button">
           <BtnCancelar onClick={() => setOpenModalNulo(false)} /> 
+        </div>
+      }
+      children={undefined}
+    />
+
+    <Modal
+      isOpen={openModalFornecedor} 
+      label="Selecione um fornecedor" 
+      buttons={
+        <div className="single-button">
+          <BtnCancelar onClick={() => setOpenModalFornecedor(false)} /> 
+        </div>
+      }
+      children={undefined}
+    />
+
+    <Modal
+      isOpen={openModalLote} 
+      label="Adicione um lote" 
+      buttons={
+        <div className="single-button">
+          <BtnCancelar onClick={() => setOpenModalLote(false)} /> 
+        </div>
+      }
+      children={undefined}
+    />    
+
+    <Modal
+      isOpen={openModalLocalArmazenamento} 
+      label="Selecione um local de armazenamento" 
+      buttons={
+        <div className="single-button">
+          <BtnCancelar onClick={() => setOpenModalLocalArmazenamento(false)} /> 
+        </div>
+      }
+      children={undefined}
+    />
+
+    <Modal
+      isOpen={openModalValidade} 
+      label="Coloque uma data de validade válida" 
+      buttons={
+        <div className="single-button">
+          <BtnCancelar onClick={() => setOpenModalValidade(false)} /> 
         </div>
       }
       children={undefined}
