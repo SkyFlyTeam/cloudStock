@@ -32,19 +32,19 @@ const ProdutoEditar = forwardRef((props: Props, ref: Ref<{ submitForm: () => voi
     const eventoFormulario = async () => {
         const formData = new FormData();
 
-        // Adicione os dados do produto
-        formData.append('Prod_nome', Prod_nome);
-        formData.append('Prod_descricao', Prod_descricao);
-        formData.append('Prod_preco', Prod_preco.toString());
-        formData.append('Prod_custo', Prod_custo.toString());
-        formData.append('Prod_peso', Prod_peso.toString());
-        formData.append('Prod_altura', Prod_altura.toString());
-        formData.append('Prod_largura', Prod_largura.toString());
-        formData.append('Prod_comprimento', Prod_comprimento.toString());
-        formData.append('Prod_marca', Prod_marca);
-        formData.append('Prod_modelo', Prod_modelo);
-        formData.append('Prod_validade', Prod_validade ? 'true' : 'false');
-        formData.append('Prod_quantidade', Prod_quantidade.toString());
+        // Adicione verificações para os valores
+    formData.append('Prod_nome', Prod_nome || '');
+    formData.append('Prod_descricao', Prod_descricao || '');
+    formData.append('Prod_preco', Prod_preco !== undefined ? Prod_preco.toString() : '0');
+    formData.append('Prod_custo', Prod_custo !== undefined ? Prod_custo.toString() : '0');
+    formData.append('Prod_peso', Prod_peso !== undefined ? Prod_peso.toString() : '0');
+    formData.append('Prod_altura', Prod_altura !== undefined ? Prod_altura.toString() : '0');
+    formData.append('Prod_largura', Prod_largura !== undefined ? Prod_largura.toString() : '0');
+    formData.append('Prod_comprimento', Prod_comprimento !== undefined ? Prod_comprimento.toString() : '0');
+    formData.append('Prod_marca', Prod_marca || '');
+    formData.append('Prod_modelo', Prod_modelo || '');
+    formData.append('Prod_validade', Prod_validade ? 'true' : 'false');
+    formData.append('Prod_quantidade', Prod_quantidade !== undefined ? Prod_quantidade.toString() : '0');
 
         // Adicione o arquivo de imagem, se houver
         if (Prod_imagem) {

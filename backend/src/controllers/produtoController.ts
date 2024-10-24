@@ -92,8 +92,12 @@ export const controllerProducts = {
   // PUT /produto/:id - Atualizar produto
   update: async (req: Request, res: Response) => {
     const { id } = req.params;
-    let { Prod_nome, Prod_preco, Prod_descricao, Prod_custo, Prod_peso, Prod_altura, Prod_largura, Prod_comprimento, Prod_marca, Prod_modelo, Prod_validade, Prod_status, Categoria_id, UnidadeMedida_id 
+    let {
+      Prod_nome, Prod_preco, Prod_descricao, Prod_custo, Prod_peso,
+      Prod_altura, Prod_largura, Prod_comprimento, Prod_marca, Prod_modelo,
+      Prod_validade, Prod_status, Categoria_id, UnidadeMedida_id 
     } = req.body;
+
       let Prod_imagem = req.file ? req.file.buffer : null;
       /*if (!Prod_nome || !Prod_preco) {
         return res.status(400).json({ error: "Campos faltando: Nome, preço" });
@@ -102,40 +106,48 @@ export const controllerProducts = {
         Prod_preco = parseFloat(Prod_preco);
       }
 
-    try {
-      const [updated] = await Produto.update({
-        Prod_nome,
-        Prod_descricao,
-        Prod_preco,
-        Prod_custo,
-        Prod_peso,
-        Prod_altura, 
-        Prod_largura,
-        Prod_comprimento, 
-        Prod_marca, 
-        Prod_modelo, 
-        Prod_validade,
-        Prod_status, 
-        Categoria_id, 
-        UnidadeMedida_id,
-        Prod_imagem
-      }, {
-        where: { Prod_cod: id }
-      });
-      
-      if (updated) {
-        const produtoAtualizado = await Produto.findOne({
+      try {
+        // Verifique se o produto existe antes de tentar atualizar
+        const existingProduct = await Produto.findByPk(id);
+        if (!existingProduct) {
+            return res.status(404).json({ error: "Produto não encontrado" });
+        }
+
+        // Apenas atualize os campos fornecidos, mantenha os outros inalterados
+        const updatedProductData = {
+          Prod_nome: Prod_nome || existingProduct.Prod_nome,
+          Prod_descricao: Prod_descricao || existingProduct.Prod_descricao,
+          Prod_preco: Prod_preco !== undefined ? Prod_preco : existingProduct.Prod_preco,
+          Prod_custo: Prod_custo !== undefined ? Prod_custo : existingProduct.Prod_custo,
+          Prod_peso: Prod_peso !== undefined ? Prod_peso : existingProduct.Prod_peso,
+          Prod_altura: Prod_altura !== undefined ? Prod_altura : existingProduct.Prod_altura,
+          Prod_largura: Prod_largura !== undefined ? Prod_largura : existingProduct.Prod_largura,
+          Prod_comprimento: Prod_comprimento !== undefined ? Prod_comprimento : existingProduct.Prod_comprimento,
+          Prod_marca: Prod_marca || existingProduct.Prod_marca,
+          Prod_modelo: Prod_modelo || existingProduct.Prod_modelo,
+          Prod_validade: Prod_validade !== undefined ? Prod_validade : existingProduct.Prod_validade,
+          Prod_status: Prod_status !== undefined ? Prod_status : existingProduct.Prod_status,
+          Categoria_id: Categoria_id !== undefined ? Categoria_id : existingProduct.Categoria_id,
+          UnidadeMedida_id: UnidadeMedida_id !== undefined ? UnidadeMedida_id : existingProduct.UnidadeMedida_id,
+          Prod_imagem: Prod_imagem || existingProduct.Prod_imagem
+      };
+
+         // Atualizar o produto
+         const [updated] = await Produto.update(updatedProductData, {
           where: { Prod_cod: id }
-        });
-  
-        return res.status(200).json(produtoAtualizado);
+      });
+
+      if (updated) {
+          const produtoAtualizado = await Produto.findOne({ where: { Prod_cod: id } });
+          return res.status(200).json(produtoAtualizado);
+      } else {
+          return res.status(400).json({ error: "Nenhuma alteração foi realizada." });
       }
-  
-    } catch (error) {
+  } catch (error) {
       console.error('Erro ao atualizar produto:', error);
       return res.status(500).json({ error: 'Erro interno no servidor' });
-    }
-  },
+  }
+}
 
   // PUT /status/:id 
   changeStatus: async (req, res) => {

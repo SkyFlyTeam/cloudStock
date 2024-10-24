@@ -24,26 +24,26 @@ export interface Produto {
 
 const getAllProdutos = async (): Promise<Produto[] | ApiException> => {
   try {
-    const { data } = await Api().get('/produto')
+    const { data } = await Api().get('/produto');
     const produtos = await Promise.all(
       data.map(async (produto: Produto) => {
-        // Faz a requisição para pegar a quantidade do produto por Prod_cod
         const { data: quantidade } = await Api().get<any>(`/lote/quantidade/${produto.Prod_cod}`);
 
-        // Retorna o produto com a quantidade adicionada
+        // Certifique-se de que quantidade não seja undefined
         return {
-          ...produto, // Inclui os dados atuais do produto
-          Prod_quantidade: quantidade // Adiciona a quantidade retornada da segunda chamada
+          ...produto,
+          Prod_quantidade: quantidade || 0 // Se quantidade for undefined, retorna 0
         };
       })
-    )
+    );
 
-    return produtos
+    return produtos;
 
   } catch (error: any) {
-    return new ApiException(error.message || 'Erro ao consultar a API.')
+    return new ApiException(error.message || 'Erro ao consultar a API.');
   }
 }
+
 
 const createProduto = async (produto: any): Promise<Produto | ApiException> => {
   try {
