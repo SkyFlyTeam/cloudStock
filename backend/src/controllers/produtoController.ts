@@ -147,7 +147,7 @@ export const controllerProducts = {
       console.error('Erro ao atualizar produto:', error);
       return res.status(500).json({ error: 'Erro interno no servidor' });
   }
-}
+},
 
   // PUT /status/:id 
   changeStatus: async (req, res) => {
