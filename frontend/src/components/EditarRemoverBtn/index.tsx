@@ -13,7 +13,7 @@ const EditarRemoverBtn: React.FC<Props> = ({ id, onEdit,onDelete }) =>{
     return (
         <div className="td-actions">
             <FiEdit2 color="#61BDE0" size={20} className="edit-icon" onClick={onEdit}/>
-            <AiOutlineDelete color="#C80000" size={20} className="delete-icon" onClick={onDelete}/>
+            {/* <AiOutlineDelete color="#C80000" size={20} className="delete-icon" onClick={onDelete}/> */}
         </div>
     )
 }

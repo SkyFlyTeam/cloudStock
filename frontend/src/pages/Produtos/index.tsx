@@ -118,7 +118,7 @@ function Produtos() {
         <EditarRemoverBtn
           id={props.row.original.Prod_cod}
           onEdit={() => handleEditClick(props.row.original.Prod_cod)}
-          onDelete={() => handleDeleteClick(props.row.original.Prod_cod)}
+          // onDelete={() => handleDeleteClick(props.row.original.Prod_cod)}
         />
       ),
     }),
@@ -145,10 +145,10 @@ function Produtos() {
     setOpenEditModal(false)
   }
   // Excluir
-  const handleDeleteClick = (id: number) => {
-    setProdutoSelecionado(id)
-    setOpenDeleteModal(true)
-  }
+  // const handleDeleteClick = (id: number) => {
+  //   setProdutoSelecionado(id)
+  //   setOpenDeleteModal(true)
+  // }
 
   const closeDeleteModal = () => {
     setProdutoSelecionado(null)
