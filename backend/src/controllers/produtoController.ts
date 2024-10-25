@@ -177,14 +177,14 @@ export const controllerProducts = {
     }
   },
 
-  // ???
-  delete: async(req: Request, resp: Response) => {
-    const {id} =  req.params
-      try {
-        const deleted = await Produto.destroy({where: {Prod_cod: id}})
-        return resp.status(200).json(deleted)
-      } catch (error) {
-        resp.status(400).json({error: 'Erro ao deletar'})
-      }
-  }
+  // 
+  // delete: async(req: Request, resp: Response) => {
+  //   const {id} =  req.params
+  //     try {
+  //       const deleted = await Produto.destroy({where: {Prod_cod: id}})
+  //       return resp.status(200).json(deleted)
+  //     } catch (error) {
+  //       resp.status(400).json({error: 'Erro ao deletar'})
+  //     }
+  // }
 };
