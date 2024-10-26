@@ -36,13 +36,13 @@ function MainRoutes(){
                     {/* Rotas do Funcionário */}
                     <Route path="/Produtos" element={<ProtectedRoute allowedRoles={[1, 2]}><Produtos /></ProtectedRoute>}/>
                     <Route path="/LocalArmazenamento/:id" element={<ProtectedRoute allowedRoles={[1]}><LocalArmazenamento /></ProtectedRoute>}/>
-                    <Route path="/Setores" element={<ProtectedRoute allowedRoles={[1]}><Setores /></ProtectedRoute>}/>
-                    <Route path="/Fornecedores" element={<ProtectedRoute allowedRoles={[1]}><Fornecedores /></ProtectedRoute>}/>
                     <Route path="/Saidas" element={<ProtectedRoute allowedRoles={[1]}><Saidas /></ProtectedRoute>}/>
                     <Route path="/Saidas-cadastro" element={<ProtectedRoute allowedRoles={[1]}><Saidas_cadastro/></ProtectedRoute>}/>
                     <Route path="/LocalProduto/:id" element={<ProtectedRoute allowedRoles={[1]}><LocalProduto /></ProtectedRoute>}/>
 
                     {/* Rotas do Gerente */}
+                    <Route path="/Setores" element={<ProtectedRoute allowedRoles={[2]}><Setores /></ProtectedRoute>}/>
+                    <Route path="/Fornecedores" element={<ProtectedRoute allowedRoles={[2]}><Fornecedores /></ProtectedRoute>}/>
                     <Route path="/Registros" element={<ProtectedRoute allowedRoles={[2]}><Registros /></ProtectedRoute>}/>
                     <Route path="/Entrada" element={<ProtectedRoute allowedRoles={[2]}><Entrada /></ProtectedRoute>}/>
                     <Route path="/RegistrosEntrada" element={<ProtectedRoute allowedRoles={[2]}><EntradasRegistro /></ProtectedRoute>}/>
