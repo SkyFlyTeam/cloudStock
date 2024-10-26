@@ -68,13 +68,7 @@ const Navbar: React.FC = () => {
               {/* Rotas do Gerente */}
               {currentUser?.Cargo_id === 2 &&
                 <>
-                <Link to="/Produtos" className="link">
-                  <div className={location.pathname === '/Produtos' ? 'menu-item active' : 'menu-item'}>
-                    <BsBoxSeamFill />
-                    <div className="navbartext"><span>Produtos</span></div>
-                  </div>
-                </Link>
-
+                
                 <div className={location.pathname === '/Relatorio' ? 'menu-item active' : 'menu-item'}>
                   <HiDocumentReport />
                   <div className="navbartext"><span>Relatório</span></div>
