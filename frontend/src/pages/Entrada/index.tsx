@@ -305,7 +305,7 @@ function Entradas() {
 
                   <div className="custo-entrada">
                     <span className="label">Custo</span>
-                    <span className="value">R${produto.Prod_custo}</span>
+                    <span className="value">R$ {Number(produto.Prod_custo).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                   </div>
                   <div className="fornecedor-container">
                     <label htmlFor="inFornecedor">Fornecedor</label>
@@ -358,7 +358,7 @@ function Entradas() {
                     </div>
                     <div className="subtotal-entrada">
                       <span className="label">Subtotal</span>
-                      <span className="value">R${calcularSubtotal(produto, entrada.Lote_quantidade)}</span>
+                      <span className="value">R$ {Number(calcularSubtotal(produto, entrada.Lote_quantidade)).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                     </div>
                     <AiOutlineDelete
                       size={24}
@@ -371,7 +371,7 @@ function Entradas() {
         })}
 
       <div className="total-container-entrada">
-        <span>Total: R${calcularTotal()}</span>
+        <span>Total: R$ {Number(calcularTotal()).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
       </div>
 
       {entradasSelecionadas.length > 0 && (

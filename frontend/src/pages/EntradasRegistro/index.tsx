@@ -50,7 +50,7 @@ function EntradasRegistro() {
         }),
         columnHelper.accessor('Ent_valortot', {
             header: () => 'Valor total',
-            cell: info => info.getValue(),
+            cell: info => 'R$ ' + Number(info.getValue()).toLocaleString('pt-BR', { minimumFractionDigits: 2 }),
         }),
         columnHelper.display({
             id: 'actions',
@@ -155,7 +155,7 @@ function EntradasRegistro() {
                                         </div>
                                         <div className="info-item">
                                             <span>Custo</span>
-                                            <span>R${lote.Produtos?.Prod_custo}</span>
+                                            <span>R${Number(lote.Produtos?.Prod_custo).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                                         </div>
                                         <div className="info-item">
                                             <span>Fornecedor</span>
@@ -175,7 +175,7 @@ function EntradasRegistro() {
                                         </div>
                                         <div className="info-item">
                                             <span>Subtotal</span>
-                                            <span>R${calcularSubtotal(lote.Lote_Entrada?.Ent_quantidade!, parseFloat(lote.Produtos?.Prod_custo || '0'))}</span>
+                                            <span>R${Number(calcularSubtotal(lote.Lote_Entrada?.Ent_quantidade!, parseFloat(lote.Produtos?.Prod_custo || '0'))).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -191,7 +191,7 @@ function EntradasRegistro() {
                         </div>
 
                         <div className="detalhes-container">
-                            <p><strong>Total: </strong>R${entradaInfo.Ent_valortot}</p>
+                            <p><strong>Total: </strong>R${Number(entradaInfo.Ent_valortot).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
                             <p><strong>Data: </strong>{new Date(entradaInfo.Ent_dataCriacao).toLocaleDateString()}</p>
                             <p><strong>Realizado por: </strong>{entradaInfo.Usuario?.Usuario_nome}</p>
                         </div>

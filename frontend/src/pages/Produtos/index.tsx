@@ -93,11 +93,19 @@ function Produtos() {
     }),
     columnHelper.accessor('Prod_preco', {
       header: () => 'Preço Venda',
-      cell: info => info.getValue(),
+      cell: info => {
+        const valor = info.getValue();
+        const valorFormatado = Number(valor).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+        return `R$ ${valorFormatado}`;
+      },
     }),
     columnHelper.accessor('Prod_custo', {
         header: () => 'Preco Custo',
-        cell: info => info.getValue(),
+        cell: info => {
+          const valor = info.getValue();
+          const valorFormatado = Number(valor).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+          return `R$ ${valorFormatado}`;
+        },
     }),
     columnHelper.accessor('Prod_status', {
       header: () => <div className="th-center"> Status</div>,

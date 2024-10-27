@@ -86,7 +86,11 @@ useEffect(() => {
     }),
     columnHelper.accessor('Saida_valorTot', {
       header: () => 'Valor Total',
-      cell: info => `R$ ${info.getValue()}`,
+      cell: info => {
+        const valor = info.getValue();
+        const valorFormatado = Number(valor).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+        return `R$ ${valorFormatado}`;
+      },
     }),
     columnHelper.display({
       id: 'actions',
@@ -127,7 +131,8 @@ useEffect(() => {
   }
 
   const calcularSubtotal = (quantidade: number, custo: number) => {
-    return (quantidade * custo).toFixed(2);
+    let valorTotal = (quantidade * custo).toFixed(2)
+    return Number(valorTotal).toLocaleString('pt-BR', { minimumFractionDigits: 2 });;
   }
 
   const closeEditModal = () => {
@@ -218,7 +223,7 @@ useEffect(() => {
                     </div>
                     <div className="info-item">
                       <span>Custo</span>
-                      <span>R${lote.Produtos?.Prod_custo}</span>
+                      <span>R${ Number(lote.Produtos?.Prod_custo).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                     </div>
                     <div className="info-item">
                       <span>Fornecedor</span>
@@ -253,8 +258,8 @@ useEffect(() => {
                             <hr />
                         </div>
                         <div className="detalhes-container">
+                          <p>Valor Total: R${Number(saidaInfo.Saida_valorTot).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
                           <p>Data de Criação: {new Date(saidaInfo.Saida_dataCriacao).toLocaleDateString()}</p>
-                          <p>Valor Total: {saidaInfo.Saida_valorTot}</p>
                           <p>Criado por: {saidaInfo.Usuarios.Usuario_nome}</p>          
                         </div> 
                     </div>

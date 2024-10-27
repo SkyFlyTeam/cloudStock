@@ -5,7 +5,7 @@
     height: 3rem;
     left: 16.5rem;
     top: 0;
-    background-color: rgb(255, 255, 255);
+    background-color: #61BDE0;
     display: flex; /* Adicione isso */
     align-items: center;
     box-sizing: border-box;
@@ -18,7 +18,7 @@
     display: flex;
     align-items: center;
     gap: 1.2rem;
-    color: #C4C4C4;
+    color: #ffffff;
 }
 
 .itensleft span{
@@ -34,7 +34,7 @@
 }
 
 .itensright i {
-    color: #C4C4C4;
+    color: #ffffff;
     font-size: 20px;
     cursor: pointer;
 }

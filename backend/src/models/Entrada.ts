@@ -50,7 +50,7 @@ export class Entrada extends Model {
 		const nome = await fetch(`http://localhost:5000/usuario/${instance.Usuario_id}`);
 		const jsonData = await nome.json();
 		await Registros.create({
-			Registro_Mensagem: `Valor total: R$ ${instance.Ent_valortot}`,
+			Registro_Mensagem: `Valor total: R$ ${Number(instance.Ent_valortot).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`,
 			Registro_Data: new Date(),
 			Registro_Repsonsavel: `${jsonData.Usuario_nome}`,
 			Registro_Tipo: "Entrada",
