@@ -51,7 +51,7 @@ export class Saida extends Model{
 		const jsonData = await response.json();
 		
 		await Registros.create({
-		  Registro_Mensagem: `Valor total: R$ ${instance.Saida_valorTot}`,
+		  Registro_Mensagem: `Valor total: R$ ${Number(instance.Saida_valorTot).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`,
 		  Registro_Data: new Date(),
 		  Registro_Repsonsavel: `${jsonData.Usuario_nome}`,
 		  Registro_Tipo: "Saida",

@@ -60,37 +60,32 @@ const Navbar: React.FC = () => {
                     <div className="navbartext"><span>Categorias</span></div>
                   </div>
 
-                  <Link to="/Fornecedores" className="link">
-                    <div className={location.pathname === '/Fornecedores' ? 'menu-item active' : 'menu-item'}>
-                      <FaUserGroup />
-                      <div className="navbartext"><span>Fornecedores</span></div>
-                    </div>
-                  </Link>
-
-                  <Link to="/Setores" className="link">
-                    <div className={location.pathname === '/Setores' ? 'menu-item active' : 'menu-item'}>
-                      <MdAllInbox />
-                      <div className="navbartext"><span>Setores</span></div>
-                    </div>
-                  </Link>
-
                   <Link to="/Saidas" className="link">
                     <div className={location.pathname === '/Saidas' ? 'menu-item active' : 'menu-item'}>
-                      <FaSquareArrowUpRight />
-                      <div className="navbartext"><span>Saídas</span></div>
+                        <FaSquareArrowUpRight />
+                        <div className="navbartext"><span>Saídas</span></div>
                     </div>
                   </Link>
-                </>}
+              </>
+              }
 
               {/* Rotas do Gerente */}
               {currentUser?.Cargo_id === 2 &&
                 <>
-                  <Link to="/Produtos" className="link">
-                    <div className={location.pathname === '/Produtos' ? 'menu-item active' : 'menu-item'}>
-                      <BsBoxSeamFill />
-                      <div className="navbartext"><span>Produtos</span></div>
-                    </div>
-                  </Link>
+                
+                <Link to="/Fornecedores" className="link">
+                  <div className={location.pathname === '/Fornecedores' ? 'menu-item active' : 'menu-item'}>
+                    <FaUserGroup />
+                    <div className="navbartext"><span>Fornecedores</span></div>
+                  </div>
+                </Link>
+                
+                <Link to="/Setores" className="link">
+                  <div className={location.pathname === '/Setores' ? 'menu-item active' : 'menu-item'}>
+                    <MdAllInbox />
+                    <div className="navbartext"><span>Setores</span></div>
+                  </div>
+                </Link>
 
                   <div className={location.pathname === '/Relatorio' ? 'menu-item active' : 'menu-item'}>
                     <HiDocumentReport />
