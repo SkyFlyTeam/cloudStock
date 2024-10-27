@@ -192,38 +192,38 @@ function Saidas() {
             produtosSelecionados?.find((p) => p.idProd === produto.Prod_cod)?.quantidade || 0;
           return (
             <div className="card-item-saida" key={produto.Prod_cod}>
-            <div className="card-name-saida">
-              <span>
-                {produto.Prod_nome} {produto.Prod_marca} {produto.Prod_modelo}
-              </span>
-            </div>
-            <div className="custo-quantidade">
-              <div className="custo-saida">
-                <span className="label">Custo</span>
-                <span className="value">R${produto.Prod_custo}</span>
+              <div className="card-name-saida">
+                <span>
+                  {produto.Prod_nome} {produto.Prod_marca} {produto.Prod_modelo}
+                </span>
               </div>
-              <div className="quantidade-saida">
+              
+              <div className="custo-quantidade">
+                <div className="custo-saida">
+                  <span className="label">Custo</span>
+                  <span className="value">R${produto.Prod_custo}</span>
+                </div>
                 <Input
                   max={produto.Prod_quantidade}
                   label="Quantidade"
                   type="number"
                   value={quantidadeSelecionada}
+                  className="quantidade-saida"
                   onChange={(e) =>
                     handleQuantidadeChange(produto.Prod_cod, +e.target.value)
                   }
                 />
+                <div className="subtotal-saida">
+                  <span className="label">Subtotal</span>
+                  <span className="value">R${calcularSubtotal(produto, quantidadeSelecionada)}</span>
+                </div>
               </div>
-              <div className="subtotal-saida">
-                <span className="label">Subtotal</span>
-                <span className="value">R${calcularSubtotal(produto, quantidadeSelecionada)}</span>
-              </div>
+              <AiOutlineDelete
+                size={24}
+                className="delete-icon-saida"
+                onClick={() => handleRemoveProduct(produto.Prod_cod)}
+              />
             </div>
-            <AiOutlineDelete
-              size={24}
-              className="delete-icon"
-              onClick={() => handleRemoveProduct(produto.Prod_cod)}
-            />
-          </div>
           );
         })}
       </div>

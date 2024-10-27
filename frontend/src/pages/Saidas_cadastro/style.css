@@ -55,6 +55,7 @@ hr.line {
     border-radius: 10px;
     margin-bottom: 1rem;
     gap: 2rem;
+    position: relative;
 }
 
 .card-name-saida {
@@ -63,16 +64,18 @@ hr.line {
 }
 
 .custo-quantidade {
-    display: flex;
-    flex: 4; 
+    display: flex; 
     justify-content: space-between;
     gap: 2rem; 
+    flex-wrap: wrap;
+    width: 100%;
 }
 
 .custo-saida, .quantidade-saida, .subtotal-saida {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: center; 
+    gap: 0.3rem;
     text-align: center;
     flex: 1; 
 }
@@ -82,10 +85,10 @@ hr.line {
 }
 
 .value {
-    min-width: 80px; 
+    min-width: max-content; 
 }
 
-.delete-icon {
+.delete-icon-saida {
     cursor: pointer;
     color: red;
 }
@@ -101,6 +104,7 @@ hr.line {
 .total-container span {
     font-size: 1.2rem;
     font-weight: bold;
+    margin-right: 12%;
 }
 
 .btn-concluir {
@@ -159,11 +163,18 @@ hr.line {
         gap: 2rem;
     }
 
-    .custo-quantidade {
-        display: flex;
-        flex-direction: column;
-        flex: 4; 
-        align-items: flex-start;
-        gap: 2rem; 
+
+    .delete-icon-saida {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+    }
+
+    .subtotal-saida{
+        align-self: flex-start;
+    }
+
+    .total-container span {
+        font-size: 16px;
     }
 }

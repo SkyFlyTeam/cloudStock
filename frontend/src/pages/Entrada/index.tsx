@@ -293,80 +293,82 @@ function Entradas() {
               {/* Nome do produto em negrito e em uma linha separada */}
               <span className="nome-produto">{produto.Prod_nome}</span>
 
-              {/* Demais labels e inputs */}
-              <div className="entrada-options">
-                  <Input
-                    max={produto.Prod_quantidade}
-                    label="Quantidade"
-                    type="number"
-                    className="quantidade-container"
-                    value={entrada.Lote_quantidade}
-                    onChange={(e) => handleQuantidadeChange(entrada.id, +e.target.value)}
-                  />
+              <div className="entrada-card">
+                {/* Demais labels e inputs */}
+                <div className="entrada-options">
+                    <Input
+                      max={produto.Prod_quantidade}
+                      label="Quantidade"
+                      type="number"
+                      className="quantidade-container"
+                      value={entrada.Lote_quantidade}
+                      onChange={(e) => handleQuantidadeChange(entrada.id, +e.target.value)}
+                    />
 
-                  <div className="custo-entrada">
-                    <span className="label">Custo</span>
-                    <span className="value">R$ {Number(produto.Prod_custo).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                  </div>
-                  <div className="fornecedor-container">
-                    <label htmlFor="inFornecedor">Fornecedor</label>
-                    <select 
-                      id="inFornecedor"
-                      className="form-select-custom"
-                      onChange={(e) => handleFornecedorChange(entrada.id, +e.target.value)}
-                    >
-                      <option value="" selected disabled>Buscar...</option>
-                      {fornecedores.map((f) => (
-                        <option key={f.Forn_id} value={f.Forn_id}>
-                          {f.Forn_razaoSocial}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <Input 
-                    label="Lote"
-                    type="text"
-                    className="lote-container-entrada"
-                    value={entrada.Lote_cod}
-                    onChange={(e) => handleLoteCodChange(entrada.id, e.target.value)}
-                  />
-
-                  <Input 
-                    label="Validade"
-                    type="date"
-                    className="entrada-validade"
-                    value={entrada.Lote_validade ? entrada.Lote_validade.toISOString().substr(0, 10) : ''} 
-                    onChange={(e) => handleLoteValidadeChange(entrada.id, e.target.value)}
-                    disabled={produto.Prod_validade ? false : true} 
-                  />
-
-                  <div className="local-container">
-                      <label htmlFor="inLocal">Local Armazenamento</label>
+                    <div className="custo-entrada">
+                      <span className="label">Custo</span>
+                      <span className="value">R$ {Number(produto.Prod_custo).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                    </div>
+                    <div className="fornecedor-container">
+                      <label htmlFor="inFornecedor">Fornecedor</label>
                       <select 
-                        id="inLocal"
+                        id="inFornecedor"
                         className="form-select-custom"
-                        value={entrada.LocAr_id}
-                        onChange={(e) => handleLocalChange(entrada.id, +e.target.value)}
+                        onChange={(e) => handleFornecedorChange(entrada.id, +e.target.value)}
                       >
-                        <option value="" selected>Buscar...</option>
-                        {locais.map((d) => (
-                          <option key={d.LocAr_id} value={d.LocAr_id}>
-                            {d.LocAr_nome}
+                        <option value="" selected disabled>Buscar...</option>
+                        {fornecedores.map((f) => (
+                          <option key={f.Forn_id} value={f.Forn_id}>
+                            {f.Forn_razaoSocial}
                           </option>
                         ))}
                       </select>
                     </div>
-                    <div className="subtotal-entrada">
-                      <span className="label">Subtotal</span>
-                      <span className="value">R$ {Number(calcularSubtotal(produto, entrada.Lote_quantidade)).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                    </div>
-                    <AiOutlineDelete
-                      size={24}
-                      className="delete-icon"
-                      onClick={() => handleRemoveProduct(entrada.id)} 
+
+                    <Input 
+                      label="Lote"
+                      type="text"
+                      className="lote-container-entrada"
+                      value={entrada.Lote_cod}
+                      onChange={(e) => handleLoteCodChange(entrada.id, e.target.value)}
                     />
+
+                    <Input 
+                      label="Validade"
+                      type="date"
+                      className="entrada-validade"
+                      value={entrada.Lote_validade ? entrada.Lote_validade.toISOString().substr(0, 10) : ''} 
+                      onChange={(e) => handleLoteValidadeChange(entrada.id, e.target.value)}
+                      disabled={produto.Prod_validade ? false : true} 
+                    />
+
+                    <div className="local-container">
+                        <label htmlFor="inLocal">Local Armazenamento</label>
+                        <select 
+                          id="inLocal"
+                          className="form-select-custom"
+                          value={entrada.LocAr_id}
+                          onChange={(e) => handleLocalChange(entrada.id, +e.target.value)}
+                        >
+                          <option value="" selected>Buscar...</option>
+                          {locais.map((d) => (
+                            <option key={d.LocAr_id} value={d.LocAr_id}>
+                              {d.LocAr_nome}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                </div>
+                <div className="subtotal-entrada">
+                  <span className="label">Subtotal</span>
+                  <span className="value">R$ {Number(calcularSubtotal(produto, entrada.Lote_quantidade)).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                </div>
               </div>
+              <AiOutlineDelete
+                size={24}
+                className="delete-icon"
+                onClick={() => handleRemoveProduct(entrada.id)} 
+              />
             </div>
           );
         })}

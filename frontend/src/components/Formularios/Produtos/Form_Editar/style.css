@@ -42,7 +42,7 @@ div.subtitle-form-prod span{
 @media (max-width: 768px) {
     
     div.subtitle-form-prod span, form.form-prod{
-        font-size: 12px;
+        font-size: 14px;
     }
     
 }

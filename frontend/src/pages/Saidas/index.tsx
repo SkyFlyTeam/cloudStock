@@ -204,6 +204,7 @@ useEffect(() => {
                 <BtnAzul icon={<IoArrowBackCircleOutline />} label='VOLTAR' onClick={() => setopenModalVisualizar(false)} />
             </>
         }
+        className="modal-content-visualizar"
     >
         {saidaInfo ? (
             <div className="modal-content">

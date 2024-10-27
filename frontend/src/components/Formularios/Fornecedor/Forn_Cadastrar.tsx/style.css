@@ -11,7 +11,7 @@ form{
     flex-direction: row;
     gap: 1rem;
     justify-content: space-between;
-    flex-wrap: nowrap !important;
+    flex-wrap: wrap;
 }
 
 .input-item{
@@ -23,7 +23,7 @@ form{
 @media (max-width: 768px) {
     
     form{
-        font-size: 12px;
+        font-size: 14px;
     }
     
 }

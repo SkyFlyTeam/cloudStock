@@ -66,6 +66,13 @@ const Navbar: React.FC = () => {
                         <div className="navbartext"><span>Saídas</span></div>
                     </div>
                   </Link>
+
+                  <Link to="/RegistrosEntrada" className="link">
+                    <div className={location.pathname === '/RegistrosEntrada' ? 'menu-item active' : 'menu-item'}>
+                      <PiRowsPlusTopFill />
+                      <div className="navbartext"><span>Entrada</span></div>
+                    </div>
+                  </Link>
               </>
               }
 
@@ -96,13 +103,6 @@ const Navbar: React.FC = () => {
                     <div className={location.pathname === '/Registros' ? 'menu-item active' : 'menu-item'}>
                       <MdOutlineAppRegistration />
                       <div className="navbartext"><span>Registros</span></div>
-                    </div>
-                  </Link>
-
-                  <Link to="/RegistrosEntrada" className="link">
-                    <div className={location.pathname === '/RegistrosEntrada' ? 'menu-item active' : 'menu-item'}>
-                      <PiRowsPlusTopFill />
-                      <div className="navbartext"><span>Entrada</span></div>
                     </div>
                   </Link>
                 </>}

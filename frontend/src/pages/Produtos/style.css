@@ -83,7 +83,7 @@ div.td-numeric{
 
 @media (max-width: 768px) {
     th, td{
-        font-size: 12px;
+        font-size: 14px;
     }
 
     td img{

@@ -1,63 +1,54 @@
-.card-entrada-item {
-    display: flex;
-    flex-direction: column;
-}
-
-.entrada-options {
-    display: flex; /* Usar flexbox para alinhamento */
-    flex-wrap: wrap;
-    align-items: center; /* Alinhar todos os itens ao centro verticalmente */
-    justify-content: center;
-    width: 100%;
-  }
-
-.cards-group {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-.card-item {
-    padding: 15px;
-    border: 2px solid #61bde0;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    gap: 0.5rem;
-  }
-
-.card-name {
-    flex: 2;
-    text-align: left; 
-}
-
 .entradas-container {
-    background-color: #fff;
-    border-radius: 0.5rem;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    row-gap: 1em;
-    padding: 3em 1.5em;
-    flex-grow: 1;
+  background-color: #fff;
+  border-radius: 0.5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1em;
+  padding: 3em 1.5em;
 }
 
 .inputContainer {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .form-select-custom {
-    border-radius: 8px;
-    width: 300px; 
-    height: 40px; 
+  border-radius: 8px;
+  width: 300px; 
+  height: 40px; 
 }
 
-.cards-group {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+.card-item {
+  padding: 15px;
+  border: 2px solid #61bde0;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.nome-produto {
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 10px; /* Espaçamento entre o nome e os outros campos */
+}
+
+.entrada-card{
+  display: flex;
+  align-items: start;
+  width: 100%;
+}
+
+.entrada-options {
+  display: flex; /* Usar flexbox para alinhamento */
+  flex-wrap: wrap;
+  align-items: start; 
+  justify-content: start;
+  flex: 1;
+  gap: 1.2rem;
 }
 
 .quantidade-container,
@@ -65,11 +56,10 @@
 .lote-container-entrada,
 .entrada-validade,
 .local-container {
-    display: flex;
-    flex-direction: column;
-    padding: 10px 10px 0 10px;
-    align-items: flex-start; /* Alinhar à esquerda */
-    gap: 0.3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Alinhar à esquerda */
+  gap: 0.3rem;
 }
 
 .custo-entrada, .subtotal-entrada {
@@ -85,13 +75,15 @@
 }
 
 .fornecedor-container select, .local-container select{
-  width: 15rem;
+  width: 12rem;
 }
 
 /* Estilo para inputs e selects */
 .form-select-custom input[type="text"], 
 .form-select-custom input[type="number"], 
-.form-select-custom input[type="date"] {
+.form-select-custom input[type="date"],
+.fornecedor-container select, 
+.local-container select {
   height: 40px; /* Defina a altura desejada */
   padding: 0.375rem 0.75rem; /* Ajuste o padding conforme necessário */
   border: 1px solid #ced4da; /* Ajuste a borda conforme necessário */
@@ -100,67 +92,83 @@
   line-height: 1.5; /* Ajuste a altura da linha se necessário */
 }
 
-.validade-container {
-    margin-top: 10px; /* Espaço acima da validade */
-  }
+.delete-icon{
+  cursor: pointer;
+  color: red;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
 
-  /* Margens para evitar que os campos fiquem colados */
-  .nome-produto {
-    font-weight: bold;
-    font-size: 16px;
-    margin-bottom: 10px; /* Espaçamento entre o nome e os outros campos */
-  }
+.subtotal-entrada, .subtotal-entrada span{
+  width: fit-content;
+  align-items: flex-end; 
+}
 
-.nome-produto-container {
-    display: flex;
-    font-weight: bold;
-    flex-direction: column;
-    margin-bottom: 10px;
-  }
-
-  .total-container-entrada {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 1rem 0;
-    border-top: 1px solid #ccc;
+.total-container-entrada {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 1rem 0;
+  border-top: 1px solid #ccc;
+  margin-right: 15px;
 }
 
 .total-container-entrada span {
     font-size: 1.2rem;
     font-weight: bold;
-    margin-right: 4rem;
 }
 
 
-
 @media (max-width: 800px){
+  .card-item{
+    position: relative;
+    font-size: 14px;
+  }
+  
   .entrada-options {
     display: flex; /* Usar flexbox para alinhamento */
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
+    gap: 0.8rem;
   }
 
-.quantidade-container,
-.fornecedor-container,
-.lote-container-entrada,
-.entrada-validade,
-.local-container {
+  .custo-entrada {
     display: flex;
-    flex-direction: column;
-    padding: 0;
-    align-items: flex-start; /* Alinhar à esquerda */
-    gap: 0.3rem;
-}
+    flex-direction: row;
+    align-items: center;
+  }
 
-.subtotal-entrada{
-  position: static;
-  translate: 350px 0px;
-}
+  .quantidade-container,
+  .fornecedor-container,
+  .lote-container-entrada,
+  .entrada-validade,
+  .local-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 0;
+  }
 
-.delete-icon{
-  position: static;
-  translate: 350px -500px;
-}
+  .fornecedor-container, .local-container {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      padding: 0;
+  }
+
+  .form-select-custom input[type="text"], 
+  .form-select-custom input[type="number"], 
+  .form-select-custom input[type="date"],
+  .fornecedor-container select, 
+  .local-container select {
+    height: 32px; /* Defina a altura desejada */
+    padding: 0.3rem 0.75rem; /* Ajuste o padding conforme necessário */
+    border: 1px solid #ced4da; /* Ajuste a borda conforme necessário */
+    border-radius: 0.25rem; /* Bordas arredondadas */
+    font-size: 14px; /* Tamanho da fonte */
+    line-height: 1.5; /* Ajuste a altura da linha se necessário */
+  }
+
 }

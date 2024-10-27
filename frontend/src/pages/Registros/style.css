@@ -63,7 +63,7 @@ div.registro-item:nth-child(odd){
 
 @media (max-width: 768px) {
     .registro-item {
-        font-size: 12px;
+        font-size: 14px;
     }    
 
     .info-title h2{
@@ -77,5 +77,10 @@ div.registro-item:nth-child(odd){
     .registro-item .icon {
         font-size: 1.5rem;
         margin-right: 10px;
+    }
+
+    .info-body{
+        display: flex;
+        flex-direction: column;
     }
 }

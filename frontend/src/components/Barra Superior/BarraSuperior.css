@@ -12,6 +12,7 @@
     padding: 2rem 3rem;
     display: flex;
     justify-content: space-between;
+    z-index: 1;
 }
 
 .itensleft {
@@ -56,7 +57,7 @@
     }
 
     .itensleft span{
-        font-size: 12px;
+        font-size: 14px;
     }
 
     .link-icon{
