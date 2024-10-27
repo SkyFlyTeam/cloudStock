@@ -42,3 +42,28 @@
 .link-icon:hover{
     color: #61BDE0 !important;
 }
+
+@media (max-width: 768px) {
+    .BarraSuperior{
+        left: 10%;
+        height: 2rem;
+        width: 90%;
+        padding: 2rem 1rem;
+    }
+
+    .itensleft{
+        gap: 0.5rem;
+    }
+
+    .itensleft span{
+        font-size: 12px;
+    }
+
+    .link-icon{
+        font-size: 1.2rem;
+    }
+
+    .itensright i{
+        font-size: 1rem;
+    }
+}

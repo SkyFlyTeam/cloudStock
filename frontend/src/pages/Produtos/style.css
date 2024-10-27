@@ -67,9 +67,12 @@ td img{
     border-radius: 10px;
 }
 
+
 div.td-center{
     display: flex;
     justify-content: center;
+    width: min-content;
+    padding: 0 0.5rem;
 }
 
 div.td-numeric{
@@ -77,6 +80,14 @@ div.td-numeric{
     width: min-content;
 }
 
-.modal-prod{
-    height: 35rem;
+
+@media (max-width: 768px) {
+    th, td{
+        font-size: 12px;
+    }
+
+    td img{
+        width: 4.5rem;
+        height: 3.5rem;
+    }
 }

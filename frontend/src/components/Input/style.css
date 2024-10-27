@@ -23,3 +23,12 @@
   border: 1px solid #E5E5E5;
   font-size: 0.9rem;
 }
+
+@media (max-width: 768px) {
+    
+  .input-field, 
+  .input-field::placeholder{
+      font-size: 12px !important;
+  }
+  
+}

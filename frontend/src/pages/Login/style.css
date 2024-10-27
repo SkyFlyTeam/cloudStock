@@ -100,3 +100,19 @@ form.login .input-item input{
     font-weight: 500;
     color: rgb(219, 17, 17);
 }
+
+
+@media (max-width: 768px) {
+    .card{
+        width: 90%;
+        padding: 1rem;
+    }
+
+    .logo-text span{
+        font-size: 16px;
+    }
+
+    .card-title, .card-title h6, form.login{
+        font-size: 12px;
+    }
+}

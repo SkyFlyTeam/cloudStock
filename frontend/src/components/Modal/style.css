@@ -16,6 +16,8 @@
   left: 50%;
   transform: translate(-50%, -50%);
   width: auto;
+  max-width: 90vw;
+  max-height: 95vh;
   padding: 20px;
   background-color: #fff;
   border-radius: 10px;
@@ -27,7 +29,7 @@
 }
 
 /* Estilo do título */
-.title {
+.modalStyle .title {
   margin: 0;
   padding-bottom: 20px;
   font-size: 24px;
@@ -37,16 +39,27 @@
 /* Conteúdo do modal */
 .content {
   flex: 1;
-  padding-bottom: 20px;
 }
 
 /* Container dos botões */
 .buttonContainer {
   display: flex;
   justify-content: space-between;
-  padding-top: 20px;
+  padding-top: 2rem;
+  padding-bottom: 0.5rem;
 }
 
 .title-id{
 color: #C80000;
+}
+
+@media (max-width: 768px) {
+    
+  .modalStyle .title{
+      font-size: 16px;
+  }
+  .buttonContainer{
+    padding-top: 1rem;
+    gap: 1rem;
+  }
 }

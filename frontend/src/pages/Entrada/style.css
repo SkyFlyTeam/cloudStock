@@ -87,10 +87,9 @@
 }
 
 /* Estilo para inputs e selects */
-.form-select-custom,
-input[type="text"], 
-input[type="number"], 
-input[type="date"] {
+.form-select-custom input[type="text"], 
+.form-select-custom input[type="number"], 
+.form-select-custom input[type="date"] {
   height: 40px; /* Defina a altura desejada */
   padding: 0.375rem 0.75rem; /* Ajuste o padding conforme necessário */
   border: 1px solid #ced4da; /* Ajuste a borda conforme necessário */

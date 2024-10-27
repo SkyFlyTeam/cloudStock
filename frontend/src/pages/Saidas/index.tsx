@@ -207,6 +207,7 @@ useEffect(() => {
               <h3 className="modal-title">Produtos</h3>
               <hr />
             </div>
+            <div className="lotes-visualizar">
             {saidaInfo.Lotes?.map((lote, index) => (
               <div key={index} className="lote-container">
                 <div className="produto-info">
@@ -244,7 +245,8 @@ useEffect(() => {
                 </div>
               </div>
 
-                        ))}
+            ))}
+            </div>
 
                         {/*DETALHES */}
 

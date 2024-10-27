@@ -38,10 +38,6 @@ tbody tr:nth-child(odd) {
 }
 
 /* Modal */
-.modal-content {
-    padding: 20px;
-    font-family: Arial, sans-serif;
-}
 
 .modal-title {
     font-size: 20px;
@@ -119,4 +115,48 @@ h3 {
 
 .grid-container hr {
     margin: 0 0 0 10px;
+}
+
+@media (max-width: 768px) {
+    .modal-content-visualizar{
+        width: 35rem;
+    }
+
+    .modal-title, .lote-container, .detalhes-container {
+        font-size: 12px;
+    }
+
+    .lotes-visualizar{
+        overflow-y: auto;
+        max-height: 15rem;
+    }
+
+    .lote-container{
+        width: 100%;
+    }
+    
+    .produto-info{
+        flex-wrap: wrap;
+    }
+    
+    .produto-info h5{
+        font-size: 14px;
+    }
+
+    .info-row{
+        margin: 0;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .info-item{
+        margin: 0;
+    }
+
+    .detalhes-container{
+        display: flex;
+        flex-wrap: wrap;
+    }
 }

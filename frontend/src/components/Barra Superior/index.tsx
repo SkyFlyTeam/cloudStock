@@ -20,7 +20,7 @@ const BarraSuperior: React.FC = () => {
               navigate(-1);
             }}
           >
-            <TbCircleCaretLeft size={25} opacity={0.9} color="#C4C4C4" className="link-icon"/>
+            <TbCircleCaretLeft opacity={0.9} color="#C4C4C4" className="link-icon"/>
           </Link>
           <span>{location.pathname.replace('/', '')}</span>
         </div>

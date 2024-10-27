@@ -5,3 +5,11 @@ td.td-lote, th.th-lote{
 tbody.table-lp, tr.table-lp{
     background-color: transparent !important;
 }
+
+@media (max-width: 768px) {
+    
+    td.td-lote, th.th-lote{
+        padding: 0.5rem 0.8rem;
+    }
+    
+}

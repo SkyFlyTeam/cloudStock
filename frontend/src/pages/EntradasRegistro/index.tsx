@@ -135,15 +135,17 @@ function EntradasRegistro() {
                 buttons={
                     <BtnAzul icon={<IoArrowBackCircleOutline />} label='VOLTAR' onClick={() => setOpenModalVisualizar(false)} />
                 }
+                className="modal-content-visualizar"
             >
                 {entradaInfo ? (
-                    <div className="modal-content">
+                    <div>
                         {/* PRODUTOS */}
                         <div className="grid-container">
                             <h3 className="modal-title">Produtos</h3>
                             <hr />
                         </div>
 
+                        <div className="lotes-visualizar">
                         {entradaInfo.Lotes?.map((lote, index) => (
                             <div key={index} className="lote-container">
                                 <div className="produto-info">
@@ -182,6 +184,7 @@ function EntradasRegistro() {
                             </div>
 
                         ))}
+                        </div>
 
                         {/*DETALHES */}
 

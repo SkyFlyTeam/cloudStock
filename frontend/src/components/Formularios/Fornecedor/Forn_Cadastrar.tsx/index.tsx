@@ -47,7 +47,7 @@ const FornecedorFormulario = forwardRef((props: Props, ref: Ref<{ submitForm: ()
                 <label htmlFor="razaoSocial">Razão social</label>
                 <input type="text" value={Forn_razaoSocial} onChange={(e) => setRazaoSocial(e.target.value)} required placeholder='Razão Social' />
             </div>
-            <div className="input-group">
+            <div className="input-group-forn">
                 <div className="input-item">
                     <label htmlFor="nome">Nome</label>
                     <input type="text" value={Forn_nome} onChange={(e) => setNome(e.target.value)} required placeholder='Nome' />

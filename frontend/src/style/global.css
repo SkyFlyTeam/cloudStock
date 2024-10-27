@@ -16,7 +16,7 @@ body {
 
 
 .main-content {
-  margin-top: 3.9rem;
+  margin-top: 2%;
   min-height: 100vh;
   margin-left: 16.5rem;
   flex-grow: 1;
@@ -34,6 +34,9 @@ h1.title{
   text-decoration: none;
 }
 
+main{
+  padding: 2.5rem 1rem;
+}
 
 /* Alinhamento do input de busca e botão de cadastro */
 
@@ -68,5 +71,20 @@ h1.title{
   margin-bottom: 0; /* Remove o espaçamento do último input */
 }
 
+@media (max-width: 768px) {
+  .main-content {
+    min-height: 100vh;
+    margin-left: 0;
+    flex-grow: 1;
+    padding: 3rem 0.5rem;
+    background-color: #F8F8F8;
+    overflow-y: auto;
+  }
+
+  h1.title{
+    font-size: 18px;
+    font-weight: 700;
+  }
+}
 
 

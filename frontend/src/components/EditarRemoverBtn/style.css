@@ -6,4 +6,12 @@ div.td-actions{
 .edit-icon,
 .delete-icon {
   cursor: pointer;
+  font-size: 1.3rem !important;
+}
+
+
+@media (max-width: 768px) {
+  .edit-icon{
+    font-size: 0.9rem !important;
+  }
 }

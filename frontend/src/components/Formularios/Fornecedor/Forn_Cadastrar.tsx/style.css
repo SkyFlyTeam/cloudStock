@@ -6,11 +6,12 @@ form{
     padding: 0.6rem 0;
 }
 
-.input-group{
+.input-group-forn{
     display: flex;
     flex-direction: row;
-    gap: 3rem;
+    gap: 1rem;
     justify-content: space-between;
+    flex-wrap: nowrap !important;
 }
 
 .input-item{
@@ -19,9 +20,10 @@ form{
     gap: 0.3rem;
 }
 
-
-input{
-    border: 1px solid #C4C4C4;
-    padding: 0.3rem 0.8rem ;
-    border-radius: 8px;
+@media (max-width: 768px) {
+    
+    form{
+        font-size: 12px;
+    }
+    
 }

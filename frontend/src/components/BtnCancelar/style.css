@@ -18,3 +18,9 @@
 
 }
 
+@media (max-width: 768px) {
+    .btn-cancelar {
+        font-size: 0.8rem;
+    }
+}
+

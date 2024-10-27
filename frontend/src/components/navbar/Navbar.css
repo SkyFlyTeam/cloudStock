@@ -89,8 +89,74 @@
     margin-left: 5%;
 }
 
+.nav-toggle {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 10%;
+	height: 4rem;
+	background-color: #ffffff;
+	cursor: pointer;
+}
+
+.nav-close{
+    display: none;
+}
+
 @media screen and (min-width: 2500px){
     .sidebar {
         gap: 5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .sidebar {
+        position: fixed;
+        left: -12.5rem; 
+        top: 0;
+        transition: left 0.3s ease; 
+        width: 12.5rem;
+        padding: 1rem 0.5rem;
+    }
+
+    .navbartext, .logout {
+        font-size: 12px;
+    }
+
+    .logo{
+        font-size: 18px;
+    }
+
+    .sidebar img {
+        width: 7rem; 
+        height: auto;
+    }
+
+    .sidebar.is-active {
+        left: 0; 
+        z-index: 3;
+    }
+
+    .nav-toggle.is-active{
+        z-index: 4;
+        left: calc(12.5rem - 2rem);
+        transition: left 0.3s ease; 
+        background-color: transparent;
+        width: min-content;
+    }
+
+    .nav-toggle.is-active .nav-close{
+        display: block;
+    }
+
+    .nav-toggle.is-active .nav-hamburguer{
+        display: none;
     }
 }

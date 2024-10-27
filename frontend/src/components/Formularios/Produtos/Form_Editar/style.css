@@ -3,9 +3,9 @@ form.form-prod{
     flex-direction: column;
     gap: 1.5rem;
     overflow-y: scroll;
-    height: 23rem;
-    width: 32rem;
     padding: 0 0.3rem;
+    width: 100%;
+    height: 20rem;
 }
 
 section.form-prod{
@@ -16,7 +16,7 @@ section.form-prod{
 
 div.input-group-prod{
     display: flex;
-    justify-content: space-between;
+    gap: 4rem;
 }
 
 .input-item-prod{
@@ -37,4 +37,12 @@ div.subtitle-form-prod{
 
 div.subtitle-form-prod span{
     font-weight: 700;
+}
+
+@media (max-width: 768px) {
+    
+    div.subtitle-form-prod span, form.form-prod{
+        font-size: 12px;
+    }
+    
 }

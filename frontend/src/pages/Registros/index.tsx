@@ -82,12 +82,13 @@ function Registros() {
 
       {/* Modal de Visualização */}
       <Modal
-    isOpen={openModalVisualizar}
-    label={`Detalhes`}
-    buttons={
-        <BtnAzul icon={<IoArrowBackCircleOutline />} label='VOLTAR' onClick={() => { setOpenModalVisualizar(false); setEntradaInfo(null); setSaidaInfo(null) }} />
-    }
->
+      isOpen={openModalVisualizar}
+      label={`Detalhes`}
+      buttons={
+          <BtnAzul icon={<IoArrowBackCircleOutline />} label='VOLTAR' onClick={() => { setOpenModalVisualizar(false); setEntradaInfo(null); setSaidaInfo(null) }} />
+      }
+      className="modal-content-visualizar"
+    >
     {entradaInfo ? (
         <div className="modal-content">
             {/* PRODUTOS */}
@@ -96,6 +97,7 @@ function Registros() {
                 <hr />
             </div>
 
+            <div className="lotes-visualizar">
             {entradaInfo.Lotes?.map((lote, index) => (
                 <div key={index} className="lote-container">
                     <div className="produto-info">
@@ -133,6 +135,7 @@ function Registros() {
                     </div>
                 </div>
             ))}
+            </div>
 
             {/*DETALHES */}
             <div className="grid-container">
@@ -154,6 +157,7 @@ function Registros() {
                 <hr />
             </div>
 
+            <div className="lotes-visualizar">
             {saidaInfo.Lotes?.map((lote, index) => (
                 <div key={index} className="lote-container">
                     <div className="produto-info">
@@ -191,6 +195,7 @@ function Registros() {
                     </div>
                 </div>
             ))}
+            </div>
 
             {/*DETALHES */}
             <div className="grid-container">

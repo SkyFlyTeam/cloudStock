@@ -31,3 +31,17 @@
 
 }
 
+
+@media (max-width: 768px) {
+    .icon {
+        font-size: 1.2em;
+    }
+
+    .label{
+        font-size: 12px;
+    }
+
+    button {
+        line-height: normal !important;
+    }
+}
