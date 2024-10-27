@@ -31,7 +31,8 @@ export const controllerEntrada = {
             // Criar uma nova entrada
             const entradaEnvio = await Entrada.create({
                 Ent_valortot: 0,
-                Ent_dataCriacao: new Date(),
+                // Ajusta a data para garantir o fuso horário local
+                Ent_dataCriacao: new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000),
                 Usuario_id: Usuario_id
             }, { transaction });
     

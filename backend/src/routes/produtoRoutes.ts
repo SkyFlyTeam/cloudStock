@@ -27,6 +27,6 @@ router.put('/status/:id', controllerProducts.changeStatus)
 router.get('/DownloadImage/:id', controllerProducts.showImage)
 
 // Rota para deletar produto
-router.delete('/:id', controllerProducts.delete)
+// router.delete('/:id', controllerProducts.delete)
 
 export default router

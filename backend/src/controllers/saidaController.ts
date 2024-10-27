@@ -20,7 +20,7 @@ export const saidaController = {
         try {
             const SaidaEnvio = await Saida.create({
                 Saida_valorTot: 0,
-                Saida_dataCriacao: '2024-10-19 10:29:00',
+                Saida_dataCriacao: new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000), // Ajuste do fuso horário local
                 Usuario_id: 1
             })
 
@@ -105,16 +105,9 @@ export const saidaController = {
                 }
             }
 
-            const date = new Date();
-            const day = String(date.getDate()).padStart(2, '0')
-            const month = String(date.getMonth() + 1).padStart(2, '0')
-            const year = date.getFullYear()
-
-            const Saida_dataCriacao = `${year}-${month}-${day}`
-
             if (SaidaEnvio){
                 SaidaEnvio.Saida_valorTot = Saida_valorTot;
-                SaidaEnvio.Saida_dataCriacao = new Date(Saida_dataCriacao);
+                SaidaEnvio.Saida_dataCriacao = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000);
                 SaidaEnvio.Usuario_id = Usuario_id;
             }
 

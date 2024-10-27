@@ -162,8 +162,9 @@ function Entradas() {
   };
   
   const handleLoteValidadeChange = (id: string, Lote_validade: string) => {
-    const date = new Date(Lote_validade);
-    date.setHours(12)
+    // Adiciona 'T00:00:00' para garantir que a data seja tratada como local
+    const date = new Date(Lote_validade + 'T00:00:00');
+    
     setEntradasSelecionadas((prev) =>
       prev.map((entrada) =>
         entrada.id === id
@@ -171,7 +172,7 @@ function Entradas() {
           : entrada
       )
     );
-  };
+};
   
   const calcularSubtotal = (produto: Produto, quantidade: number) => {
     const custo = produto.Prod_custo || 0; 
