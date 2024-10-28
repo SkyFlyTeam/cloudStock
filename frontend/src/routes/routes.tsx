@@ -44,7 +44,7 @@ function MainRoutes(){
                     <Route path="/Setores" element={<ProtectedRoute allowedRoles={[1, 2]}><Setores /></ProtectedRoute>}/>
                     <Route path="/LocalProduto/:id" element={<ProtectedRoute allowedRoles={[1, 2]}><LocalProduto /></ProtectedRoute>}/>
                     <Route path="/LocalArmazenamento/:id" element={<ProtectedRoute allowedRoles={[1, 2]}><LocalArmazenamento /></ProtectedRoute>}/>
-                    <Route path="/Fornecedores" element={<ProtectedRoute allowedRoles={[2]}><Fornecedores /></ProtectedRoute>}/>
+                    <Route path="/Fornecedores" element={<ProtectedRoute allowedRoles={[1, 2]}><Fornecedores /></ProtectedRoute>}/>
                     <Route path="/Registros" element={<ProtectedRoute allowedRoles={[2]}><Registros /></ProtectedRoute>}/>
                     
                     {/* Rotas do Admin */}

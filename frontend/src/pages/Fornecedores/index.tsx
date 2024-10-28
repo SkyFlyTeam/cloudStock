@@ -24,7 +24,7 @@ import { AiOutlineDelete } from "react-icons/ai"
 import { hostname } from "../../config/apiConfig";
 
 
-
+import { useAuth } from "../../context/AuthProvider";
 
 
 // Const para a criação de colunas; Define a Tipagem (Interface)
@@ -36,6 +36,9 @@ function Fornecedores() {
   const [openModalEdicao, setOpenModalEdicao] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
+
+  //Verificação dos Cargos
+  const {currentUser} = useAuth();
 
   // Guarda o ID dos fornecedores selecionados na tabela
   const [fornecedorSelecionado, setFornecedorSelecionado] = useState<number | null>(null);
@@ -88,23 +91,31 @@ function Fornecedores() {
       header: () => 'Status',
       cell: info => (
         <div className="td-center">
+      {currentUser?.Cargo_id === 2 ? (
           <ToggleBtn
             checked={info.getValue() == 1}
             cod={info.row.original.Forn_id}
             rota={`${hostname}fornecedor`}
             onStatusChange={(newStatus: any) => handleStatusChange(info.row.original.Forn_id, newStatus)}
           />
-        </div>
+      ) : (
+        <span className= {info.getValue() == 1 ? 'status-ativo1' : 'status-inativo1'}>
+          {info.getValue() == 1 ? 'Ativo' : 'Inativo'}
+        </span>
+      )}
+      </div>
       ),
     }),
     columnHelper.display({
       id: 'actions',
       cell: props => (
+        currentUser?.Cargo_id === 2 && (
         <EditarRemoverBtn
           id={props.row.original.Forn_id}
           onEdit={() => handleEditClick(props.row.original.Forn_id)}
           onDelete={() => handleDeleteClick(props.row.original.Forn_id)}
         />
+        )
       ),
     }),
   ];
@@ -146,10 +157,11 @@ function Fornecedores() {
         <hr className="line" />
       </div>
 
+    {currentUser?.Cargo_id === 2 && (
       <div className="actions-group">
         <BtnAzul icon={<IoAddCircleOutline />} label="CADASTRAR" onClick={() => setOpenModalCadastro(true)} />
       </div>
-      
+    )}
       {/* Implementação para o futuro, precisa adicionar tempo e + coisas {mensagemSucesso && <div className="success-message">{mensagemSucesso}</div>} */}
 
       <Table hover responsive size="lg">

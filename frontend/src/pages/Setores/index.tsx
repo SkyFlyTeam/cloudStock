@@ -16,6 +16,8 @@ import SetorFormulario from "../../components/Formularios/Setores/Setor_Cadastra
 import Setor_editar from "../../components/Formularios/Setores/Setor_Editar";
 import { Link } from "react-router-dom";
 
+
+//Verificação dos cargos
 import { useAuth } from "../../context/AuthProvider";
 
 function Setores() {

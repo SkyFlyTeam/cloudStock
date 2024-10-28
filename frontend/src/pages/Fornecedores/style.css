@@ -48,3 +48,17 @@ tbody tr:nth-child(even) {
 tbody tr:nth-child(odd) {
     background-color: #ffffff; /* Cor para as linhas ímpares */
 }
+
+.status-ativo1 {
+    color: green;
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+  }
+  
+  .status-inativo1 {
+    color: red;
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+  }
