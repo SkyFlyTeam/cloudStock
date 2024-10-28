@@ -19,10 +19,10 @@ import { Registros } from '../models/Registros';
 dotenv.config();
 
 const sequelize = new Sequelize({
-  database: process.env.DB_NAME,
-  username: process.env.DB_USER,
-  password: process.env.DB_PASSWORD, // mudar senha
-  host: process.env.DB_HOST, // colocar domínio
+  database: "sprint2",
+  username: "root",
+  password: "", // mudar senha
+  host: "localhost", // colocar domínio
   dialect: 'mysql',
   models: [Cargo, Categoria, Entrada, Fornecedor_Produto, Fornecedor, Local_Armazenamento, Lote_Entrada, Lote_Saida, Lote, Produto, Saida, Setor, Unidade_Medida, Usuario, Registros],  // Adiciona os modelos aqui
 });

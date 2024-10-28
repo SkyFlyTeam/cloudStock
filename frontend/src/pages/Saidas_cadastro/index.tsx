@@ -213,7 +213,7 @@ function Saidas() {
                 <div className="custo-quantidade">
                   <div className="custo-saida">
                     <span className="label">Preço de venda</span>
-                    <span className="value">R${produto.Prod_preco}</span>
+                    <span className="value">R${Number(produto.Prod_preco).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                   </div>
                   <Input
                     max={produto.Prod_quantidade}
@@ -227,7 +227,7 @@ function Saidas() {
                   />
                   <div className="subtotal-saida">
                     <span className="label">Subtotal</span>
-                    <span className="value">R${calcularSubtotal(produto, quantidadeSelecionada)}</span>
+                    <span className="value">R$ {Number(calcularSubtotal(produto, quantidadeSelecionada)).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                   </div>
                 </div>
                 <AiOutlineDelete
@@ -241,7 +241,7 @@ function Saidas() {
         </div>
 
         <div className="total-container">
-          <span>Total: R${calcularTotal()}</span>
+          <span>Total: R${Number(calcularTotal()).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
         </div>
 
         {produtos.length > 0 && (

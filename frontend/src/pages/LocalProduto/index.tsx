@@ -94,11 +94,11 @@ function LocalProduto() {
     }),
     columnHelper.accessor('Prod_preco', {
         header: () => 'Preço Venda',
-        cell: info => info.getValue(),
+        cell: info => `R$ ${Number(info.getValue()).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`,
     }),
     columnHelper.accessor('Prod_custo', {
         header: () => 'Preço Custo',
-        cell: info => info.getValue(),
+        cell: info => `R$ ${Number(info.getValue()).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`,
     }),
     columnHelper.display({
 			id: 'actions',
