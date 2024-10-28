@@ -16,6 +16,8 @@ import SetorFormulario from "../../components/Formularios/Setores/Setor_Cadastra
 import Setor_editar from "../../components/Formularios/Setores/Setor_Editar";
 import { Link } from "react-router-dom";
 
+import { useAuth } from "../../context/AuthProvider";
+
 function Setores() {
     const [openModalCadastro, setOpenModalCadastro] = useState(false)
     const [openModalEdicao, setOpenModalEdicao] = useState(false)
@@ -27,6 +29,9 @@ function Setores() {
 
     // Guarda o ID dos fornecedores selecionados na tabela
     const [setorSelecionado, setSetorSelecionado] = useState<number | null>(null);
+
+    // Verificação dos Cargos
+    const {currentUser} = useAuth();
 
     // Mensagem de sucesso das ações
     const [mensagemSucesso, setMensagemSucesso] = useState<string>('');
@@ -73,19 +78,21 @@ function Setores() {
                 <BtnAzul icon={<IoAddCircleOutline />} label='CADASTRAR' onClick={() => setOpenModalCadastro(true)} />
             </div> */}
 
-
+          {currentUser?.Cargo_id === 2 && (
             <div className="actions-group">
               <BtnAzul className="rfloat" icon={<IoAddCircleOutline />} label="CADASTRAR" onClick={() => setOpenModalCadastro(true)} />
             </div>
-
+          )}
         
             <div className="cards-group">
             {setores.map(setor => (
                 <Card className="card-i">
                     <span>{setor.Setor_nome}</span> 
                     <div className="actions">
-                        <FiEdit2 color="#61BDE0" size={20} className="edit-icon" onClick={() => handleEditClick(setor.Setor_id)}/>
-                        <Link to={`/LocalArmazenamento/${setor.Setor_id}`}><IoIosArrowForward color="#61BDE0" size={25} /></Link>
+                      {currentUser?.Cargo_id === 2 && (
+                        <FiEdit2 color="#61BDE0" size={20} className="edit-icon" onClick={() => handleEditClick(setor.Setor_id)}/> 
+                      )}
+                      <Link to={`/LocalArmazenamento/${setor.Setor_id}`}><IoIosArrowForward color="#61BDE0" size={25} /></Link>
                     </div>
                 </Card>
             ))}

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Fornecedor, fornecedorServices } from "../../services/fornecedorServices";
 import { ApiException } from "../../config/apiException";
 
@@ -23,6 +23,10 @@ import { IoAddCircleOutline } from "react-icons/io5"
 import { AiOutlineDelete } from "react-icons/ai"
 import { hostname } from "../../config/apiConfig";
 
+
+
+
+
 // Const para a criação de colunas; Define a Tipagem (Interface)
 const columnHelper = createColumnHelper<Fornecedor>();
 
@@ -31,6 +35,7 @@ function Fornecedores() {
   const [openModalCadastro, setOpenModalCadastro] = useState(false);
   const [openModalEdicao, setOpenModalEdicao] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
+
 
   // Guarda o ID dos fornecedores selecionados na tabela
   const [fornecedorSelecionado, setFornecedorSelecionado] = useState<number | null>(null);
@@ -144,7 +149,7 @@ function Fornecedores() {
       <div className="actions-group">
         <BtnAzul icon={<IoAddCircleOutline />} label="CADASTRAR" onClick={() => setOpenModalCadastro(true)} />
       </div>
-
+      
       {/* Implementação para o futuro, precisa adicionar tempo e + coisas {mensagemSucesso && <div className="success-message">{mensagemSucesso}</div>} */}
 
       <Table hover responsive size="lg">

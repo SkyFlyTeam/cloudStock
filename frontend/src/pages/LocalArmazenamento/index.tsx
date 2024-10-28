@@ -17,6 +17,8 @@ import Local_Editar from "../../components/Formularios/Locais/Local_Editar";
 import { Link, useParams } from "react-router-dom";
 import { Setor, setoresServices } from "../../services/setorServices";
 
+import { useAuth } from "../../context/AuthProvider";
+
 function LocalArmazenamento() {
   const [openModalCadastro, setOpenModalCadastro] = useState(false)
   const [openModalEdicao, setOpenModalEdicao] = useState(false)
@@ -29,6 +31,9 @@ function LocalArmazenamento() {
   // Guarda o ID de setor recebido na rota e converte para int
   const { id } = useParams();
   const idInt = id ? parseInt(id, 10) : null
+
+  //Verificação dos Cargos
+  const {currentUser} = useAuth();
 
   // Guarda o ID dos fornecedores selecionados na tabela
   const [localSelecionado, setlocalSelecionado] = useState<number | null>(null);
@@ -89,10 +94,11 @@ const closeEditModal = () => {
           </div> */}
 
 
-          
+          {currentUser?.Cargo_id === 2 && (
           <div className="actions-group">
             <BtnAzul className="rfloat" icon={<IoAddCircleOutline />} label="CADASTRAR" onClick={() => setOpenModalCadastro(true)} />
           </div>
+          )}
 
       
           <div className="cards-group">
@@ -100,8 +106,10 @@ const closeEditModal = () => {
               <Card className="card-i">
                   <span>{local.LocAr_nome}</span> 
                   <div className="actions">
+                    {currentUser?.Cargo_id === 2 && (
                       <FiEdit2 color="#61BDE0" size={20} className="edit-icon"  onClick={() => handleEditClick(local.LocAr_id)}/>
-                      <Link to={`/LocalProduto/${local.LocAr_id}`}><IoIosArrowForward color="#61BDE0" size={25} /></Link>
+                    )}
+                    <Link to={`/LocalProduto/${local.LocAr_id}`}><IoIosArrowForward color="#61BDE0" size={25} /></Link>
                   </div>
               </Card>
           ))}

@@ -91,3 +91,17 @@ div.td-numeric{
         height: 3.5rem;
     }
 }
+
+.status-ativo {
+    color: green;
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+  }
+  
+  .status-inativo {
+    color: red;
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+  }

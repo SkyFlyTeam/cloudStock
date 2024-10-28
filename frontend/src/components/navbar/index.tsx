@@ -55,6 +55,13 @@ const Navbar: React.FC = () => {
                     </div>
                   </Link>
 
+                  <Link to="/Setores" className="link">
+                  <div className={location.pathname === '/Setores' ? 'menu-item active' : 'menu-item'}>
+                    <MdAllInbox />
+                    <div className="navbartext"><span>Setores</span></div>
+                  </div>
+                </Link>
+
                   <div className={location.pathname === '/Categorias' ? 'menu-item active' : 'menu-item'}>
                     <IoMdPricetags />
                     <div className="navbartext"><span>Categorias</span></div>
@@ -79,6 +86,13 @@ const Navbar: React.FC = () => {
               {/* Rotas do Gerente */}
               {currentUser?.Cargo_id === 2 &&
                 <>
+
+                <Link to="/Produtos" className="link">
+                  <div className={location.pathname === '/Produtos' ? 'menu-item active' : 'menu-item'}>
+                    <BsBoxSeamFill />
+                    <div className="navbartext"><span>Produtos</span></div>
+                  </div>
+                </Link>
                 
                 <Link to="/Fornecedores" className="link">
                   <div className={location.pathname === '/Fornecedores' ? 'menu-item active' : 'menu-item'}>

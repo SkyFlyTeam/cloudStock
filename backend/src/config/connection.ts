@@ -19,7 +19,7 @@ import { Registros } from '../models/Registros';
 dotenv.config();
 
 const sequelize = new Sequelize({
-  database: "sprint2",
+  database: "sprint3",
   username: "root",
   password: "", // mudar senha
   host: "localhost", // colocar domínio

@@ -24,6 +24,7 @@ import { IoAddCircleOutline } from "react-icons/io5"
 import { AiOutlineDelete } from "react-icons/ai"
 import { hostname } from "../../config/apiConfig"
 
+import { useAuth } from "../../context/AuthProvider"
 
 // Criar o helper para colunas
 const columnHelper = createColumnHelper<Produto>()
@@ -40,6 +41,8 @@ function Produtos() {
   // Mensagem de sucesso das ações
   const [mensagemSucesso, setMensagemSucesso] = useState<string>('');
 
+  //Verificação dos Cargos
+  const {currentUser} = useAuth();
 
   // Referência ao forms para realizar o submit fora do componente do forms
   const formRef = useRef<{ submitForm: () => void }>(null);
@@ -111,23 +114,31 @@ function Produtos() {
       header: () => <div className="th-center"> Status</div>,
       cell: info => (
         <div className="td-center">
-          <ToggleBtn
-            checked={info.getValue() == 1}
-            cod={info.row.original.Prod_cod}
-            rota={`${hostname}produto`}
-            onStatusChange={(newStatus: any) => handleStatusChange(info.row.original.Prod_cod, newStatus)}
-          />
-        </div>
-      ),
-    }),
+      {currentUser?.Cargo_id === 1 ? (
+        <ToggleBtn
+          checked={info.getValue() == 1}
+          cod={info.row.original.Prod_cod}
+          rota={`${hostname}produto`}
+          onStatusChange={(newStatus) => handleStatusChange(info.row.original.Prod_cod, newStatus)}
+        />
+      ) : (
+        <span className= {info.getValue() == 1 ? 'status-ativo' : 'status-inativo'}>
+          {info.getValue() == 1 ? 'Ativo' : 'Inativo'}
+        </span>
+      )}
+    </div>
+  ),
+}),
     columnHelper.display({
       id: 'actions',
       cell: props => (
-        <EditarRemoverBtn
-          id={props.row.original.Prod_cod}
-          onEdit={() => handleEditClick(props.row.original.Prod_cod)}
-          // onDelete={() => handleDeleteClick(props.row.original.Prod_cod)}
-        />
+        currentUser?.Cargo_id === 1 && (
+          <EditarRemoverBtn
+            id={props.row.original.Prod_cod}
+            onEdit={() => handleEditClick(props.row.original.Prod_cod)}
+            // onDelete={() => handleDeleteClick(props.row.original.Prod_cod)}
+          />
+        )
       ),
     }),
   ]
@@ -170,9 +181,11 @@ function Produtos() {
         <hr className="line" />
       </div>
 
+    {currentUser?.Cargo_id === 1 && (
       <div className="actions-group">
         <BtnAzul className="rfloat" icon={<IoAddCircleOutline />} label="CADASTRAR" onClick={() => setOpenModalCadastro(true)} />
       </div>
+    )}
 
       <Table hover responsive size="lg">
         <thead>
