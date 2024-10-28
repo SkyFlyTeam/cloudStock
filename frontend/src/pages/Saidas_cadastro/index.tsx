@@ -105,7 +105,7 @@ function Saidas() {
   };
 
   const calcularSubtotal = (produto: Produto, quantidade: number) => {
-    const custo = produto.Prod_custo || 0; // Make sure this value is correct
+    const custo = produto.Prod_preco || 0; // Make sure this value is correct
     const qtd = quantidade || 0;
     return (custo * qtd).toFixed(2);
   };
@@ -115,7 +115,7 @@ function Saidas() {
       const quantidadeSelecionada = produtosSelecionados?.find(
         (p) => p.idProd === produto.Prod_cod
       )?.quantidade || 0;
-      const custo = produto.Prod_custo || 0;
+      const custo = produto.Prod_preco || 0;
       return acc + custo * quantidadeSelecionada;
     }, 0)
       .toFixed(2);
@@ -212,8 +212,8 @@ function Saidas() {
 
                 <div className="custo-quantidade">
                   <div className="custo-saida">
-                    <span className="label">Custo</span>
-                    <span className="value">R${produto.Prod_custo}</span>
+                    <span className="label">Preço de venda</span>
+                    <span className="value">R${produto.Prod_preco}</span>
                   </div>
                   <Input
                     max={produto.Prod_quantidade}
