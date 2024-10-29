@@ -84,7 +84,7 @@ Rank | Prioridade | User Story | Estimativa | Sprint | Requisito
 ### Requisitos Funcionais
 - 01: Cadastro de Usuários: Diferenciar níveis de acesso (administrador, gerente, funcionário). 
 - 02: Cadastro de Produtos: Incluindo código, nome, descrição, marca, modelo, categoria, quantidade, preço de custo e venda, unidade de medida, localização no estoque, fornecedor, imagem do produto, peso, dimensões, validade e setor de armazenagem. 
-- 03: Cadastro de Categorias: Organização hierárquica dos produtos, facilitando a navegação.  Cadastro de Local, Fornecedor e Setor: Registro dos locais de armazenamento, fornecedores e Setores.
+- 03: Cadastro de Categorias: Organização hierárquica dos produtos, facilitando a navegação.
 - 04: Cadastro de Local, Fornecedor e Setor: Registro dos locais de armazenamento, fornecedores e Setores.
 - 05: Movimentação de Estoque: Registros de entrada e saída de produtos com controle de responsável e data. 
 - 06: Relatórios de Estoque: Relatórios detalhados sobre o status do estoque, histórico de compras, e movimentações. 
