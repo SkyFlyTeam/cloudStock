@@ -67,8 +67,8 @@ Rank | Prioridade | User Story | Estimativa | Sprint | Requisito
 |----|----|----------|----|----|----|
 | 1 | Alta | Eu como funcionário gostaria de cadastrar os produtos e suas propriedades para saber o que tem no estoque.  | 6 | 1 | 02
 | 2 | Alta | Eu como gerente gostaria de cadastrar os locais, fornecedores e setores de cada produto para melhor gestão do estoque. | 4 | 1 | 04
-| 3 | Alta | Eu como gerente gostaria de realizar a compra de produtos para alimentar o meu sistema.  | 6 | 2 | 05 
-| 4 | Alta | Eu como funcionário gostaria de realizar a venda de produtos para auxiliar no sistemas de venda  | 4 | 2 | 05
+| 3 | Alta | Eu como funcionário gostaria de realizar a entrada de produtos para alimentar o meu sistema.  | 6 | 2 | 05 
+| 4 | Alta | Eu como funcionário gostaria de realizar a saída de produtos para auxiliar no sistemas de venda  | 4 | 2 | 05
 | 5 | Alta | Eu como gerente gostaria de ter registros da entrada e saída de produtos para não perder a sincronia do sistema e estoque.| 4 | 2 | 05
 | 6 | Alta | Eu como funcionário gostaria de acessar onde está localizado um produto para poder direcionar um comprador.| 2 | 2 | 04
 | 7 | Alta | Eu como administrador gostaria de ter três níveis de acesso diferente para atribuições individualizadas.| 7 | 2 | 01
