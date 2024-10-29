@@ -40,35 +40,57 @@ hr.line {
     align-items: center;
 }
 
+.saida-radio-input{
+    display: flex;
+    gap: 0.7rem;
+    align-items: center;
+}
+
+.saida-radio-input span{
+    font-weight: 600;
+}
+
+.saida-radio-input .input-radio-item{
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
 .cards-group {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
 }
 
-.card-item-saida {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem;
+.card-item-saida{
+    padding: 15px;
     border: 2px solid #61bde0;
-    border-radius: 10px;
-    margin-bottom: 1rem;
-    gap: 2rem;
-    position: relative;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 1rem;
+    position: relative;   
+}
+
+.saida-card {
+    display: flex;
+    align-items: start;
+    justify-content: space-evenly;
+    width: 100%;
 }
 
 .card-name-saida {
-    flex: 2;
-    text-align: left; 
+    font-weight: bold;
+    font-size: 16px;
 }
 
 .custo-quantidade {
     display: flex; 
-    justify-content: space-between;
-    gap: 2rem; 
     flex-wrap: wrap;
-    width: 100%;
+    align-items: start; 
+    justify-content: space-around;
+    flex: 2;
 }
 
 .custo-saida, .quantidade-saida, .subtotal-saida {
@@ -77,21 +99,40 @@ hr.line {
     align-items: center; 
     gap: 0.3rem;
     text-align: center;
-    flex: 1; 
+}
+
+.quantidade-saida input{
+    text-align: center;
 }
 
 .label {
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .value {
     min-width: max-content; 
 }
 
-.delete-icon-saida {
+.subtotal-saida {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Alinhar à esquerda */
+    gap: 0.6rem;
+    flex: 1;
+}
+
+.subtotal-saida span{
+    width: fit-content;
+    align-items: flex-end; 
+}
+
+.delete-icon-saida{
     cursor: pointer;
     color: red;
-}
+    position: absolute;
+    top: 15px;
+    right: 15px;
+  }
 
 .total-container {
     display: flex;
@@ -104,7 +145,7 @@ hr.line {
 .total-container span {
     font-size: 1.2rem;
     font-weight: bold;
-    margin-right: 12%;
+    margin-right: 14%;
 }
 
 .btn-concluir {
@@ -151,27 +192,12 @@ hr.line {
 }
 
 
-@media (max-width: 980px){
-    .card-item-saida {
-        display: flex;
-        align-items: flex-start;
+@media (max-width: 800px){
+
+    .custo-quantidade {
         flex-direction: column;
-        padding: 1rem;
-        border: 2px solid #61bde0;
-        border-radius: 10px;
-        margin-bottom: 1rem;
-        gap: 2rem;
-    }
-
-
-    .delete-icon-saida {
-        position: absolute;
-        top: 15px;
-        right: 15px;
-    }
-
-    .subtotal-saida{
-        align-self: flex-start;
+        align-items: center;
+        gap: 0.8rem;
     }
 
     .total-container span {

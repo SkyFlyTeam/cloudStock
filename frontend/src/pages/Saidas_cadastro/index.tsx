@@ -202,27 +202,27 @@ else{
           </div>
         </div>
 
-        <div>
-      <label>
-        <input
-          type="radio"
-          value="true"
-          checked={IsCompra === true}
-          onChange={() => setIsCompra(true)}
-        />
-        Sim
-      </label>
-      <label style={{marginLeft: "10px"}}>
-        <input
-          type="radio"
-          value="false"
-          checked={IsCompra === false}
-          onChange={() => setIsCompra(false)}
-        />
-        Não
-      </label>
-      <p>É uma compra?</p>
-    </div>
+      <div className="saida-radio-input">
+        <span>É uma compra?</span>
+        <label className="input-radio-item">
+          <input
+            type="radio"
+            value="true"
+            checked={IsCompra === true}
+            onChange={() => setIsCompra(true)}
+          />
+          Sim
+        </label>
+        <label className="input-radio-item">
+          <input
+            type="radio"
+            value="false"
+            checked={IsCompra === false}
+            onChange={() => setIsCompra(false)}
+          />
+          Não
+        </label>
+      </div>
 
         <div className="cards-group">
           {produtos.length <= 0 && (
@@ -242,21 +242,23 @@ else{
                   </span>
                 </div>
 
-                <div className="custo-quantidade">
-                  <div className="custo-saida">
-                    <span className="label">Preço de venda</span>
-                    <span className="value">R${Number(produto.Prod_preco).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                <div className="saida-card">
+                  <div className="custo-quantidade">
+                    <div className="custo-saida">
+                      <span className="label">Preço de venda</span>
+                      <span className="value">R${Number(produto.Prod_preco).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                    </div>
+                    <Input
+                      max={produto.Prod_quantidade}
+                      label="Quantidade"
+                      type="number"
+                      value={quantidadeSelecionada}
+                      className="quantidade-saida"
+                      onChange={(e) =>
+                        handleQuantidadeChange(produto.Prod_cod, +e.target.value)
+                      }
+                    />
                   </div>
-                  <Input
-                    max={produto.Prod_quantidade}
-                    label="Quantidade"
-                    type="number"
-                    value={quantidadeSelecionada}
-                    className="quantidade-saida"
-                    onChange={(e) =>
-                      handleQuantidadeChange(produto.Prod_cod, +e.target.value)
-                    }
-                  />
                   <div className="subtotal-saida">
                     <span className="label">Subtotal</span>
                     <span className="value">R$ {Number(calcularSubtotal(produto, quantidadeSelecionada)).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>

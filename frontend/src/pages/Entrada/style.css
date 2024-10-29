@@ -74,6 +74,10 @@
   width: 6.2rem;
 }
 
+.quantidade-container input{
+  text-align: center;
+}
+
 .fornecedor-container select, .local-container select{
   width: 12rem;
 }

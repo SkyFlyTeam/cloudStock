@@ -114,31 +114,23 @@ function Produtos() {
       header: () => <div className="th-center"> Status</div>,
       cell: info => (
         <div className="td-center">
-      {currentUser?.Cargo_id === 1 ? (
         <ToggleBtn
           checked={info.getValue() == 1}
           cod={info.row.original.Prod_cod}
           rota={`${hostname}produto`}
           onStatusChange={(newStatus) => handleStatusChange(info.row.original.Prod_cod, newStatus)}
         />
-      ) : (
-        <span className= {info.getValue() == 1 ? 'status-ativo' : 'status-inativo'}>
-          {info.getValue() == 1 ? 'Ativo' : 'Inativo'}
-        </span>
-      )}
     </div>
   ),
 }),
     columnHelper.display({
       id: 'actions',
       cell: props => (
-        currentUser?.Cargo_id === 1 && (
           <EditarRemoverBtn
             id={props.row.original.Prod_cod}
             onEdit={() => handleEditClick(props.row.original.Prod_cod)}
             // onDelete={() => handleDeleteClick(props.row.original.Prod_cod)}
           />
-        )
       ),
     }),
   ]
