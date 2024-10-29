@@ -24,6 +24,10 @@ function Saidas() {
   // Novo estado para o valor do select
   const [selectedProduto, setSelectedProduto] = useState("");
 
+  //É compra??
+  const [IsCompra, setIsCompra] = useState(false);
+
+
   // Controlar estados dos Modais
   const [openModalCadastro, setOpenModalCadastro] = useState(false); // concluir saida
   const [openModalQuantidade, setOpenModalQuantidade] = useState(false); // verificar quantidade
@@ -107,7 +111,10 @@ function Saidas() {
   const calcularSubtotal = (produto: Produto, quantidade: number) => {
     const custo = produto.Prod_preco || 0; // Make sure this value is correct
     const qtd = quantidade || 0;
+    if (IsCompra == false){ return 0 }
+else{
     return (custo * qtd).toFixed(2);
+}
   };
 
   const calcularTotal = () => {
@@ -119,7 +126,10 @@ function Saidas() {
       return acc + custo * quantidadeSelecionada;
     }, 0)
       .toFixed(2);
+    if (IsCompra){
     return total;
+    }
+    else return 0;
   };
 
 
@@ -191,6 +201,28 @@ function Saidas() {
             </select>
           </div>
         </div>
+
+        <div>
+      <label>
+        <input
+          type="radio"
+          value="true"
+          checked={IsCompra === true}
+          onChange={() => setIsCompra(true)}
+        />
+        Sim
+      </label>
+      <label style={{marginLeft: "10px"}}>
+        <input
+          type="radio"
+          value="false"
+          checked={IsCompra === false}
+          onChange={() => setIsCompra(false)}
+        />
+        Não
+      </label>
+      <p>É uma compra?</p>
+    </div>
 
         <div className="cards-group">
           {produtos.length <= 0 && (
