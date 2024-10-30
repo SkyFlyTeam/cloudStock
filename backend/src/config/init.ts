@@ -1,4 +1,5 @@
 import { Cargo } from '../models/Cargo';
+import { ConfigSistema } from '../models/ConfigSistema';
 import sequelize from './connection';
 
 export default async function init() {
@@ -24,7 +25,19 @@ export default async function init() {
             }
         }
 
-        console.log('Cargos verificados com sucesso.');
+           //Verifica as configuraçãoes de sistema e as cria caso seja a primeira inicialização do sistema
+            const config = {Config_id: 1, Config_estoqueMinimo: 5, Config_avisoValidade: 5}
+
+            const [configs, configCreated] = await ConfigSistema.findOrCreate({
+                where: { Config_id: config.Config_id },
+                defaults: config
+            })
+
+            if (configCreated){
+                console.log(`Configuração de sistema ${configs.Config_id} criado com sucesso.`);
+            }
+
+        console.log('Cargos e configurações de sistema verificados com sucesso.');
     } catch (error) {
         console.error('Erro ao inicializar o banco de dados:', error);
     }
