@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import './BarraSuperior.css';
-import { TbCircleCaretLeft } from "react-icons/tb";
+import { TbCircleCaretLeft, TbClockExclamation } from "react-icons/tb";
 import { FaRegBell } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa6";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { Tab, Tabs } from "react-bootstrap";
+
+import  loteIcon  from '../../assets/icons/Simplification.svg'
 
 
 const BarraSuperior: React.FC = () => {
@@ -45,17 +47,31 @@ const BarraSuperior: React.FC = () => {
           <Offcanvas.Body>
             <Tabs
               defaultActiveKey="todas"
-              id="uncontrolled-tab-example"
+              id="notifications"
               className="mb-3"
             >
               <Tab eventKey="todas" title="Todas">
-                Tab content for Home
+                <div className="not-item">
+                  <img src={loteIcon}></img>
+                  <div className="content">
+                    <span><b>Lote AFEGX1</b> do <b>Produto1</b> atingiu o estoque mínimo</span>
+                    <span className="subtitle">15 unidades restantes</span>
+                    <span className="date">23/10/2024 - 10:04</span>
+                  </div>
+                </div>
               </Tab>
               <Tab eventKey="estoque" title="Estoque">
                 Tab content for Profile
               </Tab>
               <Tab eventKey="validade" title="Validade">
-                Tab content for Contact
+                <div className="not-item">
+                  <TbClockExclamation className="icon-clock"/>
+                  <div className="content">
+                    <span><b>Lote AFEGX1</b> do <b>Produto1</b> atingiu o estoque mínimo</span>
+                    <span className="subtitle">15 unidades restantes</span>
+                    <span className="date">23/10/2024 - 10:04</span>
+                  </div>
+                </div>
               </Tab>
             </Tabs>
           </Offcanvas.Body>

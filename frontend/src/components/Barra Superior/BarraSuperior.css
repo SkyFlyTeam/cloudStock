@@ -49,12 +49,61 @@
     border-radius: 8px;
 }
 
-li.nav-item{
-    background-color: red;
+.offcanvas-body .nav{
+    justify-content: space-around;
 }
 
-li.nav-item.active{
-    background-color: aqua;
+.nav-tabs .nav-link{
+    color: #C4C4C4;
+}
+
+.nav-tabs .nav-link.active{
+    border: none;
+    border-bottom: 2px solid #61BDE0 !important;
+    font-weight: 600;
+}
+
+.nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover{
+    border: none;
+    color: #61BDE0 ;
+}
+
+.offcanvas-body .not-item{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 14px;
+    padding-bottom: 0.5rem;
+    border-bottom: 1.5px solid #c4c4c46b;
+}
+
+.not-item img{
+    width: 3.5rem;
+}
+
+.not-item b{
+    font-weight: 500
+}
+
+.not-item .content{
+    display: flex;
+    flex-direction: column;
+}
+
+.content .subtitle{
+    font-weight: 500;
+    color: #C4C4C4;
+}
+
+.content .date{
+    color: #C4C4C4;
+    align-self: flex-end;
+}
+
+.not-item .icon-clock{
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
 }
 
 @media (max-width: 768px) {
