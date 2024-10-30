@@ -9,7 +9,6 @@ import { Saida, saidaServices } from "../../services/saidaServices";
 import Modal from "../../components/Modal";
 import BtnAzul from "../../components/BtnAzul";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
-import { usuarioServices } from "../../services/usuariosServices";
 
 function Registros() {
   const [registros, setRegistros] = useState<Registro[]>([]);

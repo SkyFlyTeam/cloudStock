@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './BarraSuperior.css';
 import { TbCircleCaretLeft, TbClockExclamation } from "react-icons/tb";
 import { FaRegBell } from "react-icons/fa";
@@ -9,6 +9,8 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import { Tab, Tabs } from "react-bootstrap";
 
 import  loteIcon  from '../../assets/icons/Simplification.svg'
+import { Notificacao, notificacoesServices } from "../../services/notificacaoServices";
+import { ApiException } from "../../config/apiException";
 
 
 const BarraSuperior: React.FC = () => {
@@ -20,6 +22,30 @@ const BarraSuperior: React.FC = () => {
 
   const handleCloseNotifications = () => setShowNotifications(false)
   const handleShowNotifications = () => setShowNotifications(true)
+
+  // Contagem das notificações
+  const [totalCount, setTotalCount] = useState(8); 
+  const [todasCount, setTodasCount] = useState(8);       
+  const [estoqueCount, setEstoqueCount] = useState(3);  
+  const [validadeCount, setValidadeCount] = useState(2);
+
+  // Armazena notificações
+  const [notificacoes, setNotificacoes] = useState<Notificacao[]>([]);
+
+  // Função para buscar todos as notificações
+  // const fetchNotificacoes = async () => {
+  //   const result = await notificacoesServices.getAllNotificacoes()
+  //   if (result instanceof ApiException) {
+  //     console.log(result.message)
+  //   } else {
+  //     setNotificacoes(result);
+  //   }
+  // }
+
+  // // Chama a função para pegar todos os fornecedores do BD ao montar o componente
+  // useEffect(() => {
+  //   fetchNotificacoes()
+  // }, [])
 
     return (
       <div className="BarraSuperior">
@@ -36,8 +62,15 @@ const BarraSuperior: React.FC = () => {
           <span>{location.pathname.replace('/', '')}</span>
         </div>
         <div className="itensright">
-          <i> <FaRegBell onClick={handleShowNotifications}/> </i>
-          <i> <FaRegUser /> </i>
+          {totalCount > 0 ?
+            <div className="bell-icon-div" onClick={handleShowNotifications}> 
+              <div className="bell-not-cont">{totalCount}</div>
+              <FaRegBell className="bell-icon"/> 
+            </div>
+            : 
+            <FaRegBell className="bell-icon"/> 
+          }
+          <FaRegUser className="user-icon" /> 
         </div>
 
         <Offcanvas show={showNotifications} onHide={handleCloseNotifications} placement='end'>
@@ -50,7 +83,67 @@ const BarraSuperior: React.FC = () => {
               id="notifications"
               className="mb-3"
             >
-              <Tab eventKey="todas" title="Todas">
+              <Tab eventKey="todas" title={
+                <div className="title">
+                  <span>Todas</span>
+                  <div className="not-count">{todasCount}</div>
+                </div>
+              }>
+                <div className="not-item">
+                  <img src={loteIcon}></img>
+                  <div className="content">
+                    <span><b>Lote AFEGX1</b> do <b>Produto1</b> atingiu o estoque mínimo</span>
+                    <span className="subtitle">15 unidades restantes</span>
+                    <span className="date">23/10/2024 - 10:04</span>
+                  </div>
+                </div>
+                <div className="not-item">
+                  <TbClockExclamation className="icon-clock"/>
+                  <div className="content">
+                    <span><b>Lote AFEGX1</b> do <b>Produto1</b> atingiu o estoque mínimo</span>
+                    <span className="subtitle">15 dias restantes</span>
+                    <span className="date">23/10/2024 - 10:04</span>
+                  </div>
+                </div>
+                <div className="not-item">
+                  <img src={loteIcon}></img>
+                  <div className="content">
+                    <span><b>Lote AFEGX1</b> do <b>Produto1</b> atingiu o estoque mínimo</span>
+                    <span className="subtitle">15 unidades restantes</span>
+                    <span className="date">23/10/2024 - 10:04</span>
+                  </div>
+                </div>
+                <div className="not-item">
+                  <TbClockExclamation className="icon-clock"/>
+                  <div className="content">
+                    <span><b>Lote AFEGX1</b> do <b>Produto1</b> atingiu o estoque mínimo</span>
+                    <span className="subtitle">15 dias restantes</span>
+                    <span className="date">23/10/2024 - 10:04</span>
+                  </div>
+                </div>
+                <div className="not-item">
+                  <img src={loteIcon}></img>
+                  <div className="content">
+                    <span><b>Lote AFEGX1</b> do <b>Produto1</b> atingiu o estoque mínimo</span>
+                    <span className="subtitle">15 unidades restantes</span>
+                    <span className="date">23/10/2024 - 10:04</span>
+                  </div>
+                </div>
+                <div className="not-item">
+                  <TbClockExclamation className="icon-clock"/>
+                  <div className="content">
+                    <span><b>Lote AFEGX1</b> do <b>Produto1</b> atingiu o estoque mínimo</span>
+                    <span className="subtitle">15 dias restantes</span>
+                    <span className="date">23/10/2024 - 10:04</span>
+                  </div>
+                </div>
+              </Tab>
+              <Tab eventKey="estoque" title={
+                <div className="title">
+                  <span>Estoque</span>
+                  <div className="not-count">{estoqueCount}</div>
+                </div>
+              }>
                 <div className="not-item">
                   <img src={loteIcon}></img>
                   <div className="content">
@@ -60,15 +153,17 @@ const BarraSuperior: React.FC = () => {
                   </div>
                 </div>
               </Tab>
-              <Tab eventKey="estoque" title="Estoque">
-                Tab content for Profile
-              </Tab>
-              <Tab eventKey="validade" title="Validade">
+              <Tab eventKey="validade" title={
+                <div className="title">
+                  <span>Validade</span>
+                  <div className="not-count">{validadeCount}</div>
+                </div>
+              }>
                 <div className="not-item">
                   <TbClockExclamation className="icon-clock"/>
                   <div className="content">
                     <span><b>Lote AFEGX1</b> do <b>Produto1</b> atingiu o estoque mínimo</span>
-                    <span className="subtitle">15 unidades restantes</span>
+                    <span className="subtitle">15 dias restantes</span>
                     <span className="date">23/10/2024 - 10:04</span>
                   </div>
                 </div>
