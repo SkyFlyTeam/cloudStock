@@ -44,6 +44,19 @@
     color: #61BDE0 !important;
 }
 
+.offcanvas {
+    margin: 1rem;
+    border-radius: 8px;
+}
+
+li.nav-item{
+    background-color: red;
+}
+
+li.nav-item.active{
+    background-color: aqua;
+}
+
 @media (max-width: 768px) {
     .BarraSuperior{
         left: 10%;
