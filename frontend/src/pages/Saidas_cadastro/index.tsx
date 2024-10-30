@@ -25,7 +25,7 @@ function Saidas() {
   const [selectedProduto, setSelectedProduto] = useState("");
 
   //É compra??
-  const [IsCompra, setIsCompra] = useState(false);
+  const [IsCompra, setIsCompra] = useState(true);
 
 
   // Controlar estados dos Modais
