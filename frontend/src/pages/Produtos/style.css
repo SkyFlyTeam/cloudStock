@@ -20,6 +20,55 @@ hr.line{
     display: flex;
     width: 100%;
     justify-content: end;
+    align-items: center;
+    column-gap: 1em;
+}
+.btnFiltrar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: .5em;
+    cursor: pointer;
+}
+
+.btnLimpar{
+    background-color: #61BDE0;
+    padding: 2px 0;
+    width: 6em;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+}
+.btnLimpar:hover {
+    background-color: #61bce083;
+}
+.container-filtros {
+    display: flex;
+    column-gap: 1em;
+}
+.container-filtros label {
+    width: 4em;
+}
+.filtros-btn {
+    display: flex;
+    column-gap: .5em;
+}
+.quantidade-container, .venda-container, .custo-container, .validade-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.venda-container label, .custo-container label, .validade-container label{
+    width: 8em;
+}
+.venda-container input, .custo-container input, .validade-container input {
+    width: 6em;
 }
 
 table{
@@ -67,12 +116,9 @@ td img{
     border-radius: 10px;
 }
 
-
 div.td-center{
     display: flex;
     justify-content: center;
-    width: min-content;
-    padding: 0 0.5rem;
 }
 
 div.td-numeric{
@@ -80,28 +126,6 @@ div.td-numeric{
     width: min-content;
 }
 
-
-@media (max-width: 768px) {
-    th, td{
-        font-size: 14px;
-    }
-
-    td img{
-        width: 4.5rem;
-        height: 3.5rem;
-    }
+.modal-prod{
+    height: 35rem;
 }
-
-.status-ativo {
-    color: green;
-    text-align: center;
-    font-weight: bold;
-    font-size: 16px;
-  }
-  
-  .status-inativo {
-    color: red;
-    text-align: center;
-    font-weight: bold;
-    font-size: 16px;
-  }

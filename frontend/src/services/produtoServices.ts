@@ -19,6 +19,7 @@ export interface Produto {
   Categoria_id: any
   UnidadeMedida_id: any
   Prod_imagem: File | null
+  Lotes: Lote[]
 }
 
 
@@ -143,6 +144,7 @@ export interface Lote {
   Lote_cod: string
   Prod_cod: number
   LocAr_id: number
+  Forn_id: number
 }
 
 const getProdutoLotes = async (Produto_id: number, Local_id: number): Promise<Lote[] | ApiException> => {
