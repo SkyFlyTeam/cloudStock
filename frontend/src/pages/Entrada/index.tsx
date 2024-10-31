@@ -170,6 +170,8 @@ function Entradas() {
 
   const handleLoteValidadeChange = (id: string, Lote_validade: string) => {
     // Adiciona 'T00:00:00' para garantir que a data seja tratada como local
+    if (Lote_validade == '')
+      return 0;
     const date = new Date(Lote_validade + 'T00:00:00');
 
     setEntradasSelecionadas((prev) =>
@@ -351,7 +353,7 @@ function Entradas() {
                     label="Validade"
                     type="date"
                     className="entrada-validade"
-                    value={entrada.Lote_validade ? entrada.Lote_validade.toISOString().substr(0, 10) : ''}
+                    max="9999-12-31"
                     onChange={(e) => handleLoteValidadeChange(entrada.id, e.target.value)}
                     disabled={produto.Prod_validade ? false : true}
                   />
