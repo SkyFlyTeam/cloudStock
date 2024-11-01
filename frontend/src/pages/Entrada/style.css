@@ -109,6 +109,12 @@
   align-items: flex-end; 
 }
 
+.quantidade-produto{
+  font-weight: 500;
+  color: #ccc;
+  margin-top: 0.5rem;
+}
+
 .total-container-entrada {
   display: flex;
   justify-content: flex-end;

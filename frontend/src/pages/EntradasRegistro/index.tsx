@@ -52,6 +52,14 @@ function EntradasRegistro() {
             header: () => 'Valor total',
             cell: info => 'R$ ' + Number(info.getValue()).toLocaleString('pt-BR', { minimumFractionDigits: 2 }),
         }),
+        columnHelper.accessor('Ent_dataCriacao', {
+            header: () => 'Data',
+            cell: info => {
+              const valor = info.getValue();
+              const valorFormatado = new Date(valor).toLocaleDateString('pt-BR', {timeZone: 'UTC'})
+              return `${valorFormatado}`;
+            },
+          }),
         columnHelper.display({
             id: 'actions',
             cell: props => (

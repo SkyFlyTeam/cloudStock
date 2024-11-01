@@ -92,6 +92,14 @@ useEffect(() => {
         return `R$ ${valorFormatado}`;
       },
     }),
+    columnHelper.accessor('Saida_dataCriacao', {
+      header: () => 'Data',
+      cell: info => {
+        const valor = info.getValue();
+        const valorFormatado = new Date(valor).toLocaleDateString('pt-BR', {timeZone: 'UTC'})
+        return `${valorFormatado}`;
+      },
+    }),
     columnHelper.display({
       id: 'actions',
       cell: props => (

@@ -269,6 +269,8 @@ else{
                   className="delete-icon-saida"
                   onClick={() => handleRemoveProduct(produto.Prod_cod)}
                 />
+
+                <span className="quantidade-produto">Quantidade disponível: {produto.Prod_quantidade}</span>
               </div>
             );
           })}
