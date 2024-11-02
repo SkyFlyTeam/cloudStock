@@ -4,6 +4,7 @@ import { IoMdPricetags } from "react-icons/io";
 import { BsBoxSeamFill } from "react-icons/bs";
 import { FaUserGroup } from "react-icons/fa6";
 import { FaWarehouse } from "react-icons/fa";
+import { FaUsersBetweenLines } from "react-icons/fa6";
 import { FaSquareArrowUpRight } from "react-icons/fa6";
 import { PiRowsPlusTopFill, PiSignOutBold } from "react-icons/pi";
 import { Link, useLocation} from "react-router-dom";
@@ -98,6 +99,13 @@ const Navbar: React.FC = () => {
                   <div className={location.pathname === '/Produtos' ? 'menu-item active' : 'menu-item'}>
                     <BsBoxSeamFill />
                     <div className="navbartext"><span>Produtos</span></div>
+                  </div>
+                </Link>
+
+                <Link to="/Usuarios" className="link">
+                  <div className={location.pathname === '/Usuarios' ? 'menu-item active' : 'menu-item'}>
+                    <FaUsersBetweenLines />
+                    <div className="navbartext"><span>Usuarios</span></div>
                   </div>
                 </Link>
                 

@@ -6,6 +6,7 @@ export interface Usuario {
   Usuario_nome: string
   Usuario_email: string
   Usuario_senha: string
+  Usuario_dataCriacao: Date
   Cargo_id: number
   Usuario_status: boolean 
 }
@@ -33,10 +34,20 @@ const getUsuarioById = async (id: number): Promise<Usuario | ApiException> => {
     } catch (error: any) {
       return new ApiException(error.message || 'Erro ao criar o registro.')
     }
+}
+
+const getAllUsuarios = async (): Promise<Usuario[] | ApiException> => {
+  try{
+    const { data } = await Api().get('/usuario')
+    return data
+  } catch(error: any){
+    return new ApiException(error.message || 'Erro ao consultar a API.')
   }
+}
   
 
 export const usuarioServices = {
     checkLogin,
-    getUsuarioById
+    getUsuarioById,
+    getAllUsuarios,
 }
