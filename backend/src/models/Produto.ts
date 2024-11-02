@@ -1,16 +1,15 @@
-import { Table, Column, Model, DataType, ForeignKey, BelongsTo, PrimaryKey, BelongsToMany, HasMany, AutoIncrement, AllowNull } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, ForeignKey, BelongsTo, BelongsToMany, HasMany } from 'sequelize-typescript';
 import { Fornecedor_Produto } from './Fornecedor_Produto';
-import { ManyToMany } from 'typeorm';
 import { Lote } from './Lote';
 import { Categoria } from './Categoria';
 import { Unidade_Medida } from './Unidade_Medida';
 import { Fornecedor } from './Fornecedor';
+import { Notificacao } from './Notificacao';
 
 @Table({
     tableName: 'Produto',
     timestamps: false
 })
-
 export class Produto extends Model {
 
     @Column({
@@ -89,8 +88,8 @@ export class Produto extends Model {
     @Column({
         type: DataType.BOOLEAN, 
         allowNull: true, 
-      })
-      Prod_validade?: Boolean
+    })
+    Prod_validade?: boolean;
 
     @Column({
         type: DataType.BOOLEAN,
@@ -98,12 +97,18 @@ export class Produto extends Model {
     })
     Prod_status!: boolean;
 
+    @Column({
+        type: DataType.INTEGER,
+        allowNull: false,
+    })
+    Prod_estoqueMinimo!: number;
+
     @ForeignKey(() => Categoria)
     @Column({
       type: DataType.INTEGER,
       allowNull: true
     })
-    Categoria_id!: number
+    Categoria_id!: number;
 
     @BelongsTo(() => Categoria)  
     Categoria!: Categoria;
@@ -113,14 +118,17 @@ export class Produto extends Model {
       type: DataType.INTEGER,
       allowNull: true
     })
-    UnidadeMedida_id!: number
+    UnidadeMedida_id!: number;
 
     @BelongsTo(() => Unidade_Medida)
-    Unidade_Medida!: Unidade_Medida
+    Unidade_Medida!: Unidade_Medida;
 
     @BelongsToMany(() => Fornecedor, () => Fornecedor_Produto)
     Fornecedores!: Fornecedor[];
 
     @HasMany(() => Lote)
-    Lotes!: Lote[]
+    Lotes!: Lote[];
+
+    @HasMany(() => Notificacao)
+    Notificacao!: Notificacao[];
 }
