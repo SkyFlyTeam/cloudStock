@@ -26,7 +26,7 @@ export default async function init() {
         }
 
            //Verifica as configuraçãoes de sistema e as cria caso seja a primeira inicialização do sistema
-            const config = {Config_id: 1, Config_estoqueMinimo: 5, Config_avisoValidade: 5}
+            const config = {Config_id: 1, Config_avisoValidade: 5}
 
             const [configs, configCreated] = await ConfigSistema.findOrCreate({
                 where: { Config_id: config.Config_id },
