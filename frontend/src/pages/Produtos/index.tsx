@@ -17,6 +17,7 @@ import BtnCancelar from "../../components/BtnCancelar";
 import ProdutoFormulario from "../../components/Formularios/Produtos/Form_Cadastrar";
 import ProdutoExcluir from "../../components/Formularios/Produtos/Form_Excluir";
 import ProdutoEditar from "../../components/Formularios/Produtos/Form_Editar";
+import SearchBar from "./SearchBar"
 
 import './style.css'
 /* Icons */
@@ -33,6 +34,9 @@ function Produtos() {
   // Use state para armazenar uma array de Produto (interface) que será exibido na tabela
   const [data, setData] = useState<Produto[]>([])
 
+  // Estado para armazenar os produtos filtrados
+
+  const [filteredData, setFilteredData] = useState<Produto[]>([]);
   // Estado para controlar os modais
   const [openModalCadastro, setOpenModalCadastro] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
@@ -57,8 +61,17 @@ function Produtos() {
       console.log(result.message)
     } else {
       setData(result);
+      setFilteredData(result); //Inicializa o filteredData com todos os produtos
     }
   }
+
+  // Função para filtrar produtos pelo nome
+  const handleSearch = (query: string) => {
+    const filtered = data.filter((produto) =>
+      produto.Prod_nome.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredData(filtered);
+  };
 
   // Chama a função para pegar todos os produtos do BD ao montar o componente
   useEffect(() => {
@@ -138,7 +151,7 @@ function Produtos() {
 
   // Cria a tabela, aqui é onde serão passados todos os possíveis parâmetros
   const table = useReactTable({
-    data,
+    data: filteredData, //utiliza o filteredData
     columns,
     getCoreRowModel: getCoreRowModel(),
   })
@@ -173,11 +186,17 @@ function Produtos() {
         <hr className="line" />
       </div>
 
-    {currentUser?.Cargo_id === 1 && (
       <div className="actions-group">
-        <BtnAzul className="rfloat" icon={<IoAddCircleOutline />} label="CADASTRAR" onClick={() => setOpenModalCadastro(true)} />
+        <div className="search-bar-container">
+          <SearchBar onSearch={handleSearch} />
+        </div>
+    
+        <div className="cadastro">
+          {currentUser?.Cargo_id === 1 && (
+            <BtnAzul className="rfloat" icon={<IoAddCircleOutline />} label="CADASTRAR" onClick={() => setOpenModalCadastro(true)} />
+          )}
+        </div>
       </div>
-    )}
 
       <Table hover responsive size="lg">
         <thead>
