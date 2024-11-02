@@ -26,11 +26,22 @@ import { AiOutlineDelete } from "react-icons/ai"
 import { hostname } from "../../config/apiConfig"
 
 import { useAuth } from "../../context/AuthProvider"
+import { useNavigate, useParams } from "react-router-dom"
 
 // Criar o helper para colunas
 const columnHelper = createColumnHelper<Produto>()
 
 function Produtos() {
+  // Use state para armazenar e alterar a página de exibição dos produtos
+  let pags = 1
+  let {pag} = useParams();
+  if (pag === undefined){ pags = 1 }
+  else { pags = Number(pag) }
+
+  console.log(pags);
+
+  const navigate = useNavigate();
+
   // Use state para armazenar uma array de Produto (interface) que será exibido na tabela
   const [data, setData] = useState<Produto[]>([])
 
@@ -61,7 +72,7 @@ function Produtos() {
       console.log(result.message)
     } else {
       setData(result);
-      setFilteredData(result); //Inicializa o filteredData com todos os produtos
+      setFilteredData(result.slice(pags * 10 - 10, pags * 10)); //Inicializa o filteredData com todos os produtos
     }
   }
 
@@ -70,8 +81,10 @@ function Produtos() {
     const filtered = data.filter((produto) =>
       produto.Prod_nome.toLowerCase().includes(query.toLowerCase())
     );
-    setFilteredData(filtered);
+    setFilteredData(filtered.slice(pags * 10 - 10, pags * 10));
   };
+
+  const handleChangePage = (newPag: number) =>{ navigate(`/Produtos/${newPag}`); window.location.reload(); }
 
   // Chama a função para pegar todos os produtos do BD ao montar o componente
   useEffect(() => {
@@ -227,6 +240,9 @@ function Produtos() {
           ))}
         </tbody>
       </Table>
+
+      <button onClick={() => handleChangePage(pags + 1)}>next</button>
+      <button onClick={() => handleChangePage(pags - 1)}>prev</button>
 
 
       {/* MODALS*/}
