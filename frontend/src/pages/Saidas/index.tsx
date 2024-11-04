@@ -92,6 +92,14 @@ useEffect(() => {
         return `R$ ${valorFormatado}`;
       },
     }),
+    columnHelper.accessor('Saida_dataCriacao', {
+      header: () => 'Data',
+      cell: info => {
+        const valor = info.getValue();
+        const valorFormatado = new Date(valor).toLocaleDateString('pt-BR', {timeZone: 'UTC'})
+        return `${valorFormatado}`;
+      },
+    }),
     columnHelper.display({
       id: 'actions',
       cell: props => (
@@ -225,7 +233,7 @@ useEffect(() => {
                     </div>
                     <div className="info-item">
                       <span>Custo</span>
-                      <span>R${ Number(lote.Produtos?.Prod_custo).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                      <span>R${ Number(lote.Produtos?.Prod_preco).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                     </div>
                     <div className="info-item">
                       <span>Fornecedor</span>
@@ -245,7 +253,7 @@ useEffect(() => {
                     </div>
                     <div className="info-item">
                       <span>Subtotal</span>
-                      <span>R${calcularSubtotal(lote.Lote_Saida?.Saida_quantidade!, parseFloat(lote.Produtos?.Prod_custo || '0'))}</span>
+                      <span>R${calcularSubtotal(lote.Lote_Saida?.Saida_quantidade!, parseFloat(lote.Produtos?.Prod_preco || '0'))}</span>
                     </div>
                   </div>
                 </div>

@@ -25,7 +25,7 @@ function Saidas() {
   const [selectedProduto, setSelectedProduto] = useState("");
 
   //É compra??
-  const [IsCompra, setIsCompra] = useState(false);
+  const [IsCompra, setIsCompra] = useState(true);
 
 
   // Controlar estados dos Modais
@@ -269,6 +269,8 @@ else{
                   className="delete-icon-saida"
                   onClick={() => handleRemoveProduct(produto.Prod_cod)}
                 />
+
+                <span className="quantidade-produto">Quantidade disponível: {produto.Prod_quantidade}</span>
               </div>
             );
           })}

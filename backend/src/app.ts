@@ -1,6 +1,7 @@
 import router from "./routes";
 import sequelize from "./config/connection"; // Import the sequelize instance
 import init from "./config/init";
+import iniciarNotificacaoCron from "./config/validadeNotificacaoCron";
 
 const express = require('express');
 const app = express();
@@ -21,6 +22,8 @@ sequelize.sync({ force: false })  // Altere para `true` se quiser recriar as tab
 
     await init();
     
+    iniciarNotificacaoCron();
+
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
     });

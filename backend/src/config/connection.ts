@@ -15,6 +15,8 @@ import { Lote_Saida } from '../models/Lote_Saida';
 import { Unidade_Medida } from '../models/Unidade_Medida';
 import dotenv from 'dotenv';
 import { Registros } from '../models/Registros';
+import { ConfigSistema } from '../models/ConfigSistema';
+import { Notificacoes } from '../models/Notificacoes';
 
 dotenv.config();
 
@@ -24,7 +26,7 @@ const sequelize = new Sequelize({
   password: process.env.DB_PASSWORD, // mudar senha
   host: process.env.DB_HOST, // colocar domínio
   dialect: 'mysql',
-  models: [Cargo, Categoria, Entrada, Fornecedor_Produto, Fornecedor, Local_Armazenamento, Lote_Entrada, Lote_Saida, Lote, Produto, Saida, Setor, Unidade_Medida, Usuario, Registros],  // Adiciona os modelos aqui
+  models: [Cargo, Categoria, Entrada, Fornecedor_Produto, Fornecedor, Local_Armazenamento, Lote_Entrada, Lote_Saida, Lote, Produto, Saida, Setor, Unidade_Medida, Usuario, Registros, ConfigSistema, Notificacoes],  // Adiciona os modelos aqui
 });
 
 export default sequelize;

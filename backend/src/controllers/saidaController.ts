@@ -67,7 +67,7 @@ export const saidaController = {
                                     Lote_id: l.Lote_id,
                                     Saida_id: SaidaEnvio.Saida_id,
                                     Saida_quantidade: quantidadeDinamica,
-                                    Saida_valor: produto.Prod_custo * quantidadeDinamica         
+                                    Saida_valor: produto.Prod_preco * quantidadeDinamica         
                                 }
                                 
                                 saidaController.addLoteToSaidaFunc(envio);
@@ -91,7 +91,7 @@ export const saidaController = {
                                     Lote_id: l.Lote_id,
                                     Saida_id: SaidaEnvio.Saida_id,
                                     Saida_quantidade: l.Lote_quantidade,
-                                    Saida_valor: produto.Prod_custo * l.Lote_quantidade         
+                                    Saida_valor: produto.Prod_preco * l.Lote_quantidade         
                                 }
                                 
                                 saidaController.addLoteToSaidaFunc(envio);
@@ -101,7 +101,7 @@ export const saidaController = {
                     };
 
                     // Calculando o total para o produto específico
-                    Saida_valorTot += produto.Prod_custo * saidaCorrespondente.quantidade;
+                    Saida_valorTot += produto.Prod_preco * saidaCorrespondente.quantidade;
                 }
             }
 

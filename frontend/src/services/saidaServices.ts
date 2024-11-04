@@ -32,6 +32,7 @@ export interface Produto {
   Prod_id: number;
   Prod_nome: string;
   Prod_custo: string;
+  Prod_preco: string;
   Fornecedores?: Fornecedores[];
 }
 

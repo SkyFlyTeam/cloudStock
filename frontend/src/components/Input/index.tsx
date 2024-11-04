@@ -3,7 +3,7 @@ import './style.css';
 
 interface InputProps {
   label: string; // Rótulo do input
-  max?: number;
+  max?: number | string;
   className?: string; // Recebe classes para 'div' base
   placeholder?: string; // Texto que aparece quando o input está vazio
   type?: string; // Tipo do input, por padrão é "text"

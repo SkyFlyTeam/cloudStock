@@ -14,6 +14,7 @@ import registroRoutes from './registrosRoutes';
 import authRoutes from './authRoutes'
 import loteEntradaRoutes from './loteEntradaRoutes';
 import loteSaidaRoutes from './loteSaidaRoutes';
+import configRoutes from './configRoutes';
 
 const router = Router();
 
@@ -61,6 +62,9 @@ router.use('/loteEntrada', loteEntradaRoutes);
 
 //Rota para lote Saida
 router.use('/loteSaida', loteSaidaRoutes );
+
+//Rota para configurações de sistema
+router.use('/configsistema', configRoutes)
 
 
 export default router;
