@@ -15,6 +15,7 @@ import authRoutes from './authRoutes'
 import loteEntradaRoutes from './loteEntradaRoutes';
 import loteSaidaRoutes from './loteSaidaRoutes';
 import configRoutes from './configRoutes';
+import notificacoesRoutes from './notificacoesRoutes';
 
 const router = Router();
 
@@ -65,6 +66,9 @@ router.use('/loteSaida', loteSaidaRoutes );
 
 //Rota para configurações de sistema
 router.use('/configsistema', configRoutes)
+
+//Rota para notificações
+router.use('/notificacoes', notificacoesRoutes)
 
 
 export default router;

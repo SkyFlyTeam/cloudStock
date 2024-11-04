@@ -9,43 +9,48 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import { Tab, Tabs } from "react-bootstrap";
 
 import  loteIcon  from '../../assets/icons/Simplification.svg'
-import { Notificacao, notificacoesServices } from "../../services/notificacaoServices";
+import { Notificacao, notificacoesServices } from "../../services/notificacoesServices";
 import { ApiException } from "../../config/apiException";
 
 
 const BarraSuperior: React.FC = () => {
-  const location = useLocation() // Hook para pegar a rota atual
-  const navigate = useNavigate() // Funções para navegar
+    const location = useLocation() // Hook para pegar a rota atual
+    const navigate = useNavigate() // Funções para navegar
 
-  // State/Funções do OffCanvas de Notificações
-  const [showNotifications, setShowNotifications] = useState(false)
+    // State/Funções do OffCanvas de Notificações
+    const [showNotifications, setShowNotifications] = useState(false)
 
-  const handleCloseNotifications = () => setShowNotifications(false)
-  const handleShowNotifications = () => setShowNotifications(true)
+    const handleCloseNotifications = () => setShowNotifications(false)
+    const handleShowNotifications = () => setShowNotifications(true)
 
-  // Contagem das notificações
-  const [totalCount, setTotalCount] = useState(8); 
-  const [todasCount, setTodasCount] = useState(8);       
-  const [estoqueCount, setEstoqueCount] = useState(3);  
-  const [validadeCount, setValidadeCount] = useState(2);
+    // Armazena notificações
+    const [notificacoes, setNotificacoes] = useState<Notificacao[]>([]);
+    const [notificacoesValidade, setNotificacoesValidade] = useState<Notificacao[]>([]);
+    const [notificacoesEstoque, setNotificacoesEstoque] = useState<Notificacao[]>([]);
 
-  // Armazena notificações
-  const [notificacoes, setNotificacoes] = useState<Notificacao[]>([]);
+    // Função para buscar todos as notificações
+    const fetchNotificacoes = async () => {
+      const result = await notificacoesServices.getAllNotificacoes()
+      if (result instanceof ApiException) {
+        console.log(result.message)
+      } else {
+        setNotificacoes(result);
+      }
+    }
 
-  // Função para buscar todos as notificações
-  // const fetchNotificacoes = async () => {
-  //   const result = await notificacoesServices.getAllNotificacoes()
-  //   if (result instanceof ApiException) {
-  //     console.log(result.message)
-  //   } else {
-  //     setNotificacoes(result);
-  //   }
-  // }
+    // Contagem das notificações
+    const [totalCount, setTotalCount] = useState(notificacoes.length);      
+    const [estoqueCount, setEstoqueCount] = useState(3);  
+    const [validadeCount, setValidadeCount] = useState(2);
 
-  // // Chama a função para pegar todos os fornecedores do BD ao montar o componente
-  // useEffect(() => {
-  //   fetchNotificacoes()
-  // }, [])
+    // Chama a função para pegar todos os fornecedores do BD ao montar o componente
+    useEffect(() => {
+      fetchNotificacoes()
+      setNotificacoesEstoque(notificacoes.filter(item => item.Not_Tipo == 'Estoque'))
+      setNotificacoesValidade(notificacoes.filter(item => item.Not_Tipo == 'Validade'))
+      setEstoqueCount(notificacoesEstoque.length)
+      setValidadeCount(notificacoesValidade.length)
+    }, [])
 
     return (
       <div className="BarraSuperior">
@@ -86,9 +91,30 @@ const BarraSuperior: React.FC = () => {
               <Tab eventKey="todas" title={
                 <div className="title">
                   <span>Todas</span>
-                  <div className="not-count">{todasCount}</div>
+                  <div className="not-count">{totalCount}</div>
                 </div>
               }>
+                {notificacoes.map((notificacao) => (
+                  notificacao.Not_Tipo === 'Estoque' ? (
+                    <div className="not-item" key={notificacao.Not_id}> 
+                      <img src={loteIcon} alt="Lote Icon" />
+                      <div className="content">
+                        <span> <b>{notificacao.Produto.Prod_nome}</b> atingiu o estoque mínimo</span>
+                        <span className="subtitle">15 unidades restantes</span>
+                        <span className="date">{new Date(notificacao.Not_Data).toLocaleDateString()}</span>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="not-item" key={notificacao.Not_id}> 
+                      <TbClockExclamation className="icon-clock"/>
+                      <div className="content">
+                        <span><b>{notificacao.Lote?.Lote_cod}</b> do <b>{notificacao.Produto.Prod_nome}</b> atingiu o estoque mínimo</span>
+                        <span className="subtitle">15 dias restantes</span>
+                        <span className="date">{new Date(notificacao.Not_Data).toLocaleDateString()}</span>
+                      </div>
+                    </div>
+                  )
+                ))}
                 <div className="not-item">
                   <img src={loteIcon}></img>
                   <div className="content">
