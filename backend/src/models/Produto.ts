@@ -4,7 +4,7 @@ import { Lote } from './Lote';
 import { Categoria } from './Categoria';
 import { Unidade_Medida } from './Unidade_Medida';
 import { Fornecedor } from './Fornecedor';
-import { Notificacao } from './Notificacao';
+import { Notificacoes } from './Notificacoes';
 
 @Table({
     tableName: 'Produto',
@@ -99,7 +99,7 @@ export class Produto extends Model {
 
     @Column({
         type: DataType.INTEGER,
-        allowNull: false,
+        allowNull: true,
     })
     Prod_estoqueMinimo!: number;
 
@@ -129,6 +129,6 @@ export class Produto extends Model {
     @HasMany(() => Lote)
     Lotes!: Lote[];
 
-    @HasMany(() => Notificacao)
-    Notificacao!: Notificacao[];
+    @HasMany(() => Notificacoes)
+    Notificacoes!: Notificacoes[];
 }
