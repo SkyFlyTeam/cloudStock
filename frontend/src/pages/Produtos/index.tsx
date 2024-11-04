@@ -27,6 +27,7 @@ import { hostname } from "../../config/apiConfig"
 
 import { useAuth } from "../../context/AuthProvider"
 import { useNavigate, useParams } from "react-router-dom"
+import { LoadingDots } from "./LoadingDots"
 
 // Criar o helper para colunas
 const columnHelper = createColumnHelper<Produto>()
@@ -71,6 +72,7 @@ function Produtos() {
     if (result instanceof ApiException) {
       console.log(result.message)
     } else {
+      console.log('ssss')
       setData(result);
       setFilteredData(result.slice(pags * 10 - 10, pags * 10)); //Inicializa o filteredData com todos os produtos
     }
@@ -84,7 +86,17 @@ function Produtos() {
     setFilteredData(filtered.slice(pags * 10 - 10, pags * 10));
   };
 
-  const handleChangePage = (newPag: number) =>{ navigate(`/Produtos/${newPag}`); window.location.reload(); }
+  const handleChangePage = (newPag: number) => { 
+    if (newPag < 1){
+      navigate(`/Produtos/${1}`); window.location.reload(); 
+    }
+    else if (newPag > data.length / 10 + 1){
+      navigate(`/Produtos/${parseInt(`${data.length / 10 + 1}`)}`); window.location.reload(); 
+    }
+    else{
+    navigate(`/Produtos/${newPag}`); window.location.reload();
+     } 
+    }
 
   // Chama a função para pegar todos os produtos do BD ao montar o componente
   useEffect(() => {
@@ -240,6 +252,8 @@ function Produtos() {
           ))}
         </tbody>
       </Table>
+
+      <LoadingDots data={data} />
 
       <button onClick={() => handleChangePage(pags + 1)}>next</button>
       <button onClick={() => handleChangePage(pags - 1)}>prev</button>
