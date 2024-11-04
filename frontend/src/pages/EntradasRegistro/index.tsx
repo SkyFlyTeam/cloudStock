@@ -95,11 +95,12 @@ function EntradasRegistro() {
   }
 
   const handleLimparFiltros = () => {
-    setData(entradas)
-    setFornecedorFiltrado(null)
-    setProdutoFiltrado(null)
-    setFiltroKey((prevKey) => prevKey + 1)
-  }
+    setFornecedorFiltrado(null);
+    setProdutoFiltrado(null);
+    setValorMin(null);
+    setValorMax(null);
+    setFiltroKey((prevKey) => prevKey + 1);
+  };
 
   const handleProdutoChange = (id: number) => {
     const produtoFiltrado = produtos.find((p) => p.Prod_cod === id)

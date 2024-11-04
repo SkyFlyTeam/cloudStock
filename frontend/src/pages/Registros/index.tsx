@@ -116,13 +116,13 @@ function Registros() {
 
       if (valorMin !== null) {
         registrosFiltrados = registrosFiltrados.filter((r) => 
-          r.Registro_ValorTotal !== null && r.Registro_ValorTotal >= valorMin 
+          r.Registro_ValorTotal !== null && Number(r.Registro_ValorTotal) >= valorMin
         );
       }
       
       if (valorMax !== null) {
         registrosFiltrados = registrosFiltrados.filter((r) => 
-          r.Registro_ValorTotal !== null && r.Registro_ValorTotal <= valorMax
+          r.Registro_ValorTotal !== null && Number(r.Registro_ValorTotal) <= valorMax
         );
       }
 
@@ -247,14 +247,14 @@ function Registros() {
                   type="number" 
                   id="inValor" 
                   value={valorMin ?? ""}
-                  onChange={(e) => setValorMin(e.target.value ? +e.target.value : null)}
+                  onChange={(e) => setValorMin(e.target.value ? parseFloat(e.target.value) : null)}
                   placeholder="Min"
                 />
                 <input 
                   type="number" 
                   id="inValor" 
                   value={valorMax ?? ""}
-                  onChange={(e) => setValorMax(e.target.value ? +e.target.value : null)}
+                  onChange={(e) => setValorMax(e.target.value ? parseFloat(e.target.value) : null)}
                   placeholder="Máx"
                 />
               </div>

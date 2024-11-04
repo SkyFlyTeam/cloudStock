@@ -85,6 +85,8 @@ function Saidas() {
     setData(saidas)
     setFornecedorFiltrado(null)
     setProdutoFiltrado(null)
+    setValorMin(null)
+    setValorMax(null)
     setFiltroKey((prevKey) => prevKey + 1)
   }
 
