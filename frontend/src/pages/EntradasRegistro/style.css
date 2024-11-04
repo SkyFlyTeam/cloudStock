@@ -117,6 +117,13 @@ h3 {
     margin: 0 0 0 10px;
 }
 
+.entrada-container-filtros {
+    display: flex;
+    column-gap: 1em;
+    flex-wrap: wrap;
+}
+
+
 @media (max-width: 768px) {
     .modal-content-visualizar{
         width: 35rem;

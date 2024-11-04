@@ -177,9 +177,11 @@ function Registros() {
 
       {showFiltros && (
         <>
-          <div>
+        <div className="registro-container-filtros">
+          <div className="registro-primeira-coluna">
+          <div className="tipo-container">
             <label htmlFor="inStatus">Tipo</label>
-            <div>
+            <div className="radio-container">
               <label htmlFor="inAtivo">Entrada</label>
               <input
                 type="radio"
@@ -190,7 +192,7 @@ function Registros() {
                 onChange={(e) => setTipo(e.target.value)}
               />
             </div>
-            <div>
+            <div className="radio-container">
               <label htmlFor="inInativo">Saída</label>
               <input
                 type="radio"
@@ -202,7 +204,7 @@ function Registros() {
               />
             </div>
           </div>
-          <div className="fornecedor-container" key={filtroKey}>
+          <div className="responsavel-container" key={filtroKey}>
             <label htmlFor="inusuarios">Responsável</label>
             <select 
               id="inusuarios"
@@ -217,7 +219,9 @@ function Registros() {
               ))}
             </select>
           </div>
-          <div className="validade-container">
+          </div>
+          <div className="registro-segunda-coluna">
+            <div className="data-container">
               <label htmlFor="inData">Data:</label>
               <div>
                 <input 
@@ -236,7 +240,7 @@ function Registros() {
                 />
               </div>
             </div>
-            <div className="venda-container">
+            <div className="valor-container">
               <label htmlFor="inVenda">Valor:</label>
               <div>
                 <input 
@@ -255,6 +259,8 @@ function Registros() {
                 />
               </div>
             </div>
+          </div>   
+          </div>
           <div className="filtros-btn">
             <button className="rfloat btnLimpar" onClick={handleLimparFiltros}>LIMPAR</button>
           </div>

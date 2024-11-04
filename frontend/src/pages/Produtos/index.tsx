@@ -329,99 +329,111 @@ const handleLimparFiltros = () => {
       {showFiltros && (
         <>
           <div className="container-filtros" key={filtroKey}>
-            <div>
-              <label htmlFor="inStatus">Status</label>
-              <div>
-                <label htmlFor="inAtivo">Ativo</label>
-                <input type="radio" name="inStatus" id="inAtivo" value="ativo" onClick={handleAtivos} />
+            <div className="registro-primeira-coluna">
+              <div className="status-filtro">
+                <label htmlFor="inStatus">Status</label>
+                <div>
+                  <label htmlFor="inAtivo">Ativo</label>
+                  <input type="radio" name="inStatus" id="inAtivo" value="ativo" onClick={handleAtivos} />
+                </div>
+                <div>
+                  <label htmlFor="inInativo">Inativo</label>
+                  <input type="radio" name="inStatus" id="inInativo" value="inativo" onClick={handleInativos} />
+                </div>
               </div>
-              <div>
-                <label htmlFor="inInativo">Inativo</label>
-                <input type="radio" name="inStatus" id="inInativo" value="inativo" onClick={handleInativos} />
-              </div>
-            </div>
-            <div className="fornecedor-container">
-              <label htmlFor="inFornecedor">Fornecedor</label>
-              <select 
-                id="inFornecedor"
-                className="form-select-custom"
-                onChange={(e) => handleFornecedorChange(+e.target.value)}
-              >
-                <option selected>Buscar...</option>
-                {fornecedores.map((f) => (
-                  <option key={f.Forn_id} value={f.Forn_id}>
-                    {f.Forn_razaoSocial}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="quantidade-container">
-              <label htmlFor="inQuantidade">Quantidade:</label>
-              <div>
-                <input 
-                  type="number" 
-                  id="inQuantidade" 
-                  onChange={(e) => setQuantidadeMin(e.target.value ? +e.target.value : null)}
-                  placeholder="Min"
-                />
-                <input 
-                  type="number" 
-                  id="inQuantidade" 
-                  onChange={(e) => setQuantidadeMax(e.target.value ? +e.target.value : null)}
-                  placeholder="Máx"
-                />
+              <div className="fornecedor-container">
+                <label htmlFor="inFornecedor">Fornecedor</label>
+                <select 
+                  id="inFornecedor"
+                  className="form-select-custom"
+                  onChange={(e) => handleFornecedorChange(+e.target.value)}
+                >
+                  <option selected>Buscar...</option>
+                  {fornecedores.map((f) => (
+                    <option key={f.Forn_id} value={f.Forn_id}>
+                      {f.Forn_razaoSocial}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
-            <div className="venda-container">
-              <label htmlFor="inVenda">Preço de venda:</label>
-              <div>
-                <input 
-                  type="number" 
-                  id="inVenda" 
-                  onChange={(e) => setVendaMin(e.target.value ? +e.target.value : null)}
-                  placeholder="Min"
-                />
-                <input 
-                  type="number" 
-                  id="inVenda" 
-                  onChange={(e) => setVendaMax(e.target.value ? +e.target.value : null)}
-                  placeholder="Máx"
-                />
+
+            <div className="registro-segunda-coluna">
+              <div className="preco-container">
+                <div className="custo-container">
+                    <label htmlFor="inCusto">Preço de custo:</label>
+                    <div>
+                      <input 
+                        type="number" 
+                        id="inCusto" 
+                        onChange={(e) => setCustoMin(e.target.value ? +e.target.value : null)}
+                        placeholder="Min"
+                      />
+                      <input 
+                        type="number" 
+                        id="inCusto" 
+                        onChange={(e) => setCustoMax(e.target.value ? +e.target.value : null)}
+                        placeholder="Máx"
+                      />
+                    </div>
+                  </div>
+                <div className="venda-container">
+                  <label htmlFor="inVenda">Preço de venda:</label>
+                  <div>
+                    <input 
+                      type="number" 
+                      id="inVenda" 
+                      onChange={(e) => setVendaMin(e.target.value ? +e.target.value : null)}
+                      placeholder="Min"
+                    />
+                    <input 
+                      type="number" 
+                      id="inVenda" 
+                      onChange={(e) => setVendaMax(e.target.value ? +e.target.value : null)}
+                      placeholder="Máx"
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="custo-container">
-              <label htmlFor="inCusto">Preço de custo:</label>
-              <div>
-                <input 
-                  type="number" 
-                  id="inCusto" 
-                  onChange={(e) => setCustoMin(e.target.value ? +e.target.value : null)}
-                  placeholder="Min"
-                />
-                <input 
-                  type="number" 
-                  id="inCusto" 
-                  onChange={(e) => setCustoMax(e.target.value ? +e.target.value : null)}
-                  placeholder="Máx"
-                />
+
+              <div className="quantidade-validade-container">
+                <div className="quantidade-container">
+                  <label htmlFor="inQuantidade">Quantidade:</label>
+                  <div>
+                    <input 
+                      type="number" 
+                      id="inQuantidade" 
+                      onChange={(e) => setQuantidadeMin(e.target.value ? +e.target.value : null)}
+                      placeholder="Min"
+                    />
+                    <input 
+                      type="number" 
+                      id="inQuantidade" 
+                      onChange={(e) => setQuantidadeMax(e.target.value ? +e.target.value : null)}
+                      placeholder="Máx"
+                    />
+                  </div>
+                </div>
+                <div className="validade-container">
+                  <label htmlFor="inValidade">Validade:</label>
+                  <div>
+                    <input 
+                      type="date" 
+                      id="inValidade" 
+                      onChange={(e) => setDataMin(e.target.value ? e.target.value : null)}
+                      placeholder="Min"
+                    />
+                    <input 
+                      type="date" 
+                      id="inValidade" 
+                      onChange={(e) => setDataMax(e.target.value ? e.target.value : null)}
+                      placeholder="Máx"
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="validade-container">
-              <label htmlFor="inValidade">Validade:</label>
-              <div>
-                <input 
-                  type="date" 
-                  id="inValidade" 
-                  onChange={(e) => setDataMin(e.target.value ? e.target.value : null)}
-                  placeholder="Min"
-                />
-                <input 
-                  type="date" 
-                  id="inValidade" 
-                  onChange={(e) => setDataMax(e.target.value ? e.target.value : null)}
-                  placeholder="Máx"
-                />
-              </div>
+
+              
             </div>
           </div>
           <div className="filtros-btn">

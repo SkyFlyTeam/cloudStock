@@ -267,8 +267,8 @@ function Saidas() {
 
       {showFiltros && (
         <>
-          <div className="container-filtros" key={filtroKey}>
-            <div className="fornecedor-container">
+          <div className="saida-container-filtros" key={filtroKey}>
+            <div className="fornecedor-container item">
               <label htmlFor="inFornecedor">Fornecedor</label>
               <select 
                 id="inFornecedor"
@@ -298,7 +298,7 @@ function Saidas() {
                 ))}
               </select>
             </div>
-            <div className="quantidade-container">
+            <div className="quantidade-container item">
                 <label htmlFor="inValor">Valor:</label>
                 <div>
                   <input 

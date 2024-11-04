@@ -210,7 +210,7 @@ function EntradasRegistro() {
 
             {showFiltros && (
                 <>
-                <div className="container-filtros" key={filtroKey}>
+                <div className="entrada-container-filtros" key={filtroKey}>
                     <div className="fornecedor-container">
                     <label htmlFor="inFornecedor">Fornecedor</label>
                     <select 
