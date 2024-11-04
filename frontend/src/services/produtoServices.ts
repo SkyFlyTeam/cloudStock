@@ -160,6 +160,20 @@ const getProdutoLotes = async (Produto_id: number, Local_id: number): Promise<Lo
   }
 }
 
+const getProdutoLotesProduto = async (Produto_id: number): Promise<Lote[] | ApiException> => {
+  try {
+    const { data } = await Api().get<any>(`/lote/produto/${Produto_id}`, {
+      headers: { 'Content-Type': 'application/json' }
+    })
+
+    console.log(data)
+    return data
+
+  } catch (error: any) {
+    return new ApiException(error.message || 'Erro ao listar lotes.')
+  }
+}
+
 export const produtoServices = {
   getAllProdutos,
   createProduto,
@@ -167,5 +181,6 @@ export const produtoServices = {
   deleteProduto,
   updateProduto,
   getProdutosByLocal,
-  getProdutoLotes
+  getProdutoLotes,
+  getProdutoLotesProduto
 }

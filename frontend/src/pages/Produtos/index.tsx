@@ -21,11 +21,14 @@ import ProdutoEditar from "../../components/Formularios/Produtos/Form_Editar";
 
 import './style.css'
 /* Icons */
-import { IoAddCircleOutline } from "react-icons/io5"
+import { IoAddCircleOutline, IoArrowBackCircleOutline } from "react-icons/io5"
 import { AiOutlineDelete } from "react-icons/ai"
 import { hostname } from "../../config/apiConfig"
 import { Fornecedor } from "../../services/fornecedorServices"
 import { BsFilter } from "react-icons/bs"
+import VisualizarBtn from "../../components/VisualizarBtn";
+import { useParams } from "react-router-dom"
+
 
 
 // Criar o helper para colunas
@@ -51,6 +54,8 @@ function Produtos() {
   const [filtroKey, setFiltroKey] = useState(0)
   // useState para controlar os modais
   const [openModalCadastro, setOpenModalCadastro] = useState(false);
+  //Estado para controlar o modal
+	const [openModalVisualizar, setOpenModalVisualizar] = useState(false)
   const [openEditModal, setOpenEditModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   // Mensagem de sucesso das ações
@@ -61,6 +66,11 @@ function Produtos() {
   const formRef = useRef<{ submitForm: () => void }>(null);
   // Guarda o ID dos fornecedores selecionados na tabela
   const [produtoSelecionado, setProdutoSelecionado] = useState<number | null>(null);
+  const [lotesInfo, setLotesInfo] = useState<Lote[] | null>(null)
+  // Guarda o ID de local recebido na rota e converte para int
+  const { id } = useParams();
+  const idInt = id ? parseInt(id, 10) : null
+
 
   // Função para buscar todos os produtos
   const fetchProdutos = async () => {
@@ -83,12 +93,27 @@ function Produtos() {
     }
   }
 
+
   // Chama a função para pegar todos os produtos do BD ao montar o componente
   useEffect(() => {
     fetchProdutos()
     fetchFornecedores()
   }, [])
 
+  const handleVisualizarClick = (Produto_id: number) => {
+    setProdutoSelecionado(Produto_id)
+    setOpenModalVisualizar(true) // Abre o modal de edição
+    async function fetchLotes() { //
+        const response = await produtoServices.getProdutoLotesProduto(Produto_id)
+        console.log('lotes',response) // VER AS INFORMAÇÕES RETORNADAS
+        if (response instanceof ApiException) {
+            alert(response.message)
+        } else {
+            setLotesInfo(response)
+        }
+    }
+    fetchLotes()
+}
 
   // FILTROS 
   // Mostrar campo de filtro
@@ -215,6 +240,11 @@ const handleLimparFiltros = () => {
         header: () => 'Preco Custo',
         cell: info => info.getValue(),
     }),
+    // columnHelper.accessor('Lotes', {
+    //   header: () => 'Lote ID',
+    //   cell: info => info.getValue()?.[0]?.Lote_cod || 'N/A',
+    // }),
+    
     columnHelper.accessor('Prod_status', {
       header: () => <div className="th-center"> Status</div>,
       cell: info => (
@@ -227,6 +257,7 @@ const handleLimparFiltros = () => {
           />
         </div>
       ),
+      
     }),
     columnHelper.display({
       id: 'actions',
@@ -238,6 +269,15 @@ const handleLimparFiltros = () => {
         />
       ),
     }),
+    columnHelper.display({
+			id: 'actions1',
+			cell: props => (
+					<VisualizarBtn
+							id={props.row.original.Prod_cod}
+							onView={() => handleVisualizarClick(props.row.original.Prod_cod)}
+					/>
+			),
+		}),
   ]
 
 
@@ -493,10 +533,48 @@ const handleLimparFiltros = () => {
             }}
           />
         </Modal>
+
+        
       )}
+
+<Modal
+				isOpen={openModalVisualizar} // Abre o modal
+				label="Lotes" // Titulo do modal
+				buttons={
+						<>
+								<BtnAzul icon={<IoArrowBackCircleOutline />} label='VOLTAR' onClick={() => setOpenModalVisualizar(false)} />
+						</>
+				}
+		>
+				{lotesInfo ? (
+						<table>
+              <thead>
+                <tr>
+                  <th className="th-lote">Código</th>
+                  <th className="th-lote">Validade</th>
+                  <th className="th-lote">Quantidade</th>
+                </tr>
+              </thead>
+              <tbody className="table-lp">
+              {lotesInfo.filter(lote => lote.Lote_quantidade > 0).map(lote => (
+                  <tr key={lote.Lote_cod} className="table-lp">
+                    <td className="td-lote">{lote.Lote_cod}</td>
+                    <td className="td-lote">{new Date(lote.Lote_validade).toLocaleDateString()}</td>
+                    <td className="td-lote">{lote.Lote_quantidade}</td>
+                  </tr>
+                ))
+              }
+              </tbody>
+            </table>
+				) : (
+						<p>Carregando informações dos lotes...</p>
+				)}
+		</Modal>
 
     </main>
   )
 }
 
 export default Produtos
+
+

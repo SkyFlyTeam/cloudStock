@@ -42,9 +42,4 @@ export class Registros extends Model{
         allowNull: false
     })
     Registro_Chave!: number;
-
-    @Column({
-        type: DataType.FLOAT
-    })
-    Registro_ValorTotal: number
 }

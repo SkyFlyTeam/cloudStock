@@ -49,7 +49,6 @@ hr.line{
 }
 .container-filtros {
     display: flex;
-    align-items: start;
     column-gap: 1em;
 }
 .container-filtros label {
@@ -58,24 +57,18 @@ hr.line{
 .filtros-btn {
     display: flex;
     column-gap: .5em;
-    justify-content: end;
-}
-.filtros-btn button {
-    margin-right: 2em;
 }
 .quantidade-container, .venda-container, .custo-container, .validade-container {
     display: flex;
     flex-direction: column;
-    align-items: start;
+    align-items: center;
     justify-content: center;
 }
 .venda-container label, .custo-container label, .validade-container label{
     width: 8em;
-    margin-bottom: .3em;
 }
 .venda-container input, .custo-container input, .validade-container input {
     width: 6em;
-    text-align: center;
 }
 
 table{

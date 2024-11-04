@@ -10,15 +10,6 @@ body {
     gap: 10px;
 }
 
-.registro-header {
-    display: flex;
-    justify-content: space-between;
-}
-
-.responsavel {
-    text-transform: capitalize;
-}
-
 .registro-item {
     display: flex;
     align-items: center;

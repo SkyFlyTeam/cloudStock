@@ -9,7 +9,6 @@ export interface Registro {
   Registro_Tipo: string
   Registro_Chave: number
   Registro_Usuario: string
-  Registro_ValorTotal: number
 }
 
 export interface Usuario {
