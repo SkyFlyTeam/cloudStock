@@ -66,3 +66,8 @@ tbody tr:nth-child(odd) {
   .status-filtro-fornecedor label{
     width: 4em;
   }
+
+  .page-title-fornecedores {
+    display: flex;
+    justify-content: space-between;
+  }

@@ -180,19 +180,21 @@ function Fornecedores() {
   return (
     <main>
       <div className="page-title">
-        <h1 className="title">Fornecedores</h1>
+        <div className="page-title-fornecedores">
+          <h1 className="title">Fornecedores</h1>
+          <div className="btnFiltrar" onClick={() => setShowFiltros(!showFiltros)}>
+            <BsFilter size={24} style={{ color: '#61BDE0'}} />
+            <span>Filtrar por</span>
+          </div>
+        </div>
         <hr className="line" />
       </div>
 
-    {currentUser?.Cargo_id === 2 && (
       <div className="actions-group">
-        <div className="btnFiltrar" onClick={() => setShowFiltros(!showFiltros)}>
-          <BsFilter size={24} style={{ color: '#61BDE0'}} />
-          <span>Filtrar por</span>
-        </div>
-        <BtnAzul icon={<IoAddCircleOutline />} label="CADASTRAR" onClick={() => setOpenModalCadastro(true)} />
+        {currentUser?.Cargo_id === 2 && (
+          <BtnAzul icon={<IoAddCircleOutline />} label="CADASTRAR" onClick={() => setOpenModalCadastro(true)} />
+        )}
       </div>
-    )}
       {/* Implementação para o futuro, precisa adicionar tempo e + coisas {mensagemSucesso && <div className="success-message">{mensagemSucesso}</div>} */}
 
       {showFiltros && (
