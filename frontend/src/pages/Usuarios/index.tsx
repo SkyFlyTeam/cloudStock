@@ -27,6 +27,7 @@ import { hostname } from "../../config/apiConfig";
 import { useAuth } from "../../context/AuthProvider";
 import SearchBar from "./SearchBar";
 import { Usuario, usuarioServices } from "../../services/usuariosServices";
+import ToggleBtnCargo from "../../components/ToggleBtnCargo";
 
 
 // Const para a criação de colunas; Define a Tipagem (Interface)
@@ -57,7 +58,7 @@ function Usuarios() {
   const [filteredData, setFilteredData] = useState<Usuario[]>([]);
 
   // Função para buscar todos os usuarios 
-  const fetchFornecedores = async () => {
+  const fetchUsuarios = async () => {
     const result = await usuarioServices.getAllUsuarios()
     if (result instanceof ApiException) {
       console.log(result.message)
@@ -78,18 +79,23 @@ function Usuarios() {
 
   // Chama a função para pegar todos os fornecedores do BD ao montar o componente
   useEffect(() => {
-    fetchFornecedores()
+    fetchUsuarios()
   }, [])
 
 
   // Altera o Status do componente 
-//   const handleStatusChange = (forn_id: number, newStatus: boolean) => {
-//     setData(prevData =>
-//       prevData.map(produto =>
-//         produto.Forn_id === forn_id ? { ...produto, prod_status: newStatus } : produto
-//       )
-//     )
-//   }
+  const handleStatusChange = (usuario_id: number, newStatus: boolean) => {
+    setData(prevData =>
+      prevData.map(usuario =>
+        usuario.Usuario_id === usuario_id ? { ...usuario, Usuario_status: newStatus } : usuario
+      )
+    )
+  };
+
+  // Altera o Status do componente 
+  const handleCargoChange = async (usuario_id: number) => {
+    const result = await usuarioServices.updateUsuarioCargo(usuario_id)
+  };
 
   // Define as colunas
   const columns: ColumnDef<Usuario, any>[] = [
@@ -97,29 +103,47 @@ function Usuarios() {
       header: () => 'Nome',
       cell: info => info.getValue(),
     }),
-    columnHelper.accessor('Usuario_email', {
-      header: () => 'Email',
-      cell: info => info.getValue(),
-    }),
     columnHelper.accessor('Cargo_id', {
-        header: () => 'Cargo',
-        cell: info => {
-            const cargoId: number = info.getValue();
-            const cargos: { [key: number]: string } = { 1: 'Funcionário', 2: 'Gerente', 3: 'Administrador' };
-            return cargos[cargoId] || 'Desconhecido'; // Exibe 'Desconhecido' se o ID não estiver no mapeamento
-        },
-    }),
-    
-    columnHelper.accessor('Usuario_dataCriacao', {
-        header: () => 'Criado em',
-        cell: info => {
-            const data = new Date(info.getValue());
-            return data.toLocaleDateString('pt-BR', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric'
-            });
-        },
+      header: () => 'Tipo',
+      cell: info => {
+          const cargoNome = info.getValue() === 1 ? 'Funcionário' : 'Gerente';
+          return (
+              <div className="td-center">
+                  <span>{cargoNome}</span>
+                  {currentUser?.Cargo_id === 2 ? ( // Exibe o toggle para gerente
+                      <ToggleBtn
+                          checked={info.getValue() === 1}
+                          cod={info.row.original.Usuario_id}
+                          rota={`${hostname}usuario`}
+                          onStatusChange={() => handleCargoChange(info.row.original.Usuario_id)}
+                      />
+                  ) : (
+                      <span className={info.getValue() === 1 ? 'status-ativo1' : 'status-inativo1'}>
+                          {info.getValue() === 1 ? 'Ativo' : 'Inativo'}
+                      </span>
+                  )}
+              </div>
+          );
+      },
+  }),
+    columnHelper.accessor('Usuario_status', {
+      header: () => 'Status',
+      cell: info => (
+        <div className="td-center">
+      {currentUser?.Cargo_id === 2 ? (
+          <ToggleBtn
+            checked={info.getValue() == 1}
+            cod={info.row.original.Usuario_id}
+            rota={`${hostname}usuario`}
+            onStatusChange={(newStatus: any) => handleStatusChange(info.row.original.Usuario_id, newStatus)}
+          />
+      ) : (
+        <span className= {info.getValue() == 1 ? 'status-ativo1' : 'status-inativo1'}>
+          {info.getValue() == 1 ? 'Ativo' : 'Inativo'}
+        </span>
+      )}
+      </div>
+      ),
     }),
     columnHelper.display({
       id: 'actions',
@@ -169,7 +193,7 @@ function Usuarios() {
   return (
     <main>
       <div className="page-title">
-        <h1 className="title">Fornecedores</h1>
+        <h1 className="title">Usuários</h1>
         <hr className="line" />
       </div>
 
@@ -235,7 +259,7 @@ function Usuarios() {
           onSuccess={message => {
             setMensagemSucesso(message) 
             setOpenModalCadastro(false)
-            fetchFornecedores() // Atualiza a tabela
+            fetchUsuarios() // Atualiza a tabela
           }}
         />
       </Modal>
@@ -258,7 +282,7 @@ function Usuarios() {
             onSuccess={message => {
               setMensagemSucesso(message);
               closeEditModal();
-              fetchFornecedores(); // Atualiza a tabela após edição
+              fetchUsuarios(); // Atualiza a tabela após edição
             }}
           />
         </Modal>
@@ -282,7 +306,7 @@ function Usuarios() {
             onSuccess={message => {
               setMensagemSucesso(message)
               closeDeleteModal()
-              fetchFornecedores()
+              fetchUsuarios()
             }}
           />
         </Modal>

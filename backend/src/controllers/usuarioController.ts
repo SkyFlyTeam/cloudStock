@@ -109,5 +109,31 @@ export const controllerUsuario = {
     } catch (error) {
       return res.status(500).json({ error: 'Erro ao alterar o status do usuário' });
     }
+  },
+  changeCargo: async (req, res) => {
+    const { id } = req.params;
+    try {
+      // Procurar o usuário pelo ID
+      const usuario = await Usuario.findByPk(id);
+  
+      if (!usuario) {
+        return res.status(404).json({ error: 'Usuário não encontrado' });
+      }
+  
+      // Alternar o cargo atual (1 => 2 ou 2 => 1)
+      const novoCargoId = usuario.Cargo_id === 1 ? 2 : 1;
+
+  
+      // Atualizar o status no banco de dados
+      await Usuario.update(
+        { Cargo_id: novoCargoId },
+        { where: { Usuario_id: id } }
+      );
+  
+      // Retornar o novo status atualizado
+      return res.status(200).json({ message: "Status alterado com sucesso", usuario });
+    } catch (error) {
+      return res.status(500).json({ error: 'Erro ao alterar o status do usuário' });
+    }
   }
 }

@@ -44,10 +44,25 @@ const getAllUsuarios = async (): Promise<Usuario[] | ApiException> => {
     return new ApiException(error.message || 'Erro ao consultar a API.')
   }
 }
+
+const updateUsuarioCargo = async (id: number): Promise<Usuario | ApiException> => {
+  try {
+    const { data } = await Api().put<any>(`/fornecedor/${id}`,{
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+    const usuario_atualizado: Usuario = data
+    return usuario_atualizado
+
+  } catch (error: any) {
+    return new ApiException(error.message || 'Erro ao criar o registro.')
+  }
+}
   
 
 export const usuarioServices = {
     checkLogin,
     getUsuarioById,
     getAllUsuarios,
+    updateUsuarioCargo,
 }
