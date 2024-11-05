@@ -66,10 +66,6 @@ export class Entrada extends Model {
 	@AfterUpdate
 	static async verificarEstoque(instance: Entrada) {
 		try {
-			console.log('\n VERIFICANDO ESTOQUE APÓS ENTRADA');
-			console.log('Instancia: ', instance);
-			console.log('ID', instance.Ent_id);
-	
 			// Adiciona um timeout para atrasar a execução da busca
 			setTimeout(async () => {
 				const instanceWithLotes = await Entrada.findAll({
@@ -77,7 +73,6 @@ export class Entrada extends Model {
 					include: [Lote]
 				});
 	
-				console.log('entrada', instanceWithLotes);
 	
 				if (!instanceWithLotes || instanceWithLotes.length === 0 || !instanceWithLotes[0].Lotes || instanceWithLotes[0].Lotes.length === 0) {
 					console.warn("Nenhum lote encontrado para esta entrada.");
@@ -110,7 +105,6 @@ export class Entrada extends Model {
 		
 					// Se a quantidade do produto for maior que o estoque, então tenho que excluir a notificação de Estoque
 					if (quantidade >= estoqueMinimo) {
-						console.log('quantidade é maior');
 						// Verifica se já existe uma notificação para este produto e tipo "Estoque"
 						const notificacaoExistente = await Notificacoes.findOne({
 							where: {

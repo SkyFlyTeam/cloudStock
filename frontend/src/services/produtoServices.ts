@@ -16,6 +16,7 @@ export interface Produto {
   Prod_validade: boolean
   Prod_quantidade: number
   Prod_status: boolean
+  Prod_estoqueMinimo: number
   Categoria_id: any
   UnidadeMedida_id: any
   Prod_imagem: File | null

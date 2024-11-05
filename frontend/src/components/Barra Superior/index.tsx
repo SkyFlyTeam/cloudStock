@@ -21,7 +21,7 @@ const BarraSuperior: React.FC = () => {
     const [showNotifications, setShowNotifications] = useState(false)
 
     const handleCloseNotifications = () => setShowNotifications(false)
-    const handleShowNotifications = () => setShowNotifications(true)
+    const handleShowNotifications = () => {setShowNotifications(true);console.log('sss')}
 
     // Armazena notificações
     const [notificacoes, setNotificacoes] = useState<Notificacao[]>([]);
@@ -39,18 +39,36 @@ const BarraSuperior: React.FC = () => {
     }
 
     // Contagem das notificações
-    const [totalCount, setTotalCount] = useState(notificacoes.length);      
-    const [estoqueCount, setEstoqueCount] = useState(3);  
-    const [validadeCount, setValidadeCount] = useState(2);
+    const [totalCount, setTotalCount] = useState(0);      
+    const [estoqueCount, setEstoqueCount] = useState(0);  
+    const [validadeCount, setValidadeCount] = useState(0);
 
     // Chama a função para pegar todos os fornecedores do BD ao montar o componente
     useEffect(() => {
       fetchNotificacoes()
-      setNotificacoesEstoque(notificacoes.filter(item => item.Not_Tipo == 'Estoque'))
-      setNotificacoesValidade(notificacoes.filter(item => item.Not_Tipo == 'Validade'))
-      setEstoqueCount(notificacoesEstoque.length)
-      setValidadeCount(notificacoesValidade.length)
     }, [])
+
+    // Carrega todas as informações de notificação, separa por tipo e conta
+    useEffect(() => {
+      setTotalCount(notificacoes.length);
+      const estoque = notificacoes.filter((item) => item.Not_tipo === "Estoque");
+      const validade = notificacoes.filter((item) => item.Not_tipo === "Validade");
+      setNotificacoesEstoque(estoque);
+      setNotificacoesValidade(validade);
+      setEstoqueCount(estoque.length);
+      setValidadeCount(validade.length);
+    }, [notificacoes]);
+
+    const formatDate = (dateString: Date) => {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('pt-BR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+    };
 
     return (
       <div className="BarraSuperior">
@@ -73,7 +91,7 @@ const BarraSuperior: React.FC = () => {
               <FaRegBell className="bell-icon"/> 
             </div>
             : 
-            <FaRegBell className="bell-icon"/> 
+            <FaRegBell className="bell-icon" onClick={handleShowNotifications}/> 
           }
           <FaRegUser className="user-icon" /> 
         </div>
@@ -95,74 +113,29 @@ const BarraSuperior: React.FC = () => {
                 </div>
               }>
                 {notificacoes.map((notificacao) => (
-                  notificacao.Not_Tipo === 'Estoque' ? (
+                  notificacao.Not_tipo === 'Estoque' ? (
                     <div className="not-item" key={notificacao.Not_id}> 
                       <img src={loteIcon} alt="Lote Icon" />
                       <div className="content">
                         <span> <b>{notificacao.Produto.Prod_nome}</b> atingiu o estoque mínimo</span>
-                        <span className="subtitle">15 unidades restantes</span>
-                        <span className="date">{new Date(notificacao.Not_Data).toLocaleDateString()}</span>
+                        <span className="subtitle">{notificacao.Not_mensagem}</span>
+                        <span className="date">{formatDate(notificacao.Not_data)}</span>
                       </div>
                     </div>
                   ) : (
                     <div className="not-item" key={notificacao.Not_id}> 
                       <TbClockExclamation className="icon-clock"/>
                       <div className="content">
-                        <span><b>{notificacao.Lote?.Lote_cod}</b> do <b>{notificacao.Produto.Prod_nome}</b> atingiu o estoque mínimo</span>
-                        <span className="subtitle">15 dias restantes</span>
-                        <span className="date">{new Date(notificacao.Not_Data).toLocaleDateString()}</span>
+                        <span>Lote <b>{notificacao.Lote?.Lote_cod}</b> de <b>{notificacao.Produto.Prod_nome}</b> está próximo ao vencimento</span>
+                        {notificacao.Not_mensagem[0] === '-' 
+                          ?<span className="subtitle expired">Produto vencido</span> 
+                          :<span className="subtitle">{notificacao.Not_mensagem}</span>
+                          }
+                        <span className="date">{formatDate(notificacao.Not_data)}</span>
                       </div>
                     </div>
                   )
                 ))}
-                <div className="not-item">
-                  <img src={loteIcon}></img>
-                  <div className="content">
-                    <span><b>Lote AFEGX1</b> do <b>Produto1</b> atingiu o estoque mínimo</span>
-                    <span className="subtitle">15 unidades restantes</span>
-                    <span className="date">23/10/2024 - 10:04</span>
-                  </div>
-                </div>
-                <div className="not-item">
-                  <TbClockExclamation className="icon-clock"/>
-                  <div className="content">
-                    <span><b>Lote AFEGX1</b> do <b>Produto1</b> atingiu o estoque mínimo</span>
-                    <span className="subtitle">15 dias restantes</span>
-                    <span className="date">23/10/2024 - 10:04</span>
-                  </div>
-                </div>
-                <div className="not-item">
-                  <img src={loteIcon}></img>
-                  <div className="content">
-                    <span><b>Lote AFEGX1</b> do <b>Produto1</b> atingiu o estoque mínimo</span>
-                    <span className="subtitle">15 unidades restantes</span>
-                    <span className="date">23/10/2024 - 10:04</span>
-                  </div>
-                </div>
-                <div className="not-item">
-                  <TbClockExclamation className="icon-clock"/>
-                  <div className="content">
-                    <span><b>Lote AFEGX1</b> do <b>Produto1</b> atingiu o estoque mínimo</span>
-                    <span className="subtitle">15 dias restantes</span>
-                    <span className="date">23/10/2024 - 10:04</span>
-                  </div>
-                </div>
-                <div className="not-item">
-                  <img src={loteIcon}></img>
-                  <div className="content">
-                    <span><b>Lote AFEGX1</b> do <b>Produto1</b> atingiu o estoque mínimo</span>
-                    <span className="subtitle">15 unidades restantes</span>
-                    <span className="date">23/10/2024 - 10:04</span>
-                  </div>
-                </div>
-                <div className="not-item">
-                  <TbClockExclamation className="icon-clock"/>
-                  <div className="content">
-                    <span><b>Lote AFEGX1</b> do <b>Produto1</b> atingiu o estoque mínimo</span>
-                    <span className="subtitle">15 dias restantes</span>
-                    <span className="date">23/10/2024 - 10:04</span>
-                  </div>
-                </div>
               </Tab>
               <Tab eventKey="estoque" title={
                 <div className="title">
@@ -170,14 +143,16 @@ const BarraSuperior: React.FC = () => {
                   <div className="not-count">{estoqueCount}</div>
                 </div>
               }>
-                <div className="not-item">
-                  <img src={loteIcon}></img>
-                  <div className="content">
-                    <span><b>Lote AFEGX1</b> do <b>Produto1</b> atingiu o estoque mínimo</span>
-                    <span className="subtitle">15 unidades restantes</span>
-                    <span className="date">23/10/2024 - 10:04</span>
-                  </div>
-                </div>
+                {notificacoesEstoque.map((notificacao) => (
+                    <div className="not-item" key={notificacao.Not_id}> 
+                      <img src={loteIcon} alt="Lote Icon" />
+                      <div className="content">
+                        <span> <b>{notificacao.Produto.Prod_nome}</b> atingiu o estoque mínimo</span>
+                        <span className="subtitle">{notificacao.Not_mensagem}</span>
+                        <span className="date">{formatDate(notificacao.Not_data)}</span>
+                      </div>
+                    </div>
+                ))}
               </Tab>
               <Tab eventKey="validade" title={
                 <div className="title">
@@ -185,14 +160,16 @@ const BarraSuperior: React.FC = () => {
                   <div className="not-count">{validadeCount}</div>
                 </div>
               }>
-                <div className="not-item">
-                  <TbClockExclamation className="icon-clock"/>
-                  <div className="content">
-                    <span><b>Lote AFEGX1</b> do <b>Produto1</b> atingiu o estoque mínimo</span>
-                    <span className="subtitle">15 dias restantes</span>
-                    <span className="date">23/10/2024 - 10:04</span>
+                {notificacoesValidade.map((notificacao) => (
+                  <div className="not-item" key={notificacao.Not_id}> 
+                    <TbClockExclamation className="icon-clock"/>
+                    <div className="content">
+                      <span>Lote <b>{notificacao.Lote?.Lote_cod}</b> de <b>{notificacao.Produto.Prod_nome}</b> está próximo ao vencimento</span>
+                      <span className="subtitle">{notificacao.Not_mensagem}</span>
+                      <span className="date">{formatDate(notificacao.Not_data)}</span>
+                    </div>
                   </div>
-                </div>
+                ))}
               </Tab>
             </Tabs>
           </Offcanvas.Body>

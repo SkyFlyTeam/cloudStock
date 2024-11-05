@@ -115,7 +115,7 @@
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    font-size: 14px;
+    font-size: 16px;
     padding-bottom: 0.5rem;
     border-bottom: 1.5px solid #c4c4c46b;
 }
@@ -135,7 +135,12 @@
 
 .content .subtitle{
     font-weight: 500;
+    font-size: 15px;
     color: #fdbe4a;
+}
+
+.content .subtitle.expired{
+    color: #fd4a4a;
 }
 
 .content .date{

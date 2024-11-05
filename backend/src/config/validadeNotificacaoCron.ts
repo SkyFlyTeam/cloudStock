@@ -26,6 +26,9 @@ const iniciarNotificacaoCron = () => {
                         if (!notificacaoExistente && lote.Lote_quantidade > 0) {
                             const validade = new Date(lote.Lote_validade)
 
+                            dataAtual.setHours(0, 0, 0, 0);
+                            validade.setHours(0, 0, 0, 0);
+
                             const diferenca = (validade.getTime() - dataAtual.getTime())/ (24 * 60 * 60 * 1000); 
 
                             // Verifique se a validade está dentro do limite de 7 dias 
