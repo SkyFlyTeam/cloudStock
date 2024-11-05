@@ -2,7 +2,7 @@
 
 <br>
 
-Na segunda sprint, foram criadas páginas para registrar entradas e saídas de produtos, separadas e unificadas, permitindo uma análise mais detalhada. Além disso, agora os produtos são exibidos em seus respectivos locais de armazenamento. Também foi implementada a movimentação de produtos com atualização imediata na exibição das quantidades e diferenciação nos níveis de acesso ao fazer login.
+Na terceira sprint, foi criada a determinação de estoque mínimo dos produtos e ao ser atingida irá ser alertada por meio de uma notificação um aviso de abastecer o estoque necessário, não só em estoque mínimo mas a notificação também avisará quando a data de validade estiver próxima, além disso, agora o gerente poderá cadastrar novos usuários junto de suas respectivas funções. Ademais, foi desenvolvido funções de busca em certas páginas, sendo possível buscar através de filtro e o campo pesquisa. Para finalizar, no cadastro de produtos há agora um campo de inserir a categoria  e a unidade de medida. 
 
 <br>
 
