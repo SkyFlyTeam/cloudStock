@@ -36,6 +36,9 @@ function EntradasRegistro() {
     // Valor
     const [valorMin, setValorMin] = useState<number | null>(null)
     const [valorMax, setValorMax] = useState<number | null>(null)
+    // Data
+    const [dataMax, setDataMax] = useState<string | null>(null)
+    const [dataMin, setDataMin] = useState<string | null>(null)
 
     const [openModalVisualizar, setOpenModalVisualizar] = useState(false)
     const [entradaInfo, setEntradaInfo] = useState<Entrada | null>(null)
@@ -99,6 +102,8 @@ function EntradasRegistro() {
     setProdutoFiltrado(null);
     setValorMin(null);
     setValorMax(null);
+    setDataMin(null)
+    setDataMax(null)
     setFiltroKey((prevKey) => prevKey + 1);
   };
 
@@ -133,6 +138,16 @@ function EntradasRegistro() {
                 e.Ent_valortot <= valorMax
             )
         }
+        if (dataMin !== null) {
+            entradasFiltradas = entradasFiltradas.filter((s) =>
+              new Date(s.Ent_dataCriacao) >= new Date(dataMin))
+          }
+          if (dataMax !== null) {
+            const dataMaxAdjusted = new Date(dataMax);
+            dataMaxAdjusted.setDate(dataMaxAdjusted.getDate() + 1);
+            entradasFiltradas = entradasFiltradas.filter((s) =>
+              new Date(s.Ent_dataCriacao) <= new Date(dataMaxAdjusted))
+          }
 
         setData(entradasFiltradas);
         };
@@ -143,7 +158,9 @@ function EntradasRegistro() {
         produtoFiltrado, 
         entradas, 
         valorMin, 
-        valorMax
+        valorMax,
+        dataMin,
+        dataMax
     ]);
 
 
@@ -212,7 +229,7 @@ function EntradasRegistro() {
             {showFiltros && (
                 <>
                 <div className="entrada-container-filtros" key={filtroKey}>
-                    <div className="fornecedor-container">
+                    {/* <div className="fornecedor-container">
                     <label htmlFor="inFornecedor">Fornecedor</label>
                     <select 
                         id="inFornecedor"
@@ -241,7 +258,7 @@ function EntradasRegistro() {
                             </option>
                             ))}
                         </select>
-                    </div>
+                    </div> */}
                     <div className="quantidade-container">
                         <label htmlFor="inValor">Valor:</label>
                         <div>
@@ -255,6 +272,25 @@ function EntradasRegistro() {
                             type="number" 
                             id="inValor" 
                             onChange={(e) => setValorMax(e.target.value ? +e.target.value : null)}
+                            placeholder="Máx"
+                            />
+                        </div>
+                    </div>
+                    <div className="data-container">
+                        <label htmlFor="inData">Data:</label>
+                        <div>
+                            <input 
+                            type="date" 
+                            id="inData" 
+                            value={dataMin || ""}
+                            onChange={(e) => setDataMin(e.target.value ? e.target.value : null)}
+                            placeholder="Min"
+                            />
+                            <input 
+                            type="date" 
+                            id="inData" 
+                            value={dataMax || ""}
+                            onChange={(e) => setDataMax(e.target.value ? e.target.value : null)}
                             placeholder="Máx"
                             />
                         </div>

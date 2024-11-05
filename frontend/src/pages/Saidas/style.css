@@ -1,5 +1,9 @@
 .saida-container-filtros {
     display: flex;
-    column-gap: 1em;
+    column-gap: .8em;
     flex-wrap: wrap;
+}
+
+.saida-container-filtros input {
+    margin-right: 5px;
 }

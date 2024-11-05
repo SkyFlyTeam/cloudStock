@@ -8,7 +8,10 @@ tbody.table-lp, tr.table-lp{
 
 .produtos-local-filtros {
     display: flex;
-    column-gap: 1em;
+    column-gap: .6em;
+}
+.produtos-local-filtros input {
+    margin-right: 5px;
 }
 
 .produto-local-header {

@@ -45,6 +45,9 @@ function Saidas() {
   // Valor
   const [valorMin, setValorMin] = useState<number | null>(null)
   const [valorMax, setValorMax] = useState<number | null>(null)
+  // Data
+  const [dataMax, setDataMax] = useState<string | null>(null)
+  const [dataMin, setDataMin] = useState<string | null>(null)
 
   // Estado para controlar os modais
   const [openModalCadastro, setOpenModalCadastro] = useState(false);
@@ -87,6 +90,8 @@ function Saidas() {
     setProdutoFiltrado(null)
     setValorMin(null)
     setValorMax(null)
+    setDataMin(null)
+    setDataMax(null)
     setFiltroKey((prevKey) => prevKey + 1)
   }
 
@@ -121,6 +126,16 @@ function Saidas() {
               +e.Saida_valorTot <= valorMax
           )
       }
+      if (dataMin !== null) {
+        saidasFiltradas = saidasFiltradas.filter((s) =>
+          new Date(s.Saida_dataCriacao) >= new Date(dataMin))
+      }
+      if (dataMax !== null) {
+        const dataMaxAdjusted = new Date(dataMax);
+        dataMaxAdjusted.setDate(dataMaxAdjusted.getDate() + 1);
+        saidasFiltradas = saidasFiltradas.filter((s) =>
+          new Date(s.Saida_dataCriacao) <= new Date(dataMaxAdjusted))
+      }
       setData(saidasFiltradas);
     };
   
@@ -130,7 +145,9 @@ function Saidas() {
     produtoFiltrado, 
     saidas,
     valorMin, 
-    valorMax
+    valorMax,
+    dataMin,
+    dataMax
   ]);
 
   // Função para buscar todos as Saidas
@@ -270,7 +287,7 @@ function Saidas() {
       {showFiltros && (
         <>
           <div className="saida-container-filtros" key={filtroKey}>
-            <div className="fornecedor-container item">
+            {/* <div className="fornecedor-container item">
               <label htmlFor="inFornecedor">Fornecedor</label>
               <select 
                 id="inFornecedor"
@@ -299,24 +316,41 @@ function Saidas() {
                   </option>
                 ))}
               </select>
-            </div>
+            </div> */}
             <div className="quantidade-container item">
-                <label htmlFor="inValor">Valor:</label>
-                <div>
-                  <input 
-                  type="number" 
-                  id="inValor" 
-                  onChange={(e) => setValorMin(e.target.value ? +e.target.value : null)}
-                  placeholder="Min"
-                  />
-                  <input 
-                  type="number" 
-                  id="inValor" 
-                  onChange={(e) => setValorMax(e.target.value ? +e.target.value : null)}
-                  placeholder="Máx"
-                  />
-                </div>
+              <label htmlFor="inValor">Valor:</label>
+              <div>
+                <input 
+                type="number" 
+                id="inValor" 
+                onChange={(e) => setValorMin(e.target.value ? +e.target.value : null)}
+                placeholder="Min"
+                />
+                <input 
+                type="number" 
+                id="inValor" 
+                onChange={(e) => setValorMax(e.target.value ? +e.target.value : null)}
+                placeholder="Máx"
+                />
               </div>
+            </div>
+            <div className="validade-container">
+              <label htmlFor="inValidade">Data:</label>
+              <div>
+                <input 
+                  type="date" 
+                  id="inValidade" 
+                  onChange={(e) => setDataMin(e.target.value ? e.target.value : null)}
+                  placeholder="Min"
+                />
+                <input 
+                  type="date" 
+                  id="inValidade" 
+                  onChange={(e) => setDataMax(e.target.value ? e.target.value : null)}
+                  placeholder="Máx"
+                />
+              </div>
+            </div>
           </div>
           <div className="filtros-btn">
             <button className="rfloat btnLimpar" onClick={handleLimparFiltros}>LIMPAR</button>

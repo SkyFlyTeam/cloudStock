@@ -71,7 +71,7 @@ div.registro-item:nth-child(odd){
 
 .registro-container-filtros, .registro-primeira-coluna, .registro-segunda-coluna {
     display: flex;
-    column-gap: 1em;
+    column-gap: .6em;
     align-items: start;
     padding-top: 0;
 }
@@ -79,6 +79,10 @@ div.registro-item:nth-child(odd){
     width: 6em;
     text-align: center;
 }
+.registro-container-filtros input:not(input[type=radio]), select{
+    margin-right: 5px;
+}
+
 .tipo-container, .responsavel-container, .data-container, .valor-container {
     display: flex;
     flex-direction: column;
@@ -92,13 +96,26 @@ div.registro-item:nth-child(odd){
 .responsavel-container select {
     width: 12em;
 }
-.radio-container label {
-    width: 2.5em;
+.radio-container {
+    padding-right: 0;
 }
+.radio-container label {
+    width: 2em;
+}
+
+input[type=date] {
+    font-size: 0.76em;
+    color: #ACACAC;
+    width: 98px;
+    height: 35.2px;
+    padding: 0 .13em;
+}
+
 
 @media (max-width: 375px) {
     .registro-container-filtros, .registro-primeira-coluna, .registro-segunda-coluna {
         flex-direction: column;
+        row-gap: 1em;
     }
     
 }
@@ -130,12 +147,14 @@ div.registro-item:nth-child(odd){
 @media (max-width: 980px) {
     .container-filtros {
         flex-direction: column;
+        row-gap: 1em;
     }
 }
 
 @media (max-width: 1024px) {
     .registro-container-filtros {
         flex-direction: column;
+        row-gap: 1em;
     }
     .data-container {
         padding-left: 0 !important;
@@ -144,10 +163,10 @@ div.registro-item:nth-child(odd){
 
 @media (max-width: 1260px) {
     .tipo-container {
-        width: 8em;
+        width: 6em;
     }
     .radio-container label {
-        width: 4.5em;
+        width: 4em;
     }
     .radio-container input {
         width: 1em;
