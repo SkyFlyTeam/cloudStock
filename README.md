@@ -1,4 +1,4 @@
-<img src="BannerSkyFly.png" style="margin-left: auto; margin-right: auto;">
+<img src="./media/BannerSkyFly.png" style="margin-left: auto; margin-right: auto;">
 
 ### Orientadores:
 
@@ -32,7 +32,7 @@ A Cloud Stock tem como objetivo resolver problemas relacionados ao gerenciamento
 Sprint | Previsão | Status | Relatório
 |------|--------|------|------|
 |Kick Off | 26/08/2024 a 30/08/2024 | ✔️ Concluída | -
-|01 | 09/09/2024 a 29/09/2024 | ✔️ Concluída | [ver relatório](https://github.com/SkyFlyTeam/cloudStock/tree/sprint1) 
+|01 | 09/09/2024 a 29/09/2024 | ✔️ Concluída | <a href="https://github.com/SkyFLyTeam/cloudStock/tree/main/sprints/sprint1/sprint1.md">Relatório</a>
 |02|  30/09/2024 a 20/10/2024|  ✔️ Concluída | [ver relatório](https://github.com/SkyFlyTeam/cloudStock/tree/sprint2) 
 |03| 21/10/2024 a 10/11/2024 |  🔁 Em Andamento | [ver relatório](https://github.com/SkyFlyTeam/cloudStock/tree/sprint3)
 |04| 11/11/2024 a 01/12/2024 | a fazer |
