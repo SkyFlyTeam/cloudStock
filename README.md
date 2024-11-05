@@ -21,7 +21,7 @@
 
 O Cloud Stock é um sistema de controle de estoque desenvolvida para facilitar a gestão de produtos, fornecedores e movimentações de estoque. Com funcionalidades como cadastro de itens, controle de entradas e saídas, geração de relatórios e alertas automáticos, o sistema oferece suporte completo para decisões estratégicas e organização eficiente do estoque de uma empresa.
 
-## 🔎 O que a Cloud Stock resolve?
+## :pushpin: O que a Cloud Stock resolve?
 
 A Cloud Stock tem como objetivo resolver problemas relacionados ao gerenciamento de estoque ineficiente, reduzindo erros humanos e otimizando o acompanhamento do inventário.
 
@@ -34,7 +34,7 @@ Sprint | Previsão | Status | Relatório
 |Kick Off | 26/08/2024 a 30/08/2024 | ✔️ Concluída | -
 |01 | 09/09/2024 a 29/09/2024 | ✔️ Concluída | [ver relatório](https://github.com/SkyFlyTeam/cloudStock/tree/sprint1) 
 |02|  30/09/2024 a 20/10/2024|  ✔️ Concluída | [ver relatório](https://github.com/SkyFlyTeam/cloudStock/tree/sprint2) 
-|03| 21/10/2024 a 10/11/2024 |  a fazer |
+|03| 21/10/2024 a 10/11/2024 |  🔁 Em Andamento | [ver relatório](https://github.com/SkyFlyTeam/cloudStock/tree/sprint3)
 |04| 11/11/2024 a 01/12/2024 | a fazer |
 |Feira de Soluções| 12/12 | a fazer |
 
@@ -99,20 +99,44 @@ Rank | Prioridade | User Story | Estimativa | Sprint | Requisito
 - Usabilidade: Interface intuitiva, fácil navegação e design responsivo adaptável a diferentes dispositivos. 
 - Guia de Instalação: Instruções claras para a instalação do sistema em diferentes ambientes.
 
+<br>
+
+
+## DoR (Definition of Ready) 
+
+- **User Stories** : Claramente definidas, compreensíveis e com o formato adequado, garantindo que o time entenda o que será feito e por quê.
+- **Tasks**: Decomposição das User Stories em tarefas claras e mensuráveis, distribuídas igualmente entre os membros do time, levando em consideração habilidades e carga de trabalho.
+- **Critérios de Aceitação**: Definidos de maneira mensurável, testável e passíveis de verificação objetiva.
+- **Modelo de Dados**: Estrutura completa documentada, incluindo todos os campos, tipos de dados, relações, cardinalidades e restrições, garantindo consistência e clareza na implementação.
+- **Wireframes/Mockups**: Protótipos ou design de telas aprovados e alinhados com a experiência do usuário (UX), levando em consideração a usabilidade e a estética.
+
+<br>
+
+## DoD (Definition of Done) 
+
+- **Critérios de Aceitação**: Todos os critérios de aceitação definidos foram cumpridos e validados com testes adequados.
+- **Código Fonte**: O código está 100% implementado, refatorado e segue os padrões de qualidade acordados (incluindo boas práticas de codificação e design).
+- **Commits**: Os commits seguem o padrão estipulado pelo time (nomeclatura clara, pequenas alterações e mensagens descritivas), com histórico de alterações adequado e bem documentado.
+- **Guia de Instalação**: A documentação de instalação está completa e clara, permitindo que qualquer membro do time ou usuário externo consiga configurar e rodar a aplicação sem dificuldades.
+- **Testes**: Cobertura de testes adequadas, com testes unitários, de integração e de aceitação, garantindo que as funcionalidades estão corretas e o sistema como um todo está estável.
+- **Revisão de Código**: O código passou por revisão (peer review) e está em conformidade com as práticas de qualidade do time.
 
 <br>
 
 <span id="demostracao">
 
 # 💻 Demonstração
-
 Apresentação das funcionalidades desenvolvidas até o momento:
-
-[![SprintReview2](https://i9.ytimg.com/vi/eyDyj7bAfGM/mqdefault.jpg?sqp=CJD72LgG-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGDYgXChlMA8=&rs=AOn4CLA0ROuTqxKhA0yjHv6yfVB8hL920w)](https://youtu.be/eyDyj7bAfGM)
-
 <br>
 
-## 🔎 Instalação e utilização
+<div align="center">
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/eyDyj7bAfGM/0.jpg)](https://www.youtube.com/watch?v=eyDyj7bAfGM)
+
+</div>
+<br>
+
+## :cd: Instalação e utilização
 ### Configuração do backend
 Dentro da pasta "backend" crie um novo arquivo chamado .env e dentro dele coloque as configurações do seu banco de dados da seguinte forma:
 ```
@@ -142,6 +166,17 @@ E por fim para iniciar o frontend digite o seguinte comando:
 ```npm
 npm start
 ```
+<br>
+
+## :link: Links úteis
+
+Documentos do projeto:
+
+Modelo lógico do Banco de Dados: [vertabello_modelo](https://github.com/user-attachments/assets/816b7fb0-d5e7-4edf-bbcf-c5f745787ceb)
+<br>
+Backlog do Produto: [CloudStock-Backlog do Produto.pdf](https://github.com/user-attachments/files/17026988/SKYF-Backlog.do.Produto-170924-104112.pdf)
+
+<br>
 
 <span id="autores">
 
