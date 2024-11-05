@@ -55,7 +55,7 @@ Utilizamos o Burndown chart para acompanhar o progresso da equipe durante o anda
  </div>
 
  <br>
- 
+
 ## 💻 Demonstração
 
 Apresentação das funcionalidades desenvolvidas até o momento:
@@ -66,6 +66,14 @@ Apresentação das funcionalidades desenvolvidas até o momento:
 </div>
 
 <br>
+
+## :link: Links úteis
+
+Documentos do projeto:
+
+Modelo lógico do Banco de Dados: [vertabello_modelo](https://github.com/user-attachments/assets/c2692bb2-29d3-4d9a-a64f-f9042c9ae130)
+<br>
+
 
 
 
