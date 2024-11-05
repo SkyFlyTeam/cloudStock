@@ -1,4 +1,4 @@
-<h1 align='center'> Sprint 2: 30/09/2024 à 20/10/2024 </h1>
+<h1 align='center'> Sprint 3: 21/10/2024 à 11/11/2024 </h1>
 
 <br>
 
@@ -66,6 +66,14 @@ Apresentação das funcionalidades desenvolvidas até o momento:
 </div>
 
 <br>
+
+## :link: Links úteis
+
+Documentos do projeto:
+
+Modelo lógico do Banco de Dados: [vertabello_modelo](https://github.com/user-attachments/assets/3b675fd6-f59c-4b84-81aa-15fc361fce5b)
+<br>
+
 
 
 
