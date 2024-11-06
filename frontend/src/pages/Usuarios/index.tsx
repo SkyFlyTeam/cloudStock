@@ -28,6 +28,7 @@ import { useAuth } from "../../context/AuthProvider";
 import SearchBar from "./SearchBar";
 import { Usuario, usuarioServices } from "../../services/usuariosServices";
 import ToggleBtnCargo from "../../components/ToggleBtnCargo";
+import UsuarioFormulario from "../../components/Formularios/Usuario/User_Cadastrar.tsx";
 
 
 // Const para a criação de colunas; Define a Tipagem (Interface)
@@ -106,13 +107,12 @@ function Usuarios() {
     columnHelper.accessor('Cargo_id', {
       header: () => 'Tipo',
       cell: info => {
-          const cargoNome = info.getValue() === 1 ? 'Funcionário' : 'Gerente';
           return (
               <div className="td-center">
-                  <span>{cargoNome}</span>
+                  <span>Funcionário</span>
                   {currentUser?.Cargo_id === 2 ? ( // Exibe o toggle para gerente
-                      <ToggleBtn
-                          checked={info.getValue() === 1}
+                      <ToggleBtnCargo
+                          checked={info.getValue() === 2}
                           cod={info.row.original.Usuario_id}
                           rota={`${hostname}usuario`}
                           onStatusChange={() => handleCargoChange(info.row.original.Usuario_id)}
@@ -122,6 +122,7 @@ function Usuarios() {
                           {info.getValue() === 1 ? 'Ativo' : 'Inativo'}
                       </span>
                   )}
+                  <span>Gerente</span>
               </div>
           );
       },
@@ -139,7 +140,7 @@ function Usuarios() {
           />
       ) : (
         <span className= {info.getValue() == 1 ? 'status-ativo1' : 'status-inativo1'}>
-          {info.getValue() == 1 ? 'Ativo' : 'Inativo'}
+          {info.getValue() === 1 ? 'Ativo' : 'Inativo'}
         </span>
       )}
       </div>
@@ -242,7 +243,7 @@ function Usuarios() {
       {/* Modal de Cadastro */}
       <Modal
         isOpen={openModalCadastro} // Abre o modal
-        label="Cadastrar Fornecedor" // Titulo do modal
+        label="Cadastrar Usuário" // Titulo do modal
         buttons={
           <>
             <BtnCancelar onClick={() => setOpenModalCadastro(false)} /> {/*Fechar o modal */}
@@ -254,9 +255,9 @@ function Usuarios() {
           </>
         }
       >
-        <FornecedorFormulario
+        <UsuarioFormulario
           ref={formRef} /* Passa a referencia do formulario */
-          onSuccess={message => {
+          onSuccess={(message) => {
             setMensagemSucesso(message) 
             setOpenModalCadastro(false)
             fetchUsuarios() // Atualiza a tabela

@@ -22,7 +22,7 @@ dotenv.config();
 const sequelize = new Sequelize({
   database: 'sprint2',
   username: 'root',
-  password: '', // mudar senha
+  password: 'fatec', // mudar senha
   host: 'localhost', // colocar domínio
   dialect: 'mysql',
   models: [Cargo, Categoria, Entrada, Fornecedor_Produto, Fornecedor, Local_Armazenamento, Lote_Entrada, Lote_Saida, Lote, Produto, Saida, Setor, Unidade_Medida, Usuario, Registros, ConfigSistema],  // Adiciona os modelos aqui
