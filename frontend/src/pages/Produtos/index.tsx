@@ -26,8 +26,9 @@ import { AiOutlineDelete } from "react-icons/ai"
 import { hostname } from "../../config/apiConfig"
 
 import { useAuth } from "../../context/AuthProvider"
-import { useNavigate, useParams } from "react-router-dom"
+import { useLocation, useNavigate, useParams } from "react-router-dom"
 import { LoadingDots } from "./LoadingDots"
+import Pagination from "../../components/Pagination"
 
 // Criar o helper para colunas
 const columnHelper = createColumnHelper<Produto>()
@@ -38,8 +39,6 @@ function Produtos() {
   let {pag} = useParams();
   if (pag === undefined){ pags = 1 }
   else { pags = Number(pag) }
-
-  console.log(pags);
 
   const navigate = useNavigate();
 
@@ -56,6 +55,7 @@ function Produtos() {
 
   // Mensagem de sucesso das ações
   const [mensagemSucesso, setMensagemSucesso] = useState<string>('');
+  const [searchbarValue, setSearchValue] = useState<string>('');
 
   //Verificação dos Cargos
   const {currentUser} = useAuth();
@@ -72,7 +72,6 @@ function Produtos() {
     if (result instanceof ApiException) {
       console.log(result.message)
     } else {
-      console.log('ssss')
       setData(result);
       setFilteredData(result.slice(pags * 10 - 10, pags * 10)); //Inicializa o filteredData com todos os produtos
     }
@@ -80,6 +79,7 @@ function Produtos() {
 
   // Função para filtrar produtos pelo nome
   const handleSearch = (query: string) => {
+    setSearchValue(query);
     const filtered = data.filter((produto) =>
       produto.Prod_nome.toLowerCase().includes(query.toLowerCase())
     );
@@ -88,20 +88,22 @@ function Produtos() {
 
   const handleChangePage = (newPag: number) => { 
     if (newPag < 1){
-      navigate(`/Produtos/${1}`); window.location.reload(); 
+      navigate(`/Produtos/${1}`);
     }
     else if (newPag > data.length / 10 + 1){
-      navigate(`/Produtos/${parseInt(`${data.length / 10 + 1}`)}`); window.location.reload(); 
+      navigate(`/Produtos/${parseInt(`${data.length / 10 + 1}`)}`);
     }
     else{
-    navigate(`/Produtos/${newPag}`); window.location.reload();
+    navigate(`/Produtos/${newPag}`);
      } 
+     setData([])
+     setFilteredData([]);
     }
 
   // Chama a função para pegar todos os produtos do BD ao montar o componente
   useEffect(() => {
     fetchProdutos()
-  }, [])
+  }, [pags])
 
 
   // Função para atualizar o status do produto usando o toggle button !aqui é apenas para atualizar localmente (o useState) !
@@ -255,8 +257,7 @@ function Produtos() {
 
       <LoadingDots data={data} />
 
-      <button onClick={() => handleChangePage(pags + 1)}>next</button>
-      <button onClick={() => handleChangePage(pags - 1)}>prev</button>
+      <Pagination className={""} thisPage={pags} lastPage={parseInt(`${data.length / 10 + 1}`)} func={handleChangePage} />
 
 
       {/* MODALS*/}
