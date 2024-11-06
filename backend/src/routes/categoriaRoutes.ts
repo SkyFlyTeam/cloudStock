@@ -1,16 +1,20 @@
 import { Router } from 'express';
-import { controllerCategoria } from '../controllers/categoriaController'
+import { controllerCategoria } from '../controllers/categoriaController';
+
 const routes = Router();
 
-// Rota para Categoria
-routes.post('/', controllerCategoria.save); // Criar categoria
+// Rota para criar uma nova categoria
+routes.post('/', controllerCategoria.save);
 
-routes.get('/', controllerCategoria.show);  // Listar categorias
+// Rota para listar todas as categorias
+routes.get('/', controllerCategoria.show);
 
-routes.get('/:id', controllerCategoria.show); // Listar categorias com pai de id = ?
+// Rota para listar uma categoria específica pelo ID
+routes.get('/:id', controllerCategoria.showSpecific);
 
-routes.put('/', controllerCategoria.save); // Editar uma categoria
+// Rota para atualizar uma categoria pelo ID
+routes.put('/:id', controllerCategoria.update);
 
-routes.put('/status/:id', controllerCategoria.show); // Rota para mudar status do produto
+routes.delete('/:id', controllerCategoria.delete);
 
 export default routes;

@@ -63,7 +63,7 @@ export const controllerProducts = {
     try{
       const produto = await Produto.findByPk(id)
       if (!produto){
-        return res.status(404).json({ message: 'produto encontrado' });
+        return res.status(404).json({ message: 'produto não encontrado' });
       }
 
       return res.status(200).json(produto)
