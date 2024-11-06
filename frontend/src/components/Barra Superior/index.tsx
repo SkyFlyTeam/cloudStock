@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import './BarraSuperior.css';
 import { TbCircleCaretLeft, TbClockExclamation } from "react-icons/tb";
 import { FaRegBell } from "react-icons/fa";
@@ -43,6 +43,10 @@ const BarraSuperior: React.FC = () => {
     const [estoqueCount, setEstoqueCount] = useState(0);  
     const [validadeCount, setValidadeCount] = useState(0);
 
+    // States para controlar o webStocket
+    const [socket, setSocket] = useState<WebSocket | null>(null)
+    const wsRef = useRef<WebSocket | null>(null)
+
     // Chama a função para pegar todos os fornecedores do BD ao montar o componente
     useEffect(() => {
       fetchNotificacoes()
@@ -57,6 +61,33 @@ const BarraSuperior: React.FC = () => {
       setNotificacoesValidade(validade);
       setEstoqueCount(estoque.length);
       setValidadeCount(validade.length);
+
+      if (!wsRef.current || wsRef.current.readyState === WebSocket.CLOSED) {
+        // Conecta ao WebSocket para atualizações em tempo real
+        const socket = new WebSocket('ws://localhost:5000');
+        wsRef.current = socket
+        setSocket(socket)
+
+        socket.onmessage = (message) => {
+          const data = JSON.parse(message.data);
+          console.log('Notificao', data)
+              if (data.action === 'delete') {
+                console.log('exlcuindo not')
+                  setNotificacoes((prevNotificacoes) => 
+                      prevNotificacoes.filter(notificacao => notificacao.Not_id !== data.id)
+                  );
+              } else if (data.action === 'create') {
+                  setNotificacoes((prevNotificacoes) => [...prevNotificacoes, data.notificacao]);
+              }
+        };
+      }
+
+      return () => {
+        if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+          wsRef.current.close()
+        }
+      }
+
     }, [notificacoes]);
 
     const formatDate = (dateString: Date) => {

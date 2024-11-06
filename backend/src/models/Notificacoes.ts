@@ -1,6 +1,7 @@
-import { Table, Column, Model, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, ForeignKey, BelongsTo, AfterCreate, AfterDestroy, BeforeDestroy } from 'sequelize-typescript';
 import { Produto } from './Produto';
 import { Lote } from './Lote';
+import { broadcastNotificacao, broadcastNotificacaoDelete } from '../config/webSocket';
 
 @Table({
     tableName: 'Notificacoes',
@@ -13,7 +14,7 @@ export class Notificacoes extends Model {
         primaryKey: true,
         autoIncrement: true
     })
-    Not_id!: string;
+    Not_id!: number;
 
     @Column({
         type: DataType.DATE,  
@@ -45,4 +46,17 @@ export class Notificacoes extends Model {
 
     @BelongsTo(() => Lote)
     Lote?: Lote;
+
+    @AfterCreate
+	static async enviarNotificacoes(instance: Notificacoes) {
+        console.log("Notificação criada:", instance);
+		try {
+            const instanceWithLotes = await Notificacoes.findByPk( instance.Not_id, {
+                include: [Lote, Produto]
+            });
+			broadcastNotificacao(instanceWithLotes)
+		} catch (error) {
+			console.error("Erro ao enviar notificação para webSocket:", error);
+		}
+	}
 }

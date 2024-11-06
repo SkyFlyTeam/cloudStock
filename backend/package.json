@@ -14,6 +14,7 @@
     "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^20.8.6",
     "@types/sequelize": "^4.28.20",
+    "@types/ws": "^8.5.13",
     "nodemon": "^3.0.1",
     "typescript": "^5.2.2"
   },
@@ -42,6 +43,7 @@
     "sequelize": "^6.37.3",
     "sequelize-typescript": "^2.1.6",
     "ts-node": "^10.9.1",
-    "typeorm": "^0.3.17"
+    "typeorm": "^0.3.17",
+    "ws": "^8.18.0"
   }
 }
