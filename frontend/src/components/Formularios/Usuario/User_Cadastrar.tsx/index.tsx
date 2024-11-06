@@ -10,17 +10,17 @@ interface Props {
 }
 
 const UsuarioFormulario = forwardRef((props: Props, ref: Ref<{ submitForm: () => void }>) => {
-    const [User_nome, setNome] = useState<string>('')
-    const [User_email, setEmail] = useState<string>('')
-    const [User_senha, setSenha] = useState<string>('')
-    const [User_cargo, setCargo] = useState<number>(0) // Quando é criado o status é ativado - true
+    const [Usuario_nome, setNome] = useState<string>('')
+    const [Usuario_email, setEmail] = useState<string>('')
+    const [Usuario_senha, setSenha] = useState<string>('')
+    const [Cargo_id, setCargo] = useState<number>(0) // Quando é criado o status é ativado - true
 
     const eventoFormulario = async () => {
         const novoUsuario = {
-            User_nome,
-            User_email,
-            User_senha,
-            User_cargo
+            Usuario_nome,
+            Usuario_email,
+            Usuario_senha,
+            Cargo_id
         }
     
         console.log(novoUsuario)
@@ -52,16 +52,16 @@ const UsuarioFormulario = forwardRef((props: Props, ref: Ref<{ submitForm: () =>
         <form>
             <div className="input-item">
                 <label htmlFor="razaoSocial">Nome</label>
-                <input type="text" value={User_nome} onChange={(e) => setNome(e.target.value)} required placeholder='Nome' />
+                <input type="text" value={Usuario_nome} onChange={(e) => setNome(e.target.value)} required placeholder='Nome' />
             </div>
             <div className="input-group-forn">
                 <div className="input-item">
                     <label htmlFor="nome">Email</label>
-                    <input type="text" value={User_email} onChange={(e) => setEmail(e.target.value)} required placeholder='Email' />
+                    <input type="text" value={Usuario_email} onChange={(e) => setEmail(e.target.value)} required placeholder='Email' />
                 </div>
                 <div className="input-item">
                     <label htmlFor="cnpj">Senha</label>
-                    <input type="text" value={User_senha} onChange={(e) => setSenha(e.target.value)} required placeholder='Senha'/>
+                    <input type="text" value={Usuario_senha} onChange={(e) => setSenha(e.target.value)} required placeholder='Senha'/>
                 </div>
             </div>
             <div className="input-item">
@@ -72,7 +72,7 @@ const UsuarioFormulario = forwardRef((props: Props, ref: Ref<{ submitForm: () =>
                         id="funcionario" 
                         name="cargo" 
                         value="1" 
-                        checked={User_cargo === 1}
+                        checked={Cargo_id === 1}
                         onChange={handleChange}
                     />
                     Funcionário
@@ -86,7 +86,7 @@ const UsuarioFormulario = forwardRef((props: Props, ref: Ref<{ submitForm: () =>
                         id="gerente" 
                         name="cargo" 
                         value="2" 
-                        checked={User_cargo === 2}
+                        checked={Cargo_id === 2}
                         onChange={handleChange}
                     />
                     Gerente
@@ -100,7 +100,7 @@ const UsuarioFormulario = forwardRef((props: Props, ref: Ref<{ submitForm: () =>
                         id="administrador" 
                         name="cargo" 
                         value = "3" 
-                        checked={User_cargo === 3}
+                        checked={Cargo_id === 3}
                         onChange={handleChange}
                     />
                     Administrador

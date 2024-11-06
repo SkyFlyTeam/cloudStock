@@ -29,6 +29,7 @@ import SearchBar from "./SearchBar";
 import { Usuario, usuarioServices } from "../../services/usuariosServices";
 import ToggleBtnCargo from "../../components/ToggleBtnCargo";
 import UsuarioFormulario from "../../components/Formularios/Usuario/User_Cadastrar.tsx";
+import Usuario_Edicao from "../../components/Formularios/Usuario/User_Editar";
 
 
 // Const para a criação de colunas; Define a Tipagem (Interface)
@@ -44,7 +45,7 @@ function Usuarios() {
   const {currentUser} = useAuth();
 
   // Guarda o ID dos usuarios selecionados na tabela
-  const [fornecedorSelecionado, setFornecedorSelecionado] = useState<number | null>(null);
+  const [usuarioSelecionado, setUsuarioSelecionado] = useState<number | null>(null);
 
   // Mensagem de sucesso das ações
   const [mensagemSucesso, setMensagemSucesso] = useState<string>('');
@@ -109,7 +110,7 @@ function Usuarios() {
       cell: info => {
           return (
               <div className="td-center">
-                  <span>Funcionário</span>
+                  <span style={{ marginRight: "1rem" }}>Funcionário</span>
                   {currentUser?.Cargo_id === 2 ? ( // Exibe o toggle para gerente
                       <ToggleBtnCargo
                           checked={info.getValue() === 2}
@@ -122,15 +123,15 @@ function Usuarios() {
                           {info.getValue() === 1 ? 'Ativo' : 'Inativo'}
                       </span>
                   )}
-                  <span>Gerente</span>
+                  <span style={{ marginLeft: "1rem" }}> Gerente</span>
               </div>
           );
       },
-  }),
+    }),
     columnHelper.accessor('Usuario_status', {
       header: () => 'Status',
       cell: info => (
-        <div className="td-center">
+        <div className="td-center" style={{display: "flex", justifyContent: "flex-end",  width: "100%"}}>
       {currentUser?.Cargo_id === 2 ? (
           <ToggleBtn
             checked={info.getValue() == 1}
@@ -149,14 +150,15 @@ function Usuarios() {
     columnHelper.display({
       id: 'actions',
       cell: props => (
-        currentUser?.Cargo_id === 2 && (
-        <EditarRemoverBtn
+        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+          <EditarRemoverBtn
           id={props.row.original.Usuario_id
           }
           onEdit={() => handleEditClick(props.row.original.Usuario_id)}
           onDelete={() => handleDeleteClick(props.row.original.Usuario_id)}
         />
-        )
+        </div>
+        
       ),
     }),
   ];
@@ -171,23 +173,23 @@ function Usuarios() {
   // FUNÇÕES PARA EVENTO DE MODALS
   // Edição
   const handleEditClick = (id: number) => {
-    setFornecedorSelecionado(id)
+    setUsuarioSelecionado(id)
     setOpenModalEdicao(true) // Abre o modal de edição
   }
 
   const closeEditModal = () => {
-    setFornecedorSelecionado(null)
+    setUsuarioSelecionado(null)
     setOpenModalEdicao(false)
   }
 
   // Excluir
   const handleDeleteClick = (id: number) => {
-    setFornecedorSelecionado(id)
+    setUsuarioSelecionado(id)
     setOpenDeleteModal(true)
   }
 
   const closeDeleteModal = () => {
-    setFornecedorSelecionado(null)
+    setUsuarioSelecionado(null)
     setOpenDeleteModal(false)
   }
 
@@ -217,7 +219,7 @@ function Usuarios() {
           {table.getHeaderGroups().map(headerGroup => (
             <tr className="heading" key={headerGroup.id}>
               {headerGroup.headers.map(header => (
-                <th key={header.id} colSpan={header.colSpan}>
+                <th key={header.id} colSpan={header.colSpan} className={header.id === 'Usuario_status' ? 'th-align-right' : ''}>
                   {header.isPlaceholder
                     ? null
                     : flexRender(header.column.columnDef.header, header.getContext())}
@@ -266,10 +268,10 @@ function Usuarios() {
       </Modal>
 
       {/* Modal de Edição */}
-      {fornecedorSelecionado && (
+      {usuarioSelecionado && (
         <Modal
           isOpen={openModalEdicao}
-          label="Editar Fornecedor"
+          label="Editar Usuário"
           buttons={
             <>
               <BtnCancelar onClick={closeEditModal} />
@@ -277,9 +279,9 @@ function Usuarios() {
             </>
           }
         >
-          <Forn_Edicao
+          <Usuario_Edicao
             ref={formRef}
-            id={fornecedorSelecionado}
+            id={usuarioSelecionado}
             onSuccess={message => {
               setMensagemSucesso(message);
               closeEditModal();
@@ -290,7 +292,7 @@ function Usuarios() {
       )}
 
       {/* Modal de Exclusão */}
-      {fornecedorSelecionado && (
+      {usuarioSelecionado && (
         <Modal
           isOpen={openDeleteModal}
           label="Excluir Fornecedor"
@@ -303,7 +305,7 @@ function Usuarios() {
         >
           <Forn_Excluir
             ref={formRef}
-            id={fornecedorSelecionado}
+            id={usuarioSelecionado}
             onSuccess={message => {
               setMensagemSucesso(message)
               closeDeleteModal()

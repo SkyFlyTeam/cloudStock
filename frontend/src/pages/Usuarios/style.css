@@ -7,6 +7,8 @@ main{
 table {
     font-family: "Montserrat", sans-serif;
     border-collapse: collapse; /* Remover espaços e bordas entre as células */
+    table-layout: fixed;
+    width: 100%;
 }
 
 tr.table-row {
@@ -19,6 +21,11 @@ th {
     color: #ACACAC !important;
     font-weight: 500 !important;
     border: none !important;
+}
+
+/* Alinha o texto no cabeçalho para a direita */
+.th-align-right {
+    text-align: right;
 }
 
 tr.vazia { 

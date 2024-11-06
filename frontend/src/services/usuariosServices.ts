@@ -35,6 +35,20 @@ const createUsuario = async (usuario: any): Promise<any | ApiException> => {
     }
 }
 
+const updateUsuario = async (id: number, usuario: any): Promise<Usuario | ApiException> => {
+  try {
+    const { data } = await Api().put<any>(`/usuario/${id}`, usuario, {
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+    const usuario_atualizado: Usuario = data
+    return usuario_atualizado
+
+  } catch (error: any) {
+    return new ApiException(error.message || 'Erro ao criar o registro.')
+  }
+}
+
 const getUsuarioById = async (id: number): Promise<Usuario | ApiException> => {
     try {
       const { data } = await Api().get<any>(`/usuario/${id}`, {
@@ -79,4 +93,5 @@ export const usuarioServices = {
     getAllUsuarios,
     updateUsuarioCargo,
     createUsuario,
+    updateUsuario
 }
