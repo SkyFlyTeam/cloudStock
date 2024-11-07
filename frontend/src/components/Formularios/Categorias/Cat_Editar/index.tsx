@@ -53,7 +53,7 @@ const CategoriaEdicao = forwardRef((props: Props, ref: Ref<{ submitForm: () => v
     const fetchCategoria = async () => {
       const result = await categoriaServices.getCategoriaByID(props.id);
       if (result instanceof ApiException) {
-        console.error(result.message);
+        alert(result.message) 
       } else {
         setNome(result.Categoria_nome);
         setStatus(result.Categoria_status);

@@ -86,34 +86,35 @@ function Categorias() {
       header: () => 'Nome',
       cell: info => info.getValue(),
     }),
-    columnHelper.accessor('Categoria_pai', {
+    columnHelper.accessor('Categoria_pai_nome', { // Alterado de Categoria_pai para Categoria_pai_nome
       header: () => 'Categoria Pai',
-      cell: info => info.getValue(), 
-    }),    
+      cell: info => info.getValue(),
+    }),
     columnHelper.accessor('Categoria_status', {
       header: () => 'Status',
       cell: info => (
         <div className="td-center">
-            <ToggleBtn
-              checked={info.getValue()}
-              cod={info.row.original.Categoria_id}
-              rota="/categoria"
-              onStatusChange={(newStatus: any) => handleStatusChange(info.row.original.Categoria_id, newStatus)}
-            />
+          <ToggleBtn
+            checked={info.getValue()}
+            cod={info.row.original.Categoria_id}
+            rota="/categoria"
+            onStatusChange={(newStatus: any) => handleStatusChange(info.row.original.Categoria_id, newStatus)}
+          />
         </div>
       ),
     }),
     columnHelper.display({
       id: 'actions',
       cell: props => (
-          <EditarRemoverBtn
-            id={props.row.original.Categoria_id}
-            onEdit={() => handleEditClick(props.row.original.Categoria_id)}
-            onDelete={() => handleDeleteClick(props.row.original.Categoria_id)}
-          />
-        )
+        <EditarRemoverBtn
+          id={props.row.original.Categoria_id}
+          onEdit={() => handleEditClick(props.row.original.Categoria_id)}
+          onDelete={() => handleDeleteClick(props.row.original.Categoria_id)}
+        />
+      )
     }),
   ];
+  
 
   const table = useReactTable({
     data: filteredData,

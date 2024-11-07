@@ -5,15 +5,8 @@ export interface Categoria {
   Categoria_id: number;
   Categoria_nome: string;
   Categoria_status: boolean;
-  Categoria_pai?: number; // Campo opcional, pois pode ser null
-  Produtos?: Produto[];   // Associações podem ser carregadas opcionalmente
-}
-
-export interface Produto {
-  // Defina a interface Produto com base na estrutura de dados que você está esperando
-  Produto_id: number;
-  Produto_nome: string;
-  // Outros campos de Produto conforme necessário
+  Categoria_pai?: number;
+  Categoria_pai_nome?: string; // Adicionando o campo Categoria_pai_nome
 }
 
 const getAllCategoria = async (): Promise<Categoria[] | ApiException> => {

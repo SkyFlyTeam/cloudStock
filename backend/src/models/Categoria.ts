@@ -1,11 +1,11 @@
-import { Table, Column, Model, DataType, ForeignKey, BelongsToMany, HasMany } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, ForeignKey, BelongsTo, HasMany } from 'sequelize-typescript';
 import { Produto } from './Produto';
 
+// Categoria pertence a uma outra categoria (Categoria Pai)
 @Table({
   tableName: 'Categoria',
   timestamps: false
 })
-
 export class Categoria extends Model {
 
   @Column({
@@ -32,6 +32,10 @@ export class Categoria extends Model {
     allowNull: true
   })
   Categoria_pai!: number;
+
+  // Relacionamento para pegar o nome da categoria pai
+  @BelongsTo(() => Categoria, { foreignKey: 'Categoria_pai', targetKey: 'Categoria_id' })
+  CategoriaPai?: Categoria;
 
   @HasMany(() => Produto)
   Produtos!: Produto[];
