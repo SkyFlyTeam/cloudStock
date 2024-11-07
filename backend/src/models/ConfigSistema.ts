@@ -13,13 +13,7 @@ export class ConfigSistema extends Model {
         autoIncrement: true
     })
     Config_id!: number;
-
-    @Column({
-        type: DataType.INTEGER,
-        allowNull: false
-    })
-
-    Config_estoqueMinimo!: number;
+    
     @Column({
         type: DataType.INTEGER,
         allowNull: false

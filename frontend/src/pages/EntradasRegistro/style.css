@@ -45,6 +45,11 @@ tbody tr:nth-child(odd) {
     margin-bottom: 10px;
 }
 
+.lotes-visualizar{
+    overflow-y: auto;
+    max-height: 30rem;
+}
+
 .lote-container {
     border: 2px solid #61BDE0; 
     padding: 10px;

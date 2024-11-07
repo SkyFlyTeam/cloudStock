@@ -385,6 +385,7 @@ function Entradas() {
                 className="delete-icon"
                 onClick={() => handleRemoveProduct(entrada.id)}
               />
+              <span className="quantidade-produto">Quantidade disponível: {produto.Prod_quantidade}</span>
             </div>
           );
         })}

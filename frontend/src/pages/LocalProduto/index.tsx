@@ -26,6 +26,7 @@ import { Lote, Produto, produtoServices } from "../../services/produtoServices";
 import { useParams } from "react-router-dom";
 import VisualizarBtn from "../../components/VisualizarBtn";
 import { BsFilter } from "react-icons/bs";
+import SearchBar from "./SearchBar";
 
 // Const para a criação de colunas; Define a Tipagem (Interface)
 const columnHelper = createColumnHelper<Produto>();
@@ -58,6 +59,8 @@ function LocalProduto() {
   // Armazena as informações puxadas na tabela
   const [data, setData] = useState<Produto[]>([]);
   const [produtos, setProdutos] = useState<Produto[]>([])
+  //Estado para armazenar os produtos filtrados
+  const [filteredData, setFilteredData] = useState<Produto[]>([])
   
   // Guarda o ID de local recebido na rota e converte para int
   const { id } = useParams();
@@ -71,8 +74,17 @@ function LocalProduto() {
     } else {
       setData(result);
       setProdutos(result)
+      setFilteredData(result)
     }
   }
+
+  //Função para filtrar fornecedores pelo nome
+  const handleSearch = (query: string) => {
+    const filtered = data.filter((Produto) =>
+      Produto.Prod_nome.toLowerCase().includes(query.toLowerCase())
+  );
+  setFilteredData(filtered);
+  };
 
   // Chama a função para pegar todos os fornecedores do BD ao montar o componente
   useEffect(() => {
@@ -173,7 +185,7 @@ const handleLimparFiltros = () => {
 
   // Configurações da tabela
   const table = useReactTable({
-    data,
+    data: filteredData,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -192,7 +204,11 @@ const handleLimparFiltros = () => {
         </div>
         <hr className="line" />
       </div>
-
+      <div className="actions-group">
+        <div className="search-bar-container">
+          <SearchBar onSearch={handleSearch} />
+        </div>
+      </div>
       {/* Implementação para o futuro, precisa adicionar tempo e + coisas {mensagemSucesso && <div className="success-message">{mensagemSucesso}</div>} */}
 
       {showFiltros && (

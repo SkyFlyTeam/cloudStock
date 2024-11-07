@@ -98,6 +98,12 @@ export class Produto extends Model {
     })
     Prod_status!: boolean;
 
+    @Column({
+        type: DataType.INTEGER,
+        allowNull: true,
+    })
+    Prod_estoqueMinimo!: number;
+
     @ForeignKey(() => Categoria)
     @Column({
       type: DataType.INTEGER,

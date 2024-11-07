@@ -26,6 +26,7 @@ import { hostname } from "../../config/apiConfig";
 
 import { useAuth } from "../../context/AuthProvider";
 import { BsFilter } from "react-icons/bs";
+import SearchBar from "./SearchBar";
 
 
 // Const para a criação de colunas; Define a Tipagem (Interface)
@@ -40,7 +41,6 @@ function Fornecedores() {
   const [openModalCadastro, setOpenModalCadastro] = useState(false);
   const [openModalEdicao, setOpenModalEdicao] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
-
 
   //Verificação dos Cargos
   const {currentUser} = useAuth();
@@ -58,6 +58,9 @@ function Fornecedores() {
   const [data, setData] = useState<Fornecedor[]>([]);
   const [fornecedores, setFornecedores] = useState<Fornecedor[]>([])
 
+  // Estado para armazenar os produtos filtrados
+  const [filteredData, setFilteredData] = useState<Fornecedor[]>([]);
+
   // Função para buscar todos os fornecedores 
   const fetchFornecedores = async () => {
     const result = await fornecedorServices.getAllFornecedores()
@@ -66,8 +69,18 @@ function Fornecedores() {
     } else {
       setData(result);
       setFornecedores(result);
+      setFilteredData(result)
     }
   }
+
+  //Função para filtrar fornecedores pelo nome
+  const handleSearch = (query: string) => {
+    const filtered = data.filter((Fornecedor) =>
+      Fornecedor.Forn_nome.toLowerCase().includes(query.toLowerCase())
+  );
+  setFilteredData(filtered);
+  };
+
 
   // Chama a função para pegar todos os fornecedores do BD ao montar o componente
   useEffect(() => {
@@ -149,7 +162,7 @@ function Fornecedores() {
 
   // Configurações da tabela
   const table = useReactTable({
-    data,
+    data: filteredData, //utilizando filteredData
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -191,10 +204,17 @@ function Fornecedores() {
       </div>
 
       <div className="actions-group">
-        {currentUser?.Cargo_id === 2 && (
-          <BtnAzul icon={<IoAddCircleOutline />} label="CADASTRAR" onClick={() => setOpenModalCadastro(true)} />
-        )}
+        <div className="search-bar-container">
+          <SearchBar onSearch={handleSearch} />
+        </div>
+        
+        <div className="cadastro">
+          {currentUser?.Cargo_id === 2 && (
+            <BtnAzul icon={<IoAddCircleOutline />} label="CADASTRAR" onClick={() => setOpenModalCadastro(true)} />
+      
+          )}
       </div>
+    </div>
       {/* Implementação para o futuro, precisa adicionar tempo e + coisas {mensagemSucesso && <div className="success-message">{mensagemSucesso}</div>} */}
 
       {showFiltros && (
