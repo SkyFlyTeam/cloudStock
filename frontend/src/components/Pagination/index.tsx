@@ -14,8 +14,8 @@ const Pagination: React.FC<Props> = ({className, thisPage, lastPage, func}) =>{
     let numbers = [];
 
     for (let x = 1; x <= lastPage; x++) {
-        if (thisPage === x || x === lastPage || x === thisPage - 1 || x === thisPage + 1 || x === lastPage - 1 
-            || x === 1 || x === thisPage + 2 || x === lastPage - 2 || x === thisPage - 2){
+        if (x === thisPage - 2 || x === thisPage - 1 || x === thisPage || x === thisPage + 1 
+            || x === thisPage + 2 || x === thisPage + 3){
             numbers.push(x);
         }
     };

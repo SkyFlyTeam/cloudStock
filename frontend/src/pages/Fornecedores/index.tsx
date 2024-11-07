@@ -6,7 +6,7 @@ import './style.css';
 
 /* Tabela */
 import { Table } from "react-bootstrap";
-import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table';
 
 /* Componentes */
 import ToggleBtn from "../../components/ToggleBtn";
@@ -28,6 +28,7 @@ import { useAuth } from "../../context/AuthProvider";
 
 import SearchBar from "../../components/SearchBar/SearchBar"
 import { BsFilter } from "react-icons/bs";
+import Pagination from "../../components/Pagination";
 
 
 
@@ -38,6 +39,9 @@ function Fornecedores() {
   const [showFiltros, setShowFiltros] = useState(false)
   const [status, setStatus] = useState<boolean | null>(null)
   const [filtroKey, setFiltroKey] = useState(0)
+
+  const [pageIndex, setPageIndex] = useState(0);
+  const pageSize = 10; // Number of items per page
 
   // Estado para controlar os modais
   const [openModalCadastro, setOpenModalCadastro] = useState(false);
@@ -166,8 +170,17 @@ function Fornecedores() {
   const table = useReactTable({
     data: filteredData, //utilizando filteredData
     columns,
+    state: { pagination: { pageIndex, pageSize } }, // Set pagination in the state
     getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(), // Add this to enable pagination
+    onPaginationChange: (updater) => {
+      const newPagination = typeof updater === "function" ? updater({ pageIndex, pageSize }) : updater;
+      setPageIndex(newPagination.pageIndex);
+  },
   });
+
+  // Calculate the total number of pages
+  const pageCount = Math.ceil(data.length / pageSize);
 
   // FUNÇÕES PARA EVENTO DE MODALS
   // Edição
@@ -273,6 +286,8 @@ function Fornecedores() {
           ))}
         </tbody>
       </Table>
+
+      <Pagination className={""} thisPage={pageIndex} lastPage={pageCount} func={setPageIndex} />
 
       {/* MODALS*/}
       {/* Modal de Cadastro */}

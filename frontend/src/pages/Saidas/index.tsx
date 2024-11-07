@@ -8,7 +8,7 @@ import './style.css';
 
 /* Tabela */
 import { Table } from "react-bootstrap";
-import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table';
 
 /* Componentes */
 import ToggleBtn from "../../components/ToggleBtn";
@@ -28,6 +28,7 @@ import { AiOutlineDelete } from "react-icons/ai"
 import { IoAddCircleOutline, IoArrowBackCircleOutline } from "react-icons/io5"
 import { BsFilter } from "react-icons/bs";
 import { Produto, produtoServices, Lote } from "../../services/produtoServices";
+import Pagination from "../../components/Pagination";
 
 // Const para a criação de colunas; Define a Tipagem (Interface)
 const columnHelper = createColumnHelper<Saida>();
@@ -48,6 +49,9 @@ function Saidas() {
   // Data
   const [dataMax, setDataMax] = useState<string | null>(null)
   const [dataMin, setDataMin] = useState<string | null>(null)
+
+  const [pageIndex, setPageIndex] = useState(0);
+  const pageSize = 10; // Number of items per page
 
   // Estado para controlar os modais
   const [openModalCadastro, setOpenModalCadastro] = useState(false);
@@ -235,8 +239,17 @@ function Saidas() {
   const table = useReactTable({
     data,
     columns,
+    state: { pagination: { pageIndex, pageSize } }, // Set pagination in the state
     getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(), // Add this to enable pagination
+    onPaginationChange: (updater) => {
+      const newPagination = typeof updater === "function" ? updater({ pageIndex, pageSize }) : updater;
+      setPageIndex(newPagination.pageIndex);
+  },
   });
+
+  // Calculate the total number of pages
+  const pageCount = Math.ceil(data.length / pageSize);
 
   // FUNÇÕES PARA EVENTO DE MODALS
   // Edição
@@ -395,6 +408,8 @@ function Saidas() {
           ))}
         </tbody>
       </Table>
+
+      <Pagination className={""} thisPage={pageIndex} lastPage={pageCount} func={setPageIndex} />
 
       {/* MODALS*/}
       {/* Modal de Edição */}

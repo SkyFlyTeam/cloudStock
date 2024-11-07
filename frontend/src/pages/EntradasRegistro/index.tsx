@@ -11,18 +11,22 @@ import Modal from "../../components/Modal";
 
 /* Tabela */
 import { Table } from "react-bootstrap";
-import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table';
 import BtnCancelar from "../../components/BtnCancelar";
 import VisualizarBtn from "../../components/VisualizarBtn";
 import { Fornecedor, fornecedorServices } from "../../services/fornecedorServices";
 import { Produto, produtoServices } from "../../services/produtoServices";
 import { BsFilter } from "react-icons/bs";
 import { Saida } from "../../services/saidaServices";
+import Pagination from "../../components/Pagination";
 
 // Const para a criação de colunas; Define a Tipagem (Interface)
 const columnHelper = createColumnHelper<Entrada>();
 
 function EntradasRegistro() {
+    const [pageIndex, setPageIndex] = useState(0);
+    const pageSize = 10; // Number of items per page
+
     const [entradas, setEntradas] = useState<Entrada[]>([])
     // State para mostrar campo de status
     const [showFiltros, setShowFiltros] = useState(false)
@@ -195,8 +199,17 @@ function EntradasRegistro() {
     const table = useReactTable({
         data,
         columns,
+        state: { pagination: { pageIndex, pageSize } }, // Set pagination in the state
         getCoreRowModel: getCoreRowModel(),
+        getPaginationRowModel: getPaginationRowModel(), // Add this to enable pagination
+        onPaginationChange: (updater) => {
+      const newPagination = typeof updater === "function" ? updater({ pageIndex, pageSize }) : updater;
+      setPageIndex(newPagination.pageIndex);
+  },
     });
+
+    // Calculate the total number of pages
+    const pageCount = Math.ceil(data.length / pageSize);
 
     const handleVisualizarClick = (id: number) => {
         serEntradaSelecionada(id)
@@ -337,6 +350,8 @@ function EntradasRegistro() {
                     ))}
                 </tbody>
             </Table>
+
+            <Pagination className={""} thisPage={pageIndex} lastPage={pageCount} func={setPageIndex} />
 
             {/* Modal de visualizar */}
             <Modal
