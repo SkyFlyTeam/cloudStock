@@ -36,6 +36,9 @@ function Entradas() {
   const [openModalLocalArmazenamento, setOpenModalLocalArmazenamento] = useState(false) // verifica local de armazenamento
   const [openModalValidade, setOpenModalValidade] = useState(false)
 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredProdutos, setFilteredProdutos] = useState<Produto[]>([]);
+
   // data - armazena todos produtos
   const [data, setData] = useState<Produto[]>([]);
 
@@ -93,6 +96,14 @@ function Entradas() {
     fetchLocal()
     fetchFornecedor()
   }, []);
+
+  useEffect(() => {
+    setFilteredProdutos(
+      data.filter(produto =>
+        produto.Prod_nome.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+  }, [searchTerm, data]);
 
   const getProduto = async (id: number): Promise<Produto | undefined> => {
     const produto = data.find((p: Produto) => p.Prod_cod === id);
@@ -267,30 +278,34 @@ function Entradas() {
       </div>
 
       <div className="entradas-container">
-        <div className="inputContainer">
-          <div>Produto</div>
-          <div className="inputButton">
-            <select
-              className="form-select-custom"
-              aria-label="Default select example"
-              value={selectedProduto}
-              onChange={(e) => {
-                const produtoId = +e.target.value;
-                if (produtoId) {
-                  setSelectedProduto(e.target.value);
-                  getProduto(produtoId);
-                }
-              }}
-            >
-              <option value="">Buscar...</option>
-              {data.map((d) => (
-                <option key={d.Prod_cod} value={d.Prod_cod}>
-                  {d.Prod_cod}: {d.Prod_nome} {d.Prod_marca} {d.Prod_modelo}
-                </option>
+      <div className="inputContainer">
+        <div>Produto</div>
+        <div className="inputButton">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Buscar..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          {searchTerm && (
+            <div className="suggestions-container">
+              {filteredProdutos.map((produto) => (
+                <div
+                  key={produto.Prod_cod}
+                  className="suggestion-item"
+                  onClick={() => {
+                    setSearchTerm("");
+                    getProduto(produto.Prod_cod);
+                  }}
+                >
+                  {produto.Prod_nome} {produto.Prod_marca} {produto.Prod_modelo}
+                </div>
               ))}
-            </select>
-          </div>
+            </div>
+          )}
         </div>
+      </div>
 
         {entradasSelecionadas.length <= 0 && (
           <div className="emptyProducts">
