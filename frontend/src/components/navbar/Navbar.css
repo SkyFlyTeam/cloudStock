@@ -12,6 +12,7 @@
     position: fixed;
     left: 0;
     top: 0;
+    z-index: 3;
 }
   
 .sidebar img {
@@ -115,6 +116,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        z-index: 3;
     }
 
     .sidebar {

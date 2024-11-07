@@ -25,7 +25,7 @@ import { hostname } from "../../config/apiConfig";
 
 
 import { useAuth } from "../../context/AuthProvider";
-import SearchBar from "./SearchBar";
+import SearchBar from "../../components/SearchBar/SearchBar"
 
 
 // Const para a criação de colunas; Define a Tipagem (Interface)
@@ -171,16 +171,12 @@ function Fornecedores() {
       </div>
 
       <div className="actions-group">
-        <div className="search-bar-container">
           <SearchBar onSearch={handleSearch} />
-        </div>
         
-        <div className="cadastro">
           {currentUser?.Cargo_id === 2 && (
             <BtnAzul icon={<IoAddCircleOutline />} label="CADASTRAR" onClick={() => setOpenModalCadastro(true)} />
       
           )}
-      </div>
     </div>
       {/* Implementação para o futuro, precisa adicionar tempo e + coisas {mensagemSucesso && <div className="success-message">{mensagemSucesso}</div>} */}
 

@@ -25,7 +25,7 @@ import { hostname } from "../../config/apiConfig";
 import { Lote, Produto, produtoServices } from "../../services/produtoServices";
 import { useParams } from "react-router-dom";
 import VisualizarBtn from "../../components/VisualizarBtn";
-import SearchBar from "./SearchBar";
+import SearchBar from "../../components/SearchBar/SearchBar"
 
 // Const para a criação de colunas; Define a Tipagem (Interface)
 const columnHelper = createColumnHelper<Produto>();
@@ -137,9 +137,7 @@ function LocalProduto() {
         <hr className="line" />
       </div>
       <div className="actions-group">
-        <div className="search-bar-container">
           <SearchBar onSearch={handleSearch} />
-        </div>
       </div>
       {/* Implementação para o futuro, precisa adicionar tempo e + coisas {mensagemSucesso && <div className="success-message">{mensagemSucesso}</div>} */}
 

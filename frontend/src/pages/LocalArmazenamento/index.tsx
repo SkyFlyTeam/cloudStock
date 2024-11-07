@@ -18,7 +18,7 @@ import { Link, useParams } from "react-router-dom";
 import { Setor, setoresServices } from "../../services/setorServices";
 
 import { useAuth } from "../../context/AuthProvider";
-import SearchBar from "./SearchBar";
+import SearchBar from "../../components/SearchBar/SearchBar"
 
 function LocalArmazenamento() {
   const [openModalCadastro, setOpenModalCadastro] = useState(false)
@@ -112,15 +112,11 @@ const closeEditModal = () => {
           </div> */}
 
         <div className="actions-group">
-          <div className="search-bar-container">
             <SearchBar onSearch={handleSearch} />
-          </div>
 
-          <div className="cadastro">
             {currentUser?.Cargo_id === 2 && (
               <BtnAzul className="rfloat" icon={<IoAddCircleOutline />} label="CADASTRAR" onClick={() => setOpenModalCadastro(true)} />
             )}
-          </div>
         </div>
 
       

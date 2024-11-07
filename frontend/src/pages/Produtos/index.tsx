@@ -17,7 +17,7 @@ import BtnCancelar from "../../components/BtnCancelar";
 import ProdutoFormulario from "../../components/Formularios/Produtos/Form_Cadastrar";
 import ProdutoExcluir from "../../components/Formularios/Produtos/Form_Excluir";
 import ProdutoEditar from "../../components/Formularios/Produtos/Form_Editar";
-import SearchBar from "./SearchBar"
+import SearchBar from "../../components/SearchBar/SearchBar"
 
 import './style.css'
 /* Icons */
@@ -187,15 +187,11 @@ function Produtos() {
       </div>
 
       <div className="actions-group">
-        <div className="search-bar-container">
           <SearchBar onSearch={handleSearch} />
-        </div>
     
-        <div className="cadastro">
           {currentUser?.Cargo_id === 1 && (
             <BtnAzul className="rfloat" icon={<IoAddCircleOutline />} label="CADASTRAR" onClick={() => setOpenModalCadastro(true)} />
           )}
-        </div>
       </div>
 
       <Table hover responsive size="lg">

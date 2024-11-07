@@ -105,7 +105,7 @@ function EntradasRegistro() {
                 <hr className="line" />
             </div>
 
-            <div className="actions-group">
+            <div className="actions-group flex-end">
                 <BtnAzul icon={<IoAddCircleOutline />} label='CADASTRAR' onClick={handleRedirect} />
             </div>
 
