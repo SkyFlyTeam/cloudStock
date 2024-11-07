@@ -1,4 +1,4 @@
-import { useState, forwardRef, useImperativeHandle, Ref } from 'react';
+import { useState, forwardRef, useImperativeHandle, Ref, useEffect } from 'react';
 import './style.css'
 import { ApiException } from '../../../../config/apiException';
 import { produtoServices } from '../../../../services/produtoServices';
@@ -6,6 +6,7 @@ import { IoAddCircleOutline } from "react-icons/io5";
 import Input from "../../../Input";
 import DivTitulo from "../../../DivTitulo";
 import BtnAzul from "../../../BtnAzul";
+import { Unidade_Medida, unidadeService } from '../../../../services/unidadeMedidaService'
 
 interface Props {
     onSuccess: (message: string) => void // Função para quando dê certo 
@@ -27,8 +28,21 @@ const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
     const [Prod_validade, setValidade] = useState<boolean>(false)
     const [Prod_quantidade, setQuantidade] = useState<number>(0)
     const [Prod_categoriaId, setCategoriaID] = useState<null>(null)
-    const [Prod_unidadeId, setUnidadeID] = useState<null>(null)
+    const [UnidadeMedida_id, setUnidadeMedida_id] = useState<number>(0)
     const [Prod_imagem, setImg] = useState<File | null>(null)
+    const [unidades, setUnidades] = useState<Unidade_Medida[]>([])
+
+    useEffect(() => {
+        const fetchUnidades = async () => {
+            const result = await unidadeService.getAllUnidadeMedida();
+            if (result instanceof ApiException) {
+                console.error(result.message);
+            } else {
+                setUnidades(result);
+            }
+        };
+        fetchUnidades();
+    }, []);
 
     const eventoFormulario = async () => {
         const formData = new FormData();
@@ -46,6 +60,7 @@ const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
         formData.append('Prod_modelo', Prod_modelo);
         formData.append('Prod_validade', Prod_validade ? 'true' : 'false');
         formData.append('Prod_quantidade', Prod_quantidade.toString());
+        formData.append('UnidadeMedida_id', UnidadeMedida_id.toString())
 
         // Adicione o arquivo de imagem, se houver
         if (Prod_imagem) {
@@ -71,8 +86,8 @@ const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
             setValidade(false);
             setQuantidade(0);
             setCategoriaID(null);
-            setUnidadeID(null);
             setImg(null);
+            setUnidadeMedida_id(0)
             props.onSuccess('Produto criado com sucesso!');
         }
     }
@@ -84,6 +99,7 @@ const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
     }))
 
     return (
+
         <form className="form-prod" encType="multipart/form-data">
             <section className="form-prod">
                 <div className="input-group-prod">
@@ -129,6 +145,21 @@ const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
                 <hr className="line"/>
             </div>
             <section className='form-prod'>
+                <div className="input-item-prod">
+                    <label>Unidade de Medida</label>
+                    <select 
+                        className="form-select-custom"
+                        value={UnidadeMedida_id}
+                        onChange={(e) => setUnidadeMedida_id(+e.target.value)}
+                    >
+                        <option value="">Selecionar...</option>
+                        {unidades.map((unidade) => (
+                            <option key={unidade.UnidadeMedida_id} value={unidade.UnidadeMedida_id}>
+                                {unidade.UnidadeMedida_nome}
+                            </option>
+                        ))}
+                    </select>
+                </div>
                 <div className="input-group-prod">
                     <Input className="input-item-prod"
                         label="Peso"
