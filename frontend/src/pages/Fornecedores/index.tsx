@@ -26,16 +26,23 @@ import { hostname } from "../../config/apiConfig";
 
 import { useAuth } from "../../context/AuthProvider";
 
+import SearchBar from "../../components/SearchBar/SearchBar"
+import { BsFilter } from "react-icons/bs";
+
+
 
 // Const para a criação de colunas; Define a Tipagem (Interface)
 const columnHelper = createColumnHelper<Fornecedor>();
 
 function Fornecedores() {
+  const [showFiltros, setShowFiltros] = useState(false)
+  const [status, setStatus] = useState<boolean | null>(null)
+  const [filtroKey, setFiltroKey] = useState(0)
+
   // Estado para controlar os modais
   const [openModalCadastro, setOpenModalCadastro] = useState(false);
   const [openModalEdicao, setOpenModalEdicao] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
-
 
   //Verificação dos Cargos
   const {currentUser} = useAuth();
@@ -51,6 +58,10 @@ function Fornecedores() {
 
   // Armazena as informações puxadas na tabela
   const [data, setData] = useState<Fornecedor[]>([]);
+  const [fornecedores, setFornecedores] = useState<Fornecedor[]>([])
+
+  // Estado para armazenar os produtos filtrados
+  const [filteredData, setFilteredData] = useState<Fornecedor[]>([]);
 
   // Função para buscar todos os fornecedores 
   const fetchFornecedores = async () => {
@@ -59,14 +70,45 @@ function Fornecedores() {
       console.log(result.message)
     } else {
       setData(result);
+      setFornecedores(result);
+      setFilteredData(result)
     }
   }
+
+  //Função para filtrar fornecedores pelo nome
+  const handleSearch = (query: string) => {
+    const filtered = data.filter((Fornecedor) =>
+      Fornecedor.Forn_nome.toLowerCase().includes(query.toLowerCase())
+  );
+  setFilteredData(filtered);
+  };
+
 
   // Chama a função para pegar todos os fornecedores do BD ao montar o componente
   useEffect(() => {
     fetchFornecedores()
   }, [])
 
+  useEffect(() => {
+    const filtrarAutomaticamente = () => {
+      let fornecedorFiltrado = fornecedores;
+      if (status !== null) {
+        fornecedorFiltrado = fornecedorFiltrado.filter((f) => f.Forn_status === status);
+      }
+      setData(fornecedorFiltrado);
+    };
+  
+    filtrarAutomaticamente();
+  }, [status, fornecedores]);
+
+  const handleAtivos = () =>  setStatus(() => true) 
+  const handleInativos = () => setStatus(() => false)
+
+  const handleLimparFiltros = () => {
+    setStatus(null)
+    setData(fornecedores)
+    setFiltroKey((prevKey) => prevKey + 1)
+  }
 
   // Altera o Status do componente 
   const handleStatusChange = (forn_id: number, newStatus: boolean) => {
@@ -122,7 +164,7 @@ function Fornecedores() {
 
   // Configurações da tabela
   const table = useReactTable({
-    data,
+    data: filteredData, //utilizando filteredData
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -153,16 +195,57 @@ function Fornecedores() {
   return (
     <main>
       <div className="page-title">
-        <h1 className="title">Fornecedores</h1>
+        <div className="page-title-fornecedores">
+          <h1 className="title">Fornecedores</h1>
+        </div>
         <hr className="line" />
       </div>
 
-    {currentUser?.Cargo_id === 2 && (
       <div className="actions-group">
-        <BtnAzul icon={<IoAddCircleOutline />} label="CADASTRAR" onClick={() => setOpenModalCadastro(true)} />
-      </div>
-    )}
+          <SearchBar onSearch={handleSearch} />
+          <div className="action-end">
+            <div className="btnFiltrar" onClick={() => setShowFiltros(!showFiltros)}>
+              <BsFilter size={24} style={{ color: '#61BDE0'}} />
+              <span>Filtrar por</span>
+            </div>
+            {currentUser?.Cargo_id === 2 && (
+              <BtnAzul icon={<IoAddCircleOutline />} label="CADASTRAR" onClick={() => setOpenModalCadastro(true)} />
+        
+            )}
+          </div>
+    </div>
       {/* Implementação para o futuro, precisa adicionar tempo e + coisas {mensagemSucesso && <div className="success-message">{mensagemSucesso}</div>} */}
+
+      {showFiltros && (
+        <>
+          <div className="status-filtro-fornecedor" key={filtroKey}>
+            <label htmlFor="inStatus">Status</label>
+            <div>
+              <label htmlFor="inAtivo">Ativo</label>
+              <input 
+                type="radio" 
+                name="inStatus" 
+                id="inAtivo" 
+                value={"true"} 
+                onChange={handleAtivos} 
+              />
+            </div>
+            <div>
+              <label htmlFor="inInativo">Inativo</label>
+              <input 
+                type="radio" 
+                name="inStatus" 
+                id="inInativo" 
+                value="false" 
+                onChange={handleInativos} 
+              />
+            </div>
+          </div>
+          <div className="filtros-btn">
+            <button className="rfloat btnLimpar" onClick={handleLimparFiltros}>LIMPAR</button>
+          </div>
+        </>
+      )}
 
       <Table hover responsive size="lg">
         <thead>

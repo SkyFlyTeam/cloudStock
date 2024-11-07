@@ -19,8 +19,105 @@ hr.line{
 .actions-group{
     display: flex;
     width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 1em;
+}
+
+.action-end{
+    display: flex;
+    gap: 1rem;
+}
+
+.btnFiltrar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: .5em;
+    cursor: pointer;
+}
+
+.btnLimpar{
+    background-color: #61BDE0;
+    padding: 2px 0;
+    width: 6em;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+}
+.btnLimpar:hover {
+    background-color: #61bce083;
+}
+.container-filtros {
+    display: flex;
+    align-items: start;
+    column-gap: .5em;
+}
+.container-filtros label {
+    width: 4em;
+}
+.filtros-btn {
+    display: flex;
     justify-content: end;
 }
+
+.status-filtro {
+    width: 5em;
+}
+
+.quantidade-container, .venda-container, .custo-container, .validade-container {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+}
+
+.preco-container, .quantidade-validade-container {
+    display: flex;
+    column-gap: .6em;
+}
+
+.venda-container label, .custo-container label, .validade-container label{
+    width: 8em;
+    margin-bottom: .3em;
+}
+.venda-container input, .custo-container input, .validade-container input {
+    width: 6em;
+    text-align: center;
+}
+
+.container-filtros input:not(input[type=radio]), .container-filtros select {
+    margin-right: 5px;
+}
+
+input[type=date] {
+    font-size: 0.76em;
+    color: #ACACAC;
+    width: 98px;
+    height: 35.2px;
+    padding: 0 .13em;
+    justify-content: space-between;
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+    width: 15px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    animation: l5 1s infinite linear alternate;
+  }
+  @keyframes l5 {
+      0%  {box-shadow: 20px 0 #000, -20px 0 #0002;background: #000 }
+      33% {box-shadow: 20px 0 #000, -20px 0 #0002;background: #0002}
+      66% {box-shadow: 20px 0 #0002,-20px 0 #000; background: #0002}
+      100%{box-shadow: 20px 0 #0002,-20px 0 #000; background: #000 }
+  }
+
 
 table{
     font-family: "Montserrat", sans-serif;
@@ -67,12 +164,9 @@ td img{
     border-radius: 10px;
 }
 
-
 div.td-center{
     display: flex;
     justify-content: center;
-    width: min-content;
-    padding: 0 0.5rem;
 }
 
 div.td-numeric{
@@ -80,17 +174,43 @@ div.td-numeric{
     width: min-content;
 }
 
+.modal-prod{
+    height: 35rem;
+}
 
-@media (max-width: 768px) {
-    th, td{
-        font-size: 14px;
-    }
-
-    td img{
-        width: 4.5rem;
-        height: 3.5rem;
+@media (max-width: 460px) {
+    input:not(input[type=radio]) {
+        margin-bottom: .25em;
     }
 }
+
+@media (max-width: 890px) {
+    /* .registro-header {
+        padding-right: 1em;
+    } */
+
+    .preco-container, .quantidade-validade-container {
+        flex-direction: column;
+        column-gap: 1em;
+        row-gap: 1em;
+    }
+    .quantidade-container {
+        display: flex;
+        flex-direction: column !important;
+        align-items: start !important;
+    }
+}
+
+@media (max-width: 1220px) {
+    .container-filtros {
+        flex-direction: column;
+        row-gap: 1em;
+    }
+    .preco-container, .quantidade-validade-container {
+        row-gap: 1em;
+    }
+}
+
 
 .status-ativo {
     color: green;
@@ -105,3 +225,4 @@ div.td-numeric{
     font-weight: bold;
     font-size: 16px;
   }
+

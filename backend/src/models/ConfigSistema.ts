@@ -18,11 +18,5 @@ export class ConfigSistema extends Model {
         type: DataType.INTEGER,
         allowNull: false
     })
-
-    Config_estoqueMinimo!: number;
-    @Column({
-        type: DataType.INTEGER,
-        allowNull: false
-    })
     Config_avisoValidade!: number;
 }

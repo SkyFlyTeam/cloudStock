@@ -285,7 +285,7 @@ function Entradas() {
               <option value="">Buscar...</option>
               {data.map((d) => (
                 <option key={d.Prod_cod} value={d.Prod_cod}>
-                  {d.Prod_nome} {d.Prod_marca} {d.Prod_modelo}
+                  {d.Prod_cod}: {d.Prod_nome} {d.Prod_marca} {d.Prod_modelo}
                 </option>
               ))}
             </select>
@@ -313,6 +313,7 @@ function Entradas() {
                 {/* Demais labels e inputs */}
                 <div className="entrada-options">
                   <Input
+                    min="0"
                     max={produto.Prod_quantidade}
                     label="Quantidade"
                     type="number"

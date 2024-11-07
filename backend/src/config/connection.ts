@@ -18,6 +18,7 @@ import { Registros } from '../models/Registros';
 import { ConfigSistema } from '../models/ConfigSistema';
 import { Notificacoes } from '../models/Notificacoes';
 
+
 dotenv.config();
 
 const sequelize = new Sequelize({
@@ -25,6 +26,7 @@ const sequelize = new Sequelize({
   username: process.env.DB_USER,
   password: process.env.DB_PASSWORD, // mudar senha
   host: process.env.DB_HOST, // colocar domínio
+  port: parseInt(process.env.DB_PORT), // colocar porta
   dialect: 'mysql',
   models: [Cargo, Categoria, Entrada, Fornecedor_Produto, Fornecedor, Local_Armazenamento, Lote_Entrada, Lote_Saida, Lote, Produto, Saida, Setor, Unidade_Medida, Usuario, Registros, ConfigSistema, Notificacoes],  // Adiciona os modelos aqui
 });

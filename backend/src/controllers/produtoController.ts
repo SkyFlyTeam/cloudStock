@@ -29,6 +29,7 @@ export const controllerProducts = {
         Prod_modelo, 
         Prod_validade, 
         Prod_status: true,
+        Prod_estoqueMinimo: 0, 
         Categoria_id, 
         UnidadeMedida_id,
         Prod_imagem
@@ -95,7 +96,7 @@ export const controllerProducts = {
     let {
       Prod_nome, Prod_preco, Prod_descricao, Prod_custo, Prod_peso,
       Prod_altura, Prod_largura, Prod_comprimento, Prod_marca, Prod_modelo,
-      Prod_validade, Prod_status, Categoria_id, UnidadeMedida_id 
+      Prod_validade, Prod_status, Prod_estoqueMinimo, Categoria_id, UnidadeMedida_id 
     } = req.body;
 
       let Prod_imagem = req.file ? req.file.buffer : null;
@@ -127,6 +128,7 @@ export const controllerProducts = {
           Prod_modelo: Prod_modelo || existingProduct.Prod_modelo,
           Prod_validade: Prod_validade !== undefined ? Prod_validade : existingProduct.Prod_validade,
           Prod_status: Prod_status !== undefined ? Prod_status : existingProduct.Prod_status,
+          Prod_estoqueMinimo: Prod_estoqueMinimo !== undefined ? Prod_estoqueMinimo : existingProduct.Prod_estoqueMinimo,
           Categoria_id: Categoria_id !== undefined ? Categoria_id : existingProduct.Categoria_id,
           UnidadeMedida_id: UnidadeMedida_id !== undefined ? UnidadeMedida_id : existingProduct.UnidadeMedida_id,
           Prod_imagem: Prod_imagem || existingProduct.Prod_imagem

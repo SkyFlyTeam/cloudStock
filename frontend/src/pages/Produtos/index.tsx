@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from "react"
 
 import { Table } from "react-bootstrap"
-import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
+import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table'
 
-import { produtoServices, Produto } from "../../services/produtoServices"
+import { produtoServices, Produto, Lote } from "../../services/produtoServices"
+import { fornecedorServices } from "../../services/fornecedorServices"
 import { ApiException } from "../../config/apiException"
 
 import ImagemProduto from "../../components/ImagemProduto/index"
@@ -17,38 +18,82 @@ import BtnCancelar from "../../components/BtnCancelar";
 import ProdutoFormulario from "../../components/Formularios/Produtos/Form_Cadastrar";
 import ProdutoExcluir from "../../components/Formularios/Produtos/Form_Excluir";
 import ProdutoEditar from "../../components/Formularios/Produtos/Form_Editar";
+import SearchBar from "../../components/SearchBar/SearchBar"
 
 import './style.css'
 /* Icons */
-import { IoAddCircleOutline } from "react-icons/io5"
+import { IoAddCircleOutline, IoArrowBackCircleOutline } from "react-icons/io5"
 import { AiOutlineDelete } from "react-icons/ai"
 import { hostname } from "../../config/apiConfig"
+import { Fornecedor } from "../../services/fornecedorServices"
+import { BsFilter } from "react-icons/bs"
+import VisualizarBtn from "../../components/VisualizarBtn";
 
 import { useAuth } from "../../context/AuthProvider"
+import { useLocation, useNavigate, useParams } from "react-router-dom"
+import { LoadingDots } from "./LoadingDots"
+import Pagination from "../../components/Pagination"
 
 // Criar o helper para colunas
 const columnHelper = createColumnHelper<Produto>()
 
 function Produtos() {
-  // Use state para armazenar uma array de Produto (interface) que será exibido na tabela
-  const [data, setData] = useState<Produto[]>([])
 
+  // Use state para armazenar e alterar a página de exibição dos produtos
+  const [pageIndex, setPageIndex] = useState(0);
+  const pageSize = 10; // Number of items per page
+
+  const navigate = useNavigate();
+
+  // Registro geral
+  const [fornecedores, setFornecedores] = useState<Fornecedor[]>([])
+  const [produtos, setProdutos] = useState<Produto[]>([])
+  // useSatate para armazenar os estados dos filtros que queremos
+  const [data, setData] = useState<Produto[]>([]) // Use state para armazenar uma array de Produto (filtrado ou não) (interface) que será exibido na tabela
+  const [status, setStatus] = useState<boolean | null>(null) // useStates do filtro ativo ou inativo
+  const [fornecedorFiltrado, setFornecedorFiltrado] = useState<Fornecedor | null>() // useState para guardar fornecedor selecionado
+  const [quantidadeMax, setQuantidadeMax] = useState<number | null>(null)
+  const [quantidadeMin, setQuantidadeMin] = useState<number | null>(null)
+  const [vendaMax, setVendaMax] = useState<number | null>(null)
+  const [vendaMin, setVendaMin] = useState<number | null>(null)
+  const [custoMax, setCustoMax] = useState<number | null>(null)
+  const [custoMin, setCustoMin] = useState<number | null>(null)
+  const [dataMax, setDataMax] = useState<string | null>(null)
+  const [dataMin, setDataMin] = useState<string | null>(null)
+  // renderizar o componente de filtro
+  const [filtroKey, setFiltroKey] = useState(0)
+  // useState para controlar os modais
+
+  // Estado para armazenar os produtos filtrados
+
+  const [filteredData, setFilteredData] = useState<Produto[]>([]);
   // Estado para controlar os modais
   const [openModalCadastro, setOpenModalCadastro] = useState(false);
+  //Estado para controlar o modal
+	const [openModalVisualizar, setOpenModalVisualizar] = useState(false)
   const [openEditModal, setOpenEditModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
-
   // Mensagem de sucesso das ações
   const [mensagemSucesso, setMensagemSucesso] = useState<string>('');
+
+  const [searchbarValue, setSearchValue] = useState<string>('');
 
   //Verificação dos Cargos
   const {currentUser} = useAuth();
 
+
+  // State para mostrar campo de status
+  const [showFiltros, setShowFiltros] = useState(false)
+
   // Referência ao forms para realizar o submit fora do componente do forms
   const formRef = useRef<{ submitForm: () => void }>(null);
-
   // Guarda o ID dos fornecedores selecionados na tabela
   const [produtoSelecionado, setProdutoSelecionado] = useState<number | null>(null);
+  const [lotesInfo, setLotesInfo] = useState<Lote[] | null>(null)
+  // Guarda o ID de local recebido na rota e converte para int
+  const { id } = useParams();
+  const idInt = id ? parseInt(id, 10) : null
+
 
   // Função para buscar todos os produtos
   const fetchProdutos = async () => {
@@ -57,14 +102,152 @@ function Produtos() {
       console.log(result.message)
     } else {
       setData(result);
+      setProdutos(result)
+    }
+    console.log(result)
+  }
+
+  const fetchFornecedores = async () => {
+    const result = await fornecedorServices.getAllFornecedores()
+    if(result instanceof ApiException){
+      console.log(result.message)
+    } else {
+      setFornecedores(result)
     }
   }
+
+  // Função para filtrar produtos pelo nome
+  const handleSearch = (query: string) => {
+    setSearchValue(query);
+    const filtered = data.filter((produto) =>
+      produto.Prod_nome.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredData(filtered);
+  };
+
+  // const handleChangePage = (newPag: number) => { 
+  //   if (newPag < 1){
+  //     navigate(`/Produtos/${1}`);
+  //   }
+  //   else if (newPag > data.length / 10 + 1){
+  //     navigate(`/Produtos/${parseInt(`${data.length / 10 + 1}`)}`);
+  //   }
+  //   else{
+  //   navigate(`/Produtos/${newPag}`);
+  //    } 
+  //    setData([])
+  //    setFilteredData([]);
+  //   }
 
   // Chama a função para pegar todos os produtos do BD ao montar o componente
   useEffect(() => {
     fetchProdutos()
+    fetchFornecedores()
   }, [])
 
+  const handleVisualizarClick = (Produto_id: number) => {
+    setProdutoSelecionado(Produto_id)
+    setOpenModalVisualizar(true) // Abre o modal de edição
+    async function fetchLotes() { //
+        const response = await produtoServices.getProdutoLotesProduto(Produto_id)
+        console.log('lotes',response) // VER AS INFORMAÇÕES RETORNADAS
+        if (response instanceof ApiException) {
+            alert(response.message)
+        } else {
+            setLotesInfo(response)
+        }
+    }
+    fetchLotes()
+}
+
+  // FILTROS 
+  // Mostrar campo de filtro
+  const handleShowFiltros  = () => {
+    setShowFiltros((prev) => prev ? false : true)
+  }
+
+  const handleAtivos = () =>  setStatus(true) 
+  const handleInativos = () => setStatus(false)
+  const handleFornecedorChange = (id: number) => {
+    const fornecedorSelected = fornecedores.find((f) => f.Forn_id === id)
+    setFornecedorFiltrado(fornecedorSelected)
+  }
+
+useEffect(() => {
+  // Função para aplicar os filtros automaticamente
+  const filtrarAutomaticamente = () => {
+    let produtosFiltrados = produtos;
+
+    if (status !== null) {
+      produtosFiltrados = produtosFiltrados.filter((p) => p.Prod_status === status);
+    }
+    if (fornecedorFiltrado?.Forn_id !== undefined) {
+      produtosFiltrados = produtosFiltrados.filter((p) =>
+        p.Lotes?.some((l) => l.Forn_id === fornecedorFiltrado.Forn_id)
+      );
+    }
+    if (quantidadeMin !== null) {
+      produtosFiltrados = produtosFiltrados.filter((p) => p.Prod_quantidade >= quantidadeMin);
+    }
+    if (quantidadeMax !== null) {
+      produtosFiltrados = produtosFiltrados.filter((p) => p.Prod_quantidade <= quantidadeMax);
+    }
+    if (custoMin !== null) {
+      produtosFiltrados = produtosFiltrados.filter((p) => p.Prod_custo >= custoMin);
+    }
+    if (custoMax !== null) {
+      produtosFiltrados = produtosFiltrados.filter((p) => p.Prod_custo <= custoMax);
+    }
+    if (vendaMin !== null) {
+      produtosFiltrados = produtosFiltrados.filter((p) => p.Prod_preco >= vendaMin);
+    }
+    if (vendaMax !== null) {
+      produtosFiltrados = produtosFiltrados.filter((p) => p.Prod_preco <= vendaMax);
+    }
+    if (dataMin !== null) {
+      produtosFiltrados = produtosFiltrados.filter((p) =>
+        p.Prod_quantidade > 0 && p.Lotes?.some((l) => new Date(l.Lote_validade) >= new Date(dataMin))
+      );
+    }
+    if (dataMax !== null) {
+      produtosFiltrados = produtosFiltrados.filter((p) =>
+        p.Prod_quantidade > 0 && p.Lotes?.some((l) => new Date(l.Lote_validade) <= new Date(dataMax))
+      );
+    }
+
+    setData(produtosFiltrados);
+  };
+
+  filtrarAutomaticamente();
+}, [
+  status,
+  fornecedorFiltrado,
+  quantidadeMin,
+  quantidadeMax,
+  vendaMin,
+  vendaMax,
+  custoMin,
+  custoMax,
+  dataMin,
+  dataMax,
+  produtos
+]);
+
+// limpar os filtros
+const handleLimparFiltros = () => {
+  setData(produtos)
+  setFornecedorFiltrado(null)
+  setStatus(null)
+  setQuantidadeMin(null)
+  setQuantidadeMax(null)
+  setCustoMax(null)
+  setCustoMin(null)
+  setVendaMax(null)
+  setVendaMin(null)
+  setDataMin(null)
+  setDataMax(null)
+  setFiltroKey((prevKey) => prevKey + 1)
+}
 
   // Função para atualizar o status do produto usando o toggle button !aqui é apenas para atualizar localmente (o useState) !
   const handleStatusChange = (prod_cod: number, newStatus: boolean) => {
@@ -96,52 +279,68 @@ function Produtos() {
     }),
     columnHelper.accessor('Prod_preco', {
       header: () => 'Preço Venda',
-      cell: info => {
-        const valor = info.getValue();
-        const valorFormatado = Number(valor).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
-        return `R$ ${valorFormatado}`;
-      },
+      cell: info => info.getValue(),
     }),
     columnHelper.accessor('Prod_custo', {
         header: () => 'Preco Custo',
-        cell: info => {
-          const valor = info.getValue();
-          const valorFormatado = Number(valor).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
-          return `R$ ${valorFormatado}`;
-        },
+        cell: info => info.getValue(),
     }),
+    // columnHelper.accessor('Lotes', {
+    //   header: () => 'Lote ID',
+    //   cell: info => info.getValue()?.[0]?.Lote_cod || 'N/A',
+    // }),
+    
     columnHelper.accessor('Prod_status', {
       header: () => <div className="th-center"> Status</div>,
       cell: info => (
         <div className="td-center">
-        <ToggleBtn
-          checked={info.getValue() == 1}
-          cod={info.row.original.Prod_cod}
-          rota={`${hostname}produto`}
-          onStatusChange={(newStatus) => handleStatusChange(info.row.original.Prod_cod, newStatus)}
-        />
-    </div>
-  ),
-}),
+          <ToggleBtn
+            checked={info.getValue() == 1}
+            cod={info.row.original.Prod_cod}
+            rota={`${hostname}produto`}
+            onStatusChange={(newStatus: any) => handleStatusChange(info.row.original.Prod_cod, newStatus)}
+          />
+        </div>
+      ),
+      
+    }),
     columnHelper.display({
       id: 'actions',
       cell: props => (
-          <EditarRemoverBtn
-            id={props.row.original.Prod_cod}
-            onEdit={() => handleEditClick(props.row.original.Prod_cod)}
-            // onDelete={() => handleDeleteClick(props.row.original.Prod_cod)}
-          />
+        <EditarRemoverBtn
+          id={props.row.original.Prod_cod}
+          onEdit={() => handleEditClick(props.row.original.Prod_cod)}
+          // onDelete={() => handleDeleteClick(props.row.original.Prod_cod)}
+        />
       ),
     }),
+    columnHelper.display({
+			id: 'actions1',
+			cell: props => (
+					<VisualizarBtn
+							id={props.row.original.Prod_cod}
+							onView={() => handleVisualizarClick(props.row.original.Prod_cod)}
+					/>
+			),
+		}),
   ]
 
 
   // Cria a tabela, aqui é onde serão passados todos os possíveis parâmetros
   const table = useReactTable({
-    data,
+    data: filteredData, //utiliza o filteredData
     columns,
+    state: { pagination: { pageIndex, pageSize } }, // Set pagination in the state
     getCoreRowModel: getCoreRowModel(),
-  })
+    getPaginationRowModel: getPaginationRowModel(), // Add this to enable pagination
+    onPaginationChange: (updater) => {
+      const newPagination = typeof updater === "function" ? updater({ pageIndex, pageSize }) : updater;
+      setPageIndex(newPagination.pageIndex);
+  },
+})
+
+// Calculate the total number of pages
+const pageCount = Math.ceil(data.length / pageSize);
 
 
   // FUNÇÕES PARA EVENTO DE MODALS
@@ -173,11 +372,135 @@ function Produtos() {
         <hr className="line" />
       </div>
 
-    {currentUser?.Cargo_id === 1 && (
       <div className="actions-group">
-        <BtnAzul className="rfloat" icon={<IoAddCircleOutline />} label="CADASTRAR" onClick={() => setOpenModalCadastro(true)} />
+        <SearchBar onSearch={handleSearch} />
+        <div className="action-end">
+          <div className="btnFiltrar" onClick={handleShowFiltros}>
+            <BsFilter size={24} style={{ color: '#61BDE0'}} />
+            <span>Filtrar por</span>
+          </div>
+          {currentUser?.Cargo_id === 1 && (
+            <BtnAzul className="rfloat" icon={<IoAddCircleOutline />} label="CADASTRAR" onClick={() => setOpenModalCadastro(true)} />
+          )}
+        </div>
       </div>
-    )}
+
+      {showFiltros && (
+        <>
+          <div className="container-filtros" key={filtroKey}>
+            <div className="registro-primeira-coluna">
+              <div className="status-filtro">
+                <label htmlFor="inStatus">Status</label>
+                <div>
+                  <label htmlFor="inAtivo">Ativo</label>
+                  <input type="radio" name="inStatus" id="inAtivo" value="ativo" onClick={handleAtivos} />
+                </div>
+                <div>
+                  <label htmlFor="inInativo">Inativo</label>
+                  <input type="radio" name="inStatus" id="inInativo" value="inativo" onClick={handleInativos} />
+                </div>
+              </div>
+              <div className="fornecedor-container">
+                <label htmlFor="inFornecedor">Fornecedor</label>
+                <select 
+                  id="inFornecedor"
+                  className="form-select-custom"
+                  onChange={(e) => handleFornecedorChange(+e.target.value)}
+                >
+                  <option selected>Buscar...</option>
+                  {fornecedores.map((f) => (
+                    <option key={f.Forn_id} value={f.Forn_id}>
+                      {f.Forn_razaoSocial}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className="registro-segunda-coluna">
+              <div className="preco-container">
+                <div className="custo-container">
+                    <label htmlFor="inCusto">Preço de custo:</label>
+                    <div>
+                      <input 
+                        type="number" 
+                        id="inCusto" 
+                        onChange={(e) => setCustoMin(e.target.value ? +e.target.value : null)}
+                        placeholder="Min"
+                      />
+                      <input 
+                        type="number" 
+                        id="inCusto" 
+                        onChange={(e) => setCustoMax(e.target.value ? +e.target.value : null)}
+                        placeholder="Máx"
+                      />
+                    </div>
+                  </div>
+                <div className="venda-container">
+                  <label htmlFor="inVenda">Preço de venda:</label>
+                  <div>
+                    <input 
+                      type="number" 
+                      id="inVenda" 
+                      onChange={(e) => setVendaMin(e.target.value ? +e.target.value : null)}
+                      placeholder="Min"
+                    />
+                    <input 
+                      type="number" 
+                      id="inVenda" 
+                      onChange={(e) => setVendaMax(e.target.value ? +e.target.value : null)}
+                      placeholder="Máx"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="quantidade-validade-container">
+                <div className="quantidade-container">
+                  <label htmlFor="inQuantidade">Quantidade:</label>
+                  <div>
+                    <input 
+                      type="number" 
+                      id="inQuantidade" 
+                      onChange={(e) => setQuantidadeMin(e.target.value ? +e.target.value : null)}
+                      placeholder="Min"
+                    />
+                    <input 
+                      type="number" 
+                      id="inQuantidade" 
+                      onChange={(e) => setQuantidadeMax(e.target.value ? +e.target.value : null)}
+                      placeholder="Máx"
+                    />
+                  </div>
+                </div>
+                <div className="validade-container">
+                  <label htmlFor="inValidade">Validade:</label>
+                  <div>
+                    <input 
+                      type="date" 
+                      id="inValidade" 
+                      onChange={(e) => setDataMin(e.target.value ? e.target.value : null)}
+                      placeholder="Min"
+                    />
+                    <input 
+                      type="date" 
+                      id="inValidade" 
+                      onChange={(e) => setDataMax(e.target.value ? e.target.value : null)}
+                      placeholder="Máx"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              
+            </div>
+          </div>
+          <div className="filtros-btn">
+            <button className="rfloat btnLimpar" onClick={handleLimparFiltros}>LIMPAR</button>
+          </div>
+        </>
+      )}
+
 
       <Table hover responsive size="lg">
         <thead>
@@ -208,6 +531,10 @@ function Produtos() {
           ))}
         </tbody>
       </Table>
+
+      <LoadingDots data={data} />
+
+      <Pagination className={""} thisPage={pageIndex} lastPage={pageCount} func={setPageIndex} />
 
 
       {/* MODALS*/}
@@ -282,10 +609,48 @@ function Produtos() {
             }}
           />
         </Modal>
+
+        
       )}
+
+<Modal
+				isOpen={openModalVisualizar} // Abre o modal
+				label="Lotes" // Titulo do modal
+				buttons={
+						<>
+								<BtnAzul icon={<IoArrowBackCircleOutline />} label='VOLTAR' onClick={() => setOpenModalVisualizar(false)} />
+						</>
+				}
+		>
+				{lotesInfo ? (
+						<table>
+              <thead>
+                <tr>
+                  <th className="th-lote">Código</th>
+                  <th className="th-lote">Validade</th>
+                  <th className="th-lote">Quantidade</th>
+                </tr>
+              </thead>
+              <tbody className="table-lp">
+              {lotesInfo.filter(lote => lote.Lote_quantidade > 0).map(lote => (
+                  <tr key={lote.Lote_cod} className="table-lp">
+                    <td className="td-lote">{lote.Lote_cod}</td>
+                    <td className="td-lote">{new Date(lote.Lote_validade).toLocaleDateString()}</td>
+                    <td className="td-lote">{lote.Lote_quantidade}</td>
+                  </tr>
+                ))
+              }
+              </tbody>
+            </table>
+				) : (
+						<p>Carregando informações dos lotes...</p>
+				)}
+		</Modal>
 
     </main>
   )
 }
 
 export default Produtos
+
+

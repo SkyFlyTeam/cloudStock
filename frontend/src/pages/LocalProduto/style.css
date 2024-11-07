@@ -6,9 +6,29 @@ tbody.table-lp, tr.table-lp{
     background-color: transparent !important;
 }
 
+
 .expired{
     color: #fdbe4a;
     font-weight: 600;
+}
+
+.produtos-local-filtros {
+    display: flex;
+    column-gap: .6em;
+}
+.produtos-local-filtros input {
+    margin-right: 5px;
+}
+
+.produto-local-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+@media (max-width: 450px) {
+    .produtos-local-filtros {
+        flex-direction: column;
+    }
 }
 
 @media (max-width: 768px) {

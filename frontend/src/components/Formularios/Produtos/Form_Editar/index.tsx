@@ -6,13 +6,16 @@ import Input from "../../../Input";
 import DivTitulo from "../../../DivTitulo";
 
 import './style.css'
+import { useAuth } from '../../../../context/AuthProvider';
 
 interface Props {
     id: number
     onSuccess: (message: string) => void
+
 }
 
 const ProdutoEditar = forwardRef((props: Props, ref: Ref<{ submitForm: () => void }>) => {
+    const {currentUser} = useAuth();
     const [Prod_nome, setNome] = useState<string>('')
     const [Prod_descricao, setDescricao] = useState<string>('')
     const [Prod_preco, setPreco] = useState<number>(0)
@@ -28,6 +31,7 @@ const ProdutoEditar = forwardRef((props: Props, ref: Ref<{ submitForm: () => voi
     const [Categoria_Id, setCategoriaID] = useState<null>(null)
     const [UnidadeMedida_id, setUnidadeID] = useState<null>(null)
     const [Prod_imagem, setImg] = useState<File | null>(null)
+    const [Prod_estoqueMinimo, setEstoqueMinimo] = useState<number>(0); // Novo campo para estoque mínimo
 
     const eventoFormulario = async () => {
         const formData = new FormData();
@@ -45,6 +49,7 @@ const ProdutoEditar = forwardRef((props: Props, ref: Ref<{ submitForm: () => voi
     formData.append('Prod_modelo', Prod_modelo || '');
     formData.append('Prod_validade', Prod_validade ? 'true' : 'false');
     formData.append('Prod_quantidade', Prod_quantidade !== undefined ? Prod_quantidade.toString() : '0');
+    formData.append('Prod_estoqueMinimo',Prod_estoqueMinimo !== undefined ? Prod_estoqueMinimo.toString() : '0');// Envio do estoque mínimo
 
         // Adicione o arquivo de imagem, se houver
         if (Prod_imagem) {
@@ -71,6 +76,7 @@ const ProdutoEditar = forwardRef((props: Props, ref: Ref<{ submitForm: () => voi
             setCategoriaID(null);
             setUnidadeID(null);
             setImg(null);
+            setEstoqueMinimo(0); // Reset estoque mínimo
             props.onSuccess('Produto atualizado com sucesso!');
         }
     }
@@ -88,6 +94,7 @@ const ProdutoEditar = forwardRef((props: Props, ref: Ref<{ submitForm: () => voi
             if (result instanceof ApiException) {
                 alert(result.message)
             } else {
+                console.log(result)
                 setNome(result.Prod_nome)
                 setDescricao(result.Prod_descricao)
                 setPreco(result.Prod_preco)
@@ -103,6 +110,7 @@ const ProdutoEditar = forwardRef((props: Props, ref: Ref<{ submitForm: () => voi
                 setCategoriaID(result.Categoria_id)
                 setUnidadeID(result.UnidadeMedida_id)
                 //setImg(result.Prod_imagem)
+                setEstoqueMinimo(result.Prod_estoqueMinimo); // Configuração do estoque mínimo
             }
         };
 
@@ -122,6 +130,8 @@ const ProdutoEditar = forwardRef((props: Props, ref: Ref<{ submitForm: () => voi
                         value={Prod_nome}
                     />
                 </div>
+                
+
                 <div className="input-group-prod">
                     <Input className="input-item-prod"
                         label="Marca"
@@ -150,6 +160,7 @@ const ProdutoEditar = forwardRef((props: Props, ref: Ref<{ submitForm: () => voi
                         value={Prod_preco.toString()}
                     />
                 </div>
+                
                 <div className="input-group-prod">
                     <Input className="input-item-prod"
                         label="Custo"
@@ -164,6 +175,19 @@ const ProdutoEditar = forwardRef((props: Props, ref: Ref<{ submitForm: () => voi
                         value={Prod_preco.toString()}
                     />
                 </div>
+                {/* Outros campos aqui */}
+
+                {currentUser?.Cargo_id === 2 && (
+    <div className="input-group-prod">
+        <Input 
+            className="input-item-prod"
+            label="Estoque Mínimo"
+            placeholder="Digite o estoque mínimo"
+            onChange={(e) => setEstoqueMinimo(parseInt(e.target.value))}
+            value={Prod_estoqueMinimo.toString()}
+        />
+    </div>
+)}
             </section>
             <div className='subtitle-form-prod'>
                 <span>Especificações</span>

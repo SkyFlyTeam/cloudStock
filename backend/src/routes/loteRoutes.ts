@@ -23,4 +23,9 @@ router.post('/lote-saida', saidaController.addLoteToSaida)
 // Lote por local
 router.get('/local/:id', controllerLote.showByLocal)
 
+
+// Lotes de um produto
+router.get('/produto/:idProduto', controllerLote.showByProduto)
+
+
 export default router

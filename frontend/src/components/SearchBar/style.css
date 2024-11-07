@@ -1,0 +1,19 @@
+.search-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+  
+.search-icon {
+    position: absolute;
+    right: 10px; /* Ajuste conforme necessário */
+    color: #aaa; /* Cor do ícone */
+}
+
+.search-input {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 1rem;
+  width: 200px; /* Largura do campo de busca */
+}

@@ -17,6 +17,7 @@ import loteSaidaRoutes from './loteSaidaRoutes';
 import configRoutes from './configRoutes';
 import notificacoesRoutes from './notificacoesRoutes';
 
+
 const router = Router();
 
 // Rota para Cargo
@@ -69,6 +70,5 @@ router.use('/configsistema', configRoutes)
 
 //Rota para notificações
 router.use('/notificacoes', notificacoesRoutes)
-
 
 export default router;

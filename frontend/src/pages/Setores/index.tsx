@@ -19,6 +19,7 @@ import { Link } from "react-router-dom";
 
 //Verificação dos cargos
 import { useAuth } from "../../context/AuthProvider";
+import SearchBar from "../../components/SearchBar/SearchBar"
 
 function Setores() {
     const [openModalCadastro, setOpenModalCadastro] = useState(false)
@@ -28,12 +29,16 @@ function Setores() {
     const [name, setName] = useState('')
     const [sector, setSector] = useState('')
     const [setores, setSetores] = useState<Setor[]>([]);
+    const [searchTerm, setSearchTerm] = useState(''); //termo de busca
 
     // Guarda o ID dos fornecedores selecionados na tabela
     const [setorSelecionado, setSetorSelecionado] = useState<number | null>(null);
 
     // Verificação dos Cargos
     const {currentUser} = useAuth();
+
+    // Armazena as informações puxadas na tabela
+    const [data, setData] = useState<Setor[]>([]);
 
     // Mensagem de sucesso das ações
     const [mensagemSucesso, setMensagemSucesso] = useState<string>('');
@@ -64,7 +69,17 @@ function Setores() {
 
     useEffect(() => {
         fetchSetores()
-    }, [])
+    }, []);
+
+    // Função de atualização do termo de busca
+    const handleSearch = (query: string) => {
+      setSearchTerm(query);
+    };
+
+    // Filtragem dos setores de acordo com o termo de busca
+    const filteredSetores = setores.filter(setor =>
+      setor.Setor_nome.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     return (
         <main>
@@ -80,14 +95,16 @@ function Setores() {
                 <BtnAzul icon={<IoAddCircleOutline />} label='CADASTRAR' onClick={() => setOpenModalCadastro(true)} />
             </div> */}
 
-          {currentUser?.Cargo_id === 2 && (
-            <div className="actions-group">
-              <BtnAzul className="rfloat" icon={<IoAddCircleOutline />} label="CADASTRAR" onClick={() => setOpenModalCadastro(true)} />
-            </div>
-          )}
+          <div className="actions-group">
+              <SearchBar onSearch={handleSearch} />
+            
+              {currentUser?.Cargo_id === 2 && (
+                <BtnAzul className="rfloat" icon={<IoAddCircleOutline />} label="CADASTRAR" onClick={() => setOpenModalCadastro(true)} />
+              )}
+          </div>
         
             <div className="cards-group">
-            {setores.map(setor => (
+            {filteredSetores.map(setor => (
                 <Card className="card-i">
                     <span>{setor.Setor_nome}</span> 
                     <div className="actions">

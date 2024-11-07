@@ -14,16 +14,6 @@ export const configController = {
     }
   },
 
-  // GET /configsistema/estoque
-  showEstoqueMin: async (req: Request, res: Response) => {
-    try {
-      const Config = await ConfigSistema.findAll();
-      return res.status(200).json(Config[0].Config_estoqueMinimo);
-    } catch (error) {
-      return res.status(400).json({ error: 'Error fetching Cargo', details: error.message });
-    }
-  },
-
   // GET /configsistema/validade
   showAvisoValidade: async (req: Request, res: Response) => {
     try {

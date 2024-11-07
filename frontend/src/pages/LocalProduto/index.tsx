@@ -26,10 +26,25 @@ import { Lote, Produto, produtoServices } from "../../services/produtoServices";
 import { useParams } from "react-router-dom";
 import VisualizarBtn from "../../components/VisualizarBtn";
 
+import SearchBar from "../../components/SearchBar/SearchBar"
+
+import { BsFilter } from "react-icons/bs";
+
 // Const para a criação de colunas; Define a Tipagem (Interface)
 const columnHelper = createColumnHelper<Produto>();
 
 function LocalProduto() {
+
+  const [showFiltros, setShowFiltros] = useState<boolean>(false)
+  const [custoMin, setCustoMin] = useState<number | null>(null)
+  const [custoMax, setCustoMax] = useState<number | null>(null)
+  const [vendaMin, setVendaMin] = useState<number | null>(null)
+  const [vendaMax, setVendaMax] = useState<number | null>(null)
+  const [quantidadeMin, setQuantidadeMin] = useState<number | null>(null)
+  const [quantidadeMax, setQuantidadeMax] = useState<number | null>(null)
+  // chave para limpar filtro e renderizar novo campo
+  const [filtroKey, setFiltroKey] = useState(0)
+
 
   // Guarda o ID dos fornecedores selecionados na tabela
   const [produtoSelecionado, setProdutoSelecionado] = useState<number | null>(null);
@@ -45,7 +60,9 @@ function LocalProduto() {
 
   // Armazena as informações puxadas na tabela
   const [data, setData] = useState<Produto[]>([]);
-
+  const [produtos, setProdutos] = useState<Produto[]>([])
+  //Estado para armazenar os produtos filtrados
+  const [filteredData, setFilteredData] = useState<Produto[]>([])
   
   // Guarda o ID de local recebido na rota e converte para int
   const { id } = useParams();
@@ -58,13 +75,70 @@ function LocalProduto() {
       console.log(result.message)
     } else {
       setData(result);
+      setProdutos(result)
+      setFilteredData(result)
     }
   }
+
+  //Função para filtrar fornecedores pelo nome
+  const handleSearch = (query: string) => {
+    const filtered = data.filter((Produto) =>
+      Produto.Prod_nome.toLowerCase().includes(query.toLowerCase())
+  );
+  setFilteredData(filtered);
+  };
 
   // Chama a função para pegar todos os fornecedores do BD ao montar o componente
   useEffect(() => {
     fetchProdutosByLocal()
   }, [])
+
+  useEffect(() => {
+    const FiltrarAutomaticamente = () => {
+      let produtosFiltrados = produtos
+      if (quantidadeMin !== null) {
+        produtosFiltrados = produtosFiltrados.filter((p) => p.Prod_quantidade >= quantidadeMin);
+      }
+      if (quantidadeMax !== null) {
+        produtosFiltrados = produtosFiltrados.filter((p) => p.Prod_quantidade <= quantidadeMax);
+      }
+      if (custoMin !== null) {
+        produtosFiltrados = produtosFiltrados.filter((p) => p.Prod_custo >= custoMin);
+      }
+      if (custoMax !== null) {
+        produtosFiltrados = produtosFiltrados.filter((p) => p.Prod_custo <= custoMax);
+      }
+      if (vendaMin !== null) {
+        produtosFiltrados = produtosFiltrados.filter((p) => p.Prod_preco >= vendaMin);
+      }
+      if (vendaMax !== null) {
+        produtosFiltrados = produtosFiltrados.filter((p) => p.Prod_preco <= vendaMax);
+      }
+
+      setData(produtosFiltrados);
+    }
+
+    FiltrarAutomaticamente()
+  },[
+    quantidadeMin,
+    quantidadeMax,
+    vendaMin,
+    vendaMax,
+    custoMin,
+    custoMax,
+  ])
+
+  // limpar os filtros
+const handleLimparFiltros = () => {
+  setData(produtos)
+  setQuantidadeMin(null)
+  setQuantidadeMax(null)
+  setCustoMax(null)
+  setCustoMin(null)
+  setVendaMax(null)
+  setVendaMin(null)
+  setFiltroKey((prevKey) => prevKey + 1)
+}
 
   const handleVisualizarClick = (Produto_id: number, Local_Id: number) => {
         setProdutoSelecionado(Produto_id)
@@ -113,7 +187,7 @@ function LocalProduto() {
 
   // Configurações da tabela
   const table = useReactTable({
-    data,
+    data: filteredData,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -121,11 +195,91 @@ function LocalProduto() {
   return (
     <main>
       <div className="page-title">
-        <h1 className="title">Produtos do Local</h1>
+        <div className="produto-local-header">
+          <h1 className="title">Produtos do Local</h1>
+          
+        </div>
         <hr className="line" />
       </div>
-
+      <div className="actions-group">
+          <SearchBar onSearch={handleSearch} />
+          <div className="action-end">
+            <div className="btnFiltrar" 
+            onClick={() => setShowFiltros(!showFiltros)}
+            >
+              <BsFilter size={24} style={{ color: '#61BDE0'}} />
+              <span>Filtrar por</span>
+            </div>
+          </div>
+      </div>
       {/* Implementação para o futuro, precisa adicionar tempo e + coisas {mensagemSucesso && <div className="success-message">{mensagemSucesso}</div>} */}
+
+      {showFiltros && (
+        <>
+          <div className="produtos-local-filtros" key={filtroKey}>
+          <div className="custo-container item">
+            <label htmlFor="inCusto">Preço de custo:</label>
+            <div>
+              <input 
+                type="number" 
+                id="inCusto"
+                value={custoMin ?? ""} 
+                onChange={(e) => setCustoMin(e.target.value ? +e.target.value : null)}
+                placeholder="Min"
+              />
+              <input 
+                type="number" 
+                id="inCusto" 
+                value={custoMax ?? ""} 
+                onChange={(e) => setCustoMax(e.target.value ? +e.target.value : null)}
+                placeholder="Máx"
+              />
+            </div>
+          </div>
+          <div className="venda-container item">
+            <label htmlFor="inVenda">Preço de venda:</label>
+            <div>
+              <input 
+                type="number" 
+                id="inVenda" 
+                value={vendaMin ?? ""}
+                onChange={(e) => setVendaMin(e.target.value ? +e.target.value : null)}
+                placeholder="Min"
+              />
+              <input 
+                type="number" 
+                id="inVenda" 
+                value={vendaMax ?? ""}
+                onChange={(e) => setVendaMax(e.target.value ? +e.target.value : null)}
+                placeholder="Máx"
+              />
+            </div>
+          </div>
+          <div className="quantidade-container item">
+            <label htmlFor="inQuantidade">Quantidade:</label>
+            <div>
+              <input 
+                type="number" 
+                id="inQuantidade" 
+                value={quantidadeMin ?? ""}
+                onChange={(e) => setQuantidadeMin(e.target.value ? +e.target.value : null)}
+                placeholder="Min"
+              />
+              <input 
+                type="number" 
+                id="inQuantidade" 
+                value={quantidadeMax ?? ""}
+                onChange={(e) => setQuantidadeMax(e.target.value ? +e.target.value : null)}
+                placeholder="Máx"
+              />
+            </div>
+          </div>
+        </div>
+        <div className="filtros-btn">
+          <button className="rfloat btnLimpar" onClick={handleLimparFiltros}>LIMPAR</button>
+        </div>
+        </>
+      )}
 
       <Table hover responsive size="lg">
         <thead>

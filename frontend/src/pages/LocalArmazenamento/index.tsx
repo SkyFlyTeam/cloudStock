@@ -18,6 +18,7 @@ import { Link, useParams } from "react-router-dom";
 import { Setor, setoresServices } from "../../services/setorServices";
 
 import { useAuth } from "../../context/AuthProvider";
+import SearchBar from "../../components/SearchBar/SearchBar"
 
 function LocalArmazenamento() {
   const [openModalCadastro, setOpenModalCadastro] = useState(false)
@@ -27,6 +28,10 @@ function LocalArmazenamento() {
   const [locais, setLocais] = useState<Local_Armazenamento[]>([]);
 
   const [setor, setSetor] = useState<Setor>();
+
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredLocais, setFilteredLocais] = useState<Local_Armazenamento[]>([]);
+
 
   // Guarda o ID de setor recebido na rota e converte para int
   const { id } = useParams();
@@ -74,10 +79,23 @@ const closeEditModal = () => {
     }
 }
 
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+    if (query) {
+        setFilteredLocais(locais.filter(local => local.LocAr_nome.toLowerCase().includes(query.toLowerCase())));
+    } else {
+        setFilteredLocais(locais); // mostra todos se não houver busca
+    }
+};
+
   useEffect(() => {
       fetchLocais()
       fetchSetor()
   }, [])
+
+  useEffect(() => {
+      setFilteredLocais(locais); // inicializa o estado de locais filtrados
+  }, [locais]);
 
   return (
       <main>
@@ -93,16 +111,17 @@ const closeEditModal = () => {
               <BtnAzul icon={<IoAddCircleOutline />} label='CADASTRAR' onClick={() => setOpenModalCadastro(true)} />
           </div> */}
 
+        <div className="actions-group">
+            <SearchBar onSearch={handleSearch} />
 
-          {currentUser?.Cargo_id === 2 && (
-          <div className="actions-group">
-            <BtnAzul className="rfloat" icon={<IoAddCircleOutline />} label="CADASTRAR" onClick={() => setOpenModalCadastro(true)} />
-          </div>
-          )}
+            {currentUser?.Cargo_id === 2 && (
+              <BtnAzul className="rfloat" icon={<IoAddCircleOutline />} label="CADASTRAR" onClick={() => setOpenModalCadastro(true)} />
+            )}
+        </div>
 
       
           <div className="cards-group">
-          {locais.map(local => (
+          {filteredLocais.map(local => (
               <Card className="card-i">
                   <span>{local.LocAr_nome}</span> 
                   <div className="actions">
