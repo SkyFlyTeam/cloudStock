@@ -20,6 +20,7 @@ import CategoriaEdicao from "../../components/Formularios/Categorias/Cat_Editar"
 /* Icons */
 import { IoAddCircleOutline } from "react-icons/io5";
 import { AiOutlineDelete } from "react-icons/ai";
+import { hostname } from "../../config/apiConfig";
 
 import { useAuth } from "../../context/AuthProvider";
 import SearchBar from "./SearchBar";
@@ -87,7 +88,7 @@ function Categorias() {
       cell: info => info.getValue(),
     }),
     columnHelper.accessor('Categoria_pai_nome', { // Alterado de Categoria_pai para Categoria_pai_nome
-      header: () => 'Categoria Pai',
+      header: () => 'Hierarquia',
       cell: info => info.getValue(),
     }),
     columnHelper.accessor('Categoria_status', {
@@ -95,9 +96,9 @@ function Categorias() {
       cell: info => (
         <div className="td-center">
           <ToggleBtn
-            checked={info.getValue()}
+            checked={info.getValue() == 1}
             cod={info.row.original.Categoria_id}
-            rota="/categoria"
+            rota={`${hostname}categoria`}
             onStatusChange={(newStatus: any) => handleStatusChange(info.row.original.Categoria_id, newStatus)}
           />
         </div>

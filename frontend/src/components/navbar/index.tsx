@@ -68,11 +68,13 @@ const Navbar: React.FC = () => {
                     <div className="navbartext"><span>Setores</span></div>
                   </div>
                 </Link>
-
+                
+                <Link to="/Categorias" className="link">
                   <div className={location.pathname === '/Categorias' ? 'menu-item active' : 'menu-item'}>
                     <IoMdPricetags />
                     <div className="navbartext"><span>Categorias</span></div>
                   </div>
+                </Link>
                 
                   <Link to="/Saidas" className="link">
                     <div className={location.pathname === '/Saidas' ? 'menu-item active' : 'menu-item'}>
