@@ -251,6 +251,7 @@ else{
                     <Input
                       max={produto.Prod_quantidade}
                       label="Quantidade"
+                      min="0"
                       type="number"
                       value={quantidadeSelecionada}
                       className="quantidade-saida"
