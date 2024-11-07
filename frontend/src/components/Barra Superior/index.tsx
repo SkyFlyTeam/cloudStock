@@ -11,6 +11,7 @@ import { Tab, Tabs } from "react-bootstrap";
 import  loteIcon  from '../../assets/icons/Simplification.svg'
 import { Notificacao, notificacoesServices } from "../../services/notificacoesServices";
 import { ApiException } from "../../config/apiException";
+import { Api } from "../../config/apiConfig";
 
 
 const BarraSuperior: React.FC = () => {
@@ -58,17 +59,38 @@ const BarraSuperior: React.FC = () => {
         setSocket(socket)
         console.log('aberto websocket')
 
-        socket.onmessage = (message) => {
+        socket.onmessage = async (message) => {
           const data = JSON.parse(message.data);
           console.log('rodando websocket')
           console.log('Notificao', data)
               if (data.action === 'delete') {
-                console.log('exlcuindo not')
                   setNotificacoes((prevNotificacoes) => 
                       prevNotificacoes.filter(notificacao => notificacao.Not_id !== data.id)
                   );
               } if (data.action === 'create') {
-                  setNotificacoes((prevNotificacoes) => [...prevNotificacoes, data.notificacao]);
+                   // Calcular quantidade ou dias restantes antes de adicionar a notificação
+                    let mensagem = '';
+
+                    if (data.notificacao.Not_tipo === 'Estoque') {
+                      // Chama a API para buscar a quantidade
+                      const { data: quantidade } = await Api().get<any>(`/lote/quantidade/${data.notificacao.Prod_cod}`);
+                      mensagem = `${quantidade} unidades restantes`;
+                    } else if (data.notificacao.Not_tipo === 'Validade' && data.notificacao.Lote?.Lote_validade) {
+                      // Calcular a quantidade de dias restantes para validade
+                      const validade = new Date(data.notificacao.Lote.Lote_validade);
+                      const dataAtual = new Date();
+                      dataAtual.setHours(0, 0, 0, 0);
+                      validade.setHours(0, 0, 0, 0);
+
+                      const restante = Math.floor((validade.getTime() - dataAtual.getTime()) / (24 * 60 * 60 * 1000));
+                      mensagem = `${restante} dias restantes`;
+                    }
+
+                    // Adicionar a nova notificação com a mensagem calculada
+                    setNotificacoes((prevNotificacoes) => [
+                      ...prevNotificacoes,
+                      { ...data.notificacao, Not_mensagem: mensagem }
+                    ]);
               }
         };
       }
