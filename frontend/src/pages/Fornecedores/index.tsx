@@ -25,6 +25,7 @@ import { hostname } from "../../config/apiConfig";
 
 
 import { useAuth } from "../../context/AuthProvider";
+import { BsFilter } from "react-icons/bs";
 import SearchBar from "./SearchBar";
 
 
@@ -32,6 +33,10 @@ import SearchBar from "./SearchBar";
 const columnHelper = createColumnHelper<Fornecedor>();
 
 function Fornecedores() {
+  const [showFiltros, setShowFiltros] = useState(false)
+  const [status, setStatus] = useState<boolean | null>(null)
+  const [filtroKey, setFiltroKey] = useState(0)
+
   // Estado para controlar os modais
   const [openModalCadastro, setOpenModalCadastro] = useState(false);
   const [openModalEdicao, setOpenModalEdicao] = useState(false);
@@ -51,6 +56,7 @@ function Fornecedores() {
 
   // Armazena as informações puxadas na tabela
   const [data, setData] = useState<Fornecedor[]>([]);
+  const [fornecedores, setFornecedores] = useState<Fornecedor[]>([])
 
   // Estado para armazenar os produtos filtrados
   const [filteredData, setFilteredData] = useState<Fornecedor[]>([]);
@@ -62,6 +68,7 @@ function Fornecedores() {
       console.log(result.message)
     } else {
       setData(result);
+      setFornecedores(result);
       setFilteredData(result)
     }
   }
@@ -80,6 +87,26 @@ function Fornecedores() {
     fetchFornecedores()
   }, [])
 
+  useEffect(() => {
+    const filtrarAutomaticamente = () => {
+      let fornecedorFiltrado = fornecedores;
+      if (status !== null) {
+        fornecedorFiltrado = fornecedorFiltrado.filter((f) => f.Forn_status === status);
+      }
+      setData(fornecedorFiltrado);
+    };
+  
+    filtrarAutomaticamente();
+  }, [status, fornecedores]);
+
+  const handleAtivos = () =>  setStatus(() => true) 
+  const handleInativos = () => setStatus(() => false)
+
+  const handleLimparFiltros = () => {
+    setStatus(null)
+    setData(fornecedores)
+    setFiltroKey((prevKey) => prevKey + 1)
+  }
 
   // Altera o Status do componente 
   const handleStatusChange = (forn_id: number, newStatus: boolean) => {
@@ -166,7 +193,13 @@ function Fornecedores() {
   return (
     <main>
       <div className="page-title">
-        <h1 className="title">Fornecedores</h1>
+        <div className="page-title-fornecedores">
+          <h1 className="title">Fornecedores</h1>
+          <div className="btnFiltrar" onClick={() => setShowFiltros(!showFiltros)}>
+            <BsFilter size={24} style={{ color: '#61BDE0'}} />
+            <span>Filtrar por</span>
+          </div>
+        </div>
         <hr className="line" />
       </div>
 
@@ -183,6 +216,37 @@ function Fornecedores() {
       </div>
     </div>
       {/* Implementação para o futuro, precisa adicionar tempo e + coisas {mensagemSucesso && <div className="success-message">{mensagemSucesso}</div>} */}
+
+      {showFiltros && (
+        <>
+          <div className="status-filtro-fornecedor" key={filtroKey}>
+            <label htmlFor="inStatus">Status</label>
+            <div>
+              <label htmlFor="inAtivo">Ativo</label>
+              <input 
+                type="radio" 
+                name="inStatus" 
+                id="inAtivo" 
+                value={"true"} 
+                onChange={handleAtivos} 
+              />
+            </div>
+            <div>
+              <label htmlFor="inInativo">Inativo</label>
+              <input 
+                type="radio" 
+                name="inStatus" 
+                id="inInativo" 
+                value="false" 
+                onChange={handleInativos} 
+              />
+            </div>
+          </div>
+          <div className="filtros-btn">
+            <button className="rfloat btnLimpar" onClick={handleLimparFiltros}>LIMPAR</button>
+          </div>
+        </>
+      )}
 
       <Table hover responsive size="lg">
         <thead>
