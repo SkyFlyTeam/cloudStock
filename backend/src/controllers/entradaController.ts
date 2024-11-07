@@ -51,7 +51,12 @@ export const controllerEntrada = {
     
                     // Verifica se o lote já existe
                     let lote = await Lote.findOne({
-                        where: { Lote_cod: entrada.Lote_cod },
+                        where: {
+                            Lote_cod: entrada.Lote_cod,
+                            Prod_cod: entrada.Prod_cod,
+                            LocAr_id: entrada.LocAr_id,
+                            Forn_id: entrada.Forn_id
+                        },
                         transaction
                     });
     
@@ -61,8 +66,14 @@ export const controllerEntrada = {
                         const novaQuantidade = lote.Lote_quantidade + entrada.Lote_quantidade;
                         await Lote.update(
                             { Lote_quantidade: novaQuantidade },
-                            { where: { Lote_cod: entrada.Lote_cod }, transaction }
-                        );
+                            { where: {
+                                Lote_cod: entrada.Lote_cod,
+                                Prod_cod: entrada.Prod_cod,
+                                LocAr_id: entrada.LocAr_id,
+                                Forn_id: entrada.Forn_id
+                            }, 
+                            transaction
+                            });
                         loteId = lote.Lote_id;
                     } else {
                         // Cria um novo lote

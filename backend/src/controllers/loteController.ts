@@ -69,6 +69,25 @@ export const controllerLote = {
         }
     },
 
+    showByProduto: async(req, res) => {
+        const id = +req.params.idProduto
+        try {
+            const lotes = await Lote.findAll({
+                include: [Produto],
+                where: {
+                    Prod_cod: id // o valor do id que você quer buscar
+                  }
+            });
+    
+            // Filtra os lotes que pertencem ao Local_Armazenamento com o id específico
+
+            return res.status(200).json(lotes);
+        } catch (error) {
+            console.error('Error fetching lote with related data: ', error);
+            return res.status(500).json({ error: 'Internal server error' });
+        }
+    },
+
     // Exibe a quantidade de um produto x presente nos lotes
     showQuantidade: async(req, res) => {
         const id = +req.params.id

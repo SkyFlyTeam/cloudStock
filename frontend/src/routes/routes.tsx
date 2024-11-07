@@ -35,6 +35,7 @@ function MainRoutes(){
 
                     {/* Rotas do Funcionário */}
                     <Route path="/Produtos" element={<ProtectedRoute allowedRoles={[1, 2]}><Produtos /></ProtectedRoute>}/>
+                    <Route path="/Produtos/:pag" element={<ProtectedRoute allowedRoles={[1, 2]}><Produtos /></ProtectedRoute>}/>
                     <Route path="/Saidas" element={<ProtectedRoute allowedRoles={[1]}><Saidas /></ProtectedRoute>}/>
                     <Route path="/Saidas-cadastro" element={<ProtectedRoute allowedRoles={[1]}><Saidas_cadastro/></ProtectedRoute>}/>
                     <Route path="/Entrada" element={<ProtectedRoute allowedRoles={[1]}><Entrada /></ProtectedRoute>}/>
