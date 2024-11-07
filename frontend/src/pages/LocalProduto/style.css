@@ -6,6 +6,12 @@ tbody.table-lp, tr.table-lp{
     background-color: transparent !important;
 }
 
+
+.expired{
+    color: #fdbe4a;
+    font-weight: 600;
+}
+
 .produtos-local-filtros {
     display: flex;
     column-gap: .6em;

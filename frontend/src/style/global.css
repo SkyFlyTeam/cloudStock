@@ -54,13 +54,6 @@ main{
   margin-left: auto;
 }
 
-/*
-<div className="inputButton">
-  <InputBusca />
-  <BtnAzul icon={<IoAddCircleOutline />} label='CADASTRAR' onClick={() => {}} />
-</div>
-*/
-
 /* Espaçamento do componente input */
 
 .inputEspaçamento > * {
@@ -69,6 +62,21 @@ main{
 
 .inputEspaçamento > *:last-child {
   margin-bottom: 0; /* Remove o espaçamento do último input */
+}
+
+/* Scrollbar */
+html ::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+html ::-webkit-scrollbar-thumb {
+  border-radius: 50px;
+  background: #61BDE0;
+}
+
+html ::-webkit-scrollbar-track {
+  background: #ededed;
 }
 
 @media (max-width: 768px) {

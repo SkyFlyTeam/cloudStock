@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react"
-import { Usuario } from "../services/usuariosService"
+import { Usuario } from "../services/usuariosServices"
 import { useAuth } from "../context/AuthProvider"
 import { Navigate } from "react-router-dom"
 
