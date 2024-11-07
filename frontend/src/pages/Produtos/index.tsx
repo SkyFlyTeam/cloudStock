@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react"
 
 import { Table } from "react-bootstrap"
-import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
+import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table'
 
 import { produtoServices, Produto, Lote } from "../../services/produtoServices"
 import { fornecedorServices } from "../../services/fornecedorServices"
@@ -30,12 +30,25 @@ import { BsFilter } from "react-icons/bs"
 import VisualizarBtn from "../../components/VisualizarBtn";
 import { useParams } from "react-router-dom"
 
-
+import { useAuth } from "../../context/AuthProvider"
+import { useLocation, useNavigate, useParams } from "react-router-dom"
+import { LoadingDots } from "./LoadingDots"
+import Pagination from "../../components/Pagination"
 
 // Criar o helper para colunas
 const columnHelper = createColumnHelper<Produto>()
 
 function Produtos() {
+
+  // Use state para armazenar e alterar a página de exibição dos produtos
+  const [pageIndex, setPageIndex] = useState(0);
+  const pageSize = 10; // Number of items per page
+
+  const navigate = useNavigate();
+
+  // Use state para armazenar uma array de Produto (interface) que será exibido na tabela
+  const [data, setData] = useState<Produto[]>([])
+
   // Registro geral
   const [fornecedores, setFornecedores] = useState<Fornecedor[]>([])
   const [produtos, setProdutos] = useState<Produto[]>([])
@@ -66,8 +79,16 @@ function Produtos() {
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   // Mensagem de sucesso das ações
   const [mensagemSucesso, setMensagemSucesso] = useState<string>('');
+
+  const [searchbarValue, setSearchValue] = useState<string>('');
+
+  //Verificação dos Cargos
+  const {currentUser} = useAuth();
+
+
   // State para mostrar campo de status
   const [showFiltros, setShowFiltros] = useState(false)
+
   // Referência ao forms para realizar o submit fora do componente do forms
   const formRef = useRef<{ submitForm: () => void }>(null);
   // Guarda o ID dos fornecedores selecionados na tabela
@@ -104,11 +125,26 @@ function Produtos() {
 
   // Função para filtrar produtos pelo nome
   const handleSearch = (query: string) => {
+    setSearchValue(query);
     const filtered = data.filter((produto) =>
       produto.Prod_nome.toLowerCase().includes(query.toLowerCase())
     );
     setFilteredData(filtered);
   };
+
+  // const handleChangePage = (newPag: number) => { 
+  //   if (newPag < 1){
+  //     navigate(`/Produtos/${1}`);
+  //   }
+  //   else if (newPag > data.length / 10 + 1){
+  //     navigate(`/Produtos/${parseInt(`${data.length / 10 + 1}`)}`);
+  //   }
+  //   else{
+  //   navigate(`/Produtos/${newPag}`);
+  //    } 
+  //    setData([])
+  //    setFilteredData([]);
+  //   }
 
   // Chama a função para pegar todos os produtos do BD ao montar o componente
   useEffect(() => {
@@ -301,8 +337,17 @@ const handleLimparFiltros = () => {
   const table = useReactTable({
     data: filteredData, //utiliza o filteredData
     columns,
+    state: { pagination: { pageIndex, pageSize } }, // Set pagination in the state
     getCoreRowModel: getCoreRowModel(),
-  })
+    getPaginationRowModel: getPaginationRowModel(), // Add this to enable pagination
+    onPaginationChange: (updater) => {
+      const newPagination = typeof updater === "function" ? updater({ pageIndex, pageSize }) : updater;
+      setPageIndex(newPagination.pageIndex);
+  },
+})
+
+// Calculate the total number of pages
+const pageCount = Math.ceil(data.length / pageSize);
 
 
   // FUNÇÕES PARA EVENTO DE MODALS
@@ -497,6 +542,10 @@ const handleLimparFiltros = () => {
           ))}
         </tbody>
       </Table>
+
+      <LoadingDots data={data} />
+
+      <Pagination className={""} thisPage={pageIndex} lastPage={pageCount} func={setPageIndex} />
 
 
       {/* MODALS*/}
