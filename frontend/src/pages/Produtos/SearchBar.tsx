@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import { FaSearch } from "react-icons/fa";
 
 interface SearchBarProps {
     onSearch: (query: string) => void;
@@ -18,17 +19,23 @@ interface SearchBarProps {
     };
   
     return (
-      <div className="search-bar">
+    <div className="search-bar">
+      <div className="search-input-wrapper">
+        <FaSearch className="search-icon" />
         <input
           type="text"
           className="search-input"
-          placeholder="Pesquisar por nome do produto..."
+          placeholder="Pesquisar produto..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={handleKeyDown}
         />
-        <button className="search-button" onClick={handleSearch}>Buscar</button>
       </div>
+      {/* <button className="search-button" onClick={handleSearch}>
+        BUSCAR
+      </button> */}
+    </div>
+    
     );
   };
   

@@ -21,22 +21,32 @@ const checkLogin = async (credenciais: any): Promise<any | ApiException> => {
     }
 }
 
-const getUsuarioById = async (id: number): Promise<Usuario | ApiException> => {
-    try {
-      const { data } = await Api().get<any>(`/usuario/${id}`, {
-        headers: { 'Content-Type': 'application/json' }
-      })
-  
-      const usuario: Usuario = data;
-      return usuario
-  
-    } catch (error: any) {
-      return new ApiException(error.message || 'Erro ao criar o registro.')
-    }
+const getAllUsuarios = async (): Promise<Usuario[] | ApiException> => {
+  try {
+    const { data } = await Api().get(`/usuario`)
+    return data
+  } catch (error: any) {
+    return new ApiException(error.message || 'Erro ao criar o registro.')
   }
+}
+
+const getUsuarioById = async (id: number): Promise<Usuario | ApiException> => {
+  try {
+    const { data } = await Api().get<any>(`/usuario/${id}`, {
+      headers: { 'Content-Type': 'application/json' }
+    })
+
+    const usuario: Usuario = data;
+    return usuario
+
+  } catch (error: any) {
+    return new ApiException(error.message || 'Erro ao criar o registro.')
+  }
+}
   
 
 export const usuarioServices = {
     checkLogin,
-    getUsuarioById
+    getUsuarioById,
+    getAllUsuarios
 }
