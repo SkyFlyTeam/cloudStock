@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react"
 
 import { Table } from "react-bootstrap"
-import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
+import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table'
 
 import { produtoServices, Produto } from "../../services/produtoServices"
 import { ApiException } from "../../config/apiException"
@@ -35,10 +35,8 @@ const columnHelper = createColumnHelper<Produto>()
 
 function Produtos() {
   // Use state para armazenar e alterar a página de exibição dos produtos
-  let pags = 1
-  let {pag} = useParams();
-  if (pag === undefined){ pags = 1 }
-  else { pags = Number(pag) }
+  const [pageIndex, setPageIndex] = useState(0);
+  const pageSize = 10; // Number of items per page
 
   const navigate = useNavigate();
 
@@ -73,7 +71,7 @@ function Produtos() {
       console.log(result.message)
     } else {
       setData(result);
-      setFilteredData(result.slice(pags * 10 - 10, pags * 10)); //Inicializa o filteredData com todos os produtos
+      setFilteredData(result); //Inicializa o filteredData com todos os produtos
     }
   }
 
@@ -83,27 +81,27 @@ function Produtos() {
     const filtered = data.filter((produto) =>
       produto.Prod_nome.toLowerCase().includes(query.toLowerCase())
     );
-    setFilteredData(filtered.slice(pags * 10 - 10, pags * 10));
+    setFilteredData(filtered);
   };
 
-  const handleChangePage = (newPag: number) => { 
-    if (newPag < 1){
-      navigate(`/Produtos/${1}`);
-    }
-    else if (newPag > data.length / 10 + 1){
-      navigate(`/Produtos/${parseInt(`${data.length / 10 + 1}`)}`);
-    }
-    else{
-    navigate(`/Produtos/${newPag}`);
-     } 
-     setData([])
-     setFilteredData([]);
-    }
+  // const handleChangePage = (newPag: number) => { 
+  //   if (newPag < 1){
+  //     navigate(`/Produtos/${1}`);
+  //   }
+  //   else if (newPag > data.length / 10 + 1){
+  //     navigate(`/Produtos/${parseInt(`${data.length / 10 + 1}`)}`);
+  //   }
+  //   else{
+  //   navigate(`/Produtos/${newPag}`);
+  //    } 
+  //    setData([])
+  //    setFilteredData([]);
+  //   }
 
   // Chama a função para pegar todos os produtos do BD ao montar o componente
   useEffect(() => {
     fetchProdutos()
-  }, [pags])
+  }, [])
 
 
   // Função para atualizar o status do produto usando o toggle button !aqui é apenas para atualizar localmente (o useState) !
@@ -180,8 +178,17 @@ function Produtos() {
   const table = useReactTable({
     data: filteredData, //utiliza o filteredData
     columns,
+    state: { pagination: { pageIndex, pageSize } }, // Set pagination in the state
     getCoreRowModel: getCoreRowModel(),
-  })
+    getPaginationRowModel: getPaginationRowModel(), // Add this to enable pagination
+    onPaginationChange: (updater) => {
+      const newPagination = typeof updater === "function" ? updater({ pageIndex, pageSize }) : updater;
+      setPageIndex(newPagination.pageIndex);
+  },
+})
+
+// Calculate the total number of pages
+const pageCount = Math.ceil(data.length / pageSize);
 
 
   // FUNÇÕES PARA EVENTO DE MODALS
@@ -257,7 +264,7 @@ function Produtos() {
 
       <LoadingDots data={data} />
 
-      <Pagination className={""} thisPage={pags} lastPage={parseInt(`${data.length / 10 + 1}`)} func={handleChangePage} />
+      <Pagination className={""} thisPage={pageIndex} lastPage={pageCount} func={setPageIndex} />
 
 
       {/* MODALS*/}

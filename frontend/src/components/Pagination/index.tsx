@@ -1,4 +1,5 @@
 import React from 'react';
+import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
 import './Pagination.css'
 
 interface Props{
@@ -20,16 +21,16 @@ const Pagination: React.FC<Props> = ({className, thisPage, lastPage, func}) =>{
     };
 
     const pagNumbers = numbers.map(numb => {
-        if (numb === thisPage){ return <button className='Active' onClick={() => func(numb)}> {`${numb}`} </button> }
-        else return <button onClick={() => func(numb)}> {`${numb}`} </button>
+        if (numb - 1  === thisPage){ return <button className='Active' onClick={() => func(numb - 1)}> {`${numb}`} </button> }
+        else return <button onClick={() => func(numb - 1)}> {`${numb}`} </button>
     })
 
     return (
         <div className={className}>
             <span>
-            <button className='ChangeBtn' onClick={() => func(thisPage - 1)}> {'<<'} </button>
+            <button className='ChangeBtn' onClick={() => func(thisPage - 1)} disabled={thisPage === 0}> <SlArrowLeft /> </button>
             {pagNumbers}
-            <button className='ChangeBtn' onClick={() => func(thisPage + 1)}> {'>>'} </button>
+            <button className='ChangeBtn' onClick={() => func(thisPage + 1)} disabled={thisPage === lastPage - 1}> <SlArrowRight /> </button>
             </span>
         </div>
 
