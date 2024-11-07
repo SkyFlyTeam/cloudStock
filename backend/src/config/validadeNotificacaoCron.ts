@@ -40,16 +40,17 @@ const iniciarNotificacaoCron = () => {
                                     Lote_id: lote.Lote_id
                                 });
                             }
-                        } else{
-                            if(lote.Lote_quantidade == 0){
-                                await Notificacoes.destroy({
-                                    where: {
-                                        Not_tipo: 'Validade',
-                                        Prod_cod: produto.Prod_cod,
-                                        Lote_id: lote.Lote_id
-                                    }
-                                });
-                            }
+                        } 
+                        else if(notificacaoExistente != null && lote.Lote_quantidade == 0){
+                            await Notificacoes.destroy({
+                                where: {
+                                    Not_tipo: 'Validade',
+                                    Prod_cod: produto.Prod_cod,
+                                    Lote_id: lote.Lote_id
+                                },
+                                individualHooks: true, 
+                                force: true 
+                            });
                         }
                     }
                 }

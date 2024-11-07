@@ -354,6 +354,7 @@ function Entradas() {
                     type="date"
                     className="entrada-validade"
                     max="9999-12-31"
+                    min={new Date().toISOString().split('T')[0]} 
                     onChange={(e) => handleLoteValidadeChange(entrada.id, e.target.value)}
                     disabled={produto.Prod_validade ? false : true}
                   />

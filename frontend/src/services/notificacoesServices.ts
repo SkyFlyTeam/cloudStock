@@ -32,7 +32,7 @@ const getAllNotificacoes = async (): Promise<Notificacao[] | ApiException> => {
                   validade.setHours(0, 0, 0, 0)
 
                   const restante = Math.floor((validade.getTime() - dataAtual.getTime()) / (24 * 60 * 60 * 1000))
-                  mensagem = `${restante} dias restantes para o vencimento`
+                  mensagem = `${restante} dias restantes`
               }
 
               return {

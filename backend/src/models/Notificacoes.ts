@@ -59,4 +59,13 @@ export class Notificacoes extends Model {
 			console.error("Erro ao enviar notificação para webSocket:", error);
 		}
 	}
+
+    @BeforeDestroy
+	static async enviarExclusaoNotificacoes(instance: Notificacoes) {
+        try {
+            broadcastNotificacaoDelete(instance.Not_id); 
+        } catch (error) {
+            console.error("Erro ao excluir notificação:", error);
+        }
+    }
 }

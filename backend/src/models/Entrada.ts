@@ -120,8 +120,47 @@ export class Entrada extends Model {
 								where: {
 									Not_tipo: 'Estoque',
 									Prod_cod: produto.Prod_cod,
+								},                                
+								individualHooks: true, 
+                                force: true 
+							});
+						}
+					}
+
+					//Verificar a validade dos novos lotes
+					for(const lote of produto.Lotes){
+						// Não verifica lotes que não contém validade
+						if(lote.Lote_validade != null){
+							console.log('lote.Lote_id', lote.Lote_id)
+							// Verifica se já existe uma notificação para o lote
+							const notificacaoExistente = await Notificacoes.findOne({
+								where: {
+									Lote_id: lote.Lote_id,
+									Not_tipo: 'Validade'
 								}
 							});
+	
+							console.log('Notificação', notificacaoExistente)
+
+							if (!notificacaoExistente && lote.Lote_quantidade > 0) {
+								const validade = new Date(lote.Lote_validade)
+								const dataAtual = new Date()
+	
+								dataAtual.setHours(0, 0, 0, 0);
+								validade.setHours(0, 0, 0, 0);
+	
+								const diferenca = (validade.getTime() - dataAtual.getTime())/ (24 * 60 * 60 * 1000); 
+	
+								// Verifique se a validade está dentro do limite de 7 dias 
+								if (diferenca < 0 || diferenca <=7 ) {
+									await Notificacoes.create({
+										Not_tipo: 'Validade',
+										Not_data: new Date(),
+										Prod_cod: produto.Prod_cod,
+										Lote_id: lote.Lote_id
+									});
+								}
+							}
 						}
 					}
 				}

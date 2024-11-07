@@ -135,7 +135,9 @@ export class Saida extends Model{
 									Not_tipo: 'Validade',
 									Prod_cod: produto.Prod_cod,
 									Lote_id: lote.Lote_id
-								}
+								},
+                                individualHooks: true, 
+                                force: true 
 							}); 
 						}
                     }

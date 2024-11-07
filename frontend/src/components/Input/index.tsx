@@ -4,6 +4,7 @@ import './style.css';
 interface InputProps {
   label: string; // Rótulo do input
   max?: number | string;
+  min?: number | string;
   className?: string; // Recebe classes para 'div' base
   placeholder?: string; // Texto que aparece quando o input está vazio
   type?: string; // Tipo do input, por padrão é "text"
@@ -17,6 +18,7 @@ interface InputProps {
 const Input: React.FC<InputProps> = ({
   label,
   max,
+  min,
   className,
   placeholder,
   type = "text",
@@ -47,6 +49,7 @@ const Input: React.FC<InputProps> = ({
       ) : (
         <input
           max={max}
+          min={min}
           type={type}
           placeholder={placeholder}
           value={value}

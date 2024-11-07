@@ -50,6 +50,35 @@ const BarraSuperior: React.FC = () => {
     // Chama a função para pegar todos os fornecedores do BD ao montar o componente
     useEffect(() => {
       fetchNotificacoes()
+
+      if (!wsRef.current || wsRef.current.readyState === WebSocket.CLOSED) {
+        // Conecta ao WebSocket para atualizações em tempo real
+        const socket = new WebSocket('ws://localhost:5000');
+        wsRef.current = socket
+        setSocket(socket)
+        console.log('aberto websocket')
+
+        socket.onmessage = (message) => {
+          const data = JSON.parse(message.data);
+          console.log('rodando websocket')
+          console.log('Notificao', data)
+              if (data.action === 'delete') {
+                console.log('exlcuindo not')
+                  setNotificacoes((prevNotificacoes) => 
+                      prevNotificacoes.filter(notificacao => notificacao.Not_id !== data.id)
+                  );
+              } if (data.action === 'create') {
+                  setNotificacoes((prevNotificacoes) => [...prevNotificacoes, data.notificacao]);
+              }
+        };
+      }
+
+      return () => {
+        if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+          console.log('fechando websocket')
+          wsRef.current.close()
+        }
+      }
     }, [])
 
     // Carrega todas as informações de notificação, separa por tipo e conta
@@ -61,32 +90,6 @@ const BarraSuperior: React.FC = () => {
       setNotificacoesValidade(validade);
       setEstoqueCount(estoque.length);
       setValidadeCount(validade.length);
-
-      if (!wsRef.current || wsRef.current.readyState === WebSocket.CLOSED) {
-        // Conecta ao WebSocket para atualizações em tempo real
-        const socket = new WebSocket('ws://localhost:5000');
-        wsRef.current = socket
-        setSocket(socket)
-
-        socket.onmessage = (message) => {
-          const data = JSON.parse(message.data);
-          console.log('Notificao', data)
-              if (data.action === 'delete') {
-                console.log('exlcuindo not')
-                  setNotificacoes((prevNotificacoes) => 
-                      prevNotificacoes.filter(notificacao => notificacao.Not_id !== data.id)
-                  );
-              } else if (data.action === 'create') {
-                  setNotificacoes((prevNotificacoes) => [...prevNotificacoes, data.notificacao]);
-              }
-        };
-      }
-
-      return () => {
-        if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
-          wsRef.current.close()
-        }
-      }
 
     }, [notificacoes]);
 
@@ -157,7 +160,7 @@ const BarraSuperior: React.FC = () => {
                     <div className="not-item" key={notificacao.Not_id}> 
                       <TbClockExclamation className="icon-clock"/>
                       <div className="content">
-                        <span>Lote <b>{notificacao.Lote?.Lote_cod}</b> de <b>{notificacao.Produto.Prod_nome}</b> está próximo ao vencimento</span>
+                        <span>Lote <b>{notificacao.Lote?.Lote_cod}</b> de <b>{notificacao.Produto?.Prod_nome}</b> está próximo ao vencimento</span>
                         {notificacao.Not_mensagem[0] === '-' 
                           ?<span className="subtitle expired">Produto vencido</span> 
                           :<span className="subtitle">{notificacao.Not_mensagem}</span>
@@ -195,7 +198,7 @@ const BarraSuperior: React.FC = () => {
                   <div className="not-item" key={notificacao.Not_id}> 
                     <TbClockExclamation className="icon-clock"/>
                     <div className="content">
-                      <span>Lote <b>{notificacao.Lote?.Lote_cod}</b> de <b>{notificacao.Produto.Prod_nome}</b> está próximo ao vencimento</span>
+                      <span>Lote <b>{notificacao.Lote?.Lote_cod}</b> de <b>{notificacao.Produto?.Prod_nome}</b> está próximo ao vencimento</span>
                       <span className="subtitle">{notificacao.Not_mensagem}</span>
                       <span className="date">{formatDate(notificacao.Not_data)}</span>
                     </div>

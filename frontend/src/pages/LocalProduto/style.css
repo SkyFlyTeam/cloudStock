@@ -6,6 +6,11 @@ tbody.table-lp, tr.table-lp{
     background-color: transparent !important;
 }
 
+.expired{
+    color: #fdbe4a;
+    font-weight: 600;
+}
+
 @media (max-width: 768px) {
     
     td.td-lote, th.th-lote{
