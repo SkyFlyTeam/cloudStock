@@ -26,7 +26,7 @@ export class Lote extends Model {
         type: DataType.DATEONLY,
         allowNull: true
     })
-    Lote_validade!: DateOnlyDataType;
+    Lote_validade!: Date;
 
     @Column({
         type: DataType.INTEGER,

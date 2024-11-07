@@ -19,7 +19,7 @@ export interface Lote {
   Lote_id: number;
   Lote_cod: string;
   Lote_quantidade: number;
-  Lote_validade: string;
+  Lote_validade: Date;
   Forn_id: number;
   Locais_Armazenamento?: LocalArmazenamento;
   Produtos?: Produto;

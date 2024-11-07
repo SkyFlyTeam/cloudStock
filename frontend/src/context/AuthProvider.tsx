@@ -1,5 +1,5 @@
 import { createContext, PropsWithChildren, useContext, useEffect, useState } from "react"
-import { Usuario, usuarioServices } from "../services/usuariosService"
+import { Usuario, usuarioServices } from "../services/usuariosServices"
 import { ApiException } from "../config/apiException"
 
 type AuthContext = {
