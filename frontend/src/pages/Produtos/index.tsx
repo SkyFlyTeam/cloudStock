@@ -28,7 +28,6 @@ import { hostname } from "../../config/apiConfig"
 import { Fornecedor } from "../../services/fornecedorServices"
 import { BsFilter } from "react-icons/bs"
 import VisualizarBtn from "../../components/VisualizarBtn";
-import { useParams } from "react-router-dom"
 
 import { useAuth } from "../../context/AuthProvider"
 import { useLocation, useNavigate, useParams } from "react-router-dom"
@@ -45,9 +44,6 @@ function Produtos() {
   const pageSize = 10; // Number of items per page
 
   const navigate = useNavigate();
-
-  // Use state para armazenar uma array de Produto (interface) que será exibido na tabela
-  const [data, setData] = useState<Produto[]>([])
 
   // Registro geral
   const [fornecedores, setFornecedores] = useState<Fornecedor[]>([])
@@ -117,9 +113,6 @@ function Produtos() {
       console.log(result.message)
     } else {
       setFornecedores(result)
-    }
-  }
-      setFilteredData(result); //Inicializa o filteredData com todos os produtos
     }
   }
 
@@ -511,7 +504,6 @@ const pageCount = Math.ceil(data.length / pageSize);
             <BtnAzul className="rfloat" icon={<IoAddCircleOutline />} label="CADASTRAR" onClick={() => setOpenModalCadastro(true)} />
           )}
         </div>
-      </div>
 
       <Table hover responsive size="lg">
         <thead>
