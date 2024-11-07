@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { Categoria } from '../models/Categoria';
+import { Produto } from '../models/Produto';
 
 export const controllerCategoria = {
   // POST /categoria - Criar uma nova categoria
@@ -49,7 +50,37 @@ export const controllerCategoria = {
         return res.status(400).json({ error: 'ID inválido' });
       }
 
-      const categoria = await Categoria.findByPk(id);
+      const categoria = await Categoria.findByPk(id, {
+        include: {
+          model: Produto
+        }
+      });
+      if (!categoria) {
+        return res.status(404).json({ message: 'Categoria não encontrada' });
+      }
+
+      return res.status(200).json(categoria);
+    } catch (error) {
+      console.error('Erro ao buscar categoria específica', error);
+      return res.status(500).json({ error: 'Erro interno no servidor' });
+    }
+  },
+
+  // GET /categoria/:id - Buscar uma categoria específica
+  showByPai: async (req: Request, res: Response) => {
+    const { id } = req.params;
+    try {
+      // Verifica se o ID fornecido é válido
+      if (isNaN(Number(id))) {
+        return res.status(400).json({ error: 'ID inválido' });
+      }
+
+      const categoria = await Categoria.findAll({
+        include: {
+          model: Produto
+        },
+        where: {Categoria_pai: id}
+      });
       if (!categoria) {
         return res.status(404).json({ message: 'Categoria não encontrada' });
       }
