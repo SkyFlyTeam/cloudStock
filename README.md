@@ -78,8 +78,8 @@ Rank | Prioridade | User Story | Estimativa | Sprint | Requisito
 | 11 | Alta | Eu como gerente gostaria de possuir relatórios detalhados sobre o status do estoque, histórico de compras e movimentação para possuir o total controle do estoque.  | 9 | 4 | 06
 | 12 | Alta | Eu como gerente gostaria de que hajam métricas de venda e perdas para planejar a compra de produtos de interesse.  | 7 | 4 | 07
 | 13 | Média | Eu como gerente gostaria de ver um histórico de compras e alterações no sistema para auditar os registros de entrada e saída dos itens da loja. | 5 | 4 | 09
-| 14 | Média | Eu como administrador gostaria de cadastrar novos usuários junto de suas respectivas funções para alimentar minha plataforma. | 3 | 4 | 01
-| 15 | Baixa | Eu como funcionário gostaria de filtrar os produtos para melhor organização.| 2 | 4 | 03
+| 14 | Média | Eu como administrador gostaria de cadastrar novos usuários junto de suas respectivas funções para alimentar minha plataforma. | 3 | 3 | 01
+| 15 | Baixa | Eu como funcionário gostaria de filtrar os produtos para melhor organização.| 2 | 3 | 03
 
 ### Requisitos Funcionais
 - 01: Cadastro de Usuários: Diferenciar níveis de acesso (administrador, gerente, funcionário). 
