@@ -32,6 +32,10 @@ const CategoriaFormulario = forwardRef((props: Props, ref: Ref<{ submitForm: () 
             Categoria_status: Cat_status,
             Categoria_pai: Cat_pai, // Inclui o id da categoria pai
         };
+        
+        if (Cat_pai === undefined){
+            novaCategoria.Categoria_pai = 1
+        }
 
         const response = await categoriaServices.createCategoria(novaCategoria as any);
         if (response instanceof ApiException) {

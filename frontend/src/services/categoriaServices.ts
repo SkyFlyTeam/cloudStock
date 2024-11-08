@@ -5,10 +5,11 @@ export interface Categoria {
   Categoria_id: number;
   Categoria_nome: string;
   Categoria_status: boolean;
-  Categoria_pai?: number;
-  Categoria_pai_nome?: string; // Adicionando o campo Categoria_pai_nome
+  Categoria_pai: number;
+  //Categoria_pai_nome?: string; // Adicionando o campo Categoria_pai_nome
 }
 
+// GET /categoria - Buscar todas as categorias
 const getAllCategoria = async (): Promise<Categoria[] | ApiException> => {
   try {
     const { data } = await Api().get('/categoria');

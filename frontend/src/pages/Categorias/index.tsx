@@ -23,7 +23,8 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { hostname } from "../../config/apiConfig";
 
 import { useAuth } from "../../context/AuthProvider";
-import SearchBar from "./SearchBar";
+import SearchBar from "../../components/SearchBar/SearchBar";
+
 
 // Const para a criação de colunas; Define a Tipagem (Interface)
 const columnHelper = createColumnHelper<Categoria>();
@@ -74,7 +75,7 @@ function Categorias() {
   useEffect(() => {
     fetchCategorias();
     fetchCategoriasPais(); // Chama para carregar categorias pais
-  }, []);
+  }, [data]);
 
   const handleSearch = (query: string) => {
     const filtered = data.filter((categoria) =>
@@ -91,45 +92,23 @@ function Categorias() {
     );
   };
 
-  // Função para alterar a categoria pai
-  const handleCategoriaPaiChange = async (categoria_id: number, categoriaPaiId: number) => {
-    const updatedCategoria = { Categoria_pai: categoriaPaiId };
-
-    const response = await categoriaServices.updateCategoria(categoria_id, updatedCategoria as any);
-    if (response instanceof ApiException) {
-      console.error(response.message);
-    } else {
-      // Atualiza a tabela localmente
-      setData(prevData => prevData.map(c =>
-        c.Categoria_id === categoria_id ? { ...c, Categoria_pai: categoriaPaiId } : c
-      ));
-    }
-  };
-
   const columns: ColumnDef<Categoria, any>[] = [
     columnHelper.accessor('Categoria_nome', {
       header: () => 'Nome',
       cell: info => info.getValue(),
     }),
-    columnHelper.accessor('Categoria_pai_nome', {
+    columnHelper.accessor('Categoria_pai', {
       header: () => 'Hierarquia',
       cell: ({ row }) => {
         const categoria = row.original;
-
+    
+        // Verifique se a categoria pai existe antes de tentar exibi-la
+        const categoriaPai = categoriasPais.find(c => c.Categoria_id === categoria.Categoria_pai);
+    
         return (
-          <select
-            className="form-select-cat"
-            value={categoria.Categoria_pai || ''}
-            onChange={(e) => handleCategoriaPaiChange(categoria.Categoria_id, Number(e.target.value))}
-          >
-            <option value=""> - </option>
-            {categoriasPais.map((categoriaPai) => (
-              <option key={categoriaPai.Categoria_id} value={categoriaPai.Categoria_id}>
-                {categoriaPai.Categoria_nome}
-              </option>
-            ))}
-          </select>
-
+          <span>
+            {categoriaPai ? categoriaPai.Categoria_nome : '-'}
+          </span>
         );
       }
     }),

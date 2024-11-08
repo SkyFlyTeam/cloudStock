@@ -19,9 +19,7 @@ const CategoriaEdicao = forwardRef((props: Props, ref: Ref<{ submitForm: () => v
     if (result instanceof ApiException) {
       console.error(result.message);
     } else {
-      // Filtrando categorias para exibir apenas as que podem ser pais (não sendo a categoria que está sendo editada)
-      const categoriasSemCategoriaPai = result.filter(categoria => categoria.Categoria_id !== props.id);
-      setCategoriasPais(categoriasSemCategoriaPai);
+      setCategoriasPais(result);
     }
   };
 
@@ -57,8 +55,7 @@ const CategoriaEdicao = forwardRef((props: Props, ref: Ref<{ submitForm: () => v
       } else {
         setNome(result.Categoria_nome);
         setStatus(result.Categoria_status);
-        // Verificar se o Categoria_pai é undefined e definir como null
-        setCategoriaPai(result.Categoria_pai ?? null); // Se for undefined, define como null
+        setCategoriaPai(result.Categoria_pai ?? 1);
       }
     };
 
