@@ -1,53 +1,53 @@
 import { useState, useEffect, forwardRef, useImperativeHandle, Ref } from 'react';
 import { ApiException } from '../../../../config/apiException';
 import { usuarioServices } from '../../../../services/usuariosServices';
-import { fornecedorServices } from '../../../../services/fornecedorServices';
+import './style.css';
 
 interface Props {
-  id: number  
-  onSuccess: (message: string) => void
+  id: number;
+  onSuccess: (message: string) => void;
 }
 
 const Usuario_Edicao = forwardRef((props: Props, ref: Ref<{ submitForm: () => void }>) => {
-  const [Usuario_nome, setNome] = useState<string>('')
-  const [Usuario_email, setEmail] = useState<string>('')
+  const [Usuario_nome, setNome] = useState<string>('');
+  const [Usuario_email, setEmail] = useState<string>('');
+  const [Cargo_id, setCargo] = useState<number | null>(null);
 
   const eventoFormulario = async () => {
-    const fornecedorAtualizado = {
+    const usuarioAtualizado = {
       Usuario_nome,
-      Usuario_email
-    }
+      Usuario_email,
+      Cargo_id,
+    };
 
-    // Envia o id como parâmetro e as informações atualizdas
-    const response = await usuarioServices.updateUsuario(props.id, fornecedorAtualizado)
+    const response = await usuarioServices.updateUsuario(props.id, usuarioAtualizado);
     if (response instanceof ApiException) {
-      console.error(response.message)
+      console.error(response.message);
     } else {
-      console.log("Fornecedor atualizado com sucesso:", response)
-      props.onSuccess('Fornecedor atualizado com sucesso!')
+      props.onSuccess('Fornecedor atualizado com sucesso!');
     }
-  }
+  };
 
   useImperativeHandle(ref, () => ({
     submitForm() {
-      eventoFormulario()
-    }
-  }))
+      eventoFormulario();
+    },
+  }));
 
-  // Preenche o formulário com as informações
   useEffect(() => {
-    const fetchFornecedor = async () => {
-        const result = await usuarioServices.getUsuarioById(props.id)
-        if (result instanceof ApiException) {
-          alert(result.message) 
-        } else {
-            setNome(result.Usuario_nome)
-            setEmail(result.Usuario_email)
-        }
-      };
-  
-    fetchFornecedor()
-  }, []);
+    const fetchUsuarios = async () => {
+      const result = await usuarioServices.getUsuarioById(props.id);
+      if (result instanceof ApiException) {
+        alert(result.message);
+      } else {
+        setNome(result.Usuario_nome);
+        setEmail(result.Usuario_email);
+        setCargo(result.Cargo_id);
+      }
+    };
+
+    fetchUsuarios();
+  }, [props.id]);
 
   return (
     <form>
@@ -60,9 +60,46 @@ const Usuario_Edicao = forwardRef((props: Props, ref: Ref<{ submitForm: () => vo
           <label htmlFor="email">Email</label>
           <input type="text" value={Usuario_email} onChange={(e) => setEmail(e.target.value)} />
         </div>
+        <div className="input-item">
+          <div className="radio-group">
+            <label htmlFor="funcionario" className="radio-label">
+              <input
+                type="radio"
+                id="funcionario"
+                name="cargo"
+                value="1"
+                checked={Cargo_id === 1}
+                onChange={() => setCargo(1)}
+              />
+              Funcionário
+            </label>
+            <label htmlFor="gerente" className="radio-label">
+              <input
+                type="radio"
+                id="gerente"
+                name="cargo"
+                value="2"
+                checked={Cargo_id === 2}
+                onChange={() => setCargo(2)}
+              />
+              Gerente
+            </label>
+            <label htmlFor="administrador" className="radio-label">
+              <input
+                type="radio"
+                id="administrador"
+                name="cargo"
+                value="3"
+                checked={Cargo_id === 3}
+                onChange={() => setCargo(3)}
+              />
+              Administrador
+            </label>
+          </div>
+        </div>
       </div>
     </form>
-  )
-})
+  );
+});
 
 export default Usuario_Edicao;

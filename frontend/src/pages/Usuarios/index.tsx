@@ -110,20 +110,11 @@ function Usuarios() {
       cell: info => {
           return (
               <div className="td-center">
-                  <span style={{ marginRight: "1rem" }}>Funcionário</span>
-                  {currentUser?.Cargo_id === 2 ? ( // Exibe o toggle para gerente
-                      <ToggleBtnCargo
-                          checked={info.getValue() === 2}
-                          cod={info.row.original.Usuario_id}
-                          rota={`${hostname}usuario`}
-                          onStatusChange={() => handleCargoChange(info.row.original.Usuario_id)}
-                      />
-                  ) : (
-                      <span className={info.getValue() === 1 ? 'status-ativo1' : 'status-inativo1'}>
-                          {info.getValue() === 1 ? 'Ativo' : 'Inativo'}
-                      </span>
-                  )}
-                  <span style={{ marginLeft: "1rem" }}> Gerente</span>
+                {info.getValue() === 1 ? 'Funcionário':(
+                  info.getValue() === 2 ? 'Gerente' : (
+                    info.getValue() ===3 ? 'Administrador' : 'Cargo não conhecido'
+                  )
+                )}
               </div>
           );
       },
@@ -132,7 +123,7 @@ function Usuarios() {
       header: () => 'Status',
       cell: info => (
         <div className="td-center" style={{display: "flex", justifyContent: "flex-end",  width: "100%"}}>
-      {currentUser?.Cargo_id === 2 ? (
+      {currentUser?.Cargo_id === 3 ? (
           <ToggleBtn
             checked={info.getValue() == 1}
             cod={info.row.original.Usuario_id}
@@ -206,9 +197,8 @@ function Usuarios() {
         </div>
         
         <div className="cadastro">
-          {currentUser?.Cargo_id === 2 && (
+          {currentUser?.Cargo_id === 3 && (
             <BtnAzul icon={<IoAddCircleOutline />} label="CADASTRAR" onClick={() => setOpenModalCadastro(true)} />
-      
           )}
       </div>
     </div>
@@ -219,7 +209,9 @@ function Usuarios() {
           {table.getHeaderGroups().map(headerGroup => (
             <tr className="heading" key={headerGroup.id}>
               {headerGroup.headers.map(header => (
-                <th key={header.id} colSpan={header.colSpan} className={header.id === 'Usuario_status' ? 'th-align-right' : ''}>
+                <th key={header.id} colSpan={header.colSpan} className={header.id === 'Usuario_status' ? 'th-align-right' : (
+                  header.id === 'Cargo_id' ? 'th-align-center' : ''
+                )}>
                   {header.isPlaceholder
                     ? null
                     : flexRender(header.column.columnDef.header, header.getContext())}

@@ -101,13 +101,6 @@ const Navbar: React.FC = () => {
                     <div className="navbartext"><span>Produtos</span></div>
                   </div>
                 </Link>
-
-                <Link to="/Usuarios" className="link">
-                  <div className={location.pathname === '/Usuarios' ? 'menu-item active' : 'menu-item'}>
-                    <FaUsersBetweenLines />
-                    <div className="navbartext"><span>Usuarios</span></div>
-                  </div>
-                </Link>
                 
                 <Link to="/Fornecedores" className="link">
                   <div className={location.pathname === '/Fornecedores' ? 'menu-item active' : 'menu-item'}>
@@ -136,12 +129,12 @@ const Navbar: React.FC = () => {
                   </Link>
                 </>}
 
-              {/* Rotas do Usuário */}
+              {/* Rotas do Administrador */}
               {currentUser?.Cargo_id === 3 &&
                 <>
                   <Link to="/Usuarios" className="link">
                     <div className={location.pathname === '/Usuarios' ? 'menu-item active' : 'menu-item'}>
-                      <HiMiniUsers />
+                      <FaUsersBetweenLines />
                       <div className="navbartext"><span>Usuários</span></div>
                     </div>
                   </Link>
