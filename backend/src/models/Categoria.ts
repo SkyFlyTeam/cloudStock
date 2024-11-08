@@ -1,4 +1,4 @@
-import { Table, Column, Model, DataType, ForeignKey, BelongsToMany, HasMany } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, ForeignKey, BelongsToMany, HasMany, BelongsTo } from 'sequelize-typescript';
 import { Produto } from './Produto';
 
 @Table({
@@ -27,11 +27,18 @@ export class Categoria extends Model {
   })
   Categoria_status!: boolean;
 
+  @ForeignKey(() => Categoria)
   @Column({
     type: DataType.INTEGER,
     allowNull: true
   })
   Categoria_pai!: number;
+
+  @BelongsTo(() => Categoria, 'Categoria_pai')
+  categoriaPai?: Categoria;
+
+  @HasMany(() => Categoria, 'Categoria_pai')
+  subcategorias!: Categoria[];
 
   @HasMany(() => Produto)
   Produtos!: Produto[];
