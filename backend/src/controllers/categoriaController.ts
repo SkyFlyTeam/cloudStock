@@ -168,4 +168,32 @@ export const controllerCategoria = {
       return res.status(500).json({ error: 'Erro interno no servidor' });
     }
   },
+
+  // PUT /status/:id 
+  changeStatus: async (req, res) => {
+    const { id } = req.params;
+    try {
+      // Procurar o usuário pelo ID
+      const categoria = await Categoria.findByPk(id);
+  
+      if (!categoria) {
+        return res.status(404).json({ error: 'Categoria não encontrada' });
+      }
+  
+      // Alternar o status atual (se for true, muda para false e vice-versa)
+      const novoStatus = !categoria.Categoria_status;
+  
+      // Atualizar o status no banco de dados
+      await Categoria.update(
+        { Categoria_status: novoStatus },
+        { where: { Categoria_id: id } }
+      );
+  
+      // Retornar o novo status atualizado
+      return res.status(200).json({ message: "Status alterado com sucesso", categoria });
+    } catch (error) {
+      return res.status(500).json({ error: 'Erro ao alterar o status da categoria' });
+    }
+  }
+
 };
