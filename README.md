@@ -10,7 +10,10 @@
     <a href="#demostracao">Demostração</a>  |  
     <a href="#tecnologias">Tecnologias utilizadas</a>  |  
     <a href="#backlog">Backlog do produto</a>  |  
-    <a href="#autores">Autores</a>
+    <a href="#autores">Autores</a> |
+    <a href="./sprints/sprint1/sprint1.md">Sprint 1</a> |
+    <a href="./sprints/sprint2/sprint2.md">Sprint 2</a> |
+    <a href="./sprints/sprint3/sprint3.md">Sprint 3</a>
 </p>
 
 <br>
@@ -33,8 +36,8 @@ Sprint | Previsão | Status | Relatório
 |------|--------|------|------|
 |Kick Off | 26/08/2024 a 30/08/2024 | ✔️ Concluída | -
 |01 | 09/09/2024 a 29/09/2024 | ✔️ Concluída | <a href="https://github.com/SkyFLyTeam/cloudStock/tree/main/sprints/sprint1/sprint1.md">Relatório</a>
-|02|  30/09/2024 a 20/10/2024|  ✔️ Concluída | [ver relatório](https://github.com/SkyFlyTeam/cloudStock/tree/sprint2) 
-|03| 21/10/2024 a 10/11/2024 |  🔁 Em Andamento | [ver relatório](https://github.com/SkyFlyTeam/cloudStock/tree/sprint3)
+|02|  30/09/2024 a 20/10/2024|  ✔️ Concluída | <a href="https://github.com/SkyFLyTeam/cloudStock/tree/main/sprints/sprint2/sprint2.md">Relatório</a> 
+|03| 21/10/2024 a 10/11/2024 |  🔁 Em Andamento | <a href="https://github.com/SkyFLyTeam/cloudStock/tree/main/sprints/sprint3/sprint3.md">Relatório</a>
 |04| 11/11/2024 a 01/12/2024 | a fazer |
 |Feira de Soluções| 12/12 | a fazer |
 
@@ -172,9 +175,9 @@ npm start
 
 Documentos do projeto:
 
-Modelo lógico do Banco de Dados: [vertabello_modelo](https://github.com/user-attachments/assets/816b7fb0-d5e7-4edf-bbcf-c5f745787ceb)
+Modelo lógico do Banco de Dados: [vertabello_modelo](documentacao/modelo-logico.png)
 <br>
-Backlog do Produto: [CloudStock-Backlog do Produto.pdf](https://github.com/user-attachments/files/17026988/SKYF-Backlog.do.Produto-170924-104112.pdf)
+Backlog do Produto: [CloudStock-Backlog do Produto.pdf](documentacao/SKYF-Backlog.do.Produto-170924-104112.pdf)
 
 <br>
 
