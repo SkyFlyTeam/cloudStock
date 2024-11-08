@@ -25,11 +25,12 @@ import { hostname } from "../../config/apiConfig";
 
 
 import { useAuth } from "../../context/AuthProvider";
-import SearchBar from "./SearchBar";
+
 import { Usuario, usuarioServices } from "../../services/usuariosServices";
 import ToggleBtnCargo from "../../components/ToggleBtnCargo";
 import UsuarioFormulario from "../../components/Formularios/Usuario/User_Cadastrar.tsx";
 import Usuario_Edicao from "../../components/Formularios/Usuario/User_Editar";
+import SearchBar from "../../components/SearchBar/SearchBar";
 
 
 // Const para a criação de colunas; Define a Tipagem (Interface)
