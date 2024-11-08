@@ -185,8 +185,8 @@ Documentos do projeto:
 Modelo lógico do Banco de Dados: [vertabello_modelo](documentacao/modelo-logico.png)
 <br>
 Backlog do Produto: [CloudStock-Backlog do Produto.pdf](documentacao/SKYF-Backlog.do.Produto-170924-104112.pdf)
-
 <br>
+Value Proposition Canvas: [value_proposition_canvas](documentacao/Skyfly-Value%20Proposition%20Canvas%20Brainstorm.pdf)
 
 <span id="autores">
 
