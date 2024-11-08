@@ -60,6 +60,7 @@ function Produtos() {
   const [custoMin, setCustoMin] = useState<number | null>(null)
   const [dataMax, setDataMax] = useState<string | null>(null)
   const [dataMin, setDataMin] = useState<string | null>(null)
+  const [searchQuery, setSearchQuery] = useState<string | null>(null)
   // renderizar o componente de filtro
   const [filtroKey, setFiltroKey] = useState(0)
   // useState para controlar os modais
@@ -75,8 +76,6 @@ function Produtos() {
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   // Mensagem de sucesso das ações
   const [mensagemSucesso, setMensagemSucesso] = useState<string>('');
-
-  const [searchbarValue, setSearchValue] = useState<string>('');
 
   //Verificação dos Cargos
   const {currentUser} = useAuth();
@@ -115,29 +114,6 @@ function Produtos() {
       setFornecedores(result)
     }
   }
-
-  // Função para filtrar produtos pelo nome
-  const handleSearch = (query: string) => {
-    setSearchValue(query);
-    const filtered = data.filter((produto) =>
-      produto.Prod_nome.toLowerCase().includes(query.toLowerCase())
-    );
-    setFilteredData(filtered);
-  };
-
-  // const handleChangePage = (newPag: number) => { 
-  //   if (newPag < 1){
-  //     navigate(`/Produtos/${1}`);
-  //   }
-  //   else if (newPag > data.length / 10 + 1){
-  //     navigate(`/Produtos/${parseInt(`${data.length / 10 + 1}`)}`);
-  //   }
-  //   else{
-  //   navigate(`/Produtos/${newPag}`);
-  //    } 
-  //    setData([])
-  //    setFilteredData([]);
-  //   }
 
   // Chama a função para pegar todos os produtos do BD ao montar o componente
   useEffect(() => {
@@ -181,6 +157,9 @@ useEffect(() => {
     if (status !== null) {
       produtosFiltrados = produtosFiltrados.filter((p) => p.Prod_status === status);
     }
+    if (searchQuery !== null) {
+      produtosFiltrados = produtosFiltrados.filter((p) => p.Prod_nome.toLowerCase().includes(searchQuery.toLowerCase()));
+    }
     if (fornecedorFiltrado?.Forn_id !== undefined) {
       produtosFiltrados = produtosFiltrados.filter((p) =>
         p.Lotes?.some((l) => l.Forn_id === fornecedorFiltrado.Forn_id)
@@ -221,6 +200,7 @@ useEffect(() => {
   filtrarAutomaticamente();
 }, [
   status,
+  searchQuery,
   fornecedorFiltrado,
   quantidadeMin,
   quantidadeMax,
@@ -328,7 +308,7 @@ const handleLimparFiltros = () => {
 
   // Cria a tabela, aqui é onde serão passados todos os possíveis parâmetros
   const table = useReactTable({
-    data: filteredData, //utiliza o filteredData
+    data: data, //utiliza o filteredData
     columns,
     state: { pagination: { pageIndex, pageSize } }, // Set pagination in the state
     getCoreRowModel: getCoreRowModel(),
@@ -373,7 +353,7 @@ const pageCount = Math.ceil(data.length / pageSize);
       </div>
 
       <div className="actions-group">
-        <SearchBar onSearch={handleSearch} />
+        <SearchBar onSearch={setSearchQuery} />
         <div className="action-end">
           <div className="btnFiltrar" onClick={handleShowFiltros}>
             <BsFilter size={24} style={{ color: '#61BDE0'}} />
