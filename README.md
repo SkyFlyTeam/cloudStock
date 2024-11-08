@@ -28,6 +28,13 @@ O Cloud Stock é um sistema de controle de estoque desenvolvida para facilitar a
 
 A Cloud Stock tem como objetivo resolver problemas relacionados ao gerenciamento de estoque ineficiente, reduzindo erros humanos e otimizando o acompanhamento do inventário.
 
+<br>
+
+<div align="center">
+    <img src="./media/SkyFly- Value Proposition Canvas Brainstorm.png" width="900px" height="600px">
+</div>
+
+
 <br> 
 
 ## 📅 Entrega de Sprints
