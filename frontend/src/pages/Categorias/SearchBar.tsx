@@ -22,7 +22,7 @@ interface SearchBarProps {
         <input
           type="text"
           className="search-input"
-          placeholder="Pesquisar por nome do fornecedor..."
+          placeholder="Buscar por categoria"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={handleKeyDown}

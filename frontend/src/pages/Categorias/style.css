@@ -62,3 +62,18 @@ tbody tr:nth-child(odd) {
     font-weight: bold;
     font-size: 16px;
   }
+
+.form-select-cat {
+  border: none;
+  border-radius: 8px;
+  width: 50%;
+  height: 32px;
+  padding-left: 15px;
+  background-color: #F8F8F8;
+  transition: background-color 0.3s ease;
+}
+
+.form-select-cat:focus {
+  outline: none; 
+  background-color: #FFFFFF;
+}

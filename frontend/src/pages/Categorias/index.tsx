@@ -41,6 +41,7 @@ function Categorias() {
   const formRef = useRef<{ submitForm: () => void }>(null);
   const [data, setData] = useState<Categoria[]>([]);
   const [filteredData, setFilteredData] = useState<Categoria[]>([]);
+  const [categoriasPais, setCategoriasPais] = useState<Categoria[]>([]); // Estado para categorias pais
 
   // Função para buscar todas as categorias
   const fetchCategorias = async () => {
@@ -48,20 +49,32 @@ function Categorias() {
     if (result instanceof ApiException) {
       console.log(result.message);
     } else {
-      // Mapeia cada categoria, adicionando o nome da categoria pai
       const categoriasComPai = result.map((categoria) => {
         if (categoria.Categoria_pai) {
           const categoriaPai = result.find(c => c.Categoria_id === categoria.Categoria_pai);
-          return { ...categoria, Categoria_pai_nome: categoriaPai ? categoriaPai.Categoria_nome : "Nenhuma" };
+          return { ...categoria, Categoria_pai_nome: categoriaPai ? categoriaPai.Categoria_nome : "-" };
         } else {
-          return { ...categoria, Categoria_pai_nome: "Nenhuma" };
+          return { ...categoria, Categoria_pai_nome: "-" };
         }
       });
       setData(categoriasComPai);
       setFilteredData(categoriasComPai);
     }
   };
-  
+
+  const fetchCategoriasPais = async () => {
+    const result = await categoriaServices.getAllCategoria();
+    if (result instanceof ApiException) {
+      console.error(result.message);
+    } else {
+      setCategoriasPais(result); // Atualiza categorias pais
+    }
+  };
+
+  useEffect(() => {
+    fetchCategorias();
+    fetchCategoriasPais(); // Chama para carregar categorias pais
+  }, []);
 
   const handleSearch = (query: string) => {
     const filtered = data.filter((categoria) =>
@@ -69,10 +82,6 @@ function Categorias() {
     );
     setFilteredData(filtered);
   };
-
-  useEffect(() => {
-    fetchCategorias();
-  }, []);
 
   const handleStatusChange = (categoria_id: number, newStatus: boolean) => {
     setData(prevData =>
@@ -82,14 +91,47 @@ function Categorias() {
     );
   };
 
+  // Função para alterar a categoria pai
+  const handleCategoriaPaiChange = async (categoria_id: number, categoriaPaiId: number) => {
+    const updatedCategoria = { Categoria_pai: categoriaPaiId };
+
+    const response = await categoriaServices.updateCategoria(categoria_id, updatedCategoria as any);
+    if (response instanceof ApiException) {
+      console.error(response.message);
+    } else {
+      // Atualiza a tabela localmente
+      setData(prevData => prevData.map(c =>
+        c.Categoria_id === categoria_id ? { ...c, Categoria_pai: categoriaPaiId } : c
+      ));
+    }
+  };
+
   const columns: ColumnDef<Categoria, any>[] = [
     columnHelper.accessor('Categoria_nome', {
       header: () => 'Nome',
       cell: info => info.getValue(),
     }),
-    columnHelper.accessor('Categoria_pai_nome', { // Alterado de Categoria_pai para Categoria_pai_nome
+    columnHelper.accessor('Categoria_pai_nome', {
       header: () => 'Hierarquia',
-      cell: info => info.getValue(),
+      cell: ({ row }) => {
+        const categoria = row.original;
+
+        return (
+          <select
+            className="form-select-cat"
+            value={categoria.Categoria_pai || ''}
+            onChange={(e) => handleCategoriaPaiChange(categoria.Categoria_id, Number(e.target.value))}
+          >
+            <option value=""> - </option>
+            {categoriasPais.map((categoriaPai) => (
+              <option key={categoriaPai.Categoria_id} value={categoriaPai.Categoria_id}>
+                {categoriaPai.Categoria_nome}
+              </option>
+            ))}
+          </select>
+
+        );
+      }
     }),
     columnHelper.accessor('Categoria_status', {
       header: () => 'Status',
@@ -115,7 +157,6 @@ function Categorias() {
       )
     }),
   ];
-  
 
   const table = useReactTable({
     data: filteredData,
@@ -158,7 +199,6 @@ function Categorias() {
         <div className="cadastro">
           <BtnAzul icon={<IoAddCircleOutline />} label="CADASTRAR" onClick={() => setOpenModalCadastro(true)} />
         </div>
-
       </div>
 
       <Table hover responsive size="lg">
@@ -186,7 +226,7 @@ function Categorias() {
         </tbody>
       </Table>
 
-      {/* MODALS*/}
+      {/* MODALS */}
       <Modal
         isOpen={openModalCadastro}
         label="Cadastrar Categoria"
@@ -229,6 +269,7 @@ function Categorias() {
           />
         </Modal>
       )}
+
     </main>
   );
 }
