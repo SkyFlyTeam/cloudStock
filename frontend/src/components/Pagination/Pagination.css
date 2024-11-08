@@ -1,0 +1,29 @@
+.pagination .Active{
+    background-color: #61BDE0;
+    color: white;
+    border-radius: 25%;
+}
+
+.pagination .ChangeBtn{
+    color: #61BDE0;
+    padding: 5px;
+}
+
+.pagination button{
+    padding: 5px 10px;
+    background-color: rgba(0, 0, 0, 0);
+    color: gray;
+    border-color: rgba(0, 0, 0, 0);
+    transition: 0.3s;
+}
+
+.pagination button:hover{
+    background-color: gray;
+    color: white;
+    border-radius: 25%;
+}
+
+.pagination{
+    display: flex;
+    justify-content: end;
+}

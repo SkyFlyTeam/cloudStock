@@ -16,9 +16,11 @@ export interface Produto {
   Prod_validade: boolean
   Prod_quantidade: number
   Prod_status: boolean
+  Prod_estoqueMinimo:number
   Categoria_id: any
   UnidadeMedida_id: any
   Prod_imagem: File | null
+  Lotes: Lote[]
 }
 
 
@@ -141,8 +143,10 @@ export interface Lote {
   Lote_validade: Date
   Lote_quantidade: number
   Lote_cod: string
+  Lote_restante: number
   Prod_cod: number
   LocAr_id: number
+  Forn_id: number
 }
 
 const getProdutoLotes = async (Produto_id: number, Local_id: number): Promise<Lote[] | ApiException> => {
@@ -151,6 +155,39 @@ const getProdutoLotes = async (Produto_id: number, Local_id: number): Promise<Lo
       headers: { 'Content-Type': 'application/json' }
     })
 
+    const lotes = await Promise.all(
+      data.map(async (lote: Lote) => {
+          let restante = 0
+
+          const validade = new Date(lote.Lote_validade)
+          const dataAtual = new Date()
+
+          dataAtual.setHours(0, 0, 0, 0)
+          validade.setHours(0, 0, 0, 0)
+
+          restante = Math.floor((validade.getTime() - dataAtual.getTime()) / (24 * 60 * 60 * 1000))
+
+        return {
+            ...lote,
+            Lote_restante: restante
+        }
+      })
+    )
+
+    return lotes
+
+  } catch (error: any) {
+    return new ApiException(error.message || 'Erro ao listar lotes.')
+  }
+}
+
+const getProdutoLotesProduto = async (Produto_id: number): Promise<Lote[] | ApiException> => {
+  try {
+    const { data } = await Api().get<any>(`/lote/produto/${Produto_id}`, {
+      headers: { 'Content-Type': 'application/json' }
+    })
+
+    console.log(data)
     return data
 
   } catch (error: any) {
@@ -165,5 +202,6 @@ export const produtoServices = {
   deleteProduto,
   updateProduto,
   getProdutosByLocal,
-  getProdutoLotes
+  getProdutoLotes,
+  getProdutoLotesProduto
 }

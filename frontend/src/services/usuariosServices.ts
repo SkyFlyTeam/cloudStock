@@ -22,6 +22,7 @@ const checkLogin = async (credenciais: any): Promise<any | ApiException> => {
     }
 }
 
+
 const createUsuario = async (usuario: any): Promise<any | ApiException> => {
   try{
       const { data } = await Api().post<any>('/usuario', usuario, {
@@ -85,6 +86,7 @@ const updateUsuarioCargo = async (id: number): Promise<Usuario | ApiException> =
     return new ApiException(error.message || 'Erro ao criar o registro.')
   }
 }
+
   
 
 export const usuarioServices = {

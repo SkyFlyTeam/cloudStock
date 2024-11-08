@@ -1,8 +1,8 @@
-<h1 align='center'> Sprint 2: 30/09/2024 à 20/10/2024 </h1>
+<h1 align='center'> Sprint 3: 21/10/2024 à 11/11/2024 </h1>
 
 <br>
 
-Na segunda sprint, foram criadas páginas para registrar entradas e saídas de produtos, separadas e unificadas, permitindo uma análise mais detalhada. Além disso, agora os produtos são exibidos em seus respectivos locais de armazenamento. Também foi implementada a movimentação de produtos com atualização imediata na exibição das quantidades e diferenciação nos níveis de acesso ao fazer login.
+Na terceira sprint, foi criada a determinação de estoque mínimo dos produtos e ao ser atingida irá ser alertada por meio de uma notificação um aviso de abastecer o estoque necessário, não só em estoque mínimo mas a notificação também avisará quando a data de validade estiver próxima, além disso, agora o gerente poderá cadastrar novos usuários junto de suas respectivas funções. Ademais, foi desenvolvido funções de busca em certas páginas, sendo possível buscar através de filtro e o campo pesquisa. Para finalizar, no cadastro de produtos há agora um campo de inserir a categoria  e a unidade de medida. 
 
 <br>
 
@@ -66,6 +66,14 @@ Apresentação das funcionalidades desenvolvidas até o momento:
 </div>
 
 <br>
+
+## :link: Links úteis
+
+Documentos do projeto:
+
+Modelo lógico do Banco de Dados: [vertabello_modelo](https://github.com/user-attachments/assets/3b675fd6-f59c-4b84-81aa-15fc361fce5b)
+<br>
+
 
 
 

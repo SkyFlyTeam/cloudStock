@@ -62,3 +62,12 @@ tbody tr:nth-child(odd) {
     font-weight: bold;
     font-size: 16px;
   }
+
+  .status-filtro-fornecedor label{
+    width: 4em;
+  }
+
+  .page-title-fornecedores {
+    display: flex;
+    justify-content: space-between;
+  }

@@ -26,6 +26,7 @@ export interface Lote {
   Produtos?: Produto;
   Fornecedores?: Fornecedores;
   Lote_Saida?: Lote_Saida;
+  Prod_cod?: number
 }
 
 export interface Produto {

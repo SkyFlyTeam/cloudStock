@@ -19,7 +19,7 @@ import { Link } from "react-router-dom";
 
 //Verificação dos cargos
 import { useAuth } from "../../context/AuthProvider";
-import SearchBar from "./SearchBar";
+import SearchBar from "../../components/SearchBar/SearchBar"
 
 function Setores() {
     const [openModalCadastro, setOpenModalCadastro] = useState(false)
@@ -96,15 +96,11 @@ function Setores() {
             </div> */}
 
           <div className="actions-group">
-            <div className="search-bar-container">
               <SearchBar onSearch={handleSearch} />
-            </div>
             
-            <div className="cadastro">
               {currentUser?.Cargo_id === 2 && (
                 <BtnAzul className="rfloat" icon={<IoAddCircleOutline />} label="CADASTRAR" onClick={() => setOpenModalCadastro(true)} />
               )}
-            </div>
           </div>
         
             <div className="cards-group">

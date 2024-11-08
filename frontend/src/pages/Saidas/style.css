@@ -1,0 +1,14 @@
+.flex-end{
+    justify-content: end !important;
+}
+
+.saida-container-filtros {
+    display: flex;
+    column-gap: .8em;
+    flex-wrap: wrap;
+}
+
+.saida-container-filtros input {
+    margin-right: 5px;
+}
+

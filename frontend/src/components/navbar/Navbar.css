@@ -12,6 +12,7 @@
     position: fixed;
     left: 0;
     top: 0;
+    z-index: 3;
 }
   
 .sidebar img {
@@ -70,7 +71,7 @@
     justify-content: center;
     font-weight: 600;
     padding: 10px;
-    color: red;
+    color: rgb(248, 39, 39);
     cursor: pointer;
     margin-top: auto;
     gap: 1rem;
@@ -115,6 +116,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        z-index: 3;
     }
 
     .sidebar {
