@@ -25,7 +25,7 @@ const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
     const [Prod_comprimento, setComprimento] = useState<number>(0)
     const [Prod_marca, setMarca] = useState<string>('')
     const [Prod_modelo, setModelo] = useState<string>('')
-    const [Prod_validade, setValidade] = useState<boolean>(false)
+    const [Prod_validade, setValidade] = useState<boolean>(true)
     const [Prod_quantidade, setQuantidade] = useState<number>(0)
     const [Prod_categoriaId, setCategoriaID] = useState<null>(null)
     const [UnidadeMedida_id, setUnidadeMedida_id] = useState<number>(0)
@@ -187,12 +187,43 @@ const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
                         onChange={(e) => setAltura(parseFloat(e.target.value))}
                         value={Prod_altura.toString()}
                     />
+
                 </div>
             </section>
             <div className='subtitle-form-prod'>
                 <span>Detalhes</span>
                 <hr className="line"/>
             </div>
+
+            <div className="input-group-prod validade-checkbox">
+                <label>Possui validade?</label>
+                <div className="checkbox-group">
+                    <div className="checkbox-item">
+                    <input
+                        type="checkbox"
+                        checked={Prod_validade === true}
+                        onChange={() => setValidade(true)}
+                    />
+                    <label className="display">
+                        Sim
+                    </label>
+                </div>
+            
+                <div className="checkbox-group">
+                    <input
+                        type="checkbox"
+                        checked={Prod_validade === false}
+                        onChange={() => setValidade(false)}
+                    />
+                    <label>
+                        Não
+                    </label>
+                </div>        
+
+                </div>
+            </div>
+
+
             <section className='form-prod'>
                 <div className="input-group-prod">
                     <Input className="input-item-prod large"

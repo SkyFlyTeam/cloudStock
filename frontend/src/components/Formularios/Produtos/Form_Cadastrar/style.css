@@ -4,3 +4,28 @@
     border: #E5E5E5 1px solid;
     border-radius: 3px;
 }
+
+.validade-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.checkbox-group {
+    display: flex;
+    gap: 15px;
+}
+
+.checkbox-group label {
+    display: flex;
+    font-size: 14px;
+    cursor: pointer;
+    gap: 0.5rem;
+}
+
+.checkbox-item {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}

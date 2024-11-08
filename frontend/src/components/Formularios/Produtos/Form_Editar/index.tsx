@@ -233,6 +233,38 @@ const ProdutoEditar = forwardRef((props: Props, ref: Ref<{ submitForm: () => voi
                 <span>Detalhes</span>
                 <hr className="line"/>
             </div>
+
+            <div className="input-group-prod validade-checkbox">
+                <label>Possui validade?</label>
+                <div className="checkbox-group">
+                    <div className="checkbox-item">
+                    <input
+                        type="checkbox"
+                        checked={Prod_validade === true}
+                        onChange={() => setValidade(true)}
+                    />
+                    <label className="display">
+                        Sim
+                    </label>
+                </div>
+            
+                <div className="checkbox-group">
+                    <input
+                        type="checkbox"
+                        checked={Prod_validade === false}
+                        onChange={() => setValidade(false)}
+                    />
+                    <label>
+                        Não
+                    </label>
+                </div>        
+
+                </div>
+            </div>
+
+                <hr className="line"/>
+
+
             <section className='form-prod'>
                 <div className="input-group-prod">
                     <Input className="input-item-prod large"
