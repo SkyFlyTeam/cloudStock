@@ -329,7 +329,6 @@ function Entradas() {
                 <div className="entrada-options">
                   <Input
                     min="0"
-                    max={produto.Prod_quantidade}
                     label="Quantidade"
                     type="number"
                     className="quantidade-container"
