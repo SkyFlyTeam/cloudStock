@@ -1,0 +1,19 @@
+/* Grupo de radio buttons */
+.radio-group {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 0.5rem;
+  }
+  
+  .radio-label {
+    position: relative;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    color: #333;
+    cursor: pointer;
+  }
+
+  .input-item {
+    width: 45%;
+  }

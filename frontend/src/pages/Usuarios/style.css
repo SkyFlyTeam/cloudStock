@@ -28,6 +28,10 @@ th {
     text-align: right;
 }
 
+.th-align-center {
+    text-align: center;
+}
+
 tr.vazia { 
     border: none; 
     height: 1rem !important; 

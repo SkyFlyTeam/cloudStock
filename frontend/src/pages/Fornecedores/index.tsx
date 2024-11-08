@@ -223,7 +223,6 @@ function Fornecedores() {
             </div>
             {currentUser?.Cargo_id === 2 && (
               <BtnAzul icon={<IoAddCircleOutline />} label="CADASTRAR" onClick={() => setOpenModalCadastro(true)} />
-        
             )}
           </div>
     </div>
