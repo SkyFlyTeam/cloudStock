@@ -50,7 +50,7 @@ function MainRoutes(){
                     <Route path="/Registros" element={<ProtectedRoute allowedRoles={[2]}><Registros /></ProtectedRoute>}/>
 
                     {/* Rotas do Admin */}
-                    <Route path="/Usuarios" element={<ProtectedRoute allowedRoles={[3]}><Usuarios /></ProtectedRoute>}/>
+                    <Route path="/Usuarios" element={<ProtectedRoute allowedRoles={[2, 3]}><Usuarios /></ProtectedRoute>}/>
                     
                 </Route>
 

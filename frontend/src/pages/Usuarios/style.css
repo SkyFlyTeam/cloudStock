@@ -1,0 +1,75 @@
+main{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+table {
+    font-family: "Montserrat", sans-serif;
+    border-collapse: collapse; /* Remover espaços e bordas entre as células */
+    table-layout: fixed;
+    width: 100%;
+}
+
+tr.table-row {
+    background-color: white;
+    box-shadow: none !important; /* Remover sombra */
+}
+
+
+th { 
+    color: #ACACAC !important;
+    font-weight: 500 !important;
+    border: none !important;
+}
+
+/* Alinha o texto no cabeçalho para a direita */
+.th-align-right {
+    text-align: right;
+}
+
+.th-align-center {
+    text-align: center;
+}
+
+tr.vazia { 
+    border: none; 
+    height: 1rem !important; 
+    background-color: transparent; 
+}
+
+
+.align-right {
+    display: flex;
+    justify-content: flex-end; /* Alinha à direita */
+    padding-right: 15px; /* Ajuste se precisar de mais espaçamento */
+    margin-right: 2rem;
+  }
+
+/* Remover bordas arredondadas das células */
+tr td:first-child, tr td:last-child {
+    border-radius: 0 !important;
+}
+
+/* Alternar a cor das linhas da tabela */
+tbody tr:nth-child(even) {
+    background-color: #61bce027; /* Cor para as linhas pares */
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #ffffff; /* Cor para as linhas ímpares */
+}
+
+.status-ativo1 {
+    color: green;
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+  }
+  
+  .status-inativo1 {
+    color: red;
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+  }

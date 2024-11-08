@@ -13,6 +13,10 @@ export const controllerAuth = {
             return res.status(404).json({ error: 'Email ou senha inválidos.' });
           }
 
+          if (!usuario.Usuario_status) {
+            return res.status(404).json({ error: 'A conta está inativa.' });
+          }
+
           const verifyPassword = await bcrypt.compare(senha, usuario['Usuario_senha'])
           
           if(!verifyPassword){
