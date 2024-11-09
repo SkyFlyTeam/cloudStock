@@ -60,7 +60,7 @@ function Entradas() {
     Forn_id: number,
     LocAr_id: number,
     Prod_custo: number,
-    Lote_unico: boolean
+    Lote_unico: boolean // Atributo local, Flag para Input da Validade
   }>>([]);
 
   // produtos - produtos que serão exibidos
@@ -174,21 +174,22 @@ function Entradas() {
   };
 
   const handleLoteCodChange = (produto: Produto, Prod_cod: number, Prod_validade: boolean, id: string, Lote_cod: string) => {
-    if (Prod_validade) {
-      let test = '';
+    if (Prod_validade) {  // Verifica se produto na entrada tem validade para continuar com pesquisa
+      let validade = '';  // Chave 'validade'
       produto.Lotes.find((p) => {
-        if (p.Lote_cod == Lote_cod && p.Prod_cod == Prod_cod) {
-          test = p.Lote_validade.toString();
+        if (p.Lote_cod == Lote_cod && p.Prod_cod == Prod_cod) { // Procura pelo Lote atrelado ao Produto
+          validade = p.Lote_validade.toString();
+
           setEntradasSelecionadas((prev) =>
             prev.map((entrada) =>
               entrada.id === id
-                ? { ...entrada, Lote_cod, Lote_validade: test, Lote_unico: false }
+                ? { ...entrada, Lote_cod, Lote_validade: validade, Lote_unico: false }
                 : entrada
             ));
         }
       });
 
-      if (test == '') {
+      if (validade == '') { // Se não houver manipulação de 'validade', Lote é considerado único/permite usuário adicionar validade
         setEntradasSelecionadas((prev) =>
           prev.map((entrada) =>
             entrada.id === id
