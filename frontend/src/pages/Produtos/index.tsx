@@ -615,7 +615,7 @@ const pageCount = Math.ceil(data.length / pageSize);
               {lotesInfo.filter(lote => lote.Lote_quantidade > 0).map(lote => (
                   <tr key={lote.Lote_cod} className="table-lp">
                     <td className="td-lote">{lote.Lote_cod}</td>
-                    <td className="td-lote">{new Date(lote.Lote_validade).toLocaleDateString()}</td>
+                    <td className="td-lote">{lote.Lote_validade == null ? "-" : new Date(lote.Lote_validade).toLocaleDateString()}</td>
                     <td className="td-lote">{lote.Lote_quantidade}</td>
                   </tr>
                 ))
