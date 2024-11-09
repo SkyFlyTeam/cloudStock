@@ -12,6 +12,7 @@ import { IoArrowBackCircleOutline } from "react-icons/io5";
 
 import { usuarioServices } from "../../services/usuariosServices";
 import { Usuario } from "../../services/usuariosServices";
+import Entradas from "../Entrada";
 
 function Registros() {
   const [showFiltros, setShowFiltros] = useState(false)
@@ -327,7 +328,7 @@ function Registros() {
                             </div>
                             <div className="info-item">
                                 <span>Validade</span>
-                                <span>{new Date(lote.Lote_validade).toLocaleDateString()}</span>
+                                <span>{lote.Lote_validade == null ? "-" : new Date(lote.Lote_validade).toLocaleDateString()}</span>
                             </div>
                             <div className="info-item">
                                 <span>Local de armazenamento</span>
@@ -387,7 +388,7 @@ function Registros() {
                             </div>
                             <div className="info-item">
                                 <span>Validade</span>
-                                <span>{new Date(lote.Lote_validade).toLocaleDateString()}</span>
+                                <span>{lote.Lote_validade == null ? "-" : new Date(lote.Lote_validade).toLocaleDateString()}</span>
                             </div>
                             <div className="info-item">
                                 <span>Local de armazenamento</span>
