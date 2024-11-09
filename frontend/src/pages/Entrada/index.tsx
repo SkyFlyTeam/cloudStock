@@ -90,7 +90,7 @@ function Entradas() {
     if (result instanceof ApiException) {
       console.log(result.message)
     } else {
-      setFornecedores(result)
+      setFornecedores(result.filter((f) => f.Forn_status != false));
     }
   }
 
