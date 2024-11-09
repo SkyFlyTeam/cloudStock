@@ -103,12 +103,12 @@ div.registro-item:nth-child(odd){
     width: 2em;
 }
 
-input[type=date] {
-    font-size: 0.76em;
-    color: #ACACAC;
-    width: 98px;
+.data-container input[type=date]{
+    font-size: 14px;
+    width: fit-content;
     height: 35.2px;
     padding: 0 .13em;
+    justify-content: space-between;
 }
 
 

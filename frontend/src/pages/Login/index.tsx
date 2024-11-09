@@ -4,6 +4,7 @@ import './style.css';
 import { useNavigate } from 'react-router-dom';
 import Card from '../../components/Card';
 import { IoCloseCircleOutline } from 'react-icons/io5';
+import PasswordInput from '../../components/PasswordInput';
 
 function Login() {
     const { handleLogin, currentUser } = useAuth()
@@ -55,7 +56,7 @@ function Login() {
                         </div>
                         <div className="input-item">
                             <label htmlFor="password">Senha</label>
-                            <input type="password" name="password" id="password" onChange={(e) => setPassword(e.target.value)} value={password} required />
+                            <PasswordInput password={password} onPasswordChange={setPassword}/>
                         </div>
                     </div>
                     <button>ENVIAR</button>

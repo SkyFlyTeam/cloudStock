@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import './Navbar.css';
 import { IoMdPricetags } from "react-icons/io";
 import { BsBoxSeamFill } from "react-icons/bs";
@@ -17,26 +17,37 @@ import { IoCloseOutline } from "react-icons/io5";
 
 const Navbar: React.FC = () => {
   const location = useLocation() // Hook para pegar a rota atual
-  const { handleLogout, currentUser } = useAuth()
+  const { handleLogout, currentUser } = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
+  const navbarRef = useRef<HTMLDivElement | null>(null);
 
-  const abrirNavbar = () => {
-		const sidebar = document.querySelector('.sidebar')
-    const navtoggle = document.querySelector('.nav-toggle')
+  const toggleNavbar = () => setIsOpen((prevState) => !prevState);
 
-    if (sidebar && navtoggle) { 
-      sidebar.classList.toggle('is-active')
-      navtoggle.classList.toggle('is-active')
+  const handleClickOutside = (event: MouseEvent) => {
+    if (navbarRef.current && !navbarRef.current.contains(event.target as Node)) {
+      setIsOpen(false);
     }
-  }
+  };
+
+  useEffect(() => {
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
   
     return (
         <>
-        <div className="nav-toggle" onClick={()=> abrirNavbar()}>
+        <div className={`nav-toggle ${isOpen ? "is-active" : ""}`} onClick={()=> toggleNavbar()}>
           <RxHamburgerMenu size={25} color="#61BDE0" className="nav-hamburguer"/>
           <IoCloseOutline size={26} color="#61BDE0" className="nav-close"/>
         </div>
         
-        <div className="sidebar">
+        <div ref={navbarRef} className={`sidebar ${isOpen ? "is-active" : ""}`}>
           <div className="logo">
             <div className="textlogo"> <span>CLOUD STOCK</span> </div>
           </div>

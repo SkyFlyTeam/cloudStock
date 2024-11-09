@@ -113,7 +113,7 @@ function Categorias() {
       }
     }),
     columnHelper.accessor('Categoria_status', {
-      header: () => 'Status',
+      header: () => <div className="td-center"> Status </div>,
       cell: info => (
         <div className="td-center">
           <ToggleBtn

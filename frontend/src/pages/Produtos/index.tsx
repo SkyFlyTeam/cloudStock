@@ -249,21 +249,29 @@ const handleLimparFiltros = () => {
       header: () => 'Nome',
       cell: info => info.getValue(),
     }),
-    /*columnHelper.accessor('Categoria_id', {
+    columnHelper.accessor('Categoria_id', {
       header: () => 'Categoria',
       cell: info => `${info.getValue()}`,
-    }),*/
+    }),
     columnHelper.accessor('Prod_quantidade', {
-      header: () => 'Quantidade',
-      cell: info => `${info.getValue()}`,
+      header: () => <div className="th-right">Quantidade</div>,
+      cell: info => <div className="td-right"> {info.getValue()} </div>,
     }),
     columnHelper.accessor('Prod_preco', {
-      header: () => 'Preço Venda',
-      cell: info => info.getValue(),
+      header: () => <div className="th-right">Preço Venda</div>,
+      cell: info => {
+        const valor = info.getValue();
+        const valorFormatado = Number(valor).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+        return <div className="td-right"> R$ {valorFormatado} </div>;
+      },
     }),
     columnHelper.accessor('Prod_custo', {
-        header: () => 'Preco Custo',
-        cell: info => info.getValue(),
+        header: () => <div className="th-right">Preço Custo</div>,
+        cell: info => {
+          const valor = info.getValue();
+          const valorFormatado = Number(valor).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+          return <div className="td-right"> R$ {valorFormatado} </div>;
+        },
     }),
     // columnHelper.accessor('Lotes', {
     //   header: () => 'Lote ID',
@@ -593,7 +601,7 @@ const pageCount = Math.ceil(data.length / pageSize);
         
       )}
 
-<Modal
+      <Modal
 				isOpen={openModalVisualizar} // Abre o modal
 				label="Lotes" // Titulo do modal
 				buttons={
@@ -601,30 +609,33 @@ const pageCount = Math.ceil(data.length / pageSize);
 								<BtnAzul icon={<IoArrowBackCircleOutline />} label='VOLTAR' onClick={() => setOpenModalVisualizar(false)} />
 						</>
 				}
-		>
+		  >
 				{lotesInfo ? (
-						<table>
+          lotesInfo.length > 0 ? (
+            <table>
               <thead>
                 <tr>
                   <th className="th-lote">Código</th>
                   <th className="th-lote">Validade</th>
-                  <th className="th-lote">Quantidade</th>
+                  <th className="th-lote th-center">Quantidade</th>
                 </tr>
               </thead>
               <tbody className="table-lp">
-              {lotesInfo.filter(lote => lote.Lote_quantidade > 0).map(lote => (
+                {lotesInfo.filter(lote => lote.Lote_quantidade > 0).map(lote => (
                   <tr key={lote.Lote_cod} className="table-lp">
                     <td className="td-lote">{lote.Lote_cod}</td>
                     <td className="td-lote">{new Date(lote.Lote_validade).toLocaleDateString()}</td>
-                    <td className="td-lote">{lote.Lote_quantidade}</td>
+                    <td className="td-lote td-center">{lote.Lote_quantidade}</td>
                   </tr>
-                ))
-              }
+                ))}
               </tbody>
             </table>
-				) : (
-						<p>Carregando informações dos lotes...</p>
-				)}
+          ) : (
+            <p>Não há lotes para este produto.</p>
+          )
+        ) : (
+          <p>Carregando informações dos lotes...</p>
+        )}
 		</Modal>
 
     </main>

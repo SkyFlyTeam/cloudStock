@@ -4,6 +4,7 @@ import { ApiException } from '../../../../config/apiException';
 import { fornecedorServices } from '../../../../services/fornecedorServices';
 import { cnpjMask } from '../../../../utils/cnpjMask';
 import { usuarioServices } from '../../../../services/usuariosServices';
+import PasswordInput from '../../../PasswordInput';
 
 interface Props {
     onSuccess: (message: string) => void // Função pra quando dê certo 
@@ -60,13 +61,12 @@ const UsuarioFormulario = forwardRef((props: Props, ref: Ref<{ submitForm: () =>
                     <input type="text" value={Usuario_email} onChange={(e) => setEmail(e.target.value)} required placeholder='Email' />
                 </div>
                 <div className="input-item">
-                    <label htmlFor="cnpj">Senha</label>
-                    <input type="text" value={Usuario_senha} onChange={(e) => setSenha(e.target.value)} required placeholder='Senha'/>
+                    <label htmlFor="senha">Senha</label>
+                    <PasswordInput password={Usuario_senha} onPasswordChange={setSenha}/>
                 </div>
             </div>
-            <div className="input-item">
-            <div className="input-item">
-                    <label htmlFor="funcionario">
+            <div className="checkbox-group">
+                <div className="checkbox-item">
                     <input 
                         type="radio" 
                         id="funcionario" 
@@ -75,12 +75,10 @@ const UsuarioFormulario = forwardRef((props: Props, ref: Ref<{ submitForm: () =>
                         checked={Cargo_id === 1}
                         onChange={handleChange}
                     />
-                    Funcionário
-                    </label>
+                    <label htmlFor="funcionario">Funcionário</label>
                 </div>
 
-                <div className="input-item">
-                    <label htmlFor="gerente">
+                <div className="checkbox-item">
                     <input 
                         type="radio" 
                         id="gerente" 
@@ -89,12 +87,10 @@ const UsuarioFormulario = forwardRef((props: Props, ref: Ref<{ submitForm: () =>
                         checked={Cargo_id === 2}
                         onChange={handleChange}
                     />
-                    Gerente
-                    </label>
+                    <label htmlFor="gerente">Gerente</label>
                 </div>
 
-                <div className="input-item">
-                    <label htmlFor="administrador">
+                <div className="checkbox-item">
                     <input 
                         type="radio" 
                         id="administrador" 
@@ -103,8 +99,7 @@ const UsuarioFormulario = forwardRef((props: Props, ref: Ref<{ submitForm: () =>
                         checked={Cargo_id === 3}
                         onChange={handleChange}
                     />
-                    Administrador
-                    </label>
+                    <label htmlFor="administrador">Administrador</label>
                 </div>
             </div>
         </form>

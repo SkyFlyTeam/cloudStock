@@ -110,7 +110,7 @@ function Usuarios() {
       header: () => 'Tipo',
       cell: info => {
           return (
-              <div className="td-center">
+              <div>
                 {info.getValue() === 1 ? 'Funcionário':(
                   info.getValue() === 2 ? 'Gerente' : (
                     info.getValue() ===3 ? 'Administrador' : 'Cargo não conhecido'
@@ -123,19 +123,13 @@ function Usuarios() {
     columnHelper.accessor('Usuario_status', {
       header: () => 'Status',
       cell: info => (
-        <div className="td-center" style={{display: "flex", justifyContent: "flex-end",  width: "100%"}}>
-      {currentUser?.Cargo_id === 3 ? (
+        <div className="td-center">
           <ToggleBtn
             checked={info.getValue() == 1}
             cod={info.row.original.Usuario_id}
             rota={`${hostname}usuario`}
             onStatusChange={(newStatus: any) => handleStatusChange(info.row.original.Usuario_id, newStatus)}
           />
-      ) : (
-        <span className= {info.getValue() == 1 ? 'status-ativo1' : 'status-inativo1'}>
-          {info.getValue() === 1 ? 'Ativo' : 'Inativo'}
-        </span>
-      )}
       </div>
       ),
     }),
@@ -210,8 +204,8 @@ function Usuarios() {
           {table.getHeaderGroups().map(headerGroup => (
             <tr className="heading" key={headerGroup.id}>
               {headerGroup.headers.map(header => (
-                <th key={header.id} colSpan={header.colSpan} className={header.id === 'Usuario_status' ? 'th-align-right' : (
-                  header.id === 'Cargo_id' ? 'th-align-center' : ''
+                <th key={header.id} colSpan={header.colSpan} className={header.id === 'Usuario_status' ? 'th-align-center' : (
+                  ''
                 )}>
                   {header.isPlaceholder
                     ? null

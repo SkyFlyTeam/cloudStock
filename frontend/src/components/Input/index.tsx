@@ -11,6 +11,7 @@ interface InputProps {
   value?: string | number ; // Valor do input (ajustado para string ou number)
   options?: { label: string, value: any }[]; // Agora é uma lista de objetos { label, value }
   accept?: string; // Usado para seleção de arquivo
+  step?: number;
   disabled?: boolean; // Atributo para desabilitar input, padrão 'false' para deixar habilitado
   onChange?: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void; // Função de callback para lidar com mudanças
 }
@@ -21,9 +22,10 @@ const Input: React.FC<InputProps> = ({
   max,
   className,
   placeholder,
-  type = "text",
+  type,
   value,
   options,
+  step, 
   accept = "",
   disabled = false,
   onChange
@@ -53,6 +55,7 @@ const Input: React.FC<InputProps> = ({
           type={type}
           placeholder={placeholder}
           value={value}
+          step={step}
           onChange={onChange}
           className="input-field"
           accept={accept}

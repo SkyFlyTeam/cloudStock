@@ -21,12 +21,14 @@ hr.line{
     width: 100%;
     justify-content: space-between;
     align-items: center;
-    column-gap: 1em;
+    flex-wrap: wrap-reverse;
+    gap: 1em;
 }
 
 .action-end{
     display: flex;
     gap: 1rem;
+    flex-wrap: wrap;
 }
 
 .btnFiltrar {
@@ -35,6 +37,11 @@ hr.line{
     align-items: center;
     column-gap: .5em;
     cursor: pointer;
+}
+
+.btnFiltrar span{
+    color: #ACACAC;
+    font-weight: 500;
 }
 
 .btnLimpar{
@@ -66,27 +73,27 @@ hr.line{
     justify-content: end;
 }
 
-.status-filtro {
+.container-filtros .status-filtro {
     width: 5em;
 }
 
-.quantidade-container, .venda-container, .custo-container, .validade-container {
+.container-filtros .quantidade-container, .container-filtros .venda-container, .container-filtros .custo-container, .container-filtros .validade-container {
     display: flex;
     flex-direction: column;
     align-items: start;
     justify-content: center;
 }
 
-.preco-container, .quantidade-validade-container {
+.container-filtros .preco-container, .container-filtros .quantidade-validade-container {
     display: flex;
     column-gap: .6em;
 }
 
-.venda-container label, .custo-container label, .validade-container label{
+.container-filtros .venda-container label, .container-filtros .custo-container label, .container-filtros .validade-container label{
     width: 8em;
     margin-bottom: .3em;
 }
-.venda-container input, .custo-container input, .validade-container input {
+.container-filtros .venda-container input, .container-filtros .custo-container input, .container-filtros .validade-container input {
     width: 6em;
     text-align: center;
 }
@@ -95,10 +102,9 @@ hr.line{
     margin-right: 5px;
 }
 
-input[type=date] {
-    font-size: 0.76em;
-    color: #ACACAC;
-    width: 98px;
+.container-filtros input[type=date] {
+    font-size: 14px;
+    width: fit-content;
     height: 35.2px;
     padding: 0 .13em;
     justify-content: space-between;
@@ -164,14 +170,15 @@ td img{
     border-radius: 10px;
 }
 
-div.td-center{
+
+.td-center, .th-center{
     display: flex;
     justify-content: center;
 }
 
-div.td-numeric{
-    text-align: end;
-    width: min-content;
+.td-right, .th-right{
+    display: flex;
+    justify-content: end;
 }
 
 .modal-prod{
@@ -181,6 +188,20 @@ div.td-numeric{
 @media (max-width: 460px) {
     input:not(input[type=radio]) {
         margin-bottom: .25em;
+    }
+}
+
+@media (max-width: 550px) {
+    .action-end{
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+@media (min-width: 550px) and (max-width: 894px){
+    .action-end{
+        width: 100%;
+        justify-content: space-between;
     }
 }
 

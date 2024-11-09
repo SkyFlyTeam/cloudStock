@@ -7,7 +7,6 @@ main{
 table {
     font-family: "Montserrat", sans-serif;
     border-collapse: collapse; /* Remover espaços e bordas entre as células */
-    table-layout: fixed;
     width: 100%;
 }
 

@@ -154,26 +154,14 @@ const ProdutoEditar = forwardRef((props: Props, ref: Ref<{ submitForm: () => voi
                 <div className="input-group-prod">
                     <Input className="input-item-prod"
                         label="Custo"
+                        type="number"
                         placeholder="Custo"
                         onChange={(e) => setCusto(parseFloat(e.target.value))}
                         value={Prod_custo.toString()}
                     />
                     <Input className="input-item-prod"
                         label="Venda"
-                        placeholder="Venda"
-                        onChange={(e) => setPreco(parseFloat(e.target.value))}
-                        value={Prod_preco.toString()}
-                    />
-                </div>
-                <div className="input-group-prod">
-                    <Input className="input-item-prod"
-                        label="Custo"
-                        placeholder="Custo"
-                        onChange={(e) => setCusto(parseFloat(e.target.value))}
-                        value={Prod_custo.toString()}
-                    />
-                    <Input className="input-item-prod"
-                        label="Venda"
+                        type="number"
                         placeholder="Venda"
                         onChange={(e) => setPreco(parseFloat(e.target.value))}
                         value={Prod_preco.toString()}
@@ -204,11 +192,13 @@ const ProdutoEditar = forwardRef((props: Props, ref: Ref<{ submitForm: () => voi
                     <Input className="input-item-prod"
                         label="Peso"
                         placeholder="Peso"
+                        type="number"
                         onChange={(e) => setPeso(parseFloat(e.target.value))}
                         value={Prod_peso.toString()}
                     />
                     <Input className="input-item-prod"
                         label="Largura"
+                        type="number"
                         placeholder="Largura"
                         onChange={(e) => setLargura(parseFloat(e.target.value))}
                         value={Prod_largura.toString()}
@@ -218,11 +208,13 @@ const ProdutoEditar = forwardRef((props: Props, ref: Ref<{ submitForm: () => voi
                     <Input className="input-item-prod"
                         label="Comprimento"
                         placeholder="Comprimento"
+                        type="number"
                         onChange={(e) => setComprimento(parseFloat(e.target.value))}
                         value={Prod_comprimento.toString()}
                     />
                     <Input className="input-item-prod"
                         label="Altura"
+                        type="number"
                         placeholder="Altura"
                         onChange={(e) => setAltura(parseFloat(e.target.value))}
                         value={Prod_altura.toString()}

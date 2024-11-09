@@ -179,3 +179,13 @@
         font-size: 1rem;
     }
 }
+
+@media (max-width: 430px) {
+    .offcanvas{
+        max-width: 90% !important;
+    }
+
+    .nav-link{
+        padding: 0.4rem !important;
+    }
+}

@@ -221,7 +221,10 @@ const BarraSuperior: React.FC = () => {
                     <TbClockExclamation className="icon-clock"/>
                     <div className="content">
                       <span>Lote <b>{notificacao.Lote?.Lote_cod}</b> de <b>{notificacao.Produto?.Prod_nome}</b> está próximo ao vencimento</span>
-                      <span className="subtitle">{notificacao.Not_mensagem}</span>
+                      {notificacao.Not_mensagem[0] === '-' 
+                        ?<span className="subtitle expired">Produto vencido</span> 
+                        :<span className="subtitle">{notificacao.Not_mensagem}</span>
+                        }
                       <span className="date">{formatDate(notificacao.Not_data)}</span>
                     </div>
                   </div>

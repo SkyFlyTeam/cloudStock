@@ -226,9 +226,9 @@ function Saidas() {
       id: 'actions',
       cell: props => (
         <div className="action-cell">
-          <OlhoSaida
+          <VisualizarBtn
             id={props.row.original.Saida_id}
-            onEdit={() => handleVisualizarClick(props.row.original.Saida_id)}
+            onView={() => handleVisualizarClick(props.row.original.Saida_id)}
           />
         </div>
       ),

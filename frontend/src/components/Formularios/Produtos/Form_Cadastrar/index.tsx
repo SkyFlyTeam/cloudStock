@@ -128,12 +128,14 @@ const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
                 <div className="input-group-prod">
                     <Input className="input-item-prod"
                         label="Custo"
+                        type="number"
                         placeholder="Custo"
                         onChange={(e) => setCusto(parseFloat(e.target.value))}
                         value={Prod_custo.toString()}
                     />
                     <Input className="input-item-prod"
                         label="Venda"
+                        type="number"
                         placeholder="Venda"
                         onChange={(e) => setPreco(parseFloat(e.target.value))}
                         value={Prod_preco.toString()}
@@ -163,12 +165,14 @@ const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
                 <div className="input-group-prod">
                     <Input className="input-item-prod"
                         label="Peso"
+                        type="number"
                         placeholder="Peso"
                         onChange={(e) => setPeso(parseFloat(e.target.value))}
                         value={Prod_peso.toString()}
                     />
                     <Input className="input-item-prod"
                         label="Largura"
+                        type="number"
                         placeholder="Largura"
                         onChange={(e) => setLargura(parseFloat(e.target.value))}
                         value={Prod_largura.toString()}
@@ -177,12 +181,14 @@ const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
                 <div className="input-group-prod">
                     <Input className="input-item-prod"
                         label="Comprimento"
+                        type="number"
                         placeholder="Comprimento"
                         onChange={(e) => setComprimento(parseFloat(e.target.value))}
                         value={Prod_comprimento.toString()}
                     />
                     <Input className="input-item-prod"
                         label="Altura"
+                        type="number"
                         placeholder="Altura"
                         onChange={(e) => setAltura(parseFloat(e.target.value))}
                         value={Prod_altura.toString()}
@@ -195,32 +201,33 @@ const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
                 <hr className="line"/>
             </div>
 
-            <div className="input-group-prod validade-checkbox">
-                <label>Possui validade?</label>
-                <div className="checkbox-group">
-                    <div className="checkbox-item">
-                    <input
-                        type="checkbox"
-                        checked={Prod_validade === true}
-                        onChange={() => setValidade(true)}
-                    />
-                    <label className="display">
-                        Sim
-                    </label>
-                </div>
-            
-                <div className="checkbox-group">
-                    <input
-                        type="checkbox"
-                        checked={Prod_validade === false}
-                        onChange={() => setValidade(false)}
-                    />
-                    <label>
-                        Não
-                    </label>
-                </div>        
-
-                </div>
+            <div className="input-group-prod">
+                <div className="validade-checkbox">
+                    <label>Possui validade?</label>
+                    <div className="checkbox-group">
+                        <div className="checkbox-item">
+                            <input
+                                type="checkbox"
+                                checked={Prod_validade === true}
+                                onChange={() => setValidade(true)}
+                            />
+                            <label className="display">
+                                Sim
+                            </label>
+                        </div>
+                
+                        <div className="checkbox-item">
+                            <input
+                                type="checkbox"
+                                checked={Prod_validade === false}
+                                onChange={() => setValidade(false)}
+                            />
+                            <label>
+                                Não
+                            </label>
+                        </div>        
+                    </div>
+                </div>  
             </div>
 
 

@@ -2,10 +2,7 @@ form.form-prod{
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    overflow-y: scroll;
     padding: 0 0.3rem;
-    width: 100%;
-    height: 20rem;
 }
 
 section.form-prod{
@@ -39,30 +36,6 @@ div.subtitle-form-prod span{
     font-weight: 700;
 }
 
-.validade-checkbox {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 15px;
-}
-
-.checkbox-group {
-    display: flex;
-    gap: 15px;
-}
-
-.checkbox-group label {
-    display: flex;
-    font-size: 14px;
-    cursor: pointer;
-    gap: 0.5rem;
-}
-
-.checkbox-item {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-}
 
 
 @media (max-width: 768px) {

@@ -102,7 +102,7 @@ form.login .input-item input{
 }
 
 
-@media (max-width: 768px) {
+@media (max-width: 1006px) {
     .card{
         width: 90%;
         padding: 1rem;

@@ -42,7 +42,7 @@ tr td:first-child, tr td:last-child {
 
 div.td-center {
   display: flex;
-  justify-content: left;
+  justify-content: center;
 }
 
 /* Alternar a cor das linhas da tabela */

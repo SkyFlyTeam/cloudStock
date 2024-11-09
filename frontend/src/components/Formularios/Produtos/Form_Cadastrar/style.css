@@ -9,23 +9,24 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-top: 15px;
 }
 
 .checkbox-group {
     display: flex;
     gap: 15px;
+    flex-wrap: wrap;
 }
 
 .checkbox-group label {
-    display: flex;
-    font-size: 14px;
-    cursor: pointer;
-    gap: 0.5rem;
+    font-size: 16px;
 }
 
 .checkbox-item {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.3rem;
     align-items: center;
+}
+
+.checkbox-item input{
+    cursor: pointer;
 }

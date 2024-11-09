@@ -163,16 +163,24 @@ const handleLimparFiltros = () => {
       cell: info => info.getValue(),
     }),
     columnHelper.accessor('Prod_quantidade', {
-      header: () => 'Quantidade',
-      cell: info => info.getValue(),
+      header: () => <div className="th-right">Quantidade</div>,
+      cell: info => <div className="td-right"> {info.getValue()} </div>,
     }),
     columnHelper.accessor('Prod_preco', {
-        header: () => 'Preço Venda',
-        cell: info => `R$ ${Number(info.getValue()).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`,
+      header: () => <div className="th-right">Preço Venda</div>,
+      cell: info => {
+        const valor = info.getValue();
+        const valorFormatado = Number(valor).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+        return <div className="td-right"> R$ {valorFormatado} </div>;
+      },
     }),
     columnHelper.accessor('Prod_custo', {
-        header: () => 'Preço Custo',
-        cell: info => `R$ ${Number(info.getValue()).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`,
+        header: () => <div className="th-right">Preço Custo</div>,
+        cell: info => {
+          const valor = info.getValue();
+          const valorFormatado = Number(valor).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+          return <div className="td-right"> R$ {valorFormatado} </div>;
+        },
     }),
     columnHelper.display({
 			id: 'actions',
@@ -203,13 +211,11 @@ const handleLimparFiltros = () => {
       </div>
       <div className="actions-group">
           <SearchBar onSearch={handleSearch} />
-          <div className="action-end">
-            <div className="btnFiltrar" 
-            onClick={() => setShowFiltros(!showFiltros)}
-            >
-              <BsFilter size={24} style={{ color: '#61BDE0'}} />
-              <span>Filtrar por</span>
-            </div>
+          <div className="btnFiltrar" 
+          onClick={() => setShowFiltros(!showFiltros)}
+          >
+            <BsFilter size={24} style={{ color: '#61BDE0'}} />
+            <span>Filtrar por</span>
           </div>
       </div>
       {/* Implementação para o futuro, precisa adicionar tempo e + coisas {mensagemSucesso && <div className="success-message">{mensagemSucesso}</div>} */}
@@ -319,28 +325,31 @@ const handleLimparFiltros = () => {
 				}
 		>
 				{lotesInfo ? (
-						<table>
+          lotesInfo.length > 0 ? (
+            <table>
               <thead>
                 <tr>
                   <th className="th-lote">Código</th>
                   <th className="th-lote">Validade</th>
-                  <th className="th-lote">Quantidade</th>
+                  <th className="th-lote th-center">Quantidade</th>
                 </tr>
               </thead>
               <tbody className="table-lp">
-              {lotesInfo.filter(lote => lote.Lote_quantidade > 0).map(lote => (
-                  <tr key={lote.Lote_id} className="table-lp">
+                {lotesInfo.filter(lote => lote.Lote_quantidade > 0).map(lote => (
+                  <tr key={lote.Lote_cod} className="table-lp">
                     <td className="td-lote">{lote.Lote_cod}</td>
-                    <td className={`td-lote ${lote.Lote_restante < 7 ? 'expired' : ''}`}>{new Date(lote.Lote_validade).toLocaleDateString()}</td>
-                    <td className="td-lote">{lote.Lote_quantidade}</td>
+                    <td className="td-lote">{new Date(lote.Lote_validade).toLocaleDateString()}</td>
+                    <td className="td-lote td-center">{lote.Lote_quantidade}</td>
                   </tr>
-                ))
-              }
+                ))}
               </tbody>
             </table>
-				) : (
-						<p>Carregando informações dos lotes...</p>
-				)}
+          ) : (
+            <p>Nenhum lote disponível.</p>
+          )
+        ) : (
+          <p>Carregando informações dos lotes...</p>
+        )}
 		</Modal>
     </main>
   );
