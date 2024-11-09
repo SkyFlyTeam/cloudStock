@@ -19,7 +19,7 @@ const CategoriaFormulario = forwardRef((props: Props, ref: Ref<{ submitForm: () 
         const fetchCategorias = async () => {
             const response = await categoriaServices.getAllCategoria();
             if (!(response instanceof ApiException)) {
-                setCategorias(response);
+                setCategorias(response.filter(categoria => categoria.Categoria_status === true));
             } else {
                 console.error(response.message);
             }
@@ -36,7 +36,7 @@ const CategoriaFormulario = forwardRef((props: Props, ref: Ref<{ submitForm: () 
         const novaCategoria = {
             Categoria_nome: Cat_nome,
             Categoria_status: Cat_status,
-            Categoria_pai: Cat_pai ?? 1, // Inclui o id da categoria pai, padrão 1 se não selecionado
+            Categoria_pai: Cat_pai,
         };
 
         const response = await categoriaServices.createCategoria(novaCategoria as any);
@@ -44,6 +44,16 @@ const CategoriaFormulario = forwardRef((props: Props, ref: Ref<{ submitForm: () 
             console.error(response.message);
         } else {
             console.log('Categoria criada com sucesso:', response);
+
+            if (Cat_pai === undefined) {
+                await categoriaServices.updateCategoria(response.Categoria_id, {
+                    Categoria_id: response.Categoria_id, // Inclui Categoria_id como exigido pelo tipo Categoria
+                    Categoria_nome: novaCategoria.Categoria_nome,
+                    Categoria_status: novaCategoria.Categoria_status,
+                    Categoria_pai: response.Categoria_id,
+                });
+            }            
+
             setNome('');
             setCategoriaPai(undefined); // Limpar categoria pai após a criação
             props.onSuccess('Categoria criada com sucesso!');

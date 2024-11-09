@@ -10,14 +10,8 @@ interface Props {
 const CategoriaEdicao = forwardRef((props: Props, ref: Ref<{ submitForm: () => void }>) => {
   const [Cat_nome, setNome] = useState<string>('');
   const [Cat_status, setStatus] = useState<boolean>(true);
-  const [categoriasPais, setCategoriasPais] = useState<any[]>([]);
-  const [Categoria_pai, setCategoriaPai] = useState<number | null>(null);
-  const [nomeError, setNomeError] = useState<boolean>(false);
-
-  // Estados para armazenar valores iniciais
-  const [initialNome, setInitialNome] = useState<string>('');
-  const [initialStatus, setInitialStatus] = useState<boolean>(true);
-  const [initialCategoriaPai, setInitialCategoriaPai] = useState<number | null>(null);
+  const [categoriasPais, setCategoriasPais] = useState<any[]>([]); // Estado para categorias pais
+  const [Categoria_pai, setCategoriaPai] = useState<number | null>(null); // Estado para categoria pai selecionada
 
   // Função para buscar categorias pai
   const fetchCategoriasPais = async () => {
@@ -25,30 +19,17 @@ const CategoriaEdicao = forwardRef((props: Props, ref: Ref<{ submitForm: () => v
     if (result instanceof ApiException) {
       console.error(result.message);
     } else {
-      setCategoriasPais(result);
+      setCategoriasPais(result.filter(categoria => categoria.Categoria_status === true));
     }
   };
 
   // Função para enviar a atualização da categoria
   const eventoFormulario = async () => {
-    if (!Cat_nome.trim()) {
-      setNomeError(true);
-      return;
-    }
-
-    // Verifica se houve alterações antes de salvar
-    if (
-      Cat_nome === initialNome &&
-      Cat_status === initialStatus &&
-      Categoria_pai === initialCategoriaPai
-    ) {
-      return;
-    }
-
     const categoriaAtualizada = {
       Categoria_nome: Cat_nome,
       Categoria_status: Cat_status,
       Categoria_pai: Categoria_pai,
+      // Inclua outros campos conforme necessário
     };
 
     const response = await categoriaServices.updateCategoria(props.id, categoriaAtualizada as any);
@@ -70,48 +51,33 @@ const CategoriaEdicao = forwardRef((props: Props, ref: Ref<{ submitForm: () => v
     const fetchCategoria = async () => {
       const result = await categoriaServices.getCategoriaByID(props.id);
       if (result instanceof ApiException) {
-        alert(result.message);
+        alert(result.message) 
       } else {
         setNome(result.Categoria_nome);
         setStatus(result.Categoria_status);
         setCategoriaPai(result.Categoria_pai ?? 1);
-
-        // Armazena os valores iniciais para comparação
-        setInitialNome(result.Categoria_nome);
-        setInitialStatus(result.Categoria_status);
-        setInitialCategoriaPai(result.Categoria_pai ?? 1);
       }
     };
 
     fetchCategoria();
-    fetchCategoriasPais();
+    fetchCategoriasPais(); // Busca as categorias pais
   }, [props.id]);
+
 
   return (
     <form>
       <div className="input-item">
         <label htmlFor="nome">Nome</label>
-        <input
-          type="text"
-          value={Cat_nome}
-          onChange={(e) => {
-            setNome(e.target.value);
-            if (e.target.value.trim()) setNomeError(false);
-          }}
-        />
-        {nomeError && (
-          <span className="error-message">Campo obrigatório</span>
-        )}
+        <input type="text" value={Cat_nome} onChange={(e) => setNome(e.target.value)} />
       </div>
       <div className="input-item">
         <label htmlFor="categoriaPai">Categoria Pai</label>
         <select
           id="categoriaPai"
-          className="form-select-custom"
-          value={Categoria_pai || ''}
+          className="form-select-custom"  // Adicionando a classe de estilo aqui
+          value={Categoria_pai || ''}  // Verifica se existe um valor para Categoria_pai, caso contrário, atribui ''
           onChange={(e) => setCategoriaPai(Number(e.target.value))}
         >
-          <option value="">Nenhuma</option>
           {categoriasPais.map(categoria => (
             <option key={categoria.Categoria_id} value={categoria.Categoria_id}>
               {categoria.Categoria_nome}
@@ -119,6 +85,7 @@ const CategoriaEdicao = forwardRef((props: Props, ref: Ref<{ submitForm: () => v
           ))}
         </select>
       </div>
+
     </form>
   );
 });
