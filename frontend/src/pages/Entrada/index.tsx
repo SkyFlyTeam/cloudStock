@@ -17,6 +17,8 @@ import { useAuth } from "../../context/AuthProvider";
 import { Fornecedor, fornecedorServices } from "../../services/fornecedorServices";
 import { Local_Armazenamento, localServices } from "../../services/localServices";
 import { useNavigate } from "react-router-dom";
+import { noop } from "@tanstack/react-table";
+import { Entrada } from "../../services/entradaServices";
 
 
 function Entradas() {
@@ -57,7 +59,8 @@ function Entradas() {
     Usuario_id: number,
     Forn_id: number,
     LocAr_id: number,
-    Prod_custo: number
+    Prod_custo: number,
+    Lote_unico: boolean
   }>>([]);
 
   // produtos - produtos que serão exibidos
@@ -127,7 +130,8 @@ function Entradas() {
         Usuario_id: user?.Usuario_id || 0,
         Forn_id: 0,
         LocAr_id: 0,
-        Prod_custo: 0
+        Prod_custo: 0,
+        Lote_unico: true
       };
       return prev ? [...prev, newEntrada] : [newEntrada];
     });
@@ -169,14 +173,37 @@ function Entradas() {
     );
   };
 
-  const handleLoteCodChange = (id: string, Lote_cod: string) => {
-    setEntradasSelecionadas((prev) =>
+  const handleLoteCodChange = (produto: Produto, Prod_cod: number, Prod_validade: boolean, id: string, Lote_cod: string) => {
+    if (Prod_validade) {
+      let test = '';
+      produto.Lotes.find((p) => {
+        if (p.Lote_cod == Lote_cod && p.Prod_cod == Prod_cod) {
+          test = p.Lote_validade.toString();
+          setEntradasSelecionadas((prev) =>
+            prev.map((entrada) =>
+              entrada.id === id
+                ? { ...entrada, Lote_cod, Lote_validade: test, Lote_unico: false }
+                : entrada
+            ));
+        }
+      });
+
+      if (test == '') {
+        setEntradasSelecionadas((prev) =>
+          prev.map((entrada) =>
+            entrada.id === id
+              ? { ...entrada, Lote_cod, Lote_unico: true }
+              : entrada
+          ));
+      }
+    }
+    else setEntradasSelecionadas((prev) =>
       prev.map((entrada) =>
         entrada.id === id
           ? { ...entrada, Lote_cod }
           : entrada
-      )
-    );
+      ));
+
   };
 
   const handleLoteValidadeChange = (id: string, Lote_validade: string) => {
@@ -278,34 +305,34 @@ function Entradas() {
       </div>
 
       <div className="entradas-container">
-      <div className="inputContainer">
-        <div>Produto</div>
-        <div className="inputButton">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Buscar..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          {searchTerm && (
-            <div className="suggestions-container">
-              {filteredProdutos.map((produto) => (
-                <div
-                  key={produto.Prod_cod}
-                  className="suggestion-item"
-                  onClick={() => {
-                    setSearchTerm("");
-                    getProduto(produto.Prod_cod);
-                  }}
-                >
-                  {produto.Prod_nome} {produto.Prod_marca} {produto.Prod_modelo}
-                </div>
-              ))}
-            </div>
-          )}
+        <div className="inputContainer">
+          <div>Produto</div>
+          <div className="inputButton">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Buscar..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            {searchTerm && (
+              <div className="suggestions-container">
+                {filteredProdutos.map((produto) => (
+                  <div
+                    key={produto.Prod_cod}
+                    className="suggestion-item"
+                    onClick={() => {
+                      setSearchTerm("");
+                      getProduto(produto.Prod_cod);
+                    }}
+                  >
+                    {produto.Prod_nome} {produto.Prod_marca} {produto.Prod_modelo}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
-      </div>
 
         {entradasSelecionadas.length <= 0 && (
           <div className="emptyProducts">
@@ -361,7 +388,7 @@ function Entradas() {
                     type="text"
                     className="lote-container-entrada"
                     value={entrada.Lote_cod}
-                    onChange={(e) => handleLoteCodChange(entrada.id, e.target.value)}
+                    onChange={(e) => handleLoteCodChange(produto, entrada.Prod_cod, produto.Prod_validade, entrada.id, e.target.value)}
                   />
 
                   <Input
@@ -369,10 +396,12 @@ function Entradas() {
                     type="date"
                     className="entrada-validade"
                     max="9999-12-31"
-                    min={new Date().toISOString().split('T')[0]} 
+                    value={entrada.Lote_unico ? noop() : entrada.Lote_validade}
+                    min={new Date().toISOString().split('T')[0]}
                     onChange={(e) => handleLoteValidadeChange(entrada.id, e.target.value)}
-                    disabled={produto.Prod_validade ? false : true}
+                    disabled={produto.Prod_validade && entrada.Lote_unico ? false : true}
                   />
+
 
                   <div className="local-container">
                     <label htmlFor="inLocal">Local Armazenamento</label>
