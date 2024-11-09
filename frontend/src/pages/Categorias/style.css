@@ -40,6 +40,11 @@ tr td:first-child, tr td:last-child {
     border-radius: 0 !important;
 }
 
+div.td-center {
+  display: flex;
+  justify-content: left;
+}
+
 /* Alternar a cor das linhas da tabela */
 tbody tr:nth-child(even) {
     background-color: #61bce027; /* Cor para as linhas pares */

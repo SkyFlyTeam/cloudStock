@@ -26,6 +26,13 @@ form{
     height: 40px; 
   }
 
+  .error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+
 @media (max-width: 768px) {
     
     form{

@@ -12,6 +12,7 @@ const CategoriaFormulario = forwardRef((props: Props, ref: Ref<{ submitForm: () 
     const [Cat_status, setStatus] = useState<boolean>(true); // Status padrão como ativo
     const [Cat_pai, setCategoriaPai] = useState<number | undefined>(undefined); // Categoria pai selecionada
     const [categorias, setCategorias] = useState<Categoria[]>([]); // Lista de categorias para o select
+    const [nomeError, setNomeError] = useState<boolean>(false); // Estado para o erro de campo vazio
 
     useEffect(() => {
         // Carregar todas as categorias ao inicializar o componente
@@ -27,15 +28,16 @@ const CategoriaFormulario = forwardRef((props: Props, ref: Ref<{ submitForm: () 
     }, []);
 
     const eventoFormulario = async () => {
+        if (!Cat_nome.trim()) {
+            setNomeError(true); // Mostra o erro se o campo nome estiver vazio
+            return;
+        }
+        
         const novaCategoria = {
             Categoria_nome: Cat_nome,
             Categoria_status: Cat_status,
-            Categoria_pai: Cat_pai, // Inclui o id da categoria pai
+            Categoria_pai: Cat_pai ?? 1, // Inclui o id da categoria pai, padrão 1 se não selecionado
         };
-        
-        if (Cat_pai === undefined){
-            novaCategoria.Categoria_pai = 1
-        }
 
         const response = await categoriaServices.createCategoria(novaCategoria as any);
         if (response instanceof ApiException) {
@@ -45,6 +47,7 @@ const CategoriaFormulario = forwardRef((props: Props, ref: Ref<{ submitForm: () 
             setNome('');
             setCategoriaPai(undefined); // Limpar categoria pai após a criação
             props.onSuccess('Categoria criada com sucesso!');
+            setNomeError(false); // Limpa o erro ao enviar com sucesso
         }
     };
 
@@ -61,10 +64,16 @@ const CategoriaFormulario = forwardRef((props: Props, ref: Ref<{ submitForm: () 
                 <input
                     type="text"
                     value={Cat_nome}
-                    onChange={(e) => setNome(e.target.value)}
+                    onChange={(e) => {
+                        setNome(e.target.value);
+                        if (e.target.value.trim()) setNomeError(false); // Remove o erro ao digitar
+                    }}
                     required
                     placeholder="Nome"
                 />
+                {nomeError && (
+                    <span className="error-message">Campo obrigatório</span>
+                )}
             </div>
             <div className="input-item">
                 <label htmlFor="categoriaPai">Categoria Pai</label>

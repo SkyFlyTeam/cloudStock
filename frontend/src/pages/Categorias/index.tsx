@@ -75,7 +75,7 @@ function Categorias() {
   useEffect(() => {
     fetchCategorias();
     fetchCategoriasPais(); // Chama para carregar categorias pais
-  }, [data]);
+  }, []);
 
   const handleSearch = (query: string) => {
     const filtered = data.filter((categoria) =>
@@ -222,6 +222,7 @@ function Categorias() {
             setMensagemSucesso(message);
             setOpenModalCadastro(false);
             fetchCategorias();
+            fetchCategoriasPais(); 
           }}
         />
       </Modal>
@@ -244,6 +245,7 @@ function Categorias() {
               setMensagemSucesso(message);
               closeEditModal();
               fetchCategorias();
+              fetchCategoriasPais();
             }}
           />
         </Modal>
