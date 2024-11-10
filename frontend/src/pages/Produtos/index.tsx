@@ -33,6 +33,7 @@ import { useAuth } from "../../context/AuthProvider"
 import { useLocation, useNavigate, useParams } from "react-router-dom"
 import { LoadingDots } from "./LoadingDots"
 import Pagination from "../../components/Pagination"
+import { SvgSemDados } from "../../components/svgSemDados/svgSemDados"
 
 // Criar o helper para colunas
 const columnHelper = createColumnHelper<Produto>()
@@ -520,7 +521,7 @@ const pageCount = Math.ceil(data.length / pageSize);
         </tbody>
       </Table>
 
-      <LoadingDots data={data} />
+      <SvgSemDados data={data}/>
 
       <Pagination className={""} thisPage={pageIndex} lastPage={pageCount} func={setPageIndex} />
 
