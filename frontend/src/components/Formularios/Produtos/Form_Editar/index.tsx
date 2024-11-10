@@ -125,7 +125,11 @@ const ProdutoEditar = forwardRef((props: Props, ref: Ref<{ submitForm: () => voi
                 setCategoriaID(result.Categoria_id)
                 setUnidadeMedida_id(result.UnidadeMedida_id)
                 //setImg(result.Prod_imagem)
-                setEstoqueMinimo(result.Prod_estoqueMinimo); // Configuração do estoque mínimo
+                if(result.Prod_estoqueMinimo){
+                    setEstoqueMinimo(result.Prod_estoqueMinimo); // Configuração do estoque mínimo
+                }else{
+                    setEstoqueMinimo(0)
+                }
             }
         };
 
