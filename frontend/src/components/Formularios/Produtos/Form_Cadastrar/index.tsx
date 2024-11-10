@@ -142,14 +142,8 @@ const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
                         value={Prod_preco.toString()}
                     />
                 </div>
-            </section>
-            <div className='subtitle-form-prod'>
-                <span>Especificações</span>
-                <hr className="line"/>
-            </div>
-            <section className='form-prod'>
                 <div className="input-item-prod">
-                    <label>Unidade de Medida</label>
+                    <label>Medida do Produto</label>
                     <select 
                         className="form-select-custom"
                         value={UnidadeMedida_id}
@@ -163,6 +157,12 @@ const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
                         ))}
                     </select>
                 </div>
+            </section>
+            <div className='subtitle-form-prod'>
+                <span>Especificações</span>
+                <hr className="line"/>
+            </div>
+            <section className='form-prod'>
                 <div className="input-group-prod">
                     <Input className="input-item-prod"
                         label="Peso"
