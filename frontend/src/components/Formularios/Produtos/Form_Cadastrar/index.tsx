@@ -31,7 +31,7 @@ const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
     const [UnidadeMedida_id, setUnidadeMedida_id] = useState<number>(0)
     const [Prod_imagem, setImg] = useState<File | null>(null)
     const [unidades, setUnidades] = useState<Unidade_Medida[]>([])
-
+    
     useEffect(() => {
         const fetchUnidades = async () => {
             const result = await unidadeService.getAllUnidadeMedida();
@@ -61,6 +61,7 @@ const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
         formData.append('Prod_validade', Prod_validade ? 'true' : 'false');
         formData.append('Prod_quantidade', Prod_quantidade.toString());
         formData.append('UnidadeMedida_id', UnidadeMedida_id.toString())
+        
 
         // Adicione o arquivo de imagem, se houver
         if (Prod_imagem) {

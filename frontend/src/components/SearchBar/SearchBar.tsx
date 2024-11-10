@@ -26,7 +26,7 @@ interface SearchBarProps {
         <input
           type="text"
           className="search-input"
-          placeholder="Pesquisar produto..."
+          placeholder="Buscar..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={handleKeyDown}

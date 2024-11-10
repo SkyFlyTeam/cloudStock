@@ -90,7 +90,7 @@ function Entradas() {
     if (result instanceof ApiException) {
       console.log(result.message)
     } else {
-      setFornecedores(result)
+      setFornecedores(result.filter((f) => f.Forn_status != false));
     }
   }
 
@@ -103,7 +103,7 @@ function Entradas() {
   useEffect(() => {
     setFilteredProdutos(
       data.filter(produto =>
-        produto.Prod_nome.toLowerCase().includes(searchTerm.toLowerCase())
+        produto.Prod_status ? produto.Prod_nome.toLowerCase().includes(searchTerm.toLowerCase()) : noop()
       )
     );
   }, [searchTerm, data]);

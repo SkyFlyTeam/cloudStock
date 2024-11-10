@@ -457,7 +457,7 @@ function Saidas() {
                     </div>
                     <div className="info-item">
                       <span>Validade</span>
-                      <span>{new Date(lote.Lote_validade).toLocaleDateString()}</span> {/* Transforma a data em dd/mm/aaaa */}
+                      <span>{lote.Lote_validade == null ? "-" : new Date(lote.Lote_validade).toLocaleDateString()}</span> {/* Transforma a data em dd/mm/aaaa */}
                     </div>
                     <div className="info-item">
                       <span>Local de armazenamento</span>
