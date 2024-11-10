@@ -270,8 +270,8 @@ function Entradas() {
         setOpenModalValidade(true)
         return
       }
-      else if (prod?.Prod_validade == true && entrada.Lote_validade !== null)
-        if (entrada.Lote_validade.toISOString().split('T')[0] < new Date().toISOString().split('T')[0]){
+      else if (prod?.Prod_validade == true && entrada.Lote_validade !== null)        
+        if (new Date(entrada.Lote_validade).toISOString().split('T')[0] < new Date().toISOString().split('T')[0]){
           setOpenModalValidade(true)
           return
       }
