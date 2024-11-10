@@ -33,6 +33,7 @@ export const saidaController = {
             console.log(saidasSelecionadas)
             const ids = saidasSelecionadas.map((saidas: any) => saidas.idProd)
             const Usuario_id = saidasSelecionadas.map(s => s.Usuario_id)[0] 
+            const isVenda = saidasSelecionadas.map(s => s.isVendas)[0] 
             const produtos = await Produto.findAll({
                 where: {
                     Prod_cod: {
@@ -62,13 +63,17 @@ export const saidaController = {
                                     LocAr_id: l.LocAr_id
 
                                 }, {where: {Lote_id: l.Lote_id}})
-
+                                
                                 const envio = {
                                     Lote_id: l.Lote_id,
                                     Saida_id: SaidaEnvio.Saida_id,
                                     Saida_quantidade: quantidadeDinamica,
                                     Saida_valor: produto.Prod_preco * quantidadeDinamica         
                                 }
+
+                            if (isVenda == false){
+                                envio.Saida_valor = 0                                
+                            }
                                 
                                 saidaController.addLoteToSaidaFunc(envio);
 
@@ -93,6 +98,10 @@ export const saidaController = {
                                     Saida_quantidade: l.Lote_quantidade,
                                     Saida_valor: produto.Prod_preco * l.Lote_quantidade         
                                 }
+
+                                if (isVenda == false){
+                                    envio.Saida_valor = 0                                
+                                }
                                 
                                 saidaController.addLoteToSaidaFunc(envio);
                             }
@@ -106,7 +115,12 @@ export const saidaController = {
             }
 
             if (SaidaEnvio){
-                SaidaEnvio.Saida_valorTot = Saida_valorTot;
+                if (isVenda == false){
+                SaidaEnvio.Saida_valorTot = 0;
+                }
+                else{
+                    SaidaEnvio.Saida_valorTot = Saida_valorTot;
+                }
                 SaidaEnvio.Saida_dataCriacao = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000);
                 SaidaEnvio.Usuario_id = Usuario_id;
             }

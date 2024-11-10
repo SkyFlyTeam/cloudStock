@@ -37,7 +37,7 @@ function Saidas() {
   const [data, setData] = useState<Produto[]>([]);
 
   // produtosSelecionados - {id: id, quantidade: quantidade} - produtos que serão enviados ao back
-  const [produtosSelecionados, setProdutosSelecionados] = useState<Array<{ idProd: number, quantidade: number, Usuario_id: number }> | null>([]);
+  const [produtosSelecionados, setProdutosSelecionados] = useState<Array<{ idProd: number, quantidade: number, Usuario_id: number, isVendas: boolean }> | null>([]);
 
   // saidasSelecionadas - {Saida_valortot: Valor, Usuario_id: id} - Saidas que serão enviados ao back
   const [saidasSelecionadas, setSaidasSelecionadas] = useState<{ Saida_valorTot: number, Usuario_id: number } | null>(null);
@@ -94,7 +94,7 @@ function Saidas() {
 
     // Atualiza o estado de produtosSelecionados
     setProdutosSelecionados((prev) => {
-      const newProdutoSelecionado = { idProd: produto.Prod_cod, quantidade: 0, Usuario_id: user?.Usuario_id! };
+      const newProdutoSelecionado = { idProd: produto.Prod_cod, quantidade: 0, Usuario_id: user?.Usuario_id!, isVendas: IsCompra};
       return prev ? [...prev, newProdutoSelecionado] : [newProdutoSelecionado];
     });
 
@@ -161,6 +161,7 @@ else{
 
   const handleConcluir = async () => {
     try {
+      produtosSelecionados![0].isVendas = IsCompra;
       // Faz a chamada à API
       const response = await Api().post<any>('/saida', produtosSelecionados, {
         headers: { 'Content-Type': 'application/json' },
