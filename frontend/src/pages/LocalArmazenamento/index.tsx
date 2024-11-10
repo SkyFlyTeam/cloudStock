@@ -25,7 +25,7 @@ function LocalArmazenamento() {
   const [openModalCadastro, setOpenModalCadastro] = useState(false)
   const [openModalEdicao, setOpenModalEdicao] = useState(false)
   const [openDeleteModal, setOpenDeleteModal] = useState(false)
-  
+
   const [locais, setLocais] = useState<Local_Armazenamento[]>([]);
 
   const [setor, setSetor] = useState<Setor>();
@@ -39,7 +39,7 @@ function LocalArmazenamento() {
   const idInt = id ? parseInt(id, 10) : null
 
   //Verificação dos Cargos
-  const {currentUser} = useAuth();
+  const { currentUser } = useAuth();
 
   // Guarda o ID dos fornecedores selecionados na tabela
   const [localSelecionado, setlocalSelecionado] = useState<number | null>(null);
@@ -51,24 +51,24 @@ function LocalArmazenamento() {
   const formRef = useRef<{ submitForm: () => void }>(null);
 
   // FUNÇÕES PARA EVENTO DE MODALS
-// Edição
-const handleEditClick = (id: number) => {
-  setlocalSelecionado(id)
-  setOpenModalEdicao(true) // Abre o modal de edição
-}
+  // Edição
+  const handleEditClick = (id: number) => {
+    setlocalSelecionado(id)
+    setOpenModalEdicao(true) // Abre o modal de edição
+  }
 
-const closeEditModal = () => {
-  setlocalSelecionado(null)
-  setOpenModalEdicao(false)
-}
+  const closeEditModal = () => {
+    setlocalSelecionado(null)
+    setOpenModalEdicao(false)
+  }
 
   const fetchLocais = async () => {
-      const result = await localServices.getLocaisBySetor(idInt!)
-      if (result instanceof ApiException) {
-        console.log(result.message)
-      } else {
-        setLocais(result);
-      }
+    const result = await localServices.getLocaisBySetor(idInt!)
+    if (result instanceof ApiException) {
+      console.log(result.message)
+    } else {
+      setLocais(result);
+    }
   }
 
   const fetchSetor = async () => {
@@ -78,114 +78,115 @@ const closeEditModal = () => {
     } else {
       setSetor(result);
     }
-}
+  }
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
     if (query) {
-        setFilteredLocais(locais.filter(local => local.LocAr_nome.toLowerCase().includes(query.toLowerCase())));
+      setFilteredLocais(locais.filter(local => local.LocAr_nome.toLowerCase().includes(query.toLowerCase())));
     } else {
-        setFilteredLocais(locais); // mostra todos se não houver busca
+      setFilteredLocais(locais); // mostra todos se não houver busca
     }
-};
+  };
 
   useEffect(() => {
-      fetchLocais()
-      fetchSetor()
+    fetchLocais()
+    fetchSetor()
   }, [])
 
   useEffect(() => {
-      setFilteredLocais(locais); // inicializa o estado de locais filtrados
+    setFilteredLocais(locais); // inicializa o estado de locais filtrados
   }, [locais]);
 
   return (
-      <main>
-        <div className="page-title">
-          <h1 className="title"> {setor?.Setor_nome} - Locais de Armazenamento</h1>
-          <hr className="line" />
-        </div>
+    <main>
+      <div className="page-title">
+        <h1 className="title"> {setor?.Setor_nome} - Locais de Armazenamento</h1>
+        <hr className="line" />
+      </div>
 
 
-          {/* Barra de pesquisa */}
-          {/* <div className="inputButton">
+      {/* Barra de pesquisa */}
+      {/* <div className="inputButton">
               <InputBusca />
               <BtnAzul icon={<IoAddCircleOutline />} label='CADASTRAR' onClick={() => setOpenModalCadastro(true)} />
           </div> */}
 
-        <div className="actions-group">
-            <SearchBar onSearch={handleSearch} />
+      <div className="actions-group">
+        <SearchBar onSearch={handleSearch} />
 
-            {currentUser?.Cargo_id === 2 && (
-              <BtnAzul className="rfloat" icon={<IoAddCircleOutline />} label="CADASTRAR" onClick={() => setOpenModalCadastro(true)} />
-            )}
-        </div>
+        {currentUser?.Cargo_id === 2 && (
+          <BtnAzul className="rfloat" icon={<IoAddCircleOutline />} label="CADASTRAR" onClick={() => setOpenModalCadastro(true)} />
+        )}
+      </div>
 
-      
-          <div className="cards-group">
-          {filteredLocais.map(local => (
-              <Card className="card-i">
-                  <span>{local.LocAr_nome}</span> 
-                  <div className="actions">
-                    {currentUser?.Cargo_id === 2 && (
-                      <FiEdit2 color="#61BDE0" size={20} className="edit-icon"  onClick={() => handleEditClick(local.LocAr_id)}/>
-                    )}
-                    <Link to={`/LocalProduto/${local.LocAr_id}`}><IoIosArrowForward color="#61BDE0" size={25} /></Link>
-                  </div>
-              </Card>
-          ))}
-          </div>
 
-          {/* MODALS*/}
-    {/* Modal de Cadastro */}
-    <Modal
-      isOpen={openModalCadastro} // Abre o modal
-      label="Cadastrar Local de Armazenamento" // Titulo do modal
-      buttons={
-        <>
-          <BtnCancelar onClick={() => setOpenModalCadastro(false)} /> {/*Fechar o modal */}
-          <BtnAzul
-            icon={<IoAddCircleOutline />}
-            label="CADASTRAR"
-            onClick={() => formRef.current?.submitForm()} /* Passa a função da referencia do formulario para poder enviar o submit */
-          />
-        </>
-      }
-    >
-      <LocalFormulario
-        ref={formRef} /* Passa a referencia do formulario */
-        onSuccess={message => {
-          setMensagemSucesso(message) 
-          setOpenModalCadastro(false)
-          fetchLocais() // Atualiza a tabela
-        }}
-      />
-    </Modal>
+      <div className="cards-group">
+        {filteredLocais.map(local => (
+          <Card className="card-i">
+            <span>{local.LocAr_nome}</span>
+            <div className="actions">
+              {currentUser?.Cargo_id === 2 && (
+                <FiEdit2 color="#61BDE0" size={20} className="edit-icon" onClick={() => handleEditClick(local.LocAr_id)} />
+              )}
+              <Link to={`/LocalProduto/${local.LocAr_id}`}><IoIosArrowForward color="#61BDE0" size={25} /></Link>
+            </div>
+          </Card>
+        ))}
+      </div>
 
-     {/* Modal de Edição */}
-     {localSelecionado && (
+      <SvgSemDados data={filteredLocais} />
+      {/* MODALS*/}
+      {/* Modal de Cadastro */}
       <Modal
-        isOpen={openModalEdicao}
-        label="Editar Local"
+        isOpen={openModalCadastro} // Abre o modal
+        label="Cadastrar Local de Armazenamento" // Titulo do modal
         buttons={
           <>
-            <BtnCancelar onClick={closeEditModal} />
-            <BtnAzul icon={<IoAddCircleOutline />} label="SALVAR" onClick={() => formRef.current?.submitForm()} />
+            <BtnCancelar onClick={() => setOpenModalCadastro(false)} /> {/*Fechar o modal */}
+            <BtnAzul
+              icon={<IoAddCircleOutline />}
+              label="CADASTRAR"
+              onClick={() => formRef.current?.submitForm()} /* Passa a função da referencia do formulario para poder enviar o submit */
+            />
           </>
         }
       >
-        <Local_Editar
-          ref={formRef}
-          id={localSelecionado}
+        <LocalFormulario
+          ref={formRef} /* Passa a referencia do formulario */
           onSuccess={message => {
             setMensagemSucesso(message)
-            closeEditModal()
-            fetchLocais() // Atualiza a tabela após edição
+            setOpenModalCadastro(false)
+            fetchLocais() // Atualiza a tabela
           }}
         />
       </Modal>
-    )}
-          
-      </main>
+
+      {/* Modal de Edição */}
+      {localSelecionado && (
+        <Modal
+          isOpen={openModalEdicao}
+          label="Editar Local"
+          buttons={
+            <>
+              <BtnCancelar onClick={closeEditModal} />
+              <BtnAzul icon={<IoAddCircleOutline />} label="SALVAR" onClick={() => formRef.current?.submitForm()} />
+            </>
+          }
+        >
+          <Local_Editar
+            ref={formRef}
+            id={localSelecionado}
+            onSuccess={message => {
+              setMensagemSucesso(message)
+              closeEditModal()
+              fetchLocais() // Atualiza a tabela após edição
+            }}
+          />
+        </Modal>
+      )}
+
+    </main>
   )
 }
 

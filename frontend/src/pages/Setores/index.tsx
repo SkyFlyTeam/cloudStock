@@ -118,7 +118,7 @@ function Setores() {
             ))}
             </div>
 
-      <SvgSemDados data={data}/>
+      <SvgSemDados data={filteredSetores} />
       {/* MODALS*/}
       {/* Modal de Cadastro */}
       <Modal

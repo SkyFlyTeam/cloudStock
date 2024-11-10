@@ -30,6 +30,7 @@ import SearchBar from "../../components/SearchBar/SearchBar"
 
 import { BsFilter } from "react-icons/bs";
 import Pagination from "../../components/Pagination";
+import { SvgSemDados } from "../../components/svgSemDados/svgSemDados";
 
 // Const para a criação de colunas; Define a Tipagem (Interface)
 const columnHelper = createColumnHelper<Produto>();
@@ -326,7 +327,8 @@ const handleLimparFiltros = () => {
           ))}
         </tbody>
       </Table>
-
+      
+      <SvgSemDados data={data} />
       <Pagination className={""} thisPage={pageIndex} lastPage={pageCount} func={setPageIndex} />
 
       {/* Modal de visualizar */}
