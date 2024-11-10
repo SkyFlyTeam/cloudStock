@@ -153,7 +153,7 @@ const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
         <Input 
             className="input-item-prod"
             label="Cadastro"
-            placeholder="Digite o estoque mínimo"
+            placeholder="Digite o cadastro"
             onChange={(e) => setCadastro(parseInt(e.target.value))}
             value={Prod_Cadastro.toString()}
         />
