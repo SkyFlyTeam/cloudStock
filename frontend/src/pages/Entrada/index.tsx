@@ -265,9 +265,15 @@ function Entradas() {
     }
     for (const entrada of entradasSelecionadas) {
       const prod = produtos.find((p) => p.Prod_cod === entrada.Prod_cod)
+
       if (prod?.Prod_validade == true && (entrada.Lote_validade === null || entrada.Lote_validade === '')) {
         setOpenModalValidade(true)
         return
+      }
+      else if (prod?.Prod_validade == true && entrada.Lote_validade !== null)
+        if (entrada.Lote_validade.toISOString().split('T')[0] < new Date().toISOString().split('T')[0]){
+          setOpenModalValidade(true)
+          return
       }
     }
     if (entradasSelecionadas?.find((produto) => produto.LocAr_id === 0)) {
