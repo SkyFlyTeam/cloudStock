@@ -6,7 +6,7 @@ import './style.css';
 
 /* Tabela */
 import { Table } from "react-bootstrap";
-import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table';
 
 /* Componentes */
 import ToggleBtn from "../../components/ToggleBtn";
@@ -31,6 +31,7 @@ import ToggleBtnCargo from "../../components/ToggleBtnCargo";
 import UsuarioFormulario from "../../components/Formularios/Usuario/User_Cadastrar.tsx";
 import Usuario_Edicao from "../../components/Formularios/Usuario/User_Editar";
 import SearchBar from "../../components/SearchBar/SearchBar";
+import Pagination from "../../components/Pagination";
 
 
 // Const para a criação de colunas; Define a Tipagem (Interface)
@@ -59,6 +60,9 @@ function Usuarios() {
 
   // Estado para armazenar os usuarios filtrados
   const [filteredData, setFilteredData] = useState<Usuario[]>([]);
+
+  const [pageIndex, setPageIndex] = useState(0);
+  const pageSize = 10; // Number of items per page
 
   // Função para buscar todos os usuarios 
   const fetchUsuarios = async () => {
@@ -153,8 +157,17 @@ function Usuarios() {
   const table = useReactTable({
     data: filteredData, //utilizando filteredData
     columns,
+    state: { pagination: { pageIndex, pageSize } }, // Set pagination in the state
     getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(), // Add this to enable pagination
+    onPaginationChange: (updater) => {
+      const newPagination = typeof updater === "function" ? updater({ pageIndex, pageSize }) : updater;
+      setPageIndex(newPagination.pageIndex);
+  },
   });
+
+      // Calculate the total number of pages
+      const pageCount = Math.ceil(data.length / pageSize);
 
   // FUNÇÕES PARA EVENTO DE MODALS
   // Edição
@@ -227,6 +240,8 @@ function Usuarios() {
           ))}
         </tbody>
       </Table>
+
+      <Pagination className={""} thisPage={pageIndex} lastPage={pageCount} func={setPageIndex} />
 
       {/* MODALS*/}
       {/* Modal de Cadastro */}

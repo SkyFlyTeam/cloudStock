@@ -6,7 +6,7 @@ import './style.css';
 
 /* Tabela */
 import { Table } from "react-bootstrap";
-import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table';
 
 /* Componentes */
 import ToggleBtn from "../../components/ToggleBtn";
@@ -24,6 +24,7 @@ import { hostname } from "../../config/apiConfig";
 
 import { useAuth } from "../../context/AuthProvider";
 import SearchBar from "../../components/SearchBar/SearchBar";
+import Pagination from "../../components/Pagination";
 
 
 // Const para a criação de colunas; Define a Tipagem (Interface)
@@ -43,6 +44,9 @@ function Categorias() {
   const [data, setData] = useState<Categoria[]>([]);
   const [filteredData, setFilteredData] = useState<Categoria[]>([]);
   const [categoriasPais, setCategoriasPais] = useState<Categoria[]>([]); // Estado para categorias pais
+
+  const [pageIndex, setPageIndex] = useState(0);
+  const pageSize = 10; // Number of items per page
 
   // Função para buscar todas as categorias
   const fetchCategorias = async () => {
@@ -140,8 +144,17 @@ function Categorias() {
   const table = useReactTable({
     data: filteredData,
     columns,
+    state: { pagination: { pageIndex, pageSize } }, // Set pagination in the state
     getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(), // Add this to enable pagination
+    onPaginationChange: (updater) => {
+      const newPagination = typeof updater === "function" ? updater({ pageIndex, pageSize }) : updater;
+      setPageIndex(newPagination.pageIndex);
+  },
   });
+
+    // Calculate the total number of pages
+    const pageCount = Math.ceil(data.length / pageSize);
 
   const handleEditClick = (id: number) => {
     setCategoriaSelecionada(id);
@@ -204,6 +217,8 @@ function Categorias() {
           ))}
         </tbody>
       </Table>
+
+      <Pagination className={""} thisPage={pageIndex} lastPage={pageCount} func={setPageIndex} />
 
       {/* MODALS */}
       <Modal

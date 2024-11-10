@@ -6,7 +6,7 @@ import './style.css';
 
 /* Tabela */
 import { Table } from "react-bootstrap";
-import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table';
 
 /* Componentes */
 import ToggleBtn from "../../components/ToggleBtn";
@@ -29,6 +29,7 @@ import VisualizarBtn from "../../components/VisualizarBtn";
 import SearchBar from "../../components/SearchBar/SearchBar"
 
 import { BsFilter } from "react-icons/bs";
+import Pagination from "../../components/Pagination";
 
 // Const para a criação de colunas; Define a Tipagem (Interface)
 const columnHelper = createColumnHelper<Produto>();
@@ -44,6 +45,9 @@ function LocalProduto() {
   const [quantidadeMax, setQuantidadeMax] = useState<number | null>(null)
   // chave para limpar filtro e renderizar novo campo
   const [filtroKey, setFiltroKey] = useState(0)
+
+  const [pageIndex, setPageIndex] = useState(0);
+  const pageSize = 10; // Number of items per page
 
 
   // Guarda o ID dos fornecedores selecionados na tabela
@@ -197,8 +201,17 @@ const handleLimparFiltros = () => {
   const table = useReactTable({
     data: filteredData,
     columns,
+    state: { pagination: { pageIndex, pageSize } }, // Set pagination in the state
     getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(), // Add this to enable pagination
+    onPaginationChange: (updater) => {
+      const newPagination = typeof updater === "function" ? updater({ pageIndex, pageSize }) : updater;
+      setPageIndex(newPagination.pageIndex);
+  },
   });
+
+  // Calculate the total number of pages
+  const pageCount = Math.ceil(data.length / pageSize);
 
   return (
     <main>
@@ -313,6 +326,8 @@ const handleLimparFiltros = () => {
           ))}
         </tbody>
       </Table>
+
+      <Pagination className={""} thisPage={pageIndex} lastPage={pageCount} func={setPageIndex} />
 
       {/* Modal de visualizar */}
 			<Modal
