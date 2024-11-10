@@ -7,6 +7,8 @@ import Input from "../../../Input";
 import DivTitulo from "../../../DivTitulo";
 import BtnAzul from "../../../BtnAzul";
 import { Unidade_Medida, unidadeService } from '../../../../services/unidadeMedidaService'
+import { useAuth } from '../../../../context/AuthProvider';
+
 
 interface Props {
     onSuccess: (message: string) => void // Função para quando dê certo 
@@ -15,6 +17,7 @@ interface Props {
 const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
     submitForm: () => void
 }>) => {
+    const {currentUser} = useAuth();
     const [Prod_nome, setNome] = useState<string>('')
     const [Prod_descricao, setDescricao] = useState<string>('')
     const [Prod_preco, setPreco] = useState<number>(0)
@@ -31,7 +34,7 @@ const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
     const [UnidadeMedida_id, setUnidadeMedida_id] = useState<number>(0)
     const [Prod_imagem, setImg] = useState<File | null>(null)
     const [unidades, setUnidades] = useState<Unidade_Medida[]>([])
-    
+    const [Prod_Cadastro, setCadastro] = useState<number>(0); // Novo campo para Cadastro
     useEffect(() => {
         const fetchUnidades = async () => {
             const result = await unidadeService.getAllUnidadeMedida();
@@ -61,6 +64,7 @@ const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
         formData.append('Prod_validade', Prod_validade ? 'true' : 'false');
         formData.append('Prod_quantidade', Prod_quantidade.toString());
         formData.append('UnidadeMedida_id', UnidadeMedida_id.toString())
+        formData.append('Prod_estoqueMinimo',Prod_Cadastro !== undefined ? Prod_Cadastro.toString() : '0');// Envio do Cadastro
         
 
         // Adicione o arquivo de imagem, se houver
@@ -88,7 +92,8 @@ const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
             setQuantidade(0);
             setCategoriaID(null);
             setImg(null);
-            setUnidadeMedida_id(0)
+            setUnidadeMedida_id(0);
+            setCadastro(0)
             props.onSuccess('Produto criado com sucesso!');
         }
     }
@@ -142,6 +147,18 @@ const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
                         value={Prod_preco.toString()}
                     />
                 </div>
+                {/* Outros campos aqui */}
+                {currentUser?.Cargo_id === 2 && (
+    <div className="input-group-prod">
+        <Input 
+            className="input-item-prod"
+            label="Cadastro"
+            placeholder="Digite o estoque mínimo"
+            onChange={(e) => setCadastro(parseInt(e.target.value))}
+            value={Prod_Cadastro.toString()}
+        />
+    </div>
+)}
                 <div className="input-item-prod">
                     <label>Medida do Produto</label>
                     <select 
