@@ -101,6 +101,7 @@ function Fornecedores() {
         fornecedorFiltrado = fornecedorFiltrado.filter((f) => f.Forn_status === status);
       }
       setData(fornecedorFiltrado);
+      setFilteredData(fornecedorFiltrado);
     };
   
     filtrarAutomaticamente();
@@ -112,6 +113,7 @@ function Fornecedores() {
   const handleLimparFiltros = () => {
     setStatus(null)
     setData(fornecedores)
+    setFilteredData(fornecedores);
     setFiltroKey((prevKey) => prevKey + 1)
   }
 
