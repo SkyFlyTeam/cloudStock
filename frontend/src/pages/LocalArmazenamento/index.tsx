@@ -19,6 +19,7 @@ import { Setor, setoresServices } from "../../services/setorServices";
 
 import { useAuth } from "../../context/AuthProvider";
 import SearchBar from "../../components/SearchBar/SearchBar"
+import { SvgSemDados } from "../../components/svgSemDados/svgSemDados";
 
 function LocalArmazenamento() {
   const [openModalCadastro, setOpenModalCadastro] = useState(false)

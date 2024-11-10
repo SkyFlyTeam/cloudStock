@@ -20,6 +20,7 @@ import { Link } from "react-router-dom";
 //Verificação dos cargos
 import { useAuth } from "../../context/AuthProvider";
 import SearchBar from "../../components/SearchBar/SearchBar"
+import { SvgSemDados } from "../../components/svgSemDados/svgSemDados";
 
 function Setores() {
     const [openModalCadastro, setOpenModalCadastro] = useState(false)
@@ -117,6 +118,7 @@ function Setores() {
             ))}
             </div>
 
+      <SvgSemDados data={data}/>
       {/* MODALS*/}
       {/* Modal de Cadastro */}
       <Modal

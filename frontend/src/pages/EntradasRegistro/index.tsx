@@ -19,6 +19,7 @@ import { Produto, produtoServices } from "../../services/produtoServices";
 import { BsFilter } from "react-icons/bs";
 import { Saida } from "../../services/saidaServices";
 import Pagination from "../../components/Pagination";
+import { SvgSemDados } from "../../components/svgSemDados/svgSemDados";
 
 // Const para a criação de colunas; Define a Tipagem (Interface)
 const columnHelper = createColumnHelper<Entrada>();
@@ -351,6 +352,7 @@ function EntradasRegistro() {
                 </tbody>
             </Table>
 
+            <SvgSemDados data={data}/>
             <Pagination className={""} thisPage={pageIndex} lastPage={pageCount} func={setPageIndex} />
 
             {/* Modal de visualizar */}

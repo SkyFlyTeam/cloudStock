@@ -13,6 +13,7 @@ import { IoArrowBackCircleOutline } from "react-icons/io5";
 import { usuarioServices } from "../../services/usuariosServices";
 import { Usuario } from "../../services/usuariosServices";
 import Entradas from "../Entrada";
+import { SvgSemDados } from "../../components/svgSemDados/svgSemDados";
 
 function Registros() {
   const [showFiltros, setShowFiltros] = useState(false)
@@ -286,6 +287,8 @@ function Registros() {
           </div>
         ))}
       </div>
+
+      <SvgSemDados data={data}/>
 
       {/* Modal de Visualização */}
       <Modal

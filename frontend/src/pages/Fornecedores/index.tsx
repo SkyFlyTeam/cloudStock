@@ -29,6 +29,7 @@ import { useAuth } from "../../context/AuthProvider";
 import SearchBar from "../../components/SearchBar/SearchBar"
 import { BsFilter } from "react-icons/bs";
 import Pagination from "../../components/Pagination";
+import { SvgSemDados } from "../../components/svgSemDados/svgSemDados";
 
 
 
@@ -285,7 +286,8 @@ function Fornecedores() {
           ))}
         </tbody>
       </Table>
-
+      
+      <SvgSemDados data={data}/>
       <Pagination className={""} thisPage={pageIndex} lastPage={pageCount} func={setPageIndex} />
 
       {/* MODALS*/}

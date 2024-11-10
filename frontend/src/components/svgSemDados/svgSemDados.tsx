@@ -13,7 +13,7 @@ const SvgSemDados: React.FC<SvgSemDadosProps> = ({ data }) => {
                 alt="Nenhum produto disponível" 
                 style={{ width: "35%" }}
             />
-            <p>Nenhum produto encontrado.</p>
+            <p>Nenhum item cadastrado.</p>
         </center>
     ) : null;
 };

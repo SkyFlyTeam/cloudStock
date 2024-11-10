@@ -25,6 +25,7 @@ import { hostname } from "../../config/apiConfig";
 import { useAuth } from "../../context/AuthProvider";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import Pagination from "../../components/Pagination";
+import { SvgSemDados } from "../../components/svgSemDados/svgSemDados";
 
 
 // Const para a criação de colunas; Define a Tipagem (Interface)
@@ -218,6 +219,7 @@ function Categorias() {
         </tbody>
       </Table>
 
+      <SvgSemDados data={data}/>
       <Pagination className={""} thisPage={pageIndex} lastPage={pageCount} func={setPageIndex} />
 
       {/* MODALS */}

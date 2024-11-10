@@ -29,6 +29,7 @@ import { IoAddCircleOutline, IoArrowBackCircleOutline } from "react-icons/io5"
 import { BsFilter } from "react-icons/bs";
 import { Produto, produtoServices, Lote } from "../../services/produtoServices";
 import Pagination from "../../components/Pagination";
+import { SvgSemDados } from "../../components/svgSemDados/svgSemDados";
 
 // Const para a criação de colunas; Define a Tipagem (Interface)
 const columnHelper = createColumnHelper<Saida>();
@@ -409,6 +410,7 @@ function Saidas() {
         </tbody>
       </Table>
 
+      <SvgSemDados data={data}/>
       <Pagination className={""} thisPage={pageIndex} lastPage={pageCount} func={setPageIndex} />
 
       {/* MODALS*/}
