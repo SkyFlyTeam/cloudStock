@@ -48,6 +48,7 @@
     ]
   },
   "devDependencies": {
+    "@types/babel__core": "^7.20.5",
     "@types/react-modal": "^3.16.3"
   }
 }

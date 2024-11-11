@@ -8,6 +8,7 @@ import DivTitulo from "../../../DivTitulo";
 import BtnAzul from "../../../BtnAzul";
 import { Unidade_Medida, unidadeService } from '../../../../services/unidadeMedidaService'
 import { useAuth } from '../../../../context/AuthProvider';
+import { Categoria, categoriaServices } from '../../../../services/categoriaServices';
 
 
 interface Props {
@@ -30,12 +31,21 @@ const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
     const [Prod_modelo, setModelo] = useState<string>('')
     const [Prod_validade, setValidade] = useState<boolean>(true)
     const [Prod_quantidade, setQuantidade] = useState<number>(0)
-    const [Prod_categoriaId, setCategoriaID] = useState<null>(null)
+    const [Categoria_id, setCategoriaID] = useState<number>(0)
     const [UnidadeMedida_id, setUnidadeMedida_id] = useState<number>(0)
     const [Prod_imagem, setImg] = useState<File | null>(null)
     const [unidades, setUnidades] = useState<Unidade_Medida[]>([])
-    const [Prod_Cadastro, setCadastro] = useState<number>(0); // Novo campo para Cadastro
+    const [categorias, setCategorias] = useState<Categoria[]>([])
+    
     useEffect(() => {
+        const fetchCategorias = async () => {
+            const result = await categoriaServices.getAllCategoria();
+            if (result instanceof ApiException) {
+                console.error(result.message);
+            } else {
+                setCategorias(result);
+            }
+        };
         const fetchUnidades = async () => {
             const result = await unidadeService.getAllUnidadeMedida();
             if (result instanceof ApiException) {
@@ -45,6 +55,7 @@ const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
             }
         };
         fetchUnidades();
+        fetchCategorias();
     }, []);
 
     const eventoFormulario = async () => {
@@ -64,7 +75,9 @@ const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
         formData.append('Prod_validade', Prod_validade ? 'true' : 'false');
         formData.append('Prod_quantidade', Prod_quantidade.toString());
         formData.append('UnidadeMedida_id', UnidadeMedida_id.toString())
-        formData.append('Prod_estoqueMinimo',Prod_Cadastro !== undefined ? Prod_Cadastro.toString() : '0');// Envio do Cadastro
+        formData.append('Categoria_id', Categoria_id.toString())
+        
+        
         
 
         // Adicione o arquivo de imagem, se houver
@@ -90,10 +103,9 @@ const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
             setModelo('');
             setValidade(false);
             setQuantidade(0);
-            setCategoriaID(null);
+            setCategoriaID(0);
             setImg(null);
-            setUnidadeMedida_id(0);
-            setCadastro(0)
+            setUnidadeMedida_id(0)
             props.onSuccess('Produto criado com sucesso!');
         }
     }
@@ -148,17 +160,22 @@ const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
                     />
                 </div>
                 {/* Outros campos aqui */}
-                {currentUser?.Cargo_id === 2 && (
-    <div className="input-group-prod">
-        <Input 
-            className="input-item-prod"
-            label="Cadastro"
-            placeholder="Digite o cadastro"
-            onChange={(e) => setCadastro(parseInt(e.target.value))}
-            value={Prod_Cadastro.toString()}
-        />
-    </div>
-)}
+                <div className="input-item-prod">
+                    <label>Categorias</label>
+                    <select 
+                        className="form-select-custom"
+                        value={Categoria_id}
+                        onChange={(e) => setCategoriaID(+e.target.value)}
+                    >
+                        <option value="">Selecionar...</option>
+                        {categorias.map((categoria) => (
+                            <option key={categoria.Categoria_id} value={categoria.Categoria_id}>
+                                {categoria.Categoria_nome}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
                 <div className="input-item-prod">
                     <label>Medida do Produto</label>
                     <select 
