@@ -13,7 +13,9 @@ section.form-prod{
 
 div.input-group-prod{
     display: flex;
-    gap: 4rem;
+    column-gap: 4rem;
+    row-gap: 1rem;
+    flex-wrap: wrap;
 }
 
 .input-item-prod{
@@ -24,6 +26,10 @@ div.input-group-prod{
 
 .input-item-prod.large {
     width: 100%;
+}
+
+.input-item-prod.estoque-input{
+    width: 43%;
 }
 
 div.subtitle-form-prod{

@@ -12,11 +12,20 @@ import  loteIcon  from '../../assets/icons/Simplification.svg'
 import { Notificacao, notificacoesServices } from "../../services/notificacoesServices";
 import { ApiException } from "../../config/apiException";
 import { Api } from "../../config/apiConfig";
+import { FiSettings } from "react-icons/fi";
+import { useAuth } from "../../context/AuthProvider";
+import BtnCancelar from "../BtnCancelar";
+import BtnAzul from "../BtnAzul";
+import { MdDone } from "react-icons/md";
+import ConfigForm from "../Formularios/Configurações";
+import Modal from "../Modal";
 
 
 const BarraSuperior: React.FC = () => {
     const location = useLocation() // Hook para pegar a rota atual
     const navigate = useNavigate() // Funções para navegar
+    //Verificação dos Cargos
+    const {currentUser} = useAuth();
 
     // State/Funções do OffCanvas de Notificações
     const [showNotifications, setShowNotifications] = useState(false)
@@ -126,6 +135,10 @@ const BarraSuperior: React.FC = () => {
       });
     };
 
+    // Modal de configurações
+    const [openModalConfig, setOpenModalConfig] = useState(false);
+    const formRef = useRef<{ submitForm: () => void }>(null);
+
     return (
       <div className="BarraSuperior">
         <div className="itensleft">
@@ -141,6 +154,9 @@ const BarraSuperior: React.FC = () => {
           <span>{location.pathname.replace('/', '')}</span>
         </div>
         <div className="itensright">
+          {currentUser?.Cargo_id === 2 && (
+            <FiSettings onClick={() => setOpenModalConfig(true)} className="settings-icon" />
+          )}
           {totalCount > 0 ?
             <div className="bell-icon-div" onClick={handleShowNotifications}> 
               <div className="bell-not-cont">{totalCount}</div>
@@ -233,10 +249,32 @@ const BarraSuperior: React.FC = () => {
             </Tabs>
           </Offcanvas.Body>
         </Offcanvas>
+
+        {/* MODALS*/}
+        {/* Modal de Cadastro */}
+        <Modal
+          isOpen={openModalConfig} // Abre o modal
+          label="Configurações do Sistema" // Titulo do modal
+          buttons={
+            <>
+              <BtnCancelar onClick={() => setOpenModalConfig(false)} /> {/*Fechar o modal */}
+              <BtnAzul
+                icon={<MdDone />}
+                label="SALVAR"
+                onClick={() => formRef.current?.submitForm()} /* Passa a função da referencia do formulario para poder enviar o submit */
+              />
+            </>
+          }
+        >
+          <ConfigForm
+            ref={formRef} /* Passa a referencia do formulario */
+            onSuccess={message => {
+              setOpenModalConfig(false)
+            }}
+          />
+        </Modal>
       
       </div>
-
-
     );
 }
 

@@ -1,5 +1,6 @@
 import { Api } from "../config/apiConfig"
 import { ApiException } from "../config/apiException"
+import { Categoria } from "./categoriaServices"
 
 export interface Produto {
   Prod_cod: number
@@ -21,6 +22,7 @@ export interface Produto {
   UnidadeMedida_id: any
   Prod_imagem: File | null
   Lotes: Lote[]
+  Categoria: Categoria
 }
 
 

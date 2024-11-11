@@ -212,7 +212,6 @@ hr.line {
     background-color: white;
     border: 1px solid #ddd;
     border-top: none;
-    z-index: 1000;
     max-height: 200px;
     overflow-y: auto;
     border-radius: 0 0 10px 10px;

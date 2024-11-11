@@ -1,6 +1,7 @@
 import { Produto } from '../models/Produto';
 import { Notificacoes } from '../models/Notificacoes';
 import { Lote } from '../models/Lote';
+import { ConfigSistema } from '../models/ConfigSistema';
 
 const cron = require('node-cron');
 
@@ -25,6 +26,7 @@ const iniciarNotificacaoCron = () => {
 
                         if (!notificacaoExistente && lote.Lote_quantidade > 0) {
                             const validade = new Date(lote.Lote_validade)
+                            const avisoValidade = await ConfigSistema.findByPk(1)
 
                             dataAtual.setHours(0, 0, 0, 0);
                             validade.setHours(0, 0, 0, 0);
@@ -32,7 +34,7 @@ const iniciarNotificacaoCron = () => {
                             const diferenca = (validade.getTime() - dataAtual.getTime())/ (24 * 60 * 60 * 1000); 
 
                             // Verifique se a validade está dentro do limite de 7 dias 
-                            if (diferenca < 0 || diferenca <=7 ) {
+                            if (diferenca < 0 || diferenca <= avisoValidade.Config_avisoValidade ) {
                                 await Notificacoes.create({
                                     Not_tipo: 'Validade',
                                     Not_data: new Date(),

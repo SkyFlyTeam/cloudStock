@@ -250,7 +250,7 @@ const handleLimparFiltros = () => {
       header: () => 'Nome',
       cell: info => info.getValue(),
     }),
-    columnHelper.accessor('Categoria_id', {
+    columnHelper.accessor('Categoria.Categoria_nome', {
       header: () => 'Categoria',
       cell: info => `${info.getValue()}`,
     }),

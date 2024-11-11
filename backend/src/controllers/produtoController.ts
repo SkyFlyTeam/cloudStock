@@ -1,3 +1,4 @@
+import { Categoria } from '../models/Categoria';
 import { Lote } from '../models/Lote';
 import { Produto } from '../models/Produto';
 import { Request, response, Response } from 'express';
@@ -47,7 +48,7 @@ export const controllerProducts = {
     try {
       const products = await Produto.findAll({
         attributes: ['Prod_cod', 'Prod_nome', 'Prod_marca', 'Prod_modelo','Prod_preco', 'Prod_custo',  'Prod_status', 'Prod_estoqueMinimo', 'Categoria_id', 'Prod_validade'],
-        include: [Lote]
+        include: [Lote, Categoria]
       })
 
       return res.status(200).json(products);

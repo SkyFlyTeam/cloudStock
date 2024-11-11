@@ -18,7 +18,6 @@ interface Props {
 const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
     submitForm: () => void
 }>) => {
-    const {currentUser} = useAuth();
     const [Prod_nome, setNome] = useState<string>('')
     const [Prod_descricao, setDescricao] = useState<string>('')
     const [Prod_preco, setPreco] = useState<number>(0)
@@ -159,37 +158,38 @@ const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
                         value={Prod_preco.toString()}
                     />
                 </div>
-                {/* Outros campos aqui */}
-                <div className="input-item-prod">
-                    <label>Categorias</label>
-                    <select 
-                        className="form-select-custom"
-                        value={Categoria_id}
-                        onChange={(e) => setCategoriaID(+e.target.value)}
-                    >
-                        <option value="">Selecionar...</option>
-                        {categorias.map((categoria) => (
-                            <option key={categoria.Categoria_id} value={categoria.Categoria_id}>
-                                {categoria.Categoria_nome}
-                            </option>
-                        ))}
-                    </select>
-                </div>
+                <div className="input-group-prod">
+                    <div className="input-item-prod">
+                        <label>Categorias</label>
+                        <select 
+                            className="form-select-custom"
+                            value={Categoria_id}
+                            onChange={(e) => setCategoriaID(+e.target.value)}
+                        >
+                            <option value="">Selecionar...</option>
+                            {categorias.map((categoria) => (
+                                <option key={categoria.Categoria_id} value={categoria.Categoria_id}>
+                                    {categoria.Categoria_nome}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
 
-                <div className="input-item-prod">
-                    <label>Medida do Produto</label>
-                    <select 
-                        className="form-select-custom"
-                        value={UnidadeMedida_id}
-                        onChange={(e) => setUnidadeMedida_id(+e.target.value)}
-                    >
-                        <option value="">Selecionar...</option>
-                        {unidades.map((unidade) => (
-                            <option key={unidade.UnidadeMedida_id} value={unidade.UnidadeMedida_id}>
-                                {unidade.UnidadeMedida_nome}
-                            </option>
-                        ))}
-                    </select>
+                    <div className="input-item-prod">
+                        <label>Medida do Produto</label>
+                        <select 
+                            className="form-select-custom"
+                            value={UnidadeMedida_id}
+                            onChange={(e) => setUnidadeMedida_id(+e.target.value)}
+                        >
+                            <option value="">Selecionar...</option>
+                            {unidades.map((unidade) => (
+                                <option key={unidade.UnidadeMedida_id} value={unidade.UnidadeMedida_id}>
+                                    {unidade.UnidadeMedida_nome}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
                 </div>
             </section>
             <div className='subtitle-form-prod'>

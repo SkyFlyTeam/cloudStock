@@ -33,7 +33,7 @@
     gap: 15px;
 }
 
-.itensright .bell-icon, .itensright .user-icon {
+.itensright .bell-icon, .itensright .user-icon, .itensright .settings-icon {
     color: #C4C4C4;
     font-size: 1.5rem;
     cursor: pointer;

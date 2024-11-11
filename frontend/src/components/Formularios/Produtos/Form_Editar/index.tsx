@@ -8,6 +8,7 @@ import DivTitulo from "../../../DivTitulo";
 import './style.css'
 import { useAuth } from '../../../../context/AuthProvider';
 import { Unidade_Medida, unidadeService } from '../../../../services/unidadeMedidaService';
+import { Categoria, categoriaServices } from '../../../../services/categoriaServices';
 
 interface Props {
     id: number
@@ -28,13 +29,22 @@ const ProdutoEditar = forwardRef((props: Props, ref: Ref<{ submitForm: () => voi
     const [Prod_modelo, setModelo] = useState<string>('')
     const [Prod_validade, setValidade] = useState<boolean>(false)
     const [Prod_quantidade, setQuantidade] = useState<number>(0)
-    const [Categoria_Id, setCategoriaID] = useState<null>(null)
+    const [Categoria_id, setCategoriaID] = useState<number>(0)
     const [UnidadeMedida_id, setUnidadeMedida_id] = useState<number>(0)
     const [Prod_imagem, setImg] = useState<File | null>(null)
     const [unidades, setUnidades] = useState<Unidade_Medida[]>([])
+    const [categorias, setCategorias] = useState<Categoria[]>([])
     const [Prod_estoqueMinimo, setEstoqueMinimo] = useState<number>(0); // Novo campo para estoque mínimo
 
     useEffect(() => {
+        const fetchCategorias = async () => {
+            const result = await categoriaServices.getAllCategoria();
+            if (result instanceof ApiException) {
+                console.error(result.message);
+            } else {
+                setCategorias(result);
+            }
+        };
         const fetchUnidades = async () => {
             const result = await unidadeService.getAllUnidadeMedida();
             if (result instanceof ApiException) {
@@ -44,6 +54,7 @@ const ProdutoEditar = forwardRef((props: Props, ref: Ref<{ submitForm: () => voi
             }
         };
         fetchUnidades();
+        fetchCategorias();
     }, []);
 
     const eventoFormulario = async () => {
@@ -63,6 +74,7 @@ const ProdutoEditar = forwardRef((props: Props, ref: Ref<{ submitForm: () => voi
         formData.append('Prod_validade', Prod_validade ? 'true' : 'false');
         formData.append('Prod_quantidade', Prod_quantidade !== undefined ? Prod_quantidade.toString() : '0');
         formData.append('UnidadeMedida_id', UnidadeMedida_id !== undefined ? UnidadeMedida_id.toString() : '')
+        formData.append('Categoria_id', Categoria_id.toString())
         formData.append('Prod_estoqueMinimo', Prod_estoqueMinimo !== undefined ? Prod_estoqueMinimo.toString() : '0');// Envio do estoque mínimo
 
         // Adicione o arquivo de imagem, se houver
@@ -87,7 +99,7 @@ const ProdutoEditar = forwardRef((props: Props, ref: Ref<{ submitForm: () => voi
             setModelo('');
             setValidade(false);
             setQuantidade(0);
-            setCategoriaID(null);
+            setCategoriaID(0);
             setUnidadeMedida_id(0)
             setImg(null);
             setEstoqueMinimo(0); // Reset estoque mínimo
@@ -195,11 +207,26 @@ const ProdutoEditar = forwardRef((props: Props, ref: Ref<{ submitForm: () => voi
                             ))}
                         </select>
                     </div>
-
-                    {currentUser?.Cargo_id === 2 && (
+                    <div className="input-item-prod">
+                        <label>Categorias</label>
+                        <select 
+                            className="form-select-custom"
+                            value={Categoria_id}
+                            onChange={(e) => setCategoriaID(+e.target.value)}
+                        >
+                            <option value="">Selecionar...</option>
+                            {categorias.map((categoria) => (
+                                <option key={categoria.Categoria_id} value={categoria.Categoria_id}>
+                                    {categoria.Categoria_nome}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                </div>
+                {currentUser?.Cargo_id === 2 && (
                         <div className="input-item-prod">
                             <Input
-                                className="input-item-prod"
+                                className="input-item-prod estoque-input"
                                 label="Estoque Mínimo"
                                 type="number"
                                 placeholder="Digite o estoque mínimo"
@@ -208,7 +235,6 @@ const ProdutoEditar = forwardRef((props: Props, ref: Ref<{ submitForm: () => voi
                             />
                         </div>
                     )}
-                </div>
             </section>
             <div className='subtitle-form-prod'>
                 <span>Especificações</span>
