@@ -252,7 +252,7 @@ const handleLimparFiltros = () => {
     }),
     columnHelper.accessor('Categoria.Categoria_nome', {
       header: () => <div className="th-center">Categoria</div>,
-      cell: info => <div className="td-center"> {info.getValue() === null || info.getValue() === undefined ? `${info.getValue()}` : info.getValue()} </div>,
+      cell: info => <div className="td-center"> {info.getValue() === null || info.getValue() === undefined ? '-' : info.getValue()} </div>,
     }),
     columnHelper.accessor('Prod_quantidade', {
       header: () => <div className="th-right">Quantidade</div>,
