@@ -250,7 +250,7 @@ const handleLimparFiltros = () => {
       header: () => 'Nome',
       cell: info => info.getValue(),
     }),
-    columnHelper.accessor('Categoria_id', {
+    columnHelper.accessor('Categoria.Categoria_nome', {
       header: () => <div className="th-center">Categoria</div>,
       cell: info => <div className="td-center"> {info.getValue() === null || info.getValue() === undefined ? '-' : info.getValue()} </div>,
     }),
