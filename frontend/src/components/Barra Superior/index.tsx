@@ -140,6 +140,30 @@ const BarraSuperior: React.FC = () => {
     const formRef = useRef<{ submitForm: () => void }>(null);
 
     return (
+      <>
+              {/* MODALS*/}
+        {/* Modal de Cadastro */}
+        <Modal
+          isOpen={openModalConfig} // Abre o modal
+          label="Configurações do Sistema" // Titulo do modal
+          buttons={
+            <>
+              <BtnCancelar onClick={() => setOpenModalConfig(false)} /> {/*Fechar o modal */}
+              <BtnAzul
+                icon={<MdDone />}
+                label="SALVAR"
+                onClick={() => formRef.current?.submitForm()} /* Passa a função da referencia do formulario para poder enviar o submit */
+              />
+            </>
+          }
+        >
+          <ConfigForm
+            ref={formRef} /* Passa a referencia do formulario */
+            onSuccess={message => {
+              setOpenModalConfig(false)
+            }}
+          />
+        </Modal>
       <div className="BarraSuperior">
         <div className="itensleft">
           <Link
@@ -250,31 +274,8 @@ const BarraSuperior: React.FC = () => {
           </Offcanvas.Body>
         </Offcanvas>
 
-        {/* MODALS*/}
-        {/* Modal de Cadastro */}
-        <Modal
-          isOpen={openModalConfig} // Abre o modal
-          label="Configurações do Sistema" // Titulo do modal
-          buttons={
-            <>
-              <BtnCancelar onClick={() => setOpenModalConfig(false)} /> {/*Fechar o modal */}
-              <BtnAzul
-                icon={<MdDone />}
-                label="SALVAR"
-                onClick={() => formRef.current?.submitForm()} /* Passa a função da referencia do formulario para poder enviar o submit */
-              />
-            </>
-          }
-        >
-          <ConfigForm
-            ref={formRef} /* Passa a referencia do formulario */
-            onSuccess={message => {
-              setOpenModalConfig(false)
-            }}
-          />
-        </Modal>
-      
       </div>
+      </>
     );
 }
 
