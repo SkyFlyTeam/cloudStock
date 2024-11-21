@@ -6,8 +6,6 @@ import Setores from "../pages/Setores/index";
 import Fornecedores from "../pages/Fornecedores/index";
 
 import EntradasRegistro from "../pages/EntradasRegistro/index";
-import Navbar from "../components/navbar";
-//import Products from "../pages/produto"
 import Login from "../pages/Login";
 
 import Saidas from "../pages/Saidas/index";
@@ -22,6 +20,7 @@ import Layout from "./Layout";
 import ProtectedRoute from "./ProtectedRoute";
 import LocalProduto from "../pages/LocalProduto";
 import Categorias from "../pages/Categorias";
+import Relatorios from "../pages/Relatorios";
 
 
 function MainRoutes(){
@@ -48,6 +47,7 @@ function MainRoutes(){
                     <Route path="/LocalArmazenamento/:id" element={<ProtectedRoute allowedRoles={[1, 2]}><LocalArmazenamento /></ProtectedRoute>}/>
                     <Route path="/Fornecedores" element={<ProtectedRoute allowedRoles={[1, 2]}><Fornecedores /></ProtectedRoute>}/>
                     <Route path="/Registros" element={<ProtectedRoute allowedRoles={[2]}><Registros /></ProtectedRoute>}/>
+                    <Route path="/Relatorios" element={<ProtectedRoute allowedRoles={[2]}><Relatorios /></ProtectedRoute>}/>
 
                     {/* Rotas do Admin */}
                     <Route path="/Usuarios" element={<ProtectedRoute allowedRoles={[2, 3]}><Usuarios /></ProtectedRoute>}/>

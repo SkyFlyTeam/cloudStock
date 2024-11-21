@@ -1,0 +1,135 @@
+.container-grid{
+    height: 120rem;
+    min-height: fit-content;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.25fr 1fr 1.5fr 1fr 1.5fr;
+    gap: 1rem;
+    gap: 1.5rem;
+}
+
+.container-grid h1, .container-grid h4{
+    color: black;
+}
+
+.container-grid .graph-card{
+    background-color: #f9f9f9;
+    padding: 2rem;
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.stats{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.row2{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
+}
+
+.row3{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.card-stats{
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    height: 100%;
+    padding: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-stats span{
+    font-weight: 600;
+}
+
+.card-stats.positive{
+    border-inline-start: 15px solid #4FBF1A;
+    background-color: #4ebf1a2c;
+}
+
+.card-stats.negative{
+    border-inline-start: 15px solid #C80000;
+    background-color: #c800001c;
+}
+
+.card-stats.danger{
+    border-inline-start: 15px solid #FDD549;
+    background-color: #fdd64938;
+}
+
+.chart{
+    background-color: aqua;
+}
+
+.finance-stats{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between !important;
+}
+
+.finance-stat{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.finance-stat span{
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.finance-quantity{
+    display: flex;
+    gap: 1rem;
+}
+
+.graph-header{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.graph-actions{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.rs-input-group-addon{
+    color: #61BDE0 !important;
+}
+
+@media (max-width: 992px) {
+    .container-grid{
+        grid-template-columns: 1fr; 
+        grid-template-rows: 0.5fr 3fr 2fr 3fr 3fr 2fr;
+    }
+
+    .row2{
+        grid-template-columns: 1fr;
+        grid-template-rows: 3fr 2fr; 
+    }
+
+    .row3{
+        grid-template-columns: 1fr;
+        grid-template-rows: 2fr 2fr; 
+    }
+
+    .stats {
+        height: 100px; /* Define uma altura menor para .stats */
+    }
+}
