@@ -5,6 +5,7 @@ export interface Saida {
     Saida_id: number
     Saida_valorTot: string
     Saida_dataCriacao: Date
+    Saida_isVenda: boolean
     Usuario: Usuario
     Usuarios: Usuario
     Lotes?: Lote[];

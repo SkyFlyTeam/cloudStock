@@ -21,6 +21,7 @@ export const saidaController = {
             const SaidaEnvio = await Saida.create({
                 Saida_valorTot: 0,
                 Saida_dataCriacao: new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000), // Ajuste do fuso horário local
+                Saida_isVenda: true,
                 Usuario_id: 1
             })
 
@@ -72,7 +73,7 @@ export const saidaController = {
                                 }
 
                             if (isVenda == false){
-                                envio.Saida_valor = 0                                
+                                // envio.Saida_valor = 0                                
                             }
                                 
                                 saidaController.addLoteToSaidaFunc(envio);
@@ -100,7 +101,7 @@ export const saidaController = {
                                 }
 
                                 if (isVenda == false){
-                                    envio.Saida_valor = 0                                
+                                    // envio.Saida_valor = 0                                
                                 }
                                 
                                 saidaController.addLoteToSaidaFunc(envio);
@@ -116,11 +117,10 @@ export const saidaController = {
 
             if (SaidaEnvio){
                 if (isVenda == false){
-                SaidaEnvio.Saida_valorTot = 0;
+                // SaidaEnvio.Saida_valorTot = 0;
+                SaidaEnvio.Saida_isVenda = false;
                 }
-                else{
-                    SaidaEnvio.Saida_valorTot = Saida_valorTot;
-                }
+                SaidaEnvio.Saida_valorTot = Saida_valorTot;
                 SaidaEnvio.Saida_dataCriacao = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000);
                 SaidaEnvio.Usuario_id = Usuario_id;
             }

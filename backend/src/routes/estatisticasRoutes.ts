@@ -3,6 +3,7 @@ import { controllerEstatisticas } from '../controllers/estatisticasController';
 
 const router = Router();
 
-router.get('/', controllerEstatisticas.show);
+router.get('/lucro', controllerEstatisticas.showLucro);
+router.get('/perda', controllerEstatisticas.showPerda);
 
 export default router;
