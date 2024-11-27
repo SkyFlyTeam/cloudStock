@@ -9,5 +9,6 @@ router.get('/maiorEntrada', controllerEstatisticas.getMaiorEntrada)
 router.get('/maiorSaida', controllerEstatisticas.getMaiorSaida)
 router.get('/maiorRentabilidade', controllerEstatisticas.getMaiorRentabildiade)
 router.get('/maiorCusto', controllerEstatisticas.getMaiorCusto)
+router.get('/valorEntrada-saida', controllerEstatisticas.getValorEntradaSaida)
 
 export default router;

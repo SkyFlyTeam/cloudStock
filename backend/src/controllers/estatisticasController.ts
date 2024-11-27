@@ -9,56 +9,57 @@ import { Categoria } from '../models/Categoria';
 export const controllerEstatisticas = {
     showLucro: async (req: Request, res: Response) => {
         try {
-        const data = [
+        let data = [
 
         ]
 
-        let today = new Date();
-        let priorDate = new Date(new Date().setDate(today.getDate() - 30));
+        let entrada = await Entrada.findAll();
+        let saida = await Saida.findAll();
 
-        console.log(priorDate)
+        entrada.forEach(ent => {
 
-        for (let i = 29; i >= 0; i--){
-            priorDate = new Date(new Date().setDate(today.getDate() - i));
+            let thisDate = new Intl.DateTimeFormat('en-US').format(ent.Ent_dataCriacao);
+            let hasDate = false
 
-            let startOfDay = new Date(priorDate);
-            startOfDay.setHours(0, 0, 0, 0);
+            data.forEach(d => {
+                if (d.date == thisDate){
+                    d.gastos += parseFloat(ent.Ent_valortot.toString())
+                    d.lucro -= parseFloat(ent.Ent_valortot.toString())
+                    hasDate = true
+                }
+            })
 
-            let endOfDay = new Date(priorDate);
-            endOfDay.setHours(23, 59, 59, 999);
-
-            let entrada = await Entrada.findAll({where: {Ent_dataCriacao: {[Op.between]: [startOfDay, endOfDay],}}})
-            let saida = await Saida.findAll({where: {Saida_dataCriacao: {[Op.between]: [startOfDay, endOfDay]}}})
-
-            let Perda = 0;
-            let gastos = 0;
-            let custosTot = 0;
-            let Lucro = 0;
-
-            if (entrada.length > 0){
-                entrada.forEach(e => {
-                    gastos += parseFloat(e.Ent_valortot.toString());     
-                })
+            if (hasDate == false){
+                let values = {date: thisDate, lucro: -1 * parseFloat(ent.Ent_valortot.toString()), gastos: parseFloat(ent.Ent_valortot.toString()), perda: 0}
+                data.push(values);
             }
+        })
 
-            if (saida.length > 0){
-                saida.forEach(s => {
-                    if (s.Saida_isVenda == false){
-                    Perda += parseFloat(s.Saida_valorTot.toString());
-                    }
-                    else{
-                        Lucro += parseFloat(s.Saida_valorTot.toString());
-                    }
-                })
+        saida.forEach(sai => {
+            let thisDate = new Intl.DateTimeFormat('en-US').format(sai.Saida_dataCriacao);
+            let hasDate = false;
+
+            data.forEach(d => {
+                if (d.date == thisDate && sai.Saida_isVenda == true){
+                    d.lucro += parseFloat(sai.Saida_valorTot.toString())
+                    hasDate = true
+                }
+                else if (d.date == thisDate && sai.Saida_isVenda == false){
+                    d.perda += parseFloat(sai.Saida_valorTot.toString())
+                    d.lucro -= parseFloat(sai.Saida_valorTot.toString())
+                    hasDate = true
+                }
+            })
+
+            if (sai.Saida_isVenda == true && hasDate == false){
+                let values = {date: thisDate, lucro: parseFloat(sai.Saida_valorTot.toString()), gastos: 0, perda: 0}
+                data.push(values);
             }
-
-            custosTot += Perda + gastos;
-
-            Lucro -= custosTot;
-
-            let values = {date: priorDate, lucro: Lucro, gastos: gastos, perda: Perda}
-            data.push(values);
-        }
+            else if (hasDate == false){
+                let values = {date: thisDate, lucro: -1 * parseFloat(sai.Saida_valorTot.toString()), gastos: 0, perda: parseFloat(sai.Saida_valorTot.toString())}
+                data.push(values);
+            }
+        })
 
         res.status(200).json(data)
 
@@ -69,38 +70,28 @@ export const controllerEstatisticas = {
 
     showPerda: async (req: Request, res: Response) => {
         try {
-        const data = [
+        let data = [
 
         ]
 
-        let today = new Date();
-        let priorDate = new Date(new Date().setDate(today.getDate() - 30));
+        let saida = await Saida.findAll();
 
-        console.log(priorDate)
+        saida.forEach(sai =>{
+            let thisDate = new Intl.DateTimeFormat('en-US').format(sai.Saida_dataCriacao);
+            let hasDate = false
 
-        for (let i = 29; i >= 0; i--){
-            priorDate = new Date(new Date().setDate(today.getDate() - i));
+            data.forEach(d => {
+                if (d.date == thisDate && sai.Saida_isVenda == false){
+                    d.perda += parseFloat(sai.Saida_valorTot.toString())
+                    hasDate = true
+                }
+            })
 
-            let startOfDay = new Date(priorDate);
-            startOfDay.setHours(0, 0, 0, 0);
-
-            let endOfDay = new Date(priorDate);
-            endOfDay.setHours(23, 59, 59, 999);
-            let saida = await Saida.findAll({where: {Saida_dataCriacao: {[Op.between]: [startOfDay, endOfDay]}}})
-
-            let Perda = 0;
-
-            if (saida.length > 0){
-                saida.forEach(s => {
-                    if (s.Saida_isVenda == false){
-                    Perda += parseFloat(s.Saida_valorTot.toString());
-                    }
-                })
+            if (sai.Saida_isVenda == false && hasDate == false){
+                let values = {date: thisDate, perda: parseFloat(sai.Saida_valorTot.toString())}
+                data.push(values);
             }
-
-            let values = {date: priorDate, perda: Perda}
-            data.push(values);
-        }
+        })
 
         res.status(200).json(data)
 
@@ -301,6 +292,59 @@ export const controllerEstatisticas = {
             return res.status(200).json(listaOrdenada)
         } catch (error) {
             return res.status(500).json({error: `Erro ao acessar produtos: ${error}`})
+        }
+    },
+
+    getValorEntradaSaida: async (req, res) => {
+        try {
+            let data = [
+    
+            ]
+
+            let entrada = await Entrada.findAll();
+            let saida = await Saida.findAll();
+    
+            entrada.forEach(ent => {
+
+                let thisDate = new Intl.DateTimeFormat('en-US').format(ent.Ent_dataCriacao);
+                let entradaValor = parseFloat(ent.Ent_valortot.toString())
+                
+                if (thisDate in data){
+                    data.forEach(d => {
+                        if (d.date == thisDate){
+                            d.entrada += parseFloat(entradaValor.toString())
+                        }
+                    })
+                }
+                else{
+                let values = {date: thisDate, entrada: parseFloat(entradaValor.toString()), saida: 0}
+                data.push(values);
+                }
+            })
+
+            saida.forEach(sai =>{
+                let thisDate = new Intl.DateTimeFormat('en-US').format(sai.Saida_dataCriacao);
+                let saidaValor = parseFloat(sai.Saida_valorTot.toString())
+                let hasDate = false;
+                
+                if (sai.Saida_isVenda == true){
+                    data.forEach(d => {
+                        if (d.date == thisDate){
+                            d.saida += parseFloat(saidaValor.toString())
+                            hasDate = true;
+                        }
+                    })
+                }
+                if (sai.Saida_isVenda == true && hasDate == false){
+                let values = {date: thisDate, entrada: 0, saida: parseFloat(saidaValor.toString())}
+                data.push(values);
+                }
+            })
+    
+            res.status(200).json(data)
+    
+        } catch (error){
+            res.status(500).json({error: `Erro ao calcular o valor de Entrada e Saída: ${error}`})
         }
     }
 }
