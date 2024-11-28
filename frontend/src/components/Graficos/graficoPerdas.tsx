@@ -1,10 +1,8 @@
 import { Area, AreaChart, CartesianGrid, Legend, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
-import { dataEntSaida } from './data'
 
 import { BsFilter } from "react-icons/bs"
-import { BiCalendar } from "react-icons/bi";
 import { useEffect, useState } from "react"
-import { agruparEntrSaidaPorMes, agruparLucroGastos } from "../../utils/graph/agruparPorMes"
+import { agruparPerdas } from "../../utils/graph/agruparPorMes"
 
 import { DateRangePicker } from 'rsuite';
 import 'rsuite/dist/rsuite.min.css';
@@ -13,25 +11,24 @@ import ptBR from 'rsuite/locales/pt_BR';
 import moment from 'moment'
 import 'moment/locale/pt-br';
 import { IoCalendar } from "react-icons/io5";
-import { Dropdown } from "react-bootstrap";
-import { DataEntrSaida, estatisticasServices } from "../../services/estatisticasServices";
 import { ApiException } from "../../config/apiException";
+import { DataPerda, estatisticasServices } from "../../services/estatisticasServices";
 import { filtrarDadosPorPeriodo } from "../../utils/graph/filtrarPorPeriodo";
 moment.locale('pt-br');
 
-const GraficoEntrSaida: React.FC = () =>{
-    const [ rawData, setRawData ] = useState<DataEntrSaida[]>();
-    const [ data, setData ] = useState<DataEntrSaida[]>();
+const GraficoPerdas: React.FC = () =>{
+    const [ rawData, setRawData ] = useState<DataPerda[]>();
+    const [ data, setData ] = useState<DataPerda[]>();
     const [ filter, setFilter ] = useState<'none' | 'intervalo'>('none') 
     const [ showDatePicker, setShowDatePicker ] = useState<boolean>(false) 
 
     const fetchData = async () => {
-        const result = await estatisticasServices.getEntradaSaida()
+        const result = await estatisticasServices.getPerdas()
         if (result instanceof ApiException) {
           console.log(result.message)
         } else {
             setRawData(result)
-            const dadosAgrupadosPorMes = agruparEntrSaidaPorMes(result)
+            const dadosAgrupadosPorMes = agruparPerdas(result)
             setData(dadosAgrupadosPorMes);
         }
     }
@@ -42,7 +39,7 @@ const GraficoEntrSaida: React.FC = () =>{
 
     const handleDateChange = (range: any) => {
         if (!range) {
-            const dadosAgrupadosPorMes = agruparEntrSaidaPorMes(rawData!);
+            const dadosAgrupadosPorMes = agruparPerdas(rawData!);
             setData(dadosAgrupadosPorMes);
             return;
         }
@@ -56,19 +53,19 @@ const GraficoEntrSaida: React.FC = () =>{
     };
     
     
-    const handleRemoveDateFilter = () => {
-        const dadosAgrupadosPorMes = agruparEntrSaidaPorMes(rawData!)
+      const handleRemoveDateFilter = () => {
+        const dadosAgrupadosPorMes = agruparPerdas(rawData!)
         setData(dadosAgrupadosPorMes)
         setFilter('none')
         setShowDatePicker(false)
-    }
+      }
 
     return (
         <>
             <div className="graph-header">
-                <h4>Entradas e saídas</h4>
+                <h4>Perdas</h4>
                 <div className="graph-actions">
-                    {showDatePicker ? (
+                {showDatePicker ? (
                         <DateRangePicker
                         format="dd-MM-yyyy" 
                         onChange={handleDateChange} 
@@ -88,16 +85,6 @@ const GraficoEntrSaida: React.FC = () =>{
             <ResponsiveContainer width="100%" height={350}>
                 <AreaChart data={data}
                     margin={{ top: 0, right: 0, left:30, bottom: 0 }}>
-                    <defs>
-                        <linearGradient id="colorEntrada" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#c800001c" stopOpacity={0.8}/>
-                        <stop offset="95%" stopColor="#c800001c" stopOpacity={0}/>
-                        </linearGradient>
-                        <linearGradient id="colorSaida" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#4ebf1a2c" stopOpacity={0.8}/>
-                        <stop offset="95%" stopColor="#4ebf1a2c" stopOpacity={0}/>
-                        </linearGradient>
-                    </defs>
                     <XAxis dataKey="date" tickFormatter={(tick) => {
                         if(filter === 'intervalo'){
                             return moment(tick, 'YYYY-MM-DD').format('DD/MM')
@@ -122,12 +109,11 @@ const GraficoEntrSaida: React.FC = () =>{
                         />
 
                     <Legend verticalAlign="top" height={36}/>
-                    <Area type="monotone" name="Entradas" dataKey="entrada" stroke="#C80000" fillOpacity={1} fill="url(#colorEntrada)" />
-                    <Area type="monotone" name="Saídas" dataKey="saida" stroke="#4FBF1A" fillOpacity={1} fill="url(#colorSaida)" />
+                    <Area type="monotone" name="perda" dataKey="perda" stroke="#C80000" fillOpacity={1} fill="url(#colorEntrada)" />
                 </AreaChart>
             </ResponsiveContainer>
         </>
     )
 }
 
-export default GraficoEntrSaida
+export default GraficoPerdas

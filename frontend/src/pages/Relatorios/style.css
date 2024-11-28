@@ -1,11 +1,9 @@
 .container-grid{
-    height: 120rem;
     min-height: fit-content;
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 0.25fr 1fr 1.5fr 1fr 1.5fr;
+    grid-template-rows: 0.25fr 1fr 1.5fr 1fr 1fr 1.5fr;
     gap: 1rem;
-    gap: 1.5rem;
 }
 
 .container-grid h1, .container-grid h4{
@@ -116,12 +114,12 @@
 @media (max-width: 992px) {
     .container-grid{
         grid-template-columns: 1fr; 
-        grid-template-rows: 0.5fr 3fr 2fr 3fr 3fr 2fr;
+        grid-template-rows: 0.19fr 0.5fr 1fr  0.3fr 0.3fr 1fr;
     }
 
     .row2{
         grid-template-columns: 1fr;
-        grid-template-rows: 3fr 2fr; 
+        grid-template-rows: 0.8fr 0.5fr; 
     }
 
     .row3{
@@ -129,7 +127,5 @@
         grid-template-rows: 2fr 2fr; 
     }
 
-    .stats {
-        height: 100px; /* Define uma altura menor para .stats */
-    }
+    
 }

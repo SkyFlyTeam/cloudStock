@@ -1,15 +1,34 @@
+import { useState, useEffect } from 'react'
 import GraficoEntrSaida from '../../components/Graficos/graficoEntrSaida'
-import GraficoLucroPerda from '../../components/Graficos/graficoLucroPerda'
+import GraficoLucroGastos from '../../components/Graficos/graficoLucroGastos'
+import GraficoPerdas from '../../components/Graficos/graficoPerdas'
 import GraficoProdCusto from '../../components/Graficos/graficoProdCusto'
 import GraficoProdEntrada from '../../components/Graficos/graficoProdEntrada'
 import GraficoProdRentabilidade from '../../components/Graficos/graficoProdRentabilidade'
 import GraficoProdSaida from '../../components/Graficos/graficoProdSaida'
+import { ApiException } from '../../config/apiException'
+import { DataEstGeral, estatisticasServices } from '../../services/estatisticasServices'
+import { agruparEntrSaidaPorMes } from '../../utils/graph/agruparPorMes'
 import './style.css'
 
 import { FaArrowTrendDown, FaArrowTrendUp } from "react-icons/fa6"
 
 function Relatorios() {
-    
+    // const [ estGeral, setEstGeral ] = useState<DataEstGeral>();
+
+    // const fetchEstatiscasGerais = async () => {
+    //     const result = await estatisticasServices.getEstGeral()
+    //     if (result instanceof ApiException) {
+    //       console.log(result.message)
+    //     } else {
+    //         setEstGeral(result)
+    //     }
+    // }
+
+    // useEffect(() => {
+    //     fetchEstatiscasGerais()
+    // }, [])
+
     return(
         <main className="relatorios">
             <div className="page-title">
@@ -70,7 +89,12 @@ function Relatorios() {
                 </div>
                 <div>
                     <div className="graph-card">
-                        <GraficoLucroPerda />
+                        <GraficoLucroGastos />
+                    </div>
+                </div>
+                <div>
+                    <div className="graph-card">
+                        <GraficoPerdas />
                     </div>
                 </div>
                 <div className="row3">

@@ -204,18 +204,6 @@ hr.line {
     width: 100%;
   }
   
-  .suggestions-container {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: fit-content;
-    background-color: white;
-    border: 1px solid #ddd;
-    border-top: none;
-    max-height: 200px;
-    overflow-y: auto;
-    border-radius: 0 0 10px 10px;
-  }
   
   .suggestion-item {
     padding: 8px;

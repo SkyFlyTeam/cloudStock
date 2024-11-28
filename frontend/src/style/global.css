@@ -30,7 +30,7 @@ h1.title{
   font-weight: 700;
 }
 
-.link{
+.link, .link:hover{
   text-decoration: none;
 }
 

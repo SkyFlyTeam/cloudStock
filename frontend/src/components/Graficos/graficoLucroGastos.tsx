@@ -3,8 +3,8 @@ import { dataPerdaLucro } from './data'
 
 import { BsFilter } from "react-icons/bs"
 import { BiCalendar } from "react-icons/bi";
-import { useState } from "react"
-import { agruparLucroPerda } from "../../utils/graph/agruparPorMes"
+import { useEffect, useState } from "react"
+import { agruparLucroGastos } from "../../utils/graph/agruparPorMes"
 
 import { DateRangePicker } from 'rsuite';
 import 'rsuite/dist/rsuite.min.css';
@@ -13,31 +13,51 @@ import ptBR from 'rsuite/locales/pt_BR';
 import moment from 'moment'
 import 'moment/locale/pt-br';
 import { IoCalendar } from "react-icons/io5";
+import { ApiException } from "../../config/apiException";
+import { DataLucroGastos, estatisticasServices } from "../../services/estatisticasServices";
+import { filtrarDadosPorPeriodo } from "../../utils/graph/filtrarPorPeriodo";
 moment.locale('pt-br');
 
-const GraficoLucroPerda: React.FC = () =>{
-    const [dadosEntrSaida, setDadosEntrSaida] = useState(agruparLucroPerda(dataPerdaLucro));
-    const [ filter, setFilter ] = useState<'none' | 'intervalo' | 'quantidade'>('none') 
+const GraficoLucroGastos: React.FC = () =>{
+    const [ rawData, setRawData ] = useState<DataLucroGastos[]>();
+    const [ data, setData ] = useState<DataLucroGastos[]>();
+    const [ filter, setFilter ] = useState<'none' | 'intervalo'>('none') 
     const [ showDatePicker, setShowDatePicker ] = useState<boolean>(false) 
+
+    const fetchData = async () => {
+        const result = await estatisticasServices.getLucroGastos()
+        if (result instanceof ApiException) {
+          console.log(result.message)
+        } else {
+            setRawData(result)
+            const dadosAgrupadosPorMes = agruparLucroGastos(result)
+            setData(dadosAgrupadosPorMes);
+        }
+    }
+
+    useEffect(() => {
+        fetchData()
+    }, [])
 
     const handleDateChange = (range: any) => {
         if (!range) {
-            setDadosEntrSaida(agruparLucroPerda(dataPerdaLucro)); // Resetar os dados caso nenhuma data seja selecionada
+            const dadosAgrupadosPorMes = agruparLucroGastos(rawData!);
+            setData(dadosAgrupadosPorMes);
             return;
         }
     
         const [start, end] = range;
-        const filtered = dataPerdaLucro.filter((item) => {
-          const itemDate = new Date(item.date);
-          return itemDate >= start && itemDate <= end;
-        });
-        
-        setFilter('intervalo')
-        setDadosEntrSaida(filtered);
-      };
+    
+        const filtered = filtrarDadosPorPeriodo(rawData!, start, end)
+    
+        setFilter('intervalo');
+        setData(filtered);
+    };
+    
     
       const handleRemoveDateFilter = () => {
-        setDadosEntrSaida(agruparLucroPerda(dataPerdaLucro));
+        const dadosAgrupadosPorMes = agruparLucroGastos(rawData!)
+        setData(dadosAgrupadosPorMes)
         setFilter('none')
         setShowDatePicker(false)
       }
@@ -45,7 +65,7 @@ const GraficoLucroPerda: React.FC = () =>{
     return (
         <>
             <div className="graph-header">
-                <h4>Lucro x Perda</h4>
+                <h4>Lucro x Gastos</h4>
                 <div className="graph-actions">
                 {showDatePicker ? (
                         <DateRangePicker
@@ -62,11 +82,10 @@ const GraficoLucroPerda: React.FC = () =>{
                     ): (
                         <IoCalendar size={22} style={{ color: '#61BDE0'}} onClick={() => setShowDatePicker(true)}/>
                     )}
-                    <BsFilter size={33} style={{ color: '#61BDE0'}} />
                 </div>
             </div>
             <ResponsiveContainer width="100%" height={350}>
-                <AreaChart data={dadosEntrSaida}
+                <AreaChart data={data}
                     margin={{ top: 0, right: 0, left:30, bottom: 0 }}>
                     <XAxis dataKey="date" tickFormatter={(tick) => {
                         if(filter === 'intervalo'){
@@ -92,7 +111,7 @@ const GraficoLucroPerda: React.FC = () =>{
                         />
 
                     <Legend verticalAlign="top" height={36}/>
-                    <Area type="monotone" name="Perda" dataKey="perda" stroke="#C80000" fillOpacity={1} fill="url(#colorEntrada)" />
+                    <Area type="monotone" name="Gastos" dataKey="gastos" stroke="#C80000" fillOpacity={1} fill="url(#colorEntrada)" />
                     <Area type="monotone" name="Lucro" dataKey="lucro" stroke="#4FBF1A" fillOpacity={1} fill="url(#colorSaida)" />
                 </AreaChart>
             </ResponsiveContainer>
@@ -100,4 +119,4 @@ const GraficoLucroPerda: React.FC = () =>{
     )
 }
 
-export default GraficoLucroPerda
+export default GraficoLucroGastos

@@ -9,95 +9,111 @@ import { Categoria } from '../models/Categoria';
 export const controllerEstatisticas = {
     showLucro: async (req: Request, res: Response) => {
         try {
-        let data = [
-
-        ]
-
-        let entrada = await Entrada.findAll();
-        let saida = await Saida.findAll();
-
-        entrada.forEach(ent => {
-
-            let thisDate = new Intl.DateTimeFormat('en-US').format(ent.Ent_dataCriacao);
-            let hasDate = false
-
-            data.forEach(d => {
-                if (d.date == thisDate){
-                    d.gastos += parseFloat(ent.Ent_valortot.toString())
-                    d.lucro -= parseFloat(ent.Ent_valortot.toString())
-                    hasDate = true
+            let data = [];
+    
+            let entrada = await Entrada.findAll();
+            let saida = await Saida.findAll();
+    
+            entrada.forEach(ent => {
+                let thisDate = ent.Ent_dataCriacao.toISOString().split('T')[0]; // AAAA-MM-DD
+                let hasDate = false;
+    
+                data.forEach(d => {
+                    if (d.date === thisDate) {
+                        d.gastos += parseFloat(ent.Ent_valortot.toString());
+                        d.lucro -= parseFloat(ent.Ent_valortot.toString());
+                        hasDate = true;
+                    }
+                });
+    
+                if (!hasDate) {
+                    let values = {
+                        date: thisDate,
+                        lucro: -1 * parseFloat(ent.Ent_valortot.toString()),
+                        gastos: parseFloat(ent.Ent_valortot.toString()),
+                        perda: 0
+                    };
+                    data.push(values);
                 }
-            })
-
-            if (hasDate == false){
-                let values = {date: thisDate, lucro: -1 * parseFloat(ent.Ent_valortot.toString()), gastos: parseFloat(ent.Ent_valortot.toString()), perda: 0}
-                data.push(values);
-            }
-        })
-
-        saida.forEach(sai => {
-            let thisDate = new Intl.DateTimeFormat('en-US').format(sai.Saida_dataCriacao);
-            let hasDate = false;
-
-            data.forEach(d => {
-                if (d.date == thisDate && sai.Saida_isVenda == true){
-                    d.lucro += parseFloat(sai.Saida_valorTot.toString())
-                    hasDate = true
+            });
+    
+            saida.forEach(sai => {
+                let thisDate = sai.Saida_dataCriacao.toISOString().split('T')[0]; // AAAA-MM-DD
+                let hasDate = false;
+    
+                data.forEach(d => {
+                    if (d.date === thisDate && sai.Saida_isVenda === true) {
+                        d.lucro += parseFloat(sai.Saida_valorTot.toString());
+                        hasDate = true;
+                    } else if (d.date === thisDate && sai.Saida_isVenda === false) {
+                        d.perda += parseFloat(sai.Saida_valorTot.toString());
+                        d.lucro -= parseFloat(sai.Saida_valorTot.toString());
+                        hasDate = true;
+                    }
+                });
+    
+                if (sai.Saida_isVenda === true && !hasDate) {
+                    let values = {
+                        date: thisDate,
+                        lucro: parseFloat(sai.Saida_valorTot.toString()),
+                        gastos: 0,
+                        perda: 0
+                    };
+                    data.push(values);
+                } else if (!hasDate) {
+                    let values = {
+                        date: thisDate,
+                        lucro: -1 * parseFloat(sai.Saida_valorTot.toString()),
+                        gastos: 0,
+                        perda: parseFloat(sai.Saida_valorTot.toString())
+                    };
+                    data.push(values);
                 }
-                else if (d.date == thisDate && sai.Saida_isVenda == false){
-                    d.perda += parseFloat(sai.Saida_valorTot.toString())
-                    d.lucro -= parseFloat(sai.Saida_valorTot.toString())
-                    hasDate = true
-                }
-            })
-
-            if (sai.Saida_isVenda == true && hasDate == false){
-                let values = {date: thisDate, lucro: parseFloat(sai.Saida_valorTot.toString()), gastos: 0, perda: 0}
-                data.push(values);
-            }
-            else if (hasDate == false){
-                let values = {date: thisDate, lucro: -1 * parseFloat(sai.Saida_valorTot.toString()), gastos: 0, perda: parseFloat(sai.Saida_valorTot.toString())}
-                data.push(values);
-            }
-        })
-
-        res.status(200).json(data)
-
-    } catch (error){
-        res.status(500).json({error: `Erro ao calcular o lucro: ${error}`})
-    }
+            });
+            
+            data.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+            res.status(200).json(data);
+    
+        } catch (error) {
+            res.status(500).json({ error: `Erro ao calcular o lucro: ${error}` });
+        }
     },
+    
 
     showPerda: async (req: Request, res: Response) => {
         try {
-        let data = [
-
-        ]
-
-        let saida = await Saida.findAll();
-
-        saida.forEach(sai =>{
-            let thisDate = new Intl.DateTimeFormat('en-US').format(sai.Saida_dataCriacao);
-            let hasDate = false
-
-            data.forEach(d => {
-                if (d.date == thisDate && sai.Saida_isVenda == false){
-                    d.perda += parseFloat(sai.Saida_valorTot.toString())
-                    hasDate = true
+            let data = [];
+    
+            let saida = await Saida.findAll();
+    
+            saida.forEach(sai => {
+                // Formata a data para o formato AAAA-MM-DD
+                let thisDate = sai.Saida_dataCriacao.toISOString().split('T')[0];
+                let hasDate = false;
+    
+                data.forEach(d => {
+                    if (d.date === thisDate && sai.Saida_isVenda === false) {
+                        d.perda += parseFloat(sai.Saida_valorTot.toString());
+                        hasDate = true;
+                    }
+                });
+    
+                if (sai.Saida_isVenda === false && hasDate === false) {
+                    let values = {
+                        date: thisDate,
+                        perda: parseFloat(sai.Saida_valorTot.toString())
+                    };
+                    data.push(values);
                 }
-            })
+            });
 
-            if (sai.Saida_isVenda == false && hasDate == false){
-                let values = {date: thisDate, perda: parseFloat(sai.Saida_valorTot.toString())}
-                data.push(values);
-            }
-        })
+            data.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
-        res.status(200).json(data)
-
-    } catch (error){
-        res.status(500).json({error: `Erro ao calcular a perda: ${error}`})
-    }
+            res.status(200).json(data);
+    
+        } catch (error) {
+            res.status(500).json({ error: `Erro ao calcular a perda: ${error}` });
+        }
     },
 
     getMaiorEntrada: async (req, res) => {
@@ -140,7 +156,7 @@ export const controllerEstatisticas = {
                     })
                 })
             })
-            const listaOrdenada = lista.sort((a, b) => b['Quantidade'] - a['Quantidade']).splice(0, 10)
+            const listaOrdenada = lista.sort((a, b) => b['Quantidade'] - a['Quantidade'])
 
             return res.status(200).json(listaOrdenada)
         } catch (error) {
@@ -175,7 +191,7 @@ export const controllerEstatisticas = {
                 s.Lotes.forEach((l) => {
                     const existente = lista.find((li) => l['Produtos']['Prod_nome'] === li['Prod_nome'])
                     if(existente){
-                        existente['Quantidade'] += l['lote_Saida']['Saida_quantidade']
+                        existente['Quantidade'] += l['Lote_Saida']['Saida_quantidade']
                         return
                     }
                     const nome = l['Produtos']['Prod_nome']
@@ -188,7 +204,7 @@ export const controllerEstatisticas = {
                     })
                 })
             })
-            const listaOrdenada = lista.sort((a, b) => b['Quantidade'] - a['Quantidade']).splice(0, 10)
+            const listaOrdenada = lista.sort((a, b) => b['Quantidade'] - a['Quantidade'])
 
             return res.status(200).json(listaOrdenada)
         } catch (error) {
@@ -239,7 +255,7 @@ export const controllerEstatisticas = {
                     ValorTot: valorTotal
                 })
             })
-            const listaOrdenada = lista.sort((a, b) => b['ValorTot'] - a['ValorTot']).splice(0, 10)
+            const listaOrdenada = lista.sort((a, b) => b['ValorTot'] - a['ValorTot'])
 
             return res.status(200).json(listaOrdenada)
         } catch (error) {
@@ -287,7 +303,7 @@ export const controllerEstatisticas = {
                     ValorTot: custoTotal
                 })
             })
-            const listaOrdenada = lista.sort((a, b) => b['ValorTot'] - a['ValorTot']).splice(0, 10)
+            const listaOrdenada = lista.sort((a, b) => b['ValorTot'] - a['ValorTot'])
 
             return res.status(200).json(listaOrdenada)
         } catch (error) {
@@ -297,54 +313,51 @@ export const controllerEstatisticas = {
 
     getValorEntradaSaida: async (req, res) => {
         try {
-            let data = [
+            let data = [];
     
-            ]
-
             let entrada = await Entrada.findAll();
             let saida = await Saida.findAll();
     
             entrada.forEach(ent => {
-
-                let thisDate = new Intl.DateTimeFormat('en-US').format(ent.Ent_dataCriacao);
-                let entradaValor = parseFloat(ent.Ent_valortot.toString())
-                
-                if (thisDate in data){
-                    data.forEach(d => {
-                        if (d.date == thisDate){
-                            d.entrada += parseFloat(entradaValor.toString())
-                        }
-                    })
+                let thisDate = ent.Ent_dataCriacao.toISOString().split('T')[0];
+                let entradaValor = parseFloat(ent.Ent_valortot.toString());
+    
+                let existingEntry = data.find(d => d.date === thisDate);
+    
+                if (existingEntry) {
+                    existingEntry.entrada += entradaValor;
+                } else {
+                    let values = { date: thisDate, entrada: entradaValor, saida: 0 };
+                    data.push(values);
                 }
-                else{
-                let values = {date: thisDate, entrada: parseFloat(entradaValor.toString()), saida: 0}
-                data.push(values);
-                }
-            })
-
-            saida.forEach(sai =>{
-                let thisDate = new Intl.DateTimeFormat('en-US').format(sai.Saida_dataCriacao);
-                let saidaValor = parseFloat(sai.Saida_valorTot.toString())
+            });
+    
+            saida.forEach(sai => {
+                let thisDate = sai.Saida_dataCriacao.toISOString().split('T')[0];
+                let saidaValor = parseFloat(sai.Saida_valorTot.toString());
                 let hasDate = false;
-                
-                if (sai.Saida_isVenda == true){
+    
+                if (sai.Saida_isVenda === true) {
                     data.forEach(d => {
-                        if (d.date == thisDate){
-                            d.saida += parseFloat(saidaValor.toString())
+                        if (d.date === thisDate) {
+                            d.saida += saidaValor;
                             hasDate = true;
                         }
-                    })
+                    });
                 }
-                if (sai.Saida_isVenda == true && hasDate == false){
-                let values = {date: thisDate, entrada: 0, saida: parseFloat(saidaValor.toString())}
-                data.push(values);
+    
+                if (sai.Saida_isVenda === true && !hasDate) {
+                    let values = { date: thisDate, entrada: 0, saida: saidaValor };
+                    data.push(values);
                 }
-            })
+            });
     
-            res.status(200).json(data)
+            data.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+
+            res.status(200).json(data);
     
-        } catch (error){
-            res.status(500).json({error: `Erro ao calcular o valor de Entrada e Saída: ${error}`})
+        } catch (error) {
+            res.status(500).json({ error: `Erro ao calcular o valor de Entrada e Saída: ${error}` });
         }
     }
 }

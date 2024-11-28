@@ -1,3 +1,5 @@
+import { DataQuantidade } from "../../services/estatisticasServices";
+
 export const dataEntSaida = [
   { "date": "2024-01-01", "entrada": 3000, "saida": 1500 },
   { "date": "2024-01-02", "entrada": 4500, "saida": 2100 },
@@ -75,18 +77,29 @@ export const dataEntSaida = [
   { "date": "2024-03-14", "entrada": 4800, "saida": 2000 }
 ]
 
-export const dataProdComprado = [
-  { Prod_nome: 'Teclado Mecânico Gamer Switch Blue', Quantidade: 400 },
-  { Prod_nome: 'Mouse Gamer RGB 6400DPI', Quantidade: 250 },
-  { Prod_nome: 'Monitor LED 27" Full HD', Quantidade: 180 },
-  { Prod_nome: 'Cadeira Gamer Reclinável', Quantidade: 120 },
-  { Prod_nome: 'Headset Gamer Surround 7.1', Quantidade: 300 },
-  { Prod_nome: 'Placa de Vídeo RTX 3060 12GB', Quantidade: 75 },
-  { Prod_nome: 'Notebook Gamer i7 16GB RAM', Quantidade: 90 },
-  { Prod_nome: 'Fonte 750W Modular', Quantidade: 220 },
-  { Prod_nome: 'SSD NVMe 1TB', Quantidade: 400 },
-  { Prod_nome: 'Gabinete ATX com RGB', Quantidade: 150 }
+export const dataProdComprado: DataQuantidade[] = [
+  { Prod_nome: 'Teclado Mecânico Gamer Switch Blue', Quantidade: 400, CategoriaPai: 'Periféricos' },
+  { Prod_nome: 'Mouse Gamer RGB 6400DPI', Quantidade: 250, CategoriaPai: 'Periféricos' },
+  { Prod_nome: 'Mousepad Gamer Extra Grande', Quantidade: 300, CategoriaPai: 'Periféricos' },
+  { Prod_nome: 'Monitor LED 27" Full HD', Quantidade: 180, CategoriaPai: 'Monitores' },
+  { Prod_nome: 'Monitor Curvo UltraWide 34"', Quantidade: 100, CategoriaPai: 'Monitores' },
+  { Prod_nome: 'Cadeira Gamer Reclinável', Quantidade: 120, CategoriaPai: 'Móveis' },
+  { Prod_nome: 'Escrivaninha Gamer com RGB', Quantidade: 80, CategoriaPai: 'Móveis' },
+  { Prod_nome: 'Headset Gamer Surround 7.1', Quantidade: 300, CategoriaPai: 'Áudio' },
+  { Prod_nome: 'Caixa de Som Bluetooth 50W', Quantidade: 200, CategoriaPai: 'Áudio' },
+  { Prod_nome: 'Placa de Vídeo RTX 3060 12GB', Quantidade: 75, CategoriaPai: 'Hardware' },
+  { Prod_nome: 'Placa Mãe ATX Z690', Quantidade: 150, CategoriaPai: 'Hardware' },
+  { Prod_nome: 'Processador Intel i9 12ª Geração', Quantidade: 50, CategoriaPai: 'Hardware' },
+  { Prod_nome: 'Notebook Gamer i7 16GB RAM', Quantidade: 90, CategoriaPai: 'Notebooks' },
+  { Prod_nome: 'Notebook Ultrafino i5 8GB RAM', Quantidade: 120, CategoriaPai: 'Notebooks' },
+  { Prod_nome: 'Fonte 750W Modular', Quantidade: 220, CategoriaPai: 'Hardware' },
+  { Prod_nome: 'SSD NVMe 1TB', Quantidade: 400, CategoriaPai: 'Hardware' },
+  { Prod_nome: 'Gabinete ATX com RGB', Quantidade: 150, CategoriaPai: 'Gabinetes' },
+  { Prod_nome: 'Gabinete Mini-ITX Compacto', Quantidade: 80, CategoriaPai: 'Gabinetes' },
+  { Prod_nome: 'Cabo HDMI 2.1 3m', Quantidade: 300, CategoriaPai: 'Acessórios' },
+  { Prod_nome: 'Adaptador USB-C para HDMI', Quantidade: 200, CategoriaPai: 'Acessórios' },
 ];
+
 
 export const dataMaiorRent = [
   { Prod_nome: 'Teclado Mecânico Gamer Switch Blue', ValorTot: 50000 },
