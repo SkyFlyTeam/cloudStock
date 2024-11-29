@@ -30,6 +30,7 @@ export const controllerEstatisticas = {
                     let values = {
                         date: thisDate,
                         lucro: -1 * parseFloat(ent.Ent_valortot.toString()),
+                        ganhos: 0,
                         gastos: parseFloat(ent.Ent_valortot.toString()),
                         perda: 0
                     };
@@ -44,6 +45,7 @@ export const controllerEstatisticas = {
                 data.forEach(d => {
                     if (d.date === thisDate && sai.Saida_isVenda === true) {
                         d.lucro += parseFloat(sai.Saida_valorTot.toString());
+                        d.ganhos += parseFloat(sai.Saida_valorTot.toString())
                         hasDate = true;
                     } else if (d.date === thisDate && sai.Saida_isVenda === false) {
                         d.perda += parseFloat(sai.Saida_valorTot.toString());
@@ -56,6 +58,7 @@ export const controllerEstatisticas = {
                     let values = {
                         date: thisDate,
                         lucro: parseFloat(sai.Saida_valorTot.toString()),
+                        ganhos: parseFloat(sai.Saida_valorTot.toString()),
                         gastos: 0,
                         perda: 0
                     };
@@ -64,6 +67,7 @@ export const controllerEstatisticas = {
                     let values = {
                         date: thisDate,
                         lucro: -1 * parseFloat(sai.Saida_valorTot.toString()),
+                        ganhos: 0,
                         gastos: 0,
                         perda: parseFloat(sai.Saida_valorTot.toString())
                     };
