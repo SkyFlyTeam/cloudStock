@@ -8,7 +8,7 @@ export const controllerAuth = {
         try{
           const { email, senha } = req.body;
           const usuario = await Usuario.findOne({ where: { Usuario_email: email }});
-    
+          
           if(!usuario){
             return res.status(404).json({ error: 'Email ou senha inválidos.' });
           }
