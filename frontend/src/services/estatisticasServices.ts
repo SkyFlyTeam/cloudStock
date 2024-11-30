@@ -32,13 +32,8 @@ export interface DadosAgrupadosValor {
 export interface DataLucroGastos {
     date: Date | string;
     lucro: number;
+    ganhos: number;
     gastos: number;
-};
-
-export interface DataLucroGastos {
-  date: Date | string;
-  lucro: number;
-  gastos: number;
 };
 
 export interface DataPerda {

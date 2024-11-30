@@ -1,4 +1,4 @@
-import { Area, AreaChart, CartesianGrid, Legend, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
+import { Area, AreaChart, CartesianGrid, Legend, ReferenceLine, ResponsiveContainer, Tooltip, TooltipProps, XAxis, YAxis } from "recharts"
 import { dataPerdaLucro } from './data'
 
 import { BsFilter } from "react-icons/bs"
@@ -17,6 +17,31 @@ import { ApiException } from "../../config/apiException";
 import { DataLucroGastos, estatisticasServices } from "../../services/estatisticasServices";
 import { filtrarDadosPorPeriodo } from "../../utils/graph/filtrarPorPeriodo";
 moment.locale('pt-br');
+
+const GanhosGastosTooltip: React.FC<TooltipProps<number, string>> = ({ active, payload }) => {
+    if (active && payload && payload.length) {
+      const { date, ganhos, gastos, lucro } = payload[0].payload;
+      return (
+        <div className="custom-tooltip" style={{ backgroundColor: '#fff', padding: '10px', border: '1px solid #ccc' }}>
+          <p>{moment(date).format('DD/MM/YYYY')}</p>
+          <p style={{color: '#C80000'}}>Gastos: {new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+          }).format(gastos)}</p>
+          <p style={{color: '#4FBF1A'}}>Ganhos: {new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+          }).format(ganhos)}</p>
+          <p style={{color: '#F8BA36'}}>Lucro: {new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+          }).format(lucro)}</p>
+        </div>
+      );
+    }
+  
+    return null;
+};
 
 const GraficoLucroGastos: React.FC = () =>{
     const [ rawData, setRawData ] = useState<DataLucroGastos[]>();
@@ -65,7 +90,7 @@ const GraficoLucroGastos: React.FC = () =>{
     return (
         <>
             <div className="graph-header">
-                <h4>Lucro x Gastos</h4>
+                <h4>Ganhos x Gastos</h4>
                 <div className="graph-actions">
                 {showDatePicker ? (
                         <DateRangePicker
@@ -98,21 +123,10 @@ const GraficoLucroGastos: React.FC = () =>{
                     }/>
                     <YAxis  domain={[0, 'dataMax + 2000']} label={{ value: 'Valor total (R$)', angle: -90, position: 'insideLeft', dx: -30, dy: 40 }}/>
                     <CartesianGrid strokeDasharray="3 3" />
-                    <Tooltip
-                        formatter={(value) => {
-                            if (typeof value === 'number') {
-                            return new Intl.NumberFormat('pt-BR', {
-                                style: 'currency',
-                                currency: 'BRL',
-                            }).format(value);
-                            }
-                            return value;
-                        }}
-                        />
-
+                    <Tooltip content={<GanhosGastosTooltip />} />
                     <Legend verticalAlign="top" height={36}/>
                     <Area type="monotone" name="Gastos" dataKey="gastos" stroke="#C80000" fillOpacity={1} fill="url(#colorEntrada)" />
-                    <Area type="monotone" name="Lucro" dataKey="lucro" stroke="#4FBF1A" fillOpacity={1} fill="url(#colorSaida)" />
+                    <Area type="monotone" name="Ganhos" dataKey="ganhos" stroke="#4FBF1A" fillOpacity={1} fill="url(#colorSaida)" />
                 </AreaChart>
             </ResponsiveContainer>
         </>

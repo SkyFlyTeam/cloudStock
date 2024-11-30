@@ -39,7 +39,7 @@ export function agruparEntrSaidaPorMes(data: DataEntrSaida[]) {
 export function agruparLucroGastos(data: DataLucroGastos[]) {
   const dadosAgrupados = data.reduce(
     (
-      acumulador: Record<string, { date: string; lucro: number; gastos: number;}>,
+      acumulador: Record<string, { date: string; ganhos: number; lucro: number; gastos: number;}>,
       item
     ) => {
       let date: string;
@@ -54,12 +54,13 @@ export function agruparLucroGastos(data: DataLucroGastos[]) {
 
       // Se o mês ainda não existir no acumulador, cria
       if (!acumulador[date]) {
-        acumulador[date] = { date, lucro: 0, gastos: 0 };
+        acumulador[date] = { date, ganhos: 0, gastos: 0, lucro: 0 };
       }
 
       // Caso contrário, acumula os valores de lucro e perda
-      acumulador[date].lucro += item.lucro;
+      acumulador[date].ganhos += item.ganhos;
       acumulador[date].gastos += item.gastos;
+      acumulador[date].lucro += item.lucro;
 
       return acumulador;
     },
