@@ -13,7 +13,8 @@
     <a href="#autores">Autores</a> |
     <a href="./sprints/sprint1/sprint1.md">Sprint 1</a> |
     <a href="./sprints/sprint2/sprint2.md">Sprint 2</a> |
-    <a href="./sprints/sprint3/sprint3.md">Sprint 3</a>
+    <a href="./sprints/sprint3/sprint3.md">Sprint 3</a> |
+    <a href="./sprints/sprint4/sprint4.md">Sprint 4</a>
 </p>
 
 <br>
