@@ -54,18 +54,12 @@ export class Categoria extends Model {
   @HasMany(() => Produto)
   Produtos!: Produto[];
 
-  @ForeignKey(() => Usuario)
-  @Column({
-    type: DataType.INTEGER,
-    allowNull: true, // Tornar opcional
-  })
-  Usuario_id!: number | null;
 
   @AfterCreate
-  static async afterCreateHook(instance: Categoria) {
+  static async afterCreateHook(instance: Categoria, options: any) {
     try {
-      const usuario_id = instance.getDataValue('usuario_id');
-      console.log(usuario_id)
+
+      const usuario_id = options.context?.usuario_id
       const nome = await fetch(`http://localhost:5000/usuario/${usuario_id}`);
       const jsonData = await nome.json();
 
@@ -83,16 +77,18 @@ export class Categoria extends Model {
   }
 
   @AfterUpdate
-  static async afterUpdateHook(instance: Categoria) {
+  static async afterUpdateHook(instance: Categoria, options: any) {
     try {
-      const usuario_id = instance.getDataValue('usuario_id');
-      console.log(usuario_id)
+
+      const nomeAntigo = instance.previous('Categoria_nome') as string;
+      const usuario_id = options.context?.usuario_id
       const nome = await fetch(`http://localhost:5000/usuario/${usuario_id}`);
       const jsonData = await nome.json();
 
+      console.log(usuario_id)
+
       // Verifica mudanças no nome
       if (instance.changed('Categoria_nome')) {
-        const nomeAntigo = instance.previous('Categoria_nome') as string;
 
         await Registros.create({
           Registro_Mensagem: `Categoria alterada: ${nomeAntigo} renomeada para ${instance.Categoria_nome}`,

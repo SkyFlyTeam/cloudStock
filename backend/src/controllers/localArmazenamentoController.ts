@@ -11,7 +11,7 @@ export const controllerLocalArmazenamento = {
 
       const localArmazenamento = await Local_Armazenamento.create(req.body, {
         include: [Setor], // Incluindo o setor associado
-        context: {usuario_id: usuario_id}
+        context: { usuario_id: usuario_id },
       });
       
       return res.status(201).json(localArmazenamento);
@@ -80,7 +80,7 @@ export const controllerLocalArmazenamento = {
       }
       const usuario_id=req.headers.usuario_id[0]
       
-      const updated = await instance.update(req.body, {individualHooks:true, context: {usuario_id}});
+      const updated = await instance.update(req.body, {individualHooks:true, context: { usuario_id: usuario_id }});
 
       if (updated) {
         // Atualiza as relações com Setor se for necessário

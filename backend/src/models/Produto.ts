@@ -145,7 +145,7 @@ export class Produto extends Model {
             const usuario_id = instance.getDataValue('usuario_id');
             console.log(usuario_id)
             const nome = await fetch(`http://localhost:5000/usuario/${usuario_id}`);
-              const jsonData = await nome.json();
+            const jsonData = await nome.json();
             // Substitua "produto" pelo endpoint correto para buscar o responsável
             // const response = await fetch(`http://localhost:5000/usuario/produto/${instance.Prod_cod}`);
             // const jsonData = await response.json();
@@ -166,79 +166,79 @@ export class Produto extends Model {
 
     // Hook para registrar alterações
     @AfterUpdate
-    static async registrarAlteracao(instance: Produto, options: any) {
-        try {
-            let usuario_id = 0; 
-
-            if (!options.context?.usuario_id) {
-              usuario_id = instance.getDataValue('usuario_id');
-            } else {
-              usuario_id = options.context.usuario_id;
-            }
-
-            const nome = await fetch(`http://localhost:5000/usuario/${usuario_id}`);
-            const jsonData = await nome.json();
+    static async afterUpdateHook(instance: Produto, options: any) {
+      try {
+        const usuario_id = options.context?.usuario_id
+        const nome = await fetch(`http://localhost:5000/usuario/${usuario_id}`);
+        const jsonData = await nome.json();
+  
+        console.log(usuario_id)
 
 
             // Verifica mudanças no preço
             // Obtém os campos alterados
-        const camposAlterados = instance.changed() || [];
+            const camposAlterados = instance.changed() || [];
 
-        // Itera sobre os campos alterados para verificar o que realmente mudou
-        for (const campo of camposAlterados) {
-            const valorAntigo = instance.previous(campo);
-            const valorNovo = (instance as any)[campo];
+            // Itera sobre os campos alterados para verificar o que realmente mudou
+            for (const campo of camposAlterados) {
+                const valorAntigo = instance.previous(campo);
+                const valorNovo = (instance as any)[campo];
 
-            // Verifica se o valor antigo é diferente do novo
-            if (valorAntigo != valorNovo) {
-                let mensagem = '';
-                let valorTotal = null;
+                // Verifica se o valor antigo é diferente do novo
+                if (valorAntigo != valorNovo) {
+                    let mensagem = '';
+                    let valorTotal = null;
 
-                // Define mensagens específicas para cada campo
-                switch (campo) {
-                    case 'Prod_preco':
-                        mensagem = `Produto "${instance.Prod_nome}" teve o preço alterado de R$${Number(valorAntigo).toLocaleString('pt-BR', { minimumFractionDigits: 2 })} para R$${Number(valorNovo).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-                        valorTotal = valorNovo;
-                        break;
+                    // Define mensagens específicas para cada campo
+                    switch (campo) {
+                        case 'Prod_nome':
+                            mensagem = `Produto "${valorAntigo}" teve seu nome alterado para "${valorNovo}"`
+                            valorTotal = null;
+                            break;
 
-                    case 'Prod_custo':
-                        mensagem = `Produto "${instance.Prod_nome}" teve o custo alterado de R$${Number(valorAntigo).toLocaleString('pt-BR', { minimumFractionDigits: 2 })} para R$${Number(valorNovo).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-                        valorTotal = valorNovo;
-                        break;
+                        case 'Prod_preco':
+                            mensagem = `Produto "${instance.Prod_nome}" teve o preço alterado de R$${Number(valorAntigo).toLocaleString('pt-BR', { minimumFractionDigits: 2 })} para R$${Number(valorNovo).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+                            valorTotal = valorNovo;
+                            break;
 
-                    case 'Categoria_id':
-                        mensagem = `Produto "${instance.Prod_nome}" teve a categoria alterada de ${valorAntigo ?? 'não definida'} para ${valorNovo ?? 'não definida'}`;
-                        break;
+                        case 'Prod_custo':
+                            mensagem = `Produto "${instance.Prod_nome}" teve o custo alterado de R$${Number(valorAntigo).toLocaleString('pt-BR', { minimumFractionDigits: 2 })} para R$${Number(valorNovo).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+                            valorTotal = valorNovo;
+                            break;
 
-                    case 'Prod_estoqueMinimo':
-                        mensagem = `Produto "${instance.Prod_nome}" teve o estoque mínimo alterado de ${valorAntigo} para ${valorNovo}`;
-                        break;
+                        case 'Categoria_id':
+                            mensagem = `Produto "${instance.Prod_nome}" teve a categoria alterada de ${valorAntigo ?? 'não definida'} para ${valorNovo ?? 'não definida'}`;
+                            break;
 
-                    case 'Prod_status':
-                        const statusAntigo = valorAntigo ? 'Ativo' : 'Inativo';
-                        const statusNovo = valorNovo ? 'Ativo' : 'Inativo';
-                        mensagem = `Produto "${instance.Prod_nome}" teve o status alterado de "${statusAntigo}" para "${statusNovo}"`;
-                        break;
+                        case 'Prod_estoqueMinimo':
+                            mensagem = `Produto "${instance.Prod_nome}" teve o estoque mínimo alterado de ${valorAntigo} para ${valorNovo}`;
+                            break;
 
-                    default:
-                        // Ignora campos não monitorados
-                        continue;
+                        case 'Prod_status':
+                            const statusAntigo = valorAntigo ? 'Ativo' : 'Inativo';
+                            const statusNovo = valorNovo ? 'Ativo' : 'Inativo';
+                            mensagem = `Produto "${instance.Prod_nome}" teve o status alterado de "${statusAntigo}" para "${statusNovo}"`;
+                            break;
+
+                        default:
+                            // Ignora campos não monitorados
+                            continue;
+                    }
+
+                    // Cria o registro para o campo alterado
+                    await Registros.create({
+                        Registro_Mensagem: mensagem,
+                        Registro_Data: new Date(),
+                        Registro_Repsonsavel: `${jsonData.Usuario_nome}`, // Ajuste conforme necessário
+                        Registro_Tipo: 'UPDATE',
+                        Registro_Chave: instance.Prod_cod,
+                        Registro_ValorTotal: valorTotal,
+                    });
                 }
-
-                // Cria o registro para o campo alterado
-                await Registros.create({
-                    Registro_Mensagem: mensagem,
-                    Registro_Data: new Date(),
-                    Registro_Repsonsavel: `${jsonData.Usuario_nome}`, // Ajuste conforme necessário
-                    Registro_Tipo: 'UPDATE',
-                    Registro_Chave: instance.Prod_cod,
-                    Registro_ValorTotal: valorTotal,
-                });
             }
+        } catch (error) {
+            console.error('Erro ao registrar alterações no produto:', error);
         }
-    } catch (error) {
-        console.error('Erro ao registrar alterações no produto:', error);
-    }
     }
 
 

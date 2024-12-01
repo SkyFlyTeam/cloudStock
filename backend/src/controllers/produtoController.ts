@@ -17,7 +17,9 @@ export const controllerProducts = {
 
       Prod_preco = parseFloat(Prod_preco);
 
-      const usuario_id=req.headers.usuario_id[0]
+      let usuario_id=req.headers.usuario_id[0]
+
+      usuario_id = usuario_id
 
       const product = await Produto.create({
         Prod_nome,
@@ -148,7 +150,7 @@ export const controllerProducts = {
         return res.status(404).json({ error: 'Produto não encontrado' });
       }
       const usuario_id=req.headers.usuario_id[0]
-      const updated = await instance.update(req.body, {individualHooks:true, context: {usuario_id}});
+      const updated = await instance.update(req.body, {individualHooks:true, context: { usuario_id: usuario_id }});
 
       if (updated) {
         const produtoAtualizado = await Produto.findOne({ where: { Prod_cod: id } });

@@ -10,7 +10,7 @@ export const controllerSetor = {
 
       const setor = await Setor.create(req.body, {
         include: [Local_Armazenamento],
-        context: { usuario_id }, // Passando o contexto para registrar o usuário
+        context: { usuario_id: usuario_id }, // Passando o contexto para registrar o usuário
       });
 
       return res.status(201).json(setor);
@@ -57,7 +57,7 @@ export const controllerSetor = {
         return res.status(404).json({ error: 'Setor não encontrado' });
       }
 
-      await setor.update(req.body, { context: { usuario_id } });
+      await setor.update(req.body, { context: { usuario_id: usuario_id } });
 
       const updatedSetor = await Setor.findOne({
         where: { Setor_id: id },

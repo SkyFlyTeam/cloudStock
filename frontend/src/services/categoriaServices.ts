@@ -34,10 +34,10 @@ const createCategoria = async (categoria: Categoria, usuario_id: number): Promis
   }
 };
 
-const updateCategoria = async (id: number, categoria: Categoria, Usuario_id: number | undefined): Promise<Categoria | ApiException> => {
+const updateCategoria = async (id: number, categoria: Categoria, usuario_id: number | undefined): Promise<Categoria | ApiException> => {
   try {
     const { data } = await Api().put<Categoria>(`/categoria/${id}`, categoria, {
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json', usuario_id: usuario_id  }
     });
 
     const categoriaAtualizada: Categoria = data;
