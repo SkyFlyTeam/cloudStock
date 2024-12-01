@@ -29,21 +29,21 @@ export const controllerLocalArmazenamento = {
   },
 
   // GET /localArmazenamento/:id
-  showSpecific: async(req: Request, res: Response) => {
+  showSpecific: async (req: Request, res: Response) => {
     const { id } = req.params
-    try{
+    try {
       const local = await Local_Armazenamento.findByPk(id)
-      if (!local){
+      if (!local) {
         return res.status(404).json({ message: 'local não encontrado' });
       }
 
       return res.status(200).json(local)
-    } catch(error){
+    } catch (error) {
       return res.status(400).json({ error: 'Erro ao buscar local', details: error.message });
     }
   },
 
-  showBySetor: async(req: Request, res: Response) => {
+  showBySetor: async (req: Request, res: Response) => {
     const id = req.params.id
     try {
       const locais = await Local_Armazenamento.findAll({
@@ -52,7 +52,7 @@ export const controllerLocalArmazenamento = {
         },
       })
       console.log(locais)
-      if(!locais){
+      if (!locais) {
         return res.status(404).json({ message: 'local não encontrado' });
       }
       res.status(200).json(locais)
@@ -64,12 +64,15 @@ export const controllerLocalArmazenamento = {
   // PUT /localArmazenamento/:id
   update: async (req: Request, res: Response) => {
     try {
+
       const { id } = req.params;
 
       // Atualiza apenas os dados do Local_Armazenamento
-      const [updated] = await Local_Armazenamento.update(req.body, {
-        where: { LocAr_id: id }
-      });
+      const instance = await Local_Armazenamento.findOne({ where: { LocAr_id: id } });
+      if (!instance) {
+        return res.status(404).json({ error: 'Local Armazenamento não encontrado' });
+      }
+      const updated = await instance.update(req.body);
 
       if (updated) {
         // Atualiza as relações com Setor se for necessário
@@ -98,7 +101,7 @@ export const controllerLocalArmazenamento = {
   delete: async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
-      
+
       // Exclui o Local_Armazenamento
       const deleted = await Local_Armazenamento.destroy({
         where: { LocAr_id: id }
