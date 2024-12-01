@@ -34,10 +34,12 @@ export const controllerEstatisticas = {
             let gastos = 0;
             let custosTot = 0;
             let Lucro = 0;
-
+            let Ent_id = 0;
+        
             if (entrada.length > 0){
                 entrada.forEach(e => {
-                    gastos += parseFloat(e.Ent_valortot.toString());     
+                    gastos += parseFloat(e.Ent_valortot.toString());
+                    Ent_id = e.Ent_id;
                 })
             }
 
@@ -56,7 +58,7 @@ export const controllerEstatisticas = {
 
             Lucro -= custosTot;
 
-            let values = {date: priorDate, lucro: Lucro, gastos: gastos, perda: Perda}
+            let values = {date: priorDate, lucro: Lucro, gastos: gastos, perda: Perda, id: Ent_id}
             data.push(values);
         }
 
@@ -411,5 +413,47 @@ export const controllerEstatisticas = {
         } catch (error) {
             return res.status(500).json({ error: `Erro ao contar produtos: ${error}` });
         }
+    },
+    showTabelaEntradaSaidaLucro: async (req: Request, res: Response) => {
+        let Lucro = 0;
+        let Saidas = 0;
+        let Entradas = 0;
+        const today = new Date();
+        const pastDate = new Date();
+        pastDate.setDate(today.getDate() - 30);
+
+        try{
+            const entradas = await Entrada.findAll({
+                where: {
+                Ent_dataCriacao: {
+                    [Op.between]: [pastDate, today],
+                },
+                },
+            });
+
+            const saidas = await Saida.findAll({
+                where: {
+                Saida_dataCriacao: {
+                    [Op.between]: [pastDate, today],
+                },
+                },
+            });
+
+            entradas.forEach((e) => {
+                Entradas += parseFloat(e.Ent_valortot.toString());
+            })
+
+            saidas.forEach((s) => {
+                if (s.Saida_isVenda === true) {
+                    Saidas += parseFloat(s.Saida_valorTot.toString());
+                }
+                
+            })
+
+            res.status(200).json({Entradas: Entradas, Saidas: Saidas, Lucro: Saidas - Entradas});
+        }
+        catch(error) {
+            res.status(500).json({ error: `Erro ao buscar entradas: ${error.message}` });
+        } 
     }
 }
