@@ -7,9 +7,13 @@ export const controllerLocalArmazenamento = {
   // POST /localArmazenamento
   save: async (req: Request, res: Response) => {
     try {
+      const usuario_id=req.headers.usuario_id[0]
+
       const localArmazenamento = await Local_Armazenamento.create(req.body, {
-        include: [Setor] // Incluindo o setor associado
+        include: [Setor], // Incluindo o setor associado
+        context: {usuario_id: usuario_id}
       });
+      
       return res.status(201).json(localArmazenamento);
     } catch (error) {
       return res.status(400).json({ error: 'Error saving LocalArmazenamento', details: error.message });
@@ -51,7 +55,7 @@ export const controllerLocalArmazenamento = {
           Setor_id: id
         },
       })
-      console.log(locais)
+      // console.log(locais)
       if (!locais) {
         return res.status(404).json({ message: 'local não encontrado' });
       }
@@ -67,12 +71,16 @@ export const controllerLocalArmazenamento = {
 
       const { id } = req.params;
 
+      console.log("\n\n", req.headers)
+
       // Atualiza apenas os dados do Local_Armazenamento
       const instance = await Local_Armazenamento.findOne({ where: { LocAr_id: id } });
       if (!instance) {
         return res.status(404).json({ error: 'Local Armazenamento não encontrado' });
       }
-      const updated = await instance.update(req.body);
+      const usuario_id=req.headers.usuario_id[0]
+      
+      const updated = await instance.update(req.body, {individualHooks:true, context: {usuario_id}});
 
       if (updated) {
         // Atualiza as relações com Setor se for necessário

@@ -287,6 +287,7 @@ const handleLimparFiltros = () => {
             checked={info.getValue() == 1}
             cod={info.row.original.Prod_cod}
             rota={`${hostname}produto`}
+            usuario_id={currentUser?.Usuario_id}
             onStatusChange={(newStatus: any) => handleStatusChange(info.row.original.Prod_cod, newStatus)}
           />
         </div>

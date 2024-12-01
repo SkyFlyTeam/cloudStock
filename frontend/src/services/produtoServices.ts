@@ -49,10 +49,10 @@ const getAllProdutos = async (): Promise<Produto[] | ApiException> => {
 }
 
 
-const createProduto = async (produto: any): Promise<Produto | ApiException> => {
+const createProduto = async (produto: any, usuario_id: number): Promise<Produto | ApiException> => {
   try {
     const { data } = await Api().post<any>('/produto', produto, {
-      headers: { 'Content-Type': 'multipart/form-data' }
+      headers: { 'Content-Type': 'multipart/form-data',  usuario_id: usuario_id  }
     });
     const produto_criado: Produto = data;
     return produto_criado;
@@ -61,11 +61,11 @@ const createProduto = async (produto: any): Promise<Produto | ApiException> => {
   }
 }
 
-const updateProduto = async (id: number, produto: any): Promise<Produto | ApiException> => {
+const updateProduto = async (id: number, produto: any, usuario_id: number): Promise<Produto | ApiException> => {
   try {
     console.log(produto)
     const { data } = await Api().put<any>(`/produto/${id}`, produto, {
-      headers: { 'Content-Type': 'multipart/form-data' }
+      headers: { 'Content-Type': 'multipart/form-data',  usuario_id: usuario_id }
     });
     console.log("data: OK")
 

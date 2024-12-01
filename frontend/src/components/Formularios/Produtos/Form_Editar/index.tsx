@@ -36,6 +36,8 @@ const ProdutoEditar = forwardRef((props: Props, ref: Ref<{ submitForm: () => voi
     const [categorias, setCategorias] = useState<Categoria[]>([])
     const [Prod_estoqueMinimo, setEstoqueMinimo] = useState<number>(0); // Novo campo para estoque mínimo
 
+
+
     useEffect(() => {
         const fetchCategorias = async () => {
             const result = await categoriaServices.getAllCategoria();
@@ -83,7 +85,7 @@ const ProdutoEditar = forwardRef((props: Props, ref: Ref<{ submitForm: () => voi
         }
 
         // Envia o id como parâmetro e as informações atualizdas
-        const response = await produtoServices.updateProduto(props.id, formData)
+        const response = await produtoServices.updateProduto(props.id, formData, currentUser?.Usuario_id!)
         if (response instanceof ApiException) {
             console.error(response.message)
         } else {

@@ -104,6 +104,11 @@ export class Produto extends Model {
     })
     Prod_estoqueMinimo!: number;
 
+    @Column({
+        type: DataType.VIRTUAL, // Define o campo como virtual
+    })
+    usuario_id!: string; // Tipo do campo (ajuste conforme necessário)
+
     @ForeignKey(() => Categoria)
     @Column({
         type: DataType.INTEGER,
@@ -137,16 +142,19 @@ export class Produto extends Model {
     @AfterCreate
     static async registrarCriacao(instance: Produto) {
         try {
-
+            const usuario_id = instance.getDataValue('usuario_id');
+            console.log(usuario_id)
+            const nome = await fetch(`http://localhost:5000/usuario/${usuario_id}`);
+              const jsonData = await nome.json();
             // Substitua "produto" pelo endpoint correto para buscar o responsável
             // const response = await fetch(`http://localhost:5000/usuario/produto/${instance.Prod_cod}`);
             // const jsonData = await response.json();
 
 
             await Registros.create({
-                Registro_Mensagem: `Produto criado: ID ${instance.Prod_cod}, Nome: ${instance.Prod_nome}`,
+                Registro_Mensagem: `Produto criado: ID ${instance.Prod_cod}, Nome: "${instance.Prod_nome}"`,
                 Registro_Data: new Date(),
-                Registro_Repsonsavel: "Sistema", // Ajuste conforme necessidade
+                Registro_Repsonsavel: `${jsonData.Usuario_nome}`, // Ajuste conforme necessidade
                 Registro_Tipo: 'CREATE',
                 Registro_Chave: instance.Prod_cod,
                 Registro_ValorTotal: instance.Prod_preco,
@@ -158,12 +166,18 @@ export class Produto extends Model {
 
     // Hook para registrar alterações
     @AfterUpdate
-    static async registrarAlteracao(instance: Produto) {
+    static async registrarAlteracao(instance: Produto, options: any) {
         try {
+            let usuario_id = 0; 
 
-            // const response = await fetch(`http://localhost:5000/usuario/produto/${instance.Prod_cod}`);
-            // const jsonData = await response.json();
-            // const responsavel = jsonData.Usuario_nome
+            if (!options.context?.usuario_id) {
+              usuario_id = instance.getDataValue('usuario_id');
+            } else {
+              usuario_id = options.context.usuario_id;
+            }
+
+            const nome = await fetch(`http://localhost:5000/usuario/${usuario_id}`);
+            const jsonData = await nome.json();
 
 
             // Verifica mudanças no preço
@@ -215,7 +229,7 @@ export class Produto extends Model {
                 await Registros.create({
                     Registro_Mensagem: mensagem,
                     Registro_Data: new Date(),
-                    Registro_Repsonsavel: 'Sistema', // Ajuste conforme necessário
+                    Registro_Repsonsavel: `${jsonData.Usuario_nome}`, // Ajuste conforme necessário
                     Registro_Tipo: 'UPDATE',
                     Registro_Chave: instance.Prod_cod,
                     Registro_ValorTotal: valorTotal,

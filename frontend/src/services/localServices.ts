@@ -17,10 +17,10 @@ const getAllLocais = async (): Promise<Local_Armazenamento[] | ApiException> => 
     }
 }
 
-const createLocal = async (local: any): Promise<Local_Armazenamento | ApiException> => {
+const createLocal = async (local: any, usuario_id: number): Promise<Local_Armazenamento | ApiException> => {
     try {
       const { data } = await Api().post<any>('/localarmazenamento', local, {
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json', usuario_id: usuario_id  }
       });
   
       const local_criado: Local_Armazenamento = data
@@ -30,10 +30,10 @@ const createLocal = async (local: any): Promise<Local_Armazenamento | ApiExcepti
     }
   }
 
-  const updateLocal = async (id: number, local: any): Promise<Local_Armazenamento | ApiException> => {
+  const updateLocal = async (id: number, local: any, usuario_id: number): Promise<Local_Armazenamento | ApiException> => {
     try {
       const { data } = await Api().put<any>(`/localarmazenamento/${id}`, local, {
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json', usuario_id: usuario_id  }
       });
   
       const local_atualizado: Local_Armazenamento = data

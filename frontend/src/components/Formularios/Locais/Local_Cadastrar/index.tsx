@@ -5,6 +5,7 @@ import { localServices } from '../../../../services/localServices';
 import { setoresServices } from '../../../../services/setorServices';
 import { Setor } from '../../../../services/setorServices';
 import Input from '../../../Input';
+import { useAuth } from '../../../../context/AuthProvider';
 
 interface Props {
   onSuccess: (message: string) => void; // Função para quando dê certo
@@ -15,6 +16,7 @@ const LocalFormulario = forwardRef((props: Props, ref: Ref<{ submitForm: () => v
   const [Setor_id, setSetor] = useState<number>(-1);
   const [LocAr_status, setStatus] = useState<boolean>(true); // Quando é criado, o status é ativado - true
   const [setores, setSetores] = useState<{ label: string; value: number }[]>([]);
+  const { currentUser } = useAuth();
 
   const getSetores = async () => {
     const response = await setoresServices.getAllSetores();
@@ -41,7 +43,7 @@ const LocalFormulario = forwardRef((props: Props, ref: Ref<{ submitForm: () => v
       LocAr_status
     };
 
-    const response = await localServices.createLocal(novoLocal);
+    const response = await localServices.createLocal(novoLocal, currentUser?.Usuario_id!);
     if (response instanceof ApiException) {
       console.error(response.message);
     } else {

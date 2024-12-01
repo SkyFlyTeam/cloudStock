@@ -17,6 +17,8 @@ export const controllerProducts = {
 
       Prod_preco = parseFloat(Prod_preco);
 
+      const usuario_id=req.headers.usuario_id[0]
+
       const product = await Produto.create({
         Prod_nome,
         Prod_descricao,
@@ -33,8 +35,9 @@ export const controllerProducts = {
         Prod_estoqueMinimo: 0,
         Categoria_id,
         UnidadeMedida_id,
-        Prod_imagem
-      });
+        Prod_imagem,
+        usuario_id: usuario_id
+      },);
 
       return res.status(201).json(product);
     } catch (error) {
@@ -144,7 +147,8 @@ export const controllerProducts = {
       if (!instance) {
         return res.status(404).json({ error: 'Produto não encontrado' });
       }
-      const updated = await instance.update(req.body);
+      const usuario_id=req.headers.usuario_id[0]
+      const updated = await instance.update(req.body, {individualHooks:true, context: {usuario_id}});
 
       if (updated) {
         const produtoAtualizado = await Produto.findOne({ where: { Prod_cod: id } });
@@ -161,31 +165,41 @@ export const controllerProducts = {
   // PUT /status/:id 
   changeStatus: async (req, res) => {
     const { id } = req.params;
+  
     try {
       // Procurar o produto pelo ID
       const product = await Produto.findByPk(id);
-
+  
       if (!product) {
         return res.status(404).json({ error: 'Produto não encontrado' });
       }
-
-      // Alternar o status atual (se for true, muda para false e vice-versa)
+  
+      // Alternar o status atual
       const novoStatus = !product.Prod_status;
-
-      // Atualizar o status no banco de dados
-      const instance = await Produto.findOne({ where: { Prod_cod: id } });
-      if (!instance) {
-        return res.status(404).json({ error: 'Produto não encontrado' });
+  
+      // Capturar o ID do usuário
+      const usuario_id = req.headers.usuario_id?.[0];
+      if (!usuario_id) {
+        return res.status(400).json({ error: 'Usuário não identificado no header' });
       }
-      const updated = await instance.update( { Prod_status: novoStatus });
 
-      // Retornar o novo status atualizado
-      return res.status(200).json({ updated });
+      console.log('controller', usuario_id)
+  
+      product.set('Prod_status', novoStatus);
+      product.set('usuario_id',usuario_id.toString());
+      await product.save({
+        hooks: true, // Dispara os hooks
+      });
+      
+  
+      // Retornar o produto atualizado
+      return res.status(200).json(product);
     } catch (error) {
       console.error('Erro ao alterar o status do produto:', error);
       return res.status(500).json({ error: 'Erro interno no servidor' });
     }
-  },
+  }
+  
 
   // 
   // delete: async(req: Request, resp: Response) => {
