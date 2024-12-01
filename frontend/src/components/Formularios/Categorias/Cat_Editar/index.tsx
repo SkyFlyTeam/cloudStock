@@ -1,7 +1,7 @@
 import { useState, useEffect, forwardRef, useImperativeHandle, Ref } from 'react';
 import { ApiException } from '../../../../config/apiException';
 import { categoriaServices } from '../../../../services/categoriaServices';
-
+import { useAuth } from '../../../../context/AuthProvider';
 interface Props {
   id: number;
   onSuccess: (message: string) => void;
@@ -12,7 +12,7 @@ const CategoriaEdicao = forwardRef((props: Props, ref: Ref<{ submitForm: () => v
   const [Cat_status, setStatus] = useState<boolean>(true);
   const [categoriasPais, setCategoriasPais] = useState<any[]>([]); // Estado para categorias pais
   const [Categoria_pai, setCategoriaPai] = useState<number | null>(null); // Estado para categoria pai selecionada
-
+  const { currentUser } = useAuth();
   // Função para buscar categorias pai
   const fetchCategoriasPais = async () => {
     const result = await categoriaServices.getAllCategoria();
@@ -32,7 +32,7 @@ const CategoriaEdicao = forwardRef((props: Props, ref: Ref<{ submitForm: () => v
       // Inclua outros campos conforme necessário
     };
 
-    const response = await categoriaServices.updateCategoria(props.id, categoriaAtualizada as any);
+    const response = await categoriaServices.updateCategoria(props.id, categoriaAtualizada as any, currentUser?.Usuario_id);
     if (response instanceof ApiException) {
       console.error(response.message);
     } else {

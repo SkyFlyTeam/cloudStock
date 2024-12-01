@@ -13,11 +13,14 @@ export const controllerCategoria = {
         return res.status(400).json({ error: 'O nome da categoria é obrigatório.' });
       }
 
+      const usuario_id=req.headers.usuario_id[0]
+
       const category = await Categoria.create({
         Categoria_id,
         Categoria_nome,
         Categoria_status,
         Categoria_pai,
+        context: {usuario_id: usuario_id}
       });
 
       return res.status(201).json(category);
@@ -96,13 +99,20 @@ export const controllerCategoria = {
   update: async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
-      const instance = await Categoria.findByPk(id);
+      const existingCategoria = await Categoria.findByPk(id);
   
-      if (!instance) {
+      if (!existingCategoria) {
         return res.status(404).json({ error: 'Categoria não encontrada' });
       }
-  
-      const updated = await instance.update(req.body);
+      
+      const instance = await Produto.findOne({ where: { categoria_id: id } });
+      if (!instance) {
+        return res.status(404).json({ error: 'Categoria não encontrado' });
+      }
+
+      const usuario_id = req.headers.usuario_id[0]
+
+      const updated = await instance.update(req.body, {individualHooks:true, context: {usuario_id}});
   
       return res.status(200).json(updated);
     } catch (error) {

@@ -64,14 +64,15 @@ export class Categoria extends Model {
   @AfterCreate
   static async afterCreateHook(instance: Categoria) {
     try {
-      const usuario = await Usuario.findByPk(instance.Usuario_id);
-
-      const responsavel = usuario ? usuario.Usuario_nome : 'Usuário não identificado';
+      const usuario_id = instance.getDataValue('usuario_id');
+      console.log(usuario_id)
+      const nome = await fetch(`http://localhost:5000/usuario/${usuario_id}`);
+      const jsonData = await nome.json();
 
       await Registros.create({
         Registro_Mensagem: `Nova categoria criada: ${instance.Categoria_nome}`,
         Registro_Data: new Date(),
-        Registro_Repsonsavel: responsavel,
+        Registro_Repsonsavel: `${jsonData.Usuario_nome}`,
         Registro_Tipo: 'Categoria',
         Registro_Chave: instance.Categoria_id,
         Registro_ValorTotal: null,
@@ -84,8 +85,10 @@ export class Categoria extends Model {
   @AfterUpdate
   static async afterUpdateHook(instance: Categoria) {
     try {
-      const usuario = await Usuario.findByPk(instance.Usuario_id);
-      const responsavel = usuario ? usuario.Usuario_nome : 'Usuário não identificado';
+      const usuario_id = instance.getDataValue('usuario_id');
+      console.log(usuario_id)
+      const nome = await fetch(`http://localhost:5000/usuario/${usuario_id}`);
+      const jsonData = await nome.json();
 
       // Verifica mudanças no nome
       if (instance.changed('Categoria_nome')) {
@@ -94,7 +97,7 @@ export class Categoria extends Model {
         await Registros.create({
           Registro_Mensagem: `Categoria alterada: ${nomeAntigo} renomeada para ${instance.Categoria_nome}`,
           Registro_Data: new Date(),
-          Registro_Repsonsavel: responsavel,
+          Registro_Repsonsavel: `${jsonData.Usuario_nome}`,
           Registro_Tipo: 'Categoria',
           Registro_Chave: instance.Categoria_id,
           Registro_ValorTotal: null,
@@ -136,7 +139,7 @@ export class Categoria extends Model {
           await Registros.create({
             Registro_Mensagem: `Categoria "${instance.Categoria_nome}" teve a categoria pai alterada: "${nomeCategoriaPaiAntiga}" para "${nomeCategoriaPaiNova}"`,
             Registro_Data: new Date(),
-            Registro_Repsonsavel: responsavel,
+            Registro_Repsonsavel: `${jsonData.Usuario_nome}`,
             Registro_Tipo: 'Categoria',
             Registro_Chave: instance.Categoria_id,
             Registro_ValorTotal: null,

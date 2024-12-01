@@ -14,10 +14,9 @@ export const configController = {
 
       const updated = await instance.update(req.body, { 
         individualHooks: true, 
-        context: { usuario_id },
+        context: {usuario_id: usuario_id},
       });
 
-      ConfigSistema.hookContext = { usuario_id };
       return res.status(201).json(updated);
     } catch (error) {
       return res.status(400).json({ error: 'Error updating ConfigSistema', details: error.message });

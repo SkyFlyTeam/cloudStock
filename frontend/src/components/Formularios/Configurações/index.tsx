@@ -29,16 +29,17 @@ const ConfigForm = forwardRef((props: Props, ref: Ref<{ submitForm: () => void }
 
   const eventoFormulario = async () => {
     const novaConfig = {
-        Config_avisoValidade
-    }
-
-    const response = await configServices.updateConfig(novaConfig, currentUser?.Usuario_id!)
+      Config_avisoValidade,
+    };
+  
+    const response = await configServices.updateConfig(novaConfig, currentUser?.Usuario_id!);
     if (response instanceof ApiException) {
       console.error(response.message);
     } else {
-      setAvisoValidade(0)
+      props.onSuccess('Configurações salvas com sucesso!');
     }
   };
+  
 
   // Função necessária para realizar o submit utilizando a referência
   useImperativeHandle(ref, () => ({
