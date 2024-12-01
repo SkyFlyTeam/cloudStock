@@ -6,9 +6,13 @@ export const controllerSetor = {
   // POST /setor
   save: async (req: Request, res: Response) => {
     try {
+      const usuario_id = req.headers.usuario_id?.toString();
+
       const setor = await Setor.create(req.body, {
-        include: [Local_Armazenamento] // Incluindo o local de armazenamento associado
+        include: [Local_Armazenamento],
+        context: { usuario_id }, // Passando o contexto para registrar o usuário
       });
+
       return res.status(201).json(setor);
     } catch (error) {
       return res.status(400).json({ error: 'Error saving Setor', details: error.message });
@@ -46,35 +50,20 @@ export const controllerSetor = {
   update: async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
-  
-      // Atualiza os dados do Setor
+      const usuario_id = req.headers.usuario_id?.toString();
+
       const setor = await Setor.findByPk(id);
       if (!setor) {
         return res.status(404).json({ error: 'Setor não encontrado' });
       }
-  
-      await setor.update(req.body);
-  
-      // Atualiza ou cria os dados de Local_Armazenamento se fornecidos no body
-      if (req.body.Local_Armazenamento) {
-        let local = await Local_Armazenamento.findOne({ where: { Setor_id: id } });
-  
-        if (local) {
-          await local.update(req.body.Local_Armazenamento);
-        } else {
-          await Local_Armazenamento.create({
-            ...req.body.Local_Armazenamento,
-            Setor_id: id,
-          });
-        }
-      }
-  
-      // Retorna o setor atualizado com o Local_Armazenamento incluído
+
+      await setor.update(req.body, { context: { usuario_id } });
+
       const updatedSetor = await Setor.findOne({
         where: { Setor_id: id },
         include: [Local_Armazenamento],
       });
-  
+
       return res.status(200).json(updatedSetor);
     } catch (error) {
       return res.status(400).json({ error: 'Erro ao atualizar Setor', details: error.message });

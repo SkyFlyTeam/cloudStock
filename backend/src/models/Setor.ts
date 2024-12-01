@@ -28,52 +28,61 @@ export class Setor extends Model {
 
 	@HasMany(() => Local_Armazenamento)
 	Locais_Armazenamento!: Local_Armazenamento[];
-	Usuario_id: any;
 
 	@AfterCreate
-	static async afterCreateHook(instance: Setor) {
-		const nome = await fetch(`http://localhost:5000/usuario/${instance.Usuario_id}`);
-		const jsonData = await nome.json();
-
-		try {
-			// Registra a criação do setor
-			await Registros.create({
-				Registro_Mensagem: `Novo setor criado: "${instance.Setor_nome}"`,
-				Registro_Data: new Date(),
-				Registro_Repsonsavel: `${jsonData.Usuario_nome}`, 
-				Registro_Tipo: 'Sistema',
-				Registro_Chave: instance.Setor_id,
-				Registro_ValorTotal: null,
-			});
-		} catch (error) {
-			console.error('Erro ao registrar criação de setor:', error);
-		}
+	static async registrarCriacao(instance: Setor, options: any) {
+	  try {
+		const usuario_id = options.context?.usuario_id;
+		const response = await fetch(`http://localhost:5000/usuario/${usuario_id}`);
+		const usuario = await response.json();
+  
+		await Registros.create({
+		  Registro_Mensagem: `Setor criado: "${instance.Setor_nome}"`,
+		  Registro_Data: new Date(),
+		  Registro_Repsonsavel: `${usuario.Usuario_nome}`,
+		  Registro_Tipo: 'CREATE',
+		  Registro_Chave: instance.Setor_id,
+		  Registro_ValorTotal: null,
+		});
+	  } catch (error) {
+		console.error('Erro ao registrar criação do setor:', error);
+	  }
 	}
-
+  
 	@AfterUpdate
-	static async afterUpdateHook(instance: Setor) {
-		try {
-			const nome = await fetch(`http://localhost:5000/usuario/${instance.Usuario_id}`);
-			const jsonData = await nome.json();
-			
-			// Verifica se o nome foi alterado
-			if (instance.changed('Setor_nome')) {
-				const setorAntigo = await Setor.findOne({ where: { Setor_id: instance.Setor_id } });
-
-				if (setorAntigo) {
-					await Registros.create({
-						Registro_Mensagem: `setor alterado: "${setorAntigo.Setor_nome}" renomeado para "${instance.Setor_nome}"`,
-						Registro_Data: new Date(),
-						Registro_Repsonsavel: `${jsonData.Usuario_nome}`, 
-						Registro_Tipo: 'Setor',
-						Registro_Chave: instance.Setor_id,
-						Registro_ValorTotal: null,
-					});
-				}
-			}
-		} catch (error) {
-			console.error('Erro ao registrar alteração de setor:', error);
+	static async registrarAlteracao(instance: Setor, options: any) {
+	  try {
+		const usuario_id = options.context?.usuario_id;
+		const response = await fetch(`http://localhost:5000/usuario/${usuario_id}`);
+		const usuario = await response.json();
+  
+		if (instance.changed('Setor_nome')) {
+		  const nomeAntigo = instance.previous('Setor_nome');
+		  await Registros.create({
+			Registro_Mensagem: `Setor "${nomeAntigo}" renomeado para "${instance.Setor_nome}"`,
+			Registro_Data: new Date(),
+			Registro_Repsonsavel: `${usuario.Usuario_nome}`,
+			Registro_Tipo: 'UPDATE',
+			Registro_Chave: instance.Setor_id,
+			Registro_ValorTotal: null,
+		  });
 		}
+  
+		if (instance.changed('Setor_status')) {
+		  const statusAntigo = instance.previous('Setor_status') ? 'Ativo' : 'Inativo';
+		  const statusNovo = instance.Setor_status ? 'Ativo' : 'Inativo';
+		  await Registros.create({
+			Registro_Mensagem: `Status do setor "${instance.Setor_nome}" alterado de "${statusAntigo}" para "${statusNovo}"`,
+			Registro_Data: new Date(),
+			Registro_Repsonsavel: `${usuario.Usuario_nome}`,
+			Registro_Tipo: 'UPDATE',
+			Registro_Chave: instance.Setor_id,
+			Registro_ValorTotal: null,
+		  });
+		}
+	  } catch (error) {
+		console.error('Erro ao registrar alteração no setor:', error);
+	  }
 	}
 
 }
