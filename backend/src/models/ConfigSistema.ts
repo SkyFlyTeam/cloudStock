@@ -3,7 +3,7 @@ import {
     Column,
     Model,
     DataType,
-    AfterUpdate,
+    AfterUpdate
   } from 'sequelize-typescript';
   import { Registros } from './Registros';
   
@@ -11,6 +11,7 @@ import {
     tableName: 'ConfigSistema',
     timestamps: false,
   })
+
   export class ConfigSistema extends Model {
     @Column({
       type: DataType.INTEGER,
@@ -24,26 +25,26 @@ import {
       allowNull: false,
     })
     Config_avisoValidade!: number;
+    
+    static hookContext: { usuario_id: string; };
   
-    /**
-     * Hook após atualização de Config_avisoValidade
-     */
     @AfterUpdate
-    static async afterUpdateHook(instance: ConfigSistema) {
+    static async afterUpdateHook(instance: ConfigSistema, options: any) {
       try {
-
         if (instance.changed('Config_avisoValidade')) {
+
           const antigoValor = instance.previous('Config_avisoValidade') as number;
           const novoValor = instance.Config_avisoValidade;
-  
 
+          const usuario_id = options.context?.usuario_id;
+          
           await Registros.create({
             Registro_Mensagem: `Configuração de aviso de validade alterada: ${antigoValor} dias para ${novoValor} dias`,
             Registro_Data: new Date(),
-            Registro_Responsavel: 'Sistema',
+            Registro_Repsonsavel: parseInt(usuario_id),
             Registro_Tipo: 'Sistema',
-            Registro_Chave: instance.Config_id,
-            Registro_ValorTotal: null,
+            Registro_Chave: 1,
+            Registro_ValorTotal: 0,
           });
         }
       } catch (error) {
