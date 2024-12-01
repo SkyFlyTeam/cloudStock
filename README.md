@@ -45,8 +45,8 @@ Sprint | Previsão | Status | Relatório
 |Kick Off | 26/08/2024 a 30/08/2024 | ✔️ Concluída | -
 |01 | 09/09/2024 a 29/09/2024 | ✔️ Concluída | <a href="https://github.com/SkyFLyTeam/cloudStock/tree/main/sprints/sprint1/sprint1.md">Relatório</a>
 |02|  30/09/2024 a 20/10/2024|  ✔️ Concluída | <a href="https://github.com/SkyFLyTeam/cloudStock/tree/main/sprints/sprint2/sprint2.md">Relatório</a> 
-|03| 21/10/2024 a 10/11/2024 |  🔁 Em Andamento | <a href="https://github.com/SkyFLyTeam/cloudStock/tree/main/sprints/sprint3/sprint3.md">Relatório</a>
-|04| 11/11/2024 a 01/12/2024 | a fazer |
+|03| 21/10/2024 a 10/11/2024 |  ✔️ Concluída| <a href="https://github.com/SkyFLyTeam/cloudStock/tree/main/sprints/sprint3/sprint3.md">Relatório</a>
+|04| 11/11/2024 a 01/12/2024 | ✔️ Concluída | <a href="https://github.com/SkyFLyTeam/cloudStock/tree/main/sprints/sprint4/sprint4.md">Relatório</a>
 |Feira de Soluções| 12/12 | a fazer |
 
 <br>
