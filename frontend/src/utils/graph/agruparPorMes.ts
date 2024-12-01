@@ -24,8 +24,8 @@ export function agruparEntrSaidaPorMes(data: DataEntrSaida[]) {
       }
 
       // Caso contrário, acumula os valores de entrada e saída
-      acumulador[date].entrada += item.entrada;
-      acumulador[date].saida += item.saida;
+      acumulador[date].entrada += Math.round(item.entrada);
+      acumulador[date].saida += Math.round(item.saida);
 
       return acumulador;
     },
@@ -54,13 +54,13 @@ export function agruparLucroGastos(data: DataLucroGastos[]) {
 
       // Se o mês ainda não existir no acumulador, cria
       if (!acumulador[date]) {
-        acumulador[date] = { date, ganhos: 0, gastos: 0, lucro: 0 };
+        acumulador[date] = { date, ganhos: 0, gastos: 0, lucro: 0};
       }
 
       // Caso contrário, acumula os valores de lucro e perda
-      acumulador[date].ganhos += item.ganhos;
-      acumulador[date].gastos += item.gastos;
-      acumulador[date].lucro += item.lucro;
+      acumulador[date].ganhos += Math.round(item.ganhos);
+      acumulador[date].gastos += Math.round(item.gastos);
+      acumulador[date].lucro += Math.round(item.lucro);
 
       return acumulador;
     },
@@ -92,7 +92,7 @@ export function agruparPerdas(data: DataPerda[]) {
       }
 
       // Caso contrário, acumula os valores de lucro e perda
-      acumulador[date].perda += item.perda;
+      acumulador[date].perda += Math.round(item.perda);
 
       return acumulador;
     },

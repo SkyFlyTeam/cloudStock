@@ -50,6 +50,7 @@ export const controllerEstatisticas = {
                     } else if (d.date === thisDate && sai.Saida_isVenda === false) {
                         d.perda += parseFloat(sai.Saida_valorTot.toString());
                         d.lucro -= parseFloat(sai.Saida_valorTot.toString());
+                        d.gastos += parseFloat(sai.Saida_valorTot.toString());
                         hasDate = true;
                     }
                 });
@@ -68,7 +69,7 @@ export const controllerEstatisticas = {
                         date: thisDate,
                         lucro: -1 * parseFloat(sai.Saida_valorTot.toString()),
                         ganhos: 0,
-                        gastos: 0,
+                        gastos: parseFloat(sai.Saida_valorTot.toString()),
                         perda: parseFloat(sai.Saida_valorTot.toString())
                     };
                     data.push(values);
@@ -256,7 +257,7 @@ export const controllerEstatisticas = {
                 lista.push({
                     Prod_nome: nome, 
                     CategoriaPai: categoria, 
-                    ValorTot: valorTotal
+                    ValorTot: valorTotal 
                 })
             })
             const listaOrdenada = lista.sort((a, b) => b['ValorTot'] - a['ValorTot'])
