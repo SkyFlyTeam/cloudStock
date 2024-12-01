@@ -63,7 +63,7 @@ const GraficoProdCusto: React.FC = () =>{
             </div>
             <ResponsiveContainer width="100%" height={600} className={"responsive-pie"}>
                 <PieChart  margin={{ top: 0, right: 0, left:0, bottom: 0 }}>
-                    <Pie data={data} dataKey="ValorTot" cx="50%" cy="50%" outerRadius={150} fill="#8884d8" nameKey={filter}label>
+                    <Pie data={data} dataKey="ValorTot" cx="50%" cy="50%" outerRadius={150} fill="#8884d8" nameKey={filter} label={undefined}>
                     {data.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                         ))}
