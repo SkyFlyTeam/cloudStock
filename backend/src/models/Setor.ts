@@ -38,7 +38,7 @@ export class Setor extends Model {
 		try {
 			// Registra a criação do setor
 			await Registros.create({
-				Registro_Mensagem: `Novo setor criado: ${instance.Setor_nome}`,
+				Registro_Mensagem: `Novo setor criado: "${instance.Setor_nome}"`,
 				Registro_Data: new Date(),
 				Registro_Repsonsavel: `${jsonData.Usuario_nome}`, 
 				Registro_Tipo: 'Sistema',
@@ -62,7 +62,7 @@ export class Setor extends Model {
 
 				if (setorAntigo) {
 					await Registros.create({
-						Registro_Mensagem: `Novo setor alterado: ${setorAntigo.Setor_nome} renomeado para ${instance.Setor_nome}`,
+						Registro_Mensagem: `setor alterado: "${setorAntigo.Setor_nome}" renomeado para "${instance.Setor_nome}"`,
 						Registro_Data: new Date(),
 						Registro_Repsonsavel: `${jsonData.Usuario_nome}`, 
 						Registro_Tipo: 'Setor',
