@@ -10,5 +10,9 @@ router.get('/maiorSaida', controllerEstatisticas.getMaiorSaida)
 router.get('/maiorRentabilidade', controllerEstatisticas.getMaiorRentabildiade)
 router.get('/maiorCusto', controllerEstatisticas.getMaiorCusto)
 router.get('/valorEntrada-saida', controllerEstatisticas.getValorEntradaSaida)
+router.get('/estoqueMinimo', controllerEstatisticas.getProdutosComEstoqueBaixo)
+router.get('/validadeProxima', controllerEstatisticas.getProdutosComValidadeProxima)
+router.get('/contarProdutos', controllerEstatisticas.contarTotalProdutos)
+router.get('/tabelaEntradaSaidaLucro', controllerEstatisticas.showTabelaEntradaSaidaLucro)
 
 export default router;

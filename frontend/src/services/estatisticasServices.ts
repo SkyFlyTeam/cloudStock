@@ -115,7 +115,30 @@ const getPerdas = async (): Promise<DataPerda[] | ApiException> => {
 
 const getEstGeral = async (): Promise<DataEstGeral | ApiException> => {
   try {
-    const { data } = await Api().get('/estatisticas/geral')
+    const estoqueData  = await Api().get('/estatisticas/estoqueMinimo');
+    const estoqueMin = estoqueData.data.totalEstoqueBaixo
+
+    const validadeData  = await Api().get('/estatisticas/validadeProxima');
+    const validadeProx = validadeData.data.totalValidadeProxima
+
+    const prodTotalData  = await Api().get('/estatisticas/contarProdutos');
+    const prodTotal = prodTotalData.data.totalProdutos
+    console.log(prodTotal)
+
+    const entSaidaLucData  = await Api().get('/estatisticas/tabelaEntradaSaidaLucro');
+    const totEntrada = entSaidaLucData.data.Entradas;
+    const totSaidas = entSaidaLucData.data.Saidas;
+    const totLucro = entSaidaLucData.data.Lucro;
+
+    const data:DataEstGeral = {
+      Prods_quantidade: prodTotal,
+      Prods_estoqueMin: estoqueMin,
+      Prods_validade: validadeProx,
+      Total_entrada: totEntrada,
+      Total_saida: totSaidas,
+      Lucro: totLucro
+    }
+
     return data
   } catch (error: any) {
     return new ApiException(error.message || 'Erro ao consultar a API.')

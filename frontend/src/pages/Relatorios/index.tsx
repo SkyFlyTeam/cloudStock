@@ -14,20 +14,20 @@ import './style.css'
 import { FaArrowTrendDown, FaArrowTrendUp } from "react-icons/fa6"
 
 function Relatorios() {
-    // const [ estGeral, setEstGeral ] = useState<DataEstGeral>();
+    const [ estGeral, setEstGeral ] = useState<DataEstGeral>();
 
-    // const fetchEstatiscasGerais = async () => {
-    //     const result = await estatisticasServices.getEstGeral()
-    //     if (result instanceof ApiException) {
-    //       console.log(result.message)
-    //     } else {
-    //         setEstGeral(result)
-    //     }
-    // }
+    const fetchEstatiscasGerais = async () => {
+        const result = await estatisticasServices.getEstGeral()
+        if (result instanceof ApiException) {
+          console.log(result.message)
+        } else {
+            setEstGeral(result)
+        }
+    }
 
-    // useEffect(() => {
-    //     fetchEstatiscasGerais()
-    // }, [])
+    useEffect(() => {
+        fetchEstatiscasGerais()
+    }, [])
 
     return(
         <main className="relatorios">
@@ -40,15 +40,15 @@ function Relatorios() {
                 <div className="stats">
                     <div className="card-stats positive">
                         <span>Total de produtos</span>
-                        <h1>234</h1>
+                        <h1>{estGeral?.Prods_quantidade}</h1>
                     </div>
                     <div className="card-stats negative">
                         <span>Produtos com estoque mínimo</span>
-                        <h1>12</h1>
+                        <h1>{estGeral?.Prods_estoqueMin}</h1>
                     </div>
                     <div className="card-stats danger">
                         <span>Produtos com validade próxima</span>
-                        <h1>22</h1>
+                        <h1>{estGeral?.Prods_validade}</h1>
                     </div>
                 </div>
                 <div className="row2">
@@ -60,21 +60,21 @@ function Relatorios() {
                             <span>Total gasto em entradas</span>
                             <div className="finance-quantity">
                                 <FaArrowTrendDown color="#C80000" size={50} />
-                                <h1>R$ 22.000</h1>
+                                <h1>R$ {Number(estGeral?.Total_entrada).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</h1>
                             </div>
                         </div>
                         <div className="finance-stat">
                             <span>Total ganho em saídas</span>
                             <div className="finance-quantity">
                                 <FaArrowTrendUp color="#61BDE0" size={50} />
-                                <h1>R$ 22.000</h1>
+                                <h1>R$ {Number(estGeral?.Total_saida).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</h1>
                             </div>
                         </div>
                         <div className="finance-stat">
                             <span>Lucro Total</span>
                             <div className="finance-quantity">
                                 <FaArrowTrendUp color="#4FBF1A" size={50} />
-                                <h1>R$ 22.000</h1>
+                                <h1>R$ {Number(estGeral?.Lucro).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</h1>
                             </div>
                         </div>
                     </div>

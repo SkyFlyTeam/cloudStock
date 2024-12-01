@@ -363,5 +363,142 @@ export const controllerEstatisticas = {
         } catch (error) {
             res.status(500).json({ error: `Erro ao calcular o valor de Entrada e Saída: ${error}` });
         }
+    },
+
+    getProdutosComEstoqueBaixo: async (req: Request, res: Response) => {
+        try {
+            const produtos = await Produto.findAll({
+                include: [
+                    {
+                        model: Lote,
+                        attributes: ["Lote_quantidade"]
+                    }
+                ],
+                attributes: [
+                    "Prod_cod",
+                    "Prod_nome",
+                    "Prod_estoqueMinimo"
+                ]
+            });
+            if (!produtos.length) {
+                return res.status(404).json({ error: "Nenhum produto encontrado." });
+            }
+            const produtosComEstoqueBaixo = produtos
+                .map((produto) => {
+                    const estoqueTotal = produto.Lotes.reduce(
+                        (total, lote) => total + lote.Lote_quantidade,
+                        0
+                    );
+                    return {
+                        Prod_cod: produto.Prod_cod,
+                        Prod_nome: produto.Prod_nome,
+                        EstoqueAtual: estoqueTotal,
+                        EstoqueMinimo: produto.Prod_estoqueMinimo
+                    };
+                })
+                .filter(({ EstoqueAtual, EstoqueMinimo }) => EstoqueAtual < EstoqueMinimo);
+            const totalEstoqueBaixo = produtosComEstoqueBaixo.length;
+            // Retorno da resposta
+            return res.status(200).json({
+                totalEstoqueBaixo,
+                produtos: produtosComEstoqueBaixo
+            });
+        } catch (error) {
+            return res.status(500).json({ error: `Erro ao buscar produtos com estoque baixo: ${error}` });
+        }
+    },
+
+    getProdutosComValidadeProxima: async (req: Request, res: Response) => {
+        try {
+            const hoje = new Date();
+            const dataLimite = new Date();
+            dataLimite.setDate(hoje.getDate() + 30);
+            const produtos = await Produto.findAll({
+                include: [
+                    {
+                        model: Lote,
+                        attributes: ["Lote_validade", "Lote_quantidade"]
+                    }
+                ],
+                attributes: [
+                    "Prod_cod",
+                    "Prod_nome"
+                ]
+            });
+            if (!produtos.length) {
+                return res.status(404).json({ error: "Nenhum produto encontrado." });
+            }
+            const produtosComValidadeProxima = produtos
+                .map((produto) => {
+                    const lotesValidos = produto.Lotes.filter((lote) => {
+                        const validadeLote = new Date(lote.Lote_validade);
+                        return validadeLote <= dataLimite && validadeLote >= hoje;
+                    });
+                    return {
+                        Prod_cod: produto.Prod_cod,
+                        Prod_nome: produto.Prod_nome,
+                        LotesValidos: lotesValidos.map((lote) => ({
+                            Validade: lote.Lote_validade,
+                            Quantidade: lote.Lote_quantidade
+                        }))
+                    };
+                })
+                .filter(({ LotesValidos }) => LotesValidos.length > 0);
+            const totalValidadeProxima = produtosComValidadeProxima.length;
+            return res.status(200).json({
+                totalValidadeProxima,
+                produtos: produtosComValidadeProxima
+            });
+        } catch (error) {
+            return res.status(500).json({ error: `Erro ao buscar produtos com validade próxima: ${error}` });
+        }
+    },
+    contarTotalProdutos: async (req: Request, res: Response) => {
+        try {
+            // Contar o número total de produtos
+            const totalProdutos = await Produto.count();
+            // Retornar o total
+            return res.status(200).json({ totalProdutos });
+        } catch (error) {
+            return res.status(500).json({ error: `Erro ao contar produtos: ${error}` });
+        }
+    },
+
+    showTabelaEntradaSaidaLucro: async (req: Request, res: Response) => {
+        let Lucro = 0;
+        let Saidas = 0;
+        let Entradas = 0;
+        const today = new Date();
+        const pastDate = new Date();
+        pastDate.setDate(today.getDate() - 30);
+        try{
+            const entradas = await Entrada.findAll({
+                where: {
+                Ent_dataCriacao: {
+                    [Op.between]: [pastDate, today],
+                },
+                },
+            });
+            const saidas = await Saida.findAll({
+                where: {
+                Saida_dataCriacao: {
+                    [Op.between]: [pastDate, today],
+                },
+                },
+            });
+            entradas.forEach((e) => {
+                Entradas += parseFloat(e.Ent_valortot.toString());
+            })
+            saidas.forEach((s) => {
+                if (s.Saida_isVenda === true) {
+                    Saidas += parseFloat(s.Saida_valorTot.toString());
+                }
+                
+            })
+            res.status(200).json({Entradas: Entradas, Saidas: Saidas, Lucro: Saidas - Entradas});
+        }
+        catch(error) {
+            res.status(500).json({ error: `Erro ao buscar entradas: ${error.message}` });
+        } 
     }
 }

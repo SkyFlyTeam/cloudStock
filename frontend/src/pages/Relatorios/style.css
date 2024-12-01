@@ -90,7 +90,12 @@
 
 .finance-quantity{
     display: flex;
+    align-items: center;
     gap: 1rem;
+}
+
+.finance-quantity h1{
+    font-size: 32px;
 }
 
 .graph-header{
