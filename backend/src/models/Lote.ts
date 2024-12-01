@@ -70,6 +70,7 @@ export class Lote extends Model {
     // Associação com Entrada através de LoteEntrada
     @BelongsToMany(() => Entrada, () => Lote_Entrada)
     Entradas!: Entrada[];
+    Lote_Entrada: Lote_Entrada;
 
     @BelongsToMany(() => Saida, () => Lote_Saida)
     Saidas!: Saida[];   

@@ -1,4 +1,4 @@
-import { Table, Column, Model, DataType, ForeignKey, BelongsToMany, BelongsTo, AfterCreate, AfterUpdate } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, ForeignKey, BelongsToMany, BelongsTo, AfterCreate, AfterUpdate, AllowNull } from 'sequelize-typescript';
 import { Usuario } from './Usuario';
 import { Lote } from './Lote';
 import { Lote_Saida } from './Lote_Saida'
@@ -30,6 +30,12 @@ export class Saida extends Model{
 		allowNull: false
 	})
 	Saida_dataCriacao!: Date;
+
+	@Column({
+		type: DataType.BOOLEAN,
+		allowNull: false
+	})
+	Saida_isVenda!: boolean;
 
 	@ForeignKey(() => Usuario)
 	@Column({

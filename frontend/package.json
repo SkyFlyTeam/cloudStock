@@ -13,6 +13,7 @@
     "@types/react-dom": "^18.3.0",
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
+    "moment": "^2.30.1",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.4",
     "react-dom": "^18.3.1",
@@ -20,6 +21,8 @@
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.26.2",
     "react-scripts": "5.0.1",
+    "recharts": "^2.13.3",
+    "rsuite": "^5.74.2",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },

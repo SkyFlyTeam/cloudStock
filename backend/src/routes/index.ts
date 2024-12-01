@@ -16,6 +16,7 @@ import loteEntradaRoutes from './loteEntradaRoutes';
 import loteSaidaRoutes from './loteSaidaRoutes';
 import configRoutes from './configRoutes';
 import notificacoesRoutes from './notificacoesRoutes';
+import estatisticasRoutes from './estatisticasRoutes';
 
 
 const router = Router();
@@ -70,5 +71,8 @@ router.use('/configsistema', configRoutes)
 
 //Rota para notificações
 router.use('/notificacoes', notificacoesRoutes)
+
+//Rota para estatísticas
+router.use('/estatisticas', estatisticasRoutes)
 
 export default router;

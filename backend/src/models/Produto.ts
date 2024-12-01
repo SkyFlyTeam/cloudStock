@@ -106,7 +106,7 @@ export class Produto extends Model {
     @ForeignKey(() => Categoria)
     @Column({
       type: DataType.INTEGER,
-      allowNull: true
+      allowNull: false
     })
     Categoria_id!: number;
 
