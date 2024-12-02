@@ -2,18 +2,20 @@ import { useState, useEffect, forwardRef, useImperativeHandle, Ref } from 'react
 import './style.css';
 import { ApiException } from '../../../../config/apiException';
 import { categoriaServices, Categoria } from '../../../../services/categoriaServices';
+import { useAuth } from '../../../../context/AuthProvider'
 
 interface Props {
     onSuccess: (message: string) => void;
 }
 
 const CategoriaFormulario = forwardRef((props: Props, ref: Ref<{ submitForm: () => void }>) => {
+    const { currentUser } = useAuth();
     const [Cat_nome, setNome] = useState<string>('');
     const [Cat_status, setStatus] = useState<boolean>(true); // Status padrão como ativo
     const [Cat_pai, setCategoriaPai] = useState<number | undefined>(undefined); // Categoria pai selecionada
     const [categorias, setCategorias] = useState<Categoria[]>([]); // Lista de categorias para o select
     const [nomeError, setNomeError] = useState<boolean>(false); // Estado para o erro de campo vazio
-
+    
     useEffect(() => {
         // Carregar todas as categorias ao inicializar o componente
         const fetchCategorias = async () => {
@@ -32,14 +34,14 @@ const CategoriaFormulario = forwardRef((props: Props, ref: Ref<{ submitForm: () 
             setNomeError(true); // Mostra o erro se o campo nome estiver vazio
             return;
         }
-        
+
         const novaCategoria = {
             Categoria_nome: Cat_nome,
             Categoria_status: Cat_status,
             Categoria_pai: Cat_pai,
         };
 
-        const response = await categoriaServices.createCategoria(novaCategoria as any);
+        const response = await categoriaServices.createCategoria(novaCategoria as any, currentUser?.Usuario_id!);
         if (response instanceof ApiException) {
             console.error(response.message);
         } else {
@@ -51,8 +53,10 @@ const CategoriaFormulario = forwardRef((props: Props, ref: Ref<{ submitForm: () 
                     Categoria_nome: novaCategoria.Categoria_nome,
                     Categoria_status: novaCategoria.Categoria_status,
                     Categoria_pai: response.Categoria_id,
-                });
-            }            
+                },
+                    currentUser?.Usuario_id
+                );
+            }
 
             setNome('');
             setCategoriaPai(undefined); // Limpar categoria pai após a criação

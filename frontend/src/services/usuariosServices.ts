@@ -23,10 +23,11 @@ const checkLogin = async (credenciais: any): Promise<any | ApiException> => {
 }
 
 
-const createUsuario = async (usuario: any): Promise<any | ApiException> => {
+const createUsuario = async (usuario: any, usuario_id: number | undefined): Promise<any | ApiException> => {
   try{
+    console.log(usuario_id)
       const { data } = await Api().post<any>('/usuario', usuario, {
-          headers: { 'Content-Type': 'application/json' }
+          headers: { 'Content-Type': 'application/json', usuario_id: usuario_id  }
       });
       const usuario_criado: Usuario = data
       return usuario_criado
@@ -36,10 +37,10 @@ const createUsuario = async (usuario: any): Promise<any | ApiException> => {
     }
 }
 
-const updateUsuario = async (id: number, usuario: any): Promise<Usuario | ApiException> => {
+const updateUsuario = async (id: number, usuario: any, usuario_id: number | undefined): Promise<Usuario | ApiException> => {
   try {
     const { data } = await Api().put<any>(`/usuario/${id}`, usuario, {
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json', usuario_id: usuario_id  }
     });
 
     const usuario_atualizado: Usuario = data

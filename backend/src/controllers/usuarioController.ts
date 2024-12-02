@@ -19,13 +19,18 @@ export const controllerUsuario = {
       
       const hashPassword = await bcrypt.hash(Usuario_senha, 10)
 
+      let usuario_id=req.headers.usuario_id[0]
+
+      usuario_id = usuario_id
+
       const usuario = await Usuario.create({
         Usuario_email,
         Usuario_senha: hashPassword,
         Usuario_nome,
         Usuario_status: true,
         Usuario_dataCriacao: new Date(),
-        Cargo_id
+        Cargo_id,
+        usuario_id: usuario_id
       });
 
       return res.status(201).json(usuario);
@@ -71,9 +76,13 @@ export const controllerUsuario = {
       if (!id) {
         return res.status(400).json({ error: 'Invalid ID parameter' });
       }
-      const [updated] = await Usuario.update(req.body, {
-        where: { Usuario_id: id }
-      });
+
+      const instance = await Usuario.findByPk(id);
+
+
+      const usuario_id=req.headers.usuario_id[0]
+      const updated = await instance.update(req.body, {individualHooks: true, context: { usuario_id: usuario_id }});
+
       if (updated) {
         const updatedUsuario = await Usuario.findOne({ where: { Usuario_id: id } });
         return res.status(200).json(updatedUsuario);
@@ -97,12 +106,22 @@ export const controllerUsuario = {
   
       // Alternar o status atual (se for true, muda para false e vice-versa)
       const novoStatus = !usuario.Usuario_status;
+
+      // Capturar o ID do usuário
+      const usuario_id = req.headers.usuario_id?.[0];
+      if (!usuario_id) {
+        return res.status(400).json({ error: 'Usuário não identificado no header' });
+      }
   
       // Atualizar o status no banco de dados
-      await Usuario.update(
-        { Usuario_status: novoStatus },
-        { where: { Usuario_id: id } }
+      const updated = await usuario.update(
+        { Usuario_status: novoStatus }, // Fields you want to update
+        {
+          individualHooks: true, // Ensure hooks run for this specific instance
+          context: { usuario_id: usuario_id }, // Pass the context here
+        } as any // Cast to `any` if TypeScript throws a type error
       );
+      
   
       // Retornar o novo status atualizado
       return res.status(200).json({ message: "Status alterado com sucesso", usuario });

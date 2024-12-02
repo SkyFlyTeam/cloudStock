@@ -18,6 +18,8 @@ interface Props {
 const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
     submitForm: () => void
 }>) => {
+    const { currentUser } = useAuth();
+
     const [Prod_nome, setNome] = useState<string>('')
     const [Prod_descricao, setDescricao] = useState<string>('')
     const [Prod_preco, setPreco] = useState<number>(0)
@@ -84,7 +86,7 @@ const ProdutoFormulario = forwardRef((props: Props, ref: Ref<{
             formData.append('Prod_imagem', Prod_imagem);
         }
 
-        const response = await produtoServices.createProduto(formData); 
+        const response = await produtoServices.createProduto(formData, currentUser?.Usuario_id!); 
         if (response instanceof ApiException) {
             console.error(response.message);
         } else {

@@ -16,31 +16,30 @@ const getAllSetores = async (): Promise<Setor[] | ApiException> => {
     }
 }
 
-const createSetor = async (setor: any): Promise<Setor | ApiException> => {
-    try {
+const createSetor = async (setor: any, usuario_id: number): Promise<Setor | ApiException> => {
+  try {
       const { data } = await Api().post<any>('/setor', setor, {
-        headers: { 'Content-Type': 'application/json' }
+          headers: { 'Content-Type': 'application/json', usuario_id },
       });
-  
-      const setor_criado: Setor = data
-      return setor_criado
-    } catch (error: any) {
+      const setor_criado: Setor = data;
+      return setor_criado;
+  } catch (error: any) {
       return new ApiException(error.message || 'Erro ao criar o registro.');
-    }
   }
+}
 
 
-const updateSetor = async (id: number, setor: any): Promise<Setor | ApiException> => {
-    try {
+const updateSetor = async (id: number, setor: any, usuario_id: number): Promise<Setor | ApiException> => {
+  try {
       const { data } = await Api().put<any>(`/setor/${id}`, setor, {
-        headers: { 'Content-Type': 'application/json' }
+          headers: { 'Content-Type': 'application/json', usuario_id },
       });
-      const setor_atualizado: Setor = data
-      return setor_atualizado
-    } catch (error: any) {
-      return new ApiException(error.message || 'Erro ao criar o registro.')
-    }
+      const setor_atualizado: Setor = data;
+      return setor_atualizado;
+  } catch (error: any) {
+      return new ApiException(error.message || 'Erro ao criar o registro.');
   }
+}
 
 
 const getSetorByID = async (id: number): Promise<Setor | ApiException> => {

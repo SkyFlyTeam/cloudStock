@@ -5,6 +5,7 @@ import { localServices } from '../../../../services/localServices';
 import { setoresServices } from '../../../../services/setorServices';
 import { Setor } from '../../../../services/setorServices';
 import Input from '../../../Input';
+import { useAuth } from '../../../../context/AuthProvider';
 
 interface Props {
     id: number  
@@ -15,6 +16,7 @@ const Local_Editar = forwardRef((props: Props, ref: Ref<{ submitForm: () => void
   const [LocAr_nome, setNome] = useState<string>('');
   const [Setor_id, setSetor] = useState<number>(-1);
   const [setores, setSetores] = useState<{ label: string; value: number }[]>([]);
+  const { currentUser } = useAuth();
 
   const getSetores = async () => {
     const response = await setoresServices.getAllSetores();
@@ -55,7 +57,7 @@ const Local_Editar = forwardRef((props: Props, ref: Ref<{ submitForm: () => void
     };
 
     // Envia o id como parâmetro e as informações atualizdas
-    const response = await localServices.updateLocal(props.id, localAtualizado)
+    const response = await localServices.updateLocal(props.id, localAtualizado, currentUser?.Usuario_id!)
     if (response instanceof ApiException) {
     console.error(response.message)
     } else {

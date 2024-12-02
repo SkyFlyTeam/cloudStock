@@ -7,18 +7,25 @@ export const controllerCategoria = {
   save: async (req: Request, res: Response) => {
     try {
       const { Categoria_id, Categoria_nome, Categoria_status, Categoria_pai } = req.body;
+      const usuario_id=req.headers.usuario_id[0]
 
       // Validação dos campos obrigatórios
       if (!Categoria_nome) {
         return res.status(400).json({ error: 'O nome da categoria é obrigatório.' });
       }
 
-      const category = await Categoria.create({
-        Categoria_id,
-        Categoria_nome,
-        Categoria_status,
-        Categoria_pai,
-      });
+      const category = await Categoria.create(
+        {
+          Categoria_id,
+          Categoria_nome,
+          Categoria_status,
+          Categoria_pai,
+        },
+        {
+          include: null,
+          context: { usuario_id: usuario_id }, // Passando o contexto com usuário_id
+        }
+      );
 
       return res.status(201).json(category);
     } catch (error) {
@@ -94,46 +101,24 @@ export const controllerCategoria = {
 
   // PUT /categoria/:id - Atualizar categoria
   update: async (req: Request, res: Response) => {
-    const { id } = req.params;
-    const { Categoria_nome, Categoria_status, Categoria_pai } = req.body;
-
     try {
-      // Validação do ID fornecido
-      if (isNaN(Number(id))) {
-        return res.status(400).json({ error: 'ID inválido' });
-      }
-
-      const existingCategory = await Categoria.findByPk(id);
-      if (!existingCategory) {
-        console.log(`Categoria com ID ${id} não encontrada para atualização.`);
+      const { id } = req.params;
+      const instance = await Categoria.findByPk(id);
+  
+      if (!instance) {
         return res.status(404).json({ error: 'Categoria não encontrada' });
       }
+  
+      const usuario_id=req.headers.usuario_id[0]
 
-      // Atualize apenas os campos fornecidos
-      const updatedCategoryData = {
-        Categoria_nome: Categoria_nome ?? existingCategory.Categoria_nome,
-        Categoria_status: Categoria_status ?? existingCategory.Categoria_status,
-        Categoria_pai: Categoria_pai ?? existingCategory.Categoria_pai,
-      };
-
-      // Realiza a atualização e verifica se alguma linha foi afetada
-      const [updated] = await Categoria.update(updatedCategoryData, {
-        where: { Categoria_id: id },
-      });
-
-      if (updated) {
-        const categoriaAtualizada = await Categoria.findOne({ where: { Categoria_id: id } });
-        return res.status(200).json(categoriaAtualizada);
-      } else {
-        console.log('Nenhuma alteração foi feita na categoria.');
-        return res.status(400).json({ error: 'Nenhuma alteração foi realizada.' });
-      }
+      const updated = await instance.update(req.body, {individualHooks:true, context: { usuario_id: usuario_id }});
+  
+      return res.status(200).json(updated);
     } catch (error) {
-      console.error('Erro ao atualizar categoria:', error);
-      return res.status(500).json({ error: 'Erro interno no servidor' });
+      return res.status(400).json({ error: 'Erro ao atualizar Categoria', details: error.message });
     }
   },
-
+  
   delete: async (req: Request, res: Response) => {
     const { id } = req.params;
 

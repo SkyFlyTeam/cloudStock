@@ -5,10 +5,10 @@ export interface Configuracoes {
     Config_avisoValidade: number 
 }
 
-const updateConfig = async (avisoValidade: any): Promise<Configuracoes | ApiException> => {
+const updateConfig = async (avisoValidade: any, usuario_id: number): Promise<Configuracoes | ApiException> => {
     try {
         const { data } = await Api().put<any>(`/configsistema/`, avisoValidade, {
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 'Content-Type': 'application/json', usuario_id: usuario_id }
         });
 
         const config_atualizado: Configuracoes = data

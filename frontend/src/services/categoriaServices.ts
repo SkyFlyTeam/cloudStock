@@ -19,10 +19,12 @@ const getAllCategoria = async (): Promise<Categoria[] | ApiException> => {
   }
 };
 
-const createCategoria = async (categoria: Categoria): Promise<Categoria | ApiException> => {
+const createCategoria = async (categoria: Categoria, usuario_id: number): Promise<Categoria | ApiException> => {
   try {
-    const { data } = await Api().post<Categoria>('/categoria', categoria, {
-      headers: { 'Content-Type': 'application/json' }
+    const { data } = await Api().post<any>('/categoria', categoria, {
+      headers: { 'Content-Type': 'application/json', 
+      usuario_id: usuario_id
+      }
     });
 
     const categoriaCriada: Categoria = data;
@@ -32,10 +34,10 @@ const createCategoria = async (categoria: Categoria): Promise<Categoria | ApiExc
   }
 };
 
-const updateCategoria = async (id: number, categoria: Categoria): Promise<Categoria | ApiException> => {
+const updateCategoria = async (id: number, categoria: Categoria, usuario_id: number | undefined): Promise<Categoria | ApiException> => {
   try {
     const { data } = await Api().put<Categoria>(`/categoria/${id}`, categoria, {
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json', usuario_id: usuario_id  }
     });
 
     const categoriaAtualizada: Categoria = data;
