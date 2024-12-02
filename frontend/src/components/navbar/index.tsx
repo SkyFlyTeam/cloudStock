@@ -129,10 +129,12 @@ const Navbar: React.FC = () => {
                   </div>
                 </Link>
 
-                  <div className={location.pathname === '/Relatorio' ? 'menu-item active' : 'menu-item'}>
+                <Link to="/Relatorios" className="link">
+                  <div className={location.pathname === '/Relatorios' ? 'menu-item active' : 'menu-item'}>
                     <HiDocumentReport />
-                    <div className="navbartext"><span>Relatório</span></div>
+                    <div className="navbartext"><span>Relatórios</span></div>
                   </div>
+                </Link>
 
                   <Link to="/Registros" className="link">
                     <div className={location.pathname === '/Registros' ? 'menu-item active' : 'menu-item'}>

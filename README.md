@@ -1,8 +1,8 @@
-<h1 align='center'> Sprint 3: 21/10/2024 à 11/11/2024 </h1>
+<h1 align='center'> Sprint 4: 11/11/2024 à 01/12/2024 </h1>
 
 <br>
 
-Na terceira sprint, foi criada a determinação de estoque mínimo dos produtos e ao ser atingida irá ser alertada por meio de uma notificação um aviso de abastecer o estoque necessário, não só em estoque mínimo mas a notificação também avisará quando a data de validade estiver próxima, além disso, agora o gerente poderá cadastrar novos usuários junto de suas respectivas funções. Ademais, foi desenvolvido funções de busca em certas páginas, sendo possível buscar através de filtro e o campo pesquisa. Para finalizar, no cadastro de produtos há agora um campo de inserir a categoria  e a unidade de medida. 
+Na quarta sprint, foi desenvolvida a página de Relatórios onde é encontrado todas as nossas análises do que foi movimentado no sistema, possuindo relatórios detalhados sobre o status do estoque, histórico de compras e controle das movimentações no geral, sendo observado os lucros, as saídas e os gastos em entradas. Além disso, ainda na página, possui agora métricas de vendas e perdas para planejar toda a compra que deverá ser feita. Para mais, foi desenvolvida na página de Registros separando em registros de operações e registros do sistema, onde é registrado na primeira toda entrada e saída de produtos e na segunda é registrado toda alteração ou cricação que ocorre na aplicação.
 
 <br>
 
@@ -10,38 +10,34 @@ Na terceira sprint, foi criada a determinação de estoque mínimo dos produtos 
 
 Os requisitos desenvolvidos durante esta sprint foram:
 
-- Cadastro de Usuários: Diferenciar níveis de acesso (administrador, gerente, funcionário).
-- Cadastro de Categorias: Organização hierárquica dos produtos, facilitando a navegação.
-- Alertas de Baixo Estoque: Notificações automáticas para itens com estoque abaixo do nível mínimo.
-- Notificações de Expiração: Avisos para produtos próximos da data de validade. 
-- Definir o estoque mínimo.
+- Relatórios de Estoque: Relatórios detalhados sobre o status do estoque, histórico de compras, e movimentações.
+- Análise de Tendências: Ferramentas de análise para prever demandas futuras e planejar compras.
+- Histórico de Compras e Auditoria: Registro de compras e logs de alterações no sistema.
+
 <br>
 
 ## 🎯 Sprint backlog
 
 ID | User story | Estimativa
 |------|--------|------|
-| 8 | 	Eu como gerente gostaria de definir o estoque mínimo de cada produto para que não haja falta de produtos. | 4 |
-| 9 | 	Eu como gerente e funcionário gostaria que sejam emitidos alertas de estoque baixo para controle de reposição. | 6 |
-| 10 | 	Eu como gerente e funcionário desejo que a plataforma emita avisos assim que um produto esteja próximo da data de validade para que eu possa substituir esses produtos por itens com validade mais longa e evitar perdas. | 4 |
-| 14 | 	Eu como administrador gostaria de cadastrar novos usuários junto de suas respectivas funções para alimentar minha plataforma. | 3 |
-| 15 | Eu como funcionário gostaria de filtrar os produtos para melhor organização.| 2 |
+| 11 | Eu como gerente gostaria de possuir relatórios detalhados sobre o status do estoque, histórico de compras e movimentação para possuir o total controle do estoque.  | 9 |
+| 12 | Eu como gerente gostaria de que hajam métricas de venda e perdas para planejar a compra de produtos de interesse.  | 7 |
+| 13 | Eu como gerente gostaria de ver um histórico de compras e alterações no sistema para auditar os registros de entrada e saída dos itens da loja. | 5 |
 
 
 <br>
 
 US | Task | Estimativa | Status
 |------|--------|------|-----|
-| 8 | Criar campo de estóque mínimo | 4 | Feito ✔ |
-| 9 | Criar a notificação de estoque mínimo | 10 | Feito ✔ |
-| 10 | Criar a notificação de produto próximo à validade | 4 | Feito ✔ |
-| 14 | Página de cadastro de usuários | 10 | Feito ✔ |
-| 15 | Criar filtros para uma busca melhor nas páginas | 10 | Feito ✔ |
-| 15 | Criar sistema de paginação | 8 | Feito ✔ |
-| 15 | Criar campo de pesquisa | 8 | Feito ✔ |
-| 15 | Página de categorias | 8 | Feito ✔ |
-| 15 | Editar o cadastro de produtos para inserção da categoria | 4 | Feito ✔ |
-| 15 | Colocar a unidade de medida nos devidos campos | 4 | Feito ✔ |
+| 11 | Criar página de relatórios | 10 | Feito ✔ |
+| 11 | Rotas para somar quantidade de produto, produtos com estoque mínimo, com data próxima a validade. Ademais,total gasto em entradas, ganho em saídas e lucro. | 8 | Feito ✔ |
+| 12 | Rotas para produtos mais vendidos, mais comprados, maior rentabilidade e maior custo de compra | 6 | Feito ✔ |
+| 12 | Rota para lucro e perda mensal; Alterar para calcular o valor total de saída mesmo quando não é venda | 5 | Feito ✔ |
+| 13 | Criar triggers para Configurações do sistema e Produto | 4 | Feito ✔ |
+| 13 | Triggers para usuários| 8 | Feito ✔ |
+| 13 | Triggers para Produtos, locais | 11 | Feito ✔ |
+| 13 | Triggers para setores e categorias | 8 | Feito ✔ |
+| 13 | Filtros para os registros de sistema e acrescentar no front a página de sistemas | 12 | Feito ✔ |
 
 <br> 
 
@@ -62,7 +58,7 @@ Utilizamos o Burndown chart para acompanhar o progresso da equipe durante o anda
 Apresentação das funcionalidades desenvolvidas até o momento:
 <div align="center">
  
-[![SprintReview2](https://i9.ytimg.com/vi/eyDyj7bAfGM/mqdefault.jpg?sqp=CJD72LgG-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGDYgXChlMA8=&rs=AOn4CLA0ROuTqxKhA0yjHv6yfVB8hL920w)](https://youtu.be/eyDyj7bAfGM)
+[![SprintReview4](https://i9.ytimg.com/vi/eyDyj7bAfGM/mqdefault.jpg?sqp=CJD72LgG-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGDYgXChlMA8=&rs=AOn4CLA0ROuTqxKhA0yjHv6yfVB8hL920w)](https://youtu.be/eyDyj7bAfGM)
 
 </div>
 

@@ -122,7 +122,7 @@ function Saidas() {
   const calcularSubtotal = (produto: Produto, quantidade: number) => {
     const custo = produto.Prod_preco || 0; // Make sure this value is correct
     const qtd = quantidade || 0;
-    if (IsCompra == false){ return 0 }
+    if (IsCompra == false){ return (custo * qtd * -1).toFixed(2); }
 else{
     return (custo * qtd).toFixed(2);
 }
@@ -140,7 +140,7 @@ else{
     if (IsCompra){
     return total;
     }
-    else return 0;
+    else return (parseFloat(total) * -1).toString();
   };
 
 

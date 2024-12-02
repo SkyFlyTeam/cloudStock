@@ -153,6 +153,7 @@
   max-height: 200px;
   overflow-y: auto;
   border-radius: 0 0 10px 10px;
+  z-index: 2;
 }
 
 .suggestion-item {

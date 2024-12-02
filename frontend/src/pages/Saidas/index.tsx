@@ -211,7 +211,11 @@ function Saidas() {
       header: () => 'Valor Total',
       cell: info => {
         const valor = info.getValue();
-        const valorFormatado = Number(valor).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+        // Get the Saida_isVenda value from the row data
+        const isVenda = info.row.original.Saida_isVenda;
+        // If it's not a sale (isVenda is false), make the value negative
+        const finalValue = isVenda ? valor : -valor;
+        const valorFormatado = Number(finalValue).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
         return `R$ ${valorFormatado}`;
       },
     }),
