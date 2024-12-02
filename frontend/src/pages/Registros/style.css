@@ -26,19 +26,20 @@ body {
     border-radius: 8px;
     background-color: #ffffff;
     border-left: 8px solid;
-    
+
 }
 
-div.registro-item:nth-child(even){
+div.registro-item:nth-child(even) {
     background-color: #79d3f727;
 }
 
-div.registro-item:nth-child(odd){
+div.registro-item:nth-child(odd) {
     background-color: #ffffff;
 }
 
 .registro-item {
-    border-color: #21a4e6; /* Verde para Entradas */
+    border-color: #21a4e6;
+    /* Verde para Entradas */
 }
 
 
@@ -53,7 +54,8 @@ div.registro-item:nth-child(odd){
     flex-grow: 1;
 }
 
-.info-body, .info-title{
+.info-body,
+.info-title {
     display: flex;
     justify-content: space-between;
 }
@@ -64,46 +66,67 @@ div.registro-item:nth-child(odd){
     font-weight: bold;
 }
 
-.info span{
+.info span {
     margin: 5px 0;
     color: #555;
 }
 
-.registro-container-filtros, .registro-primeira-coluna, .registro-segunda-coluna {
+.registro-container-filtros,
+.registro-container-filtros>div {
     display: flex;
     column-gap: .6em;
     align-items: start;
     padding-top: 0;
 }
+
 .registro-container-filtros input {
     width: 6em;
     text-align: center;
 }
-.registro-container-filtros input:not(input[type=radio]), select{
+
+.registro-container-filtros input:not(input[type=radio]),
+select {
     margin-right: 5px;
 }
 
-.tipo-container, .responsavel-container, .data-container, .valor-container {
+.tipo-container,
+.responsavel-container,
+.data-container,
+.valor-container,
+.area-container-prod,
+.area-container-setor {
     display: flex;
     flex-direction: column;
     align-items: start;
     justify-content: center;
 }
-.responsavel-container label, .data-container label, .valor-container label {
+.area-container > div {
+    display: flex;
+    flex-direction: row;
+}
+
+.responsavel-container label,
+.data-container label,
+.valor-container label {
     width: 8em;
     margin-bottom: .3em;
 }
+
 .responsavel-container select {
     width: 12em;
 }
+
 .radio-container {
     padding-right: 0;
 }
+
 .radio-container label {
-    width: 2em;
+    margin-right: 0.5em;
+    width: 3em;
 }
 
-.data-container input[type=date]{
+
+.data-container input[type=date] {
     font-size: 14px;
     width: fit-content;
     height: 35.2px;
@@ -112,24 +135,64 @@ div.registro-item:nth-child(odd){
 }
 
 
+.registro-menu {
+    display: flex;
+    flex-wrap: wrap;
+    flex-flow: row;
+    width: 100%;
+}
+
+.registro-menu-item {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: white;
+    transition: background-color 0.3s ease;
+    color: #00aaff;
+    margin: 0.5%;
+}
+
+.registro-menu-item.active {
+    background-color: #61BDE0;
+    color: white !important;
+}
+
+.registro-menu-item:hover {
+    background-color: #cee4ec !important;
+    color: #4C8399 !important;
+}
+
+.registro-menu-text {
+    font-family: "Montserrat", sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+
 @media (max-width: 375px) {
-    .registro-container-filtros, .registro-primeira-coluna, .registro-segunda-coluna {
+
+    .registro-container-filtros,
+    .registro-container-filtros>div {
         flex-direction: column;
         row-gap: 1em;
     }
-    
+
 }
 
 @media (max-width: 768px) {
     .registro-item {
         font-size: 14px;
-    }    
+    }
 
-    .info-title h2{
+    .info-title h2 {
         font-size: 14px;
     }
 
-    .registro-item{
+    .registro-item {
         padding: 1rem;
     }
 
@@ -138,7 +201,7 @@ div.registro-item:nth-child(odd){
         margin-right: 10px;
     }
 
-    .info-body{
+    .info-body {
         display: flex;
         flex-direction: column;
     }
@@ -156,21 +219,28 @@ div.registro-item:nth-child(odd){
         flex-direction: column;
         row-gap: 1em;
     }
+
     .data-container {
         padding-left: 0 !important;
     }
 }
 
 @media (max-width: 1260px) {
-    .tipo-container {
+    .tipo-container,
+    .area-container,
+    .area-container-prod,
+    .area-container-setor {
         width: 6em;
     }
+
     .radio-container label {
         width: 4em;
     }
+
     .radio-container input {
         width: 1em;
     }
+
     .data-container {
         padding-left: 4em;
     }
