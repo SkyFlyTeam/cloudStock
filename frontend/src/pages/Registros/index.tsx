@@ -351,8 +351,8 @@ function Registros() {
                       />
                     </div>
                   </div>
-                  <div className="area-container-setor">
-                    <div className="radio-container">
+                  <div className="area-container-setor" style={{marginLeft: "15px"}}>
+                    <div className="radio-container" style={{marginLeft: "15px"}}>
                       <label htmlFor="inSet">Setor</label>
                       <input
                         type="radio"
@@ -363,7 +363,7 @@ function Registros() {
                         onChange={(e) => setArea(e.target.value)}
                       />
                     </div>
-                    <div className="radio-container">
+                    <div className="radio-container" style={{marginLeft: "15px"}}>
                       <label htmlFor="inLoc">Local</label>
                       <input
                         type="radio"
