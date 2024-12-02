@@ -47,7 +47,7 @@ Utilizamos o Burndown chart para acompanhar o progresso da equipe durante o anda
 
 <div align="center">
 
-![BurndownChart](https://github.com/user-attachments/assets/f716c9c2-3236-4a27-b90b-8c83924af378)
+![BurndownChart](https://github.com/user-attachments/assets/c60d5235-13b2-4dd5-abd3-f3c1a5b8e39e)
 
  </div>
 
