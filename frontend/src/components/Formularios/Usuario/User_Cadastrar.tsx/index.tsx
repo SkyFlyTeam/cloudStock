@@ -5,12 +5,14 @@ import { fornecedorServices } from '../../../../services/fornecedorServices';
 import { cnpjMask } from '../../../../utils/cnpjMask';
 import { usuarioServices } from '../../../../services/usuariosServices';
 import PasswordInput from '../../../PasswordInput';
+import { useAuth } from '../../../../context/AuthProvider';
 
 interface Props {
     onSuccess: (message: string) => void // Função pra quando dê certo 
 }
 
 const UsuarioFormulario = forwardRef((props: Props, ref: Ref<{ submitForm: () => void }>) => {
+    const { currentUser } = useAuth();
     const [Usuario_nome, setNome] = useState<string>('')
     const [Usuario_email, setEmail] = useState<string>('')
     const [Usuario_senha, setSenha] = useState<string>('')
@@ -25,7 +27,7 @@ const UsuarioFormulario = forwardRef((props: Props, ref: Ref<{ submitForm: () =>
         }
     
         console.log(novoUsuario)
-        const response = await usuarioServices.createUsuario(novoUsuario);
+        const response = await usuarioServices.createUsuario(novoUsuario, currentUser?.Usuario_id);
         if (response instanceof ApiException) {
           console.error(response.message);
         } else {

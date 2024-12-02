@@ -132,6 +132,7 @@ function Usuarios() {
             checked={info.getValue() == 1}
             cod={info.row.original.Usuario_id}
             rota={`${hostname}usuario`}
+            usuario_id={currentUser?.Usuario_id}
             onStatusChange={(newStatus: any) => handleStatusChange(info.row.original.Usuario_id, newStatus)}
           />
       </div>

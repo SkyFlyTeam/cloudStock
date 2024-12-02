@@ -2,6 +2,7 @@ import { useState, useEffect, forwardRef, useImperativeHandle, Ref } from 'react
 import { ApiException } from '../../../../config/apiException';
 import { usuarioServices } from '../../../../services/usuariosServices';
 import './style.css';
+import { useAuth } from '../../../../context/AuthProvider';
 
 interface Props {
   id: number;
@@ -9,6 +10,7 @@ interface Props {
 }
 
 const Usuario_Edicao = forwardRef((props: Props, ref: Ref<{ submitForm: () => void }>) => {
+  const { currentUser } = useAuth();
   const [Usuario_nome, setNome] = useState<string>('');
   const [Usuario_email, setEmail] = useState<string>('');
   const [Cargo_id, setCargo] = useState<number | null>(null);
@@ -20,7 +22,7 @@ const Usuario_Edicao = forwardRef((props: Props, ref: Ref<{ submitForm: () => vo
       Cargo_id,
     };
 
-    const response = await usuarioServices.updateUsuario(props.id, usuarioAtualizado);
+    const response = await usuarioServices.updateUsuario(props.id, usuarioAtualizado, currentUser?.Usuario_id);
     if (response instanceof ApiException) {
       console.error(response.message);
     } else {

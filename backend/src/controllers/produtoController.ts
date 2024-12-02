@@ -187,11 +187,14 @@ export const controllerProducts = {
 
       console.log('controller', usuario_id)
   
-      product.set('Prod_status', novoStatus);
-      product.set('usuario_id',usuario_id.toString());
-      await product.save({
-        hooks: true, // Dispara os hooks
-      });
+      // Atualizar o status no banco de dados
+      const updated = await product.update(
+        { Prod_status: novoStatus }, // Fields you want to update
+        {
+          individualHooks: true, // Ensure hooks run for this specific instance
+          context: { usuario_id: usuario_id }, // Pass the context here
+        } as any // Cast to `any` if TypeScript throws a type error
+      );
       
   
       // Retornar o produto atualizado
